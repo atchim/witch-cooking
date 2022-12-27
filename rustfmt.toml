@@ -1,0 +1,7 @@
+edition = '2021'
+max_width = 79
+newline_style = 'Unix'
+tab_spaces = 2
+use_field_init_shorthand = true
+use_small_heuristics = 'Max'
+use_try_shorthand = true

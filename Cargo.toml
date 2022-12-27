@@ -1,0 +1,35 @@
+[package]
+name = "witch-cooking"
+version = "0.0.0"
+edition = "2021"
+
+[dependencies]
+atty = "0.2"
+clap = {version = "4.0", features = ["derive"]}
+detect-lang = "0.1"
+env_logger = "0.9"
+error-stack = "0.1"
+fnv = "1.0"
+thiserror = "1.0"
+tree-sitter = "0.20"
+tree-sitter-rust = {version = "0.20", optional = true}
+
+[dependencies.log]
+version = "0.4"
+features = ["max_level_trace", "release_max_level_info"]
+
+[dependencies.ropey]
+version = "1.5"
+default-features = false
+features = ["simd"]
+
+[dev-dependencies]
+tree-sitter-rust = "0.20"
+
+[features]
+rust = ["tree-sitter-rust"]
+default = ["rust"]
+
+[[bin]]
+name = "cook"
+path = "src/main.rs"
