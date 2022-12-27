@@ -2,6 +2,9 @@
 name = "witch-cooking"
 version = "0.0.0"
 edition = "2021"
+description = """\
+  Experimental multilingual code formatter based on Tree-Sitter's query.\
+"""
 
 [dependencies]
 atty = "0.2"
