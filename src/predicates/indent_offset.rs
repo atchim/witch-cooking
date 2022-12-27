@@ -3,9 +3,7 @@ use super::{super::settings::IndentRule, predicate::prelude::*};
 pub struct IndentOffset;
 
 impl Predicate for IndentOffset {
-  fn name(&self) -> &'static str {
-    "indent-offset!"
-  }
+  fn name(&self) -> &'static str { "indent-offset!" }
 
   fn apply<'tree>(
     &self,

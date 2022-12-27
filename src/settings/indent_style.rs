@@ -3,9 +3,7 @@ use super::setting::prelude::*;
 pub struct IndentStyle;
 
 impl Setting for IndentStyle {
-  fn name(&self) -> &'static str {
-    "indent-style"
-  }
+  fn name(&self) -> &'static str { "indent-style" }
 
   fn apply<'tree>(
     &self,

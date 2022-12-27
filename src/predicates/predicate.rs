@@ -32,7 +32,9 @@ pub(super) mod prelude {
         super::{
           editor::Editor,
           node_utils::{
-            Displayer as NodeDisplayer, Jumper, Provider as NodesProvider,
+            Displayer as NodeDisplayer,
+            Jumper,
+            Provider as NodesProvider,
             Walker,
           },
           settings::{MatchSettings, NodeToSettings},

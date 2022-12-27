@@ -25,13 +25,9 @@ pub enum Error {
 }
 
 impl Error {
-  pub fn key(s: impl ToString) -> Self {
-    Self::Key(s.to_string())
-  }
+  pub fn key(s: impl ToString) -> Self { Self::Key(s.to_string()) }
 
-  pub fn other(t: impl ToString) -> Self {
-    Self::Other(t.to_string())
-  }
+  pub fn other(t: impl ToString) -> Self { Self::Other(t.to_string()) }
 
   pub fn value(expected: impl ToString, got: impl ToString) -> Self {
     Self::Value { expected: expected.to_string(), got: got.to_string() }

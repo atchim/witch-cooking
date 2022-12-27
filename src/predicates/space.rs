@@ -36,9 +36,7 @@ fn arg_to_single_node<'a, 'tree>(
 pub struct Space;
 
 impl Predicate for Space {
-  fn name(&self) -> &'static str {
-    "space!"
-  }
+  fn name(&self) -> &'static str { "space!" }
 
   fn apply<'tree>(
     &self,

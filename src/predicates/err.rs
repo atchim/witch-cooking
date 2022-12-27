@@ -29,7 +29,5 @@ impl Error {
     Self::Nargs { expected: expected.to_string(), got: got.to_string() }
   }
 
-  pub fn op(s: impl ToString) -> Self {
-    Self::Op(s.to_string())
-  }
+  pub fn op(s: impl ToString) -> Self { Self::Op(s.to_string()) }
 }

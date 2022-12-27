@@ -1,5 +1,10 @@
+//! Experimental multilingual code formatter based on [Tree-Sitter]'s [query].
+//!
+//! [Tree-Sitter]: https://tree-sitter.github.io/tree-sitter
+//! [query]: https://tree-sitter.github.io/tree-sitter/using-parsers#query-syntax
+
 #![allow(dead_code)]
-#![deny(elided_lifetimes_in_paths)]
+#![deny(elided_lifetimes_in_paths, missing_docs)]
 
 #[cfg(not(any(feature = "rust")))]
 compile_error!("no language to support");
@@ -24,7 +29,13 @@ use {
   ropey::{iter::Chunks, Rope, RopeSlice},
   std::{fs, io, process::ExitCode},
   tree_sitter::{
-    Language, Node, Parser, Query, QueryCursor, TextProvider, Tree,
+    Language,
+    Node,
+    Parser,
+    Query,
+    QueryCursor,
+    TextProvider,
+    Tree,
   },
 };
 
@@ -88,9 +99,8 @@ struct ChunksBytes<'a>(Chunks<'a>);
 
 impl<'a> Iterator for ChunksBytes<'a> {
   type Item = &'a [u8];
-  fn next(&mut self) -> Option<Self::Item> {
-    self.0.next().map(str::as_bytes)
-  }
+
+  fn next(&mut self) -> Option<Self::Item> { self.0.next().map(str::as_bytes) }
 }
 
 #[derive(Clone)]
@@ -98,6 +108,7 @@ struct RopeProvider<'a>(RopeSlice<'a>);
 
 impl<'a> TextProvider<'a> for RopeProvider<'a> {
   type I = ChunksBytes<'a>;
+
   fn text(&mut self, node: Node<'_>) -> Self::I {
     ChunksBytes(self.0.byte_slice(node.byte_range()).chunks())
   }

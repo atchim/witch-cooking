@@ -42,9 +42,7 @@ fn space_rec<'tree>(
 pub struct SpaceRec;
 
 impl Predicate for SpaceRec {
-  fn name(&self) -> &'static str {
-    "space-rec!"
-  }
+  fn name(&self) -> &'static str { "space-rec!" }
 
   fn apply<'tree>(
     &self,

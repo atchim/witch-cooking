@@ -32,21 +32,18 @@ pub enum IndentRule {
 impl fmt::Display for IndentRule {
   fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
     use IndentRule::*;
-    write!(
-      f,
-      "{}",
-      match self {
-        Absolute(n) => format!("={n}"),
-        Minus(n) => format!("-{n}"),
-        Offset(node_id) => format!("#{node_id}"),
-        Plus(n) => format!("+{n}"),
-      },
-    )
+    write!(f, "{}", match self {
+      Absolute(n) => format!("={n}"),
+      Minus(n) => format!("-{n}"),
+      Offset(node_id) => format!("#{node_id}"),
+      Plus(n) => format!("+{n}"),
+    })
   }
 }
 
 impl FromStr for IndentRule {
   type Err = IndentRuleErr;
+
   fn from_str(s: &str) -> Result<Self, Self::Err> {
     let mut chars = s.chars();
     let op = chars.next().ok_or(IndentRuleErr::Empty)?;
@@ -69,9 +66,7 @@ impl FromStr for IndentRule {
 pub struct IndentRuleSetting;
 
 impl Setting for IndentRuleSetting {
-  fn name(&self) -> &'static str {
-    "indent-rule"
-  }
+  fn name(&self) -> &'static str { "indent-rule" }
 
   fn apply<'tree>(
     &self,

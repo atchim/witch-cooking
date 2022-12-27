@@ -8,26 +8,18 @@ pub struct Item<'tree> {
 
 impl<'tree> Item<'tree> {
   #[inline]
-  pub fn depth(&self) -> usize {
-    self.depth
-  }
+  pub fn depth(&self) -> usize { self.depth }
 
   #[inline]
-  pub fn node(&self) -> &Node<'tree> {
-    &self.node
-  }
+  pub fn node(&self) -> &Node<'tree> { &self.node }
 
   #[inline]
-  pub fn field(&self) -> Option<&'static str> {
-    self.field
-  }
+  pub fn field(&self) -> Option<&'static str> { self.field }
 }
 
 impl<'tree> From<Item<'tree>> for Node<'tree> {
   #[inline]
-  fn from(item: Item<'tree>) -> Self {
-    item.node
-  }
+  fn from(item: Item<'tree>) -> Self { item.node }
 }
 
 #[allow(clippy::from_over_into)]
@@ -96,6 +88,7 @@ impl<'cursor, 'tree> From<&'cursor mut TreeCursor<'tree>>
 
 impl<'cursor, 'tree> Iterator for Walker<'cursor, 'tree> {
   type Item = Item<'tree>;
+
   fn next(&mut self) -> Option<Self::Item> {
     match self.exhausted {
       false => {

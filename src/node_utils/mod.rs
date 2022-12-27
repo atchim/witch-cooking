@@ -1,15 +1,14 @@
 mod jumper;
 mod walker;
 
-pub use {
-  jumper::{Item as JumperItem, Jumper},
-  walker::{Item as WalkerItem, Walker},
-};
-
 use {
   fnv::FnvHashMap,
   std::{borrow::Cow, fmt},
   tree_sitter::{Node, QueryMatches, TextProvider},
+};
+pub use {
+  jumper::{Item as JumperItem, Jumper},
+  walker::{Item as WalkerItem, Walker},
 };
 
 pub struct Displayer<'a, 'tree>(pub &'a Node<'tree>);
@@ -88,9 +87,7 @@ impl<'tree> Matches<'tree> {
   }
 
   #[inline]
-  pub fn id_to_node(&self) -> &IdToNode<'tree> {
-    &self.id_to_node
-  }
+  pub fn id_to_node(&self) -> &IdToNode<'tree> { &self.id_to_node }
 }
 
 impl<'provider, 'tree, T> From<QueryMatches<'provider, 'tree, T>>

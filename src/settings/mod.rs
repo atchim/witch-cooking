@@ -9,7 +9,6 @@ pub use self::{
   indent_rule::{IndentRule, IndentRuleErr},
   setting::Setting,
 };
-
 use {
   super::node_utils::Provider as NodesProvider,
   fnv::FnvHashMap,
@@ -24,9 +23,7 @@ pub struct MatchSettings {
 
 impl MatchSettings {
   #[inline]
-  pub fn indent_style(&self) -> Option<&str> {
-    self.indent_style.as_deref()
-  }
+  pub fn indent_style(&self) -> Option<&str> { self.indent_style.as_deref() }
 
   #[inline]
   pub fn set_indent_style(&mut self, style: &str) -> Option<String> {
@@ -43,9 +40,7 @@ pub struct NodeSettings<'tree> {
 
 impl<'tree> NodeSettings<'tree> {
   #[inline]
-  pub fn ignored(&self) -> bool {
-    self.ignored
-  }
+  pub fn ignored(&self) -> bool { self.ignored }
 
   #[inline]
   pub fn ignore(&mut self, cond: bool) -> bool {
@@ -55,9 +50,7 @@ impl<'tree> NodeSettings<'tree> {
   }
 
   #[inline]
-  pub fn indent_rule(&self) -> Option<IndentRule> {
-    self.indent_rule
-  }
+  pub fn indent_rule(&self) -> Option<IndentRule> { self.indent_rule }
 
   #[inline]
   pub fn set_indent_rule(&mut self, rule: IndentRule) -> Option<IndentRule> {

@@ -14,6 +14,7 @@ pub enum Lang {
 
 impl<'a> TryFrom<DlLang<'a>> for Lang {
   type Error = Error;
+
   fn try_from(lang: DlLang<'_>) -> Result<Self, Self::Error> {
     Ok(match lang.name() {
       #[cfg(feature = "rust")]

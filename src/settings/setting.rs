@@ -1,6 +1,8 @@
 use {
   super::{
-    super::node_utils::Provider as NodesProvider, err::Error, MatchSettings,
+    super::node_utils::Provider as NodesProvider,
+    err::Error,
+    MatchSettings,
     NodeToSettings,
   },
   tree_sitter::QueryProperty,
@@ -24,10 +26,12 @@ pub(super) mod prelude {
     super::{
       super::{
         super::node_utils::{
-          Displayer as NodeDisplayer, Provider as NodesProvider,
+          Displayer as NodeDisplayer,
+          Provider as NodesProvider,
         },
         err::Error,
-        MatchSettings, NodeToSettings,
+        MatchSettings,
+        NodeToSettings,
       },
       Setting,
     },

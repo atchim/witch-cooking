@@ -3,9 +3,7 @@ use super::setting::prelude::*;
 pub struct Ignored;
 
 impl Setting for Ignored {
-  fn name(&self) -> &'static str {
-    "ignored"
-  }
+  fn name(&self) -> &'static str { "ignored" }
 
   fn apply<'tree>(
     &self,

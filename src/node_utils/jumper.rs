@@ -7,35 +7,25 @@ pub struct Item<'tree> {
 
 impl<'tree> Item<'tree> {
   #[inline]
-  pub fn depth(&self) -> usize {
-    self.depth
-  }
+  pub fn depth(&self) -> usize { self.depth }
 
   #[inline]
-  pub fn node(&self) -> &Node<'tree> {
-    &self.node
-  }
+  pub fn node(&self) -> &Node<'tree> { &self.node }
 }
 
 impl<'tree> From<Item<'tree>> for Node<'tree> {
   #[inline]
-  fn from(item: Item<'tree>) -> Self {
-    item.node
-  }
+  fn from(item: Item<'tree>) -> Self { item.node }
 }
 
 #[allow(clippy::from_over_into)]
 impl<'tree> Into<(Node<'tree>, usize)> for Item<'tree> {
-  fn into(self) -> (Node<'tree>, usize) {
-    (self.node, self.depth)
-  }
+  fn into(self) -> (Node<'tree>, usize) { (self.node, self.depth) }
 }
 
 #[allow(clippy::from_over_into)]
 impl<'a, 'tree> Into<(&'a Node<'tree>, usize)> for &'a Item<'tree> {
-  fn into(self) -> (&'a Node<'tree>, usize) {
-    (&self.node, self.depth)
-  }
+  fn into(self) -> (&'a Node<'tree>, usize) { (&self.node, self.depth) }
 }
 
 pub struct Jumper<'tree> {
@@ -77,6 +67,7 @@ impl<'tree> From<Node<'tree>> for Jumper<'tree> {
 
 impl<'tree> Iterator for Jumper<'tree> {
   type Item = Item<'tree>;
+
   fn next(&mut self) -> Option<Self::Item> {
     match self.exhausted {
       false => {

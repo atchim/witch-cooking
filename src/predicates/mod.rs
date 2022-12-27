@@ -5,7 +5,6 @@ mod space;
 mod space_rec;
 
 pub use self::{err::Error, predicate::Predicate};
-
 use {
   super::{
     editor::Editor,

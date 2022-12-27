@@ -27,9 +27,7 @@ pub struct Editor {
 
 impl Editor {
   #[inline]
-  fn push(&mut self, edit: InputEdit) {
-    self.edits.push(edit);
-  }
+  fn push(&mut self, edit: InputEdit) { self.edits.push(edit); }
 
   pub fn insert(
     &mut self,
@@ -86,9 +84,7 @@ impl Editor {
   }
 
   #[inline]
-  pub fn text(&self) -> RopeSlice<'_> {
-    self.text.slice(..)
-  }
+  pub fn text(&self) -> RopeSlice<'_> { self.text.slice(..) }
 
   #[inline]
   pub fn sync(&self, node: &mut Node<'_>) {
@@ -115,15 +111,11 @@ impl Editor {
 }
 
 impl From<Editor> for Rope {
-  fn from(editor: Editor) -> Self {
-    editor.text
-  }
+  fn from(editor: Editor) -> Self { editor.text }
 }
 
 impl From<Rope> for Editor {
-  fn from(text: Rope) -> Self {
-    Self { text, edits: vec![] }
-  }
+  fn from(text: Rope) -> Self { Self { text, edits: vec![] } }
 }
 
 #[cfg(test)]
