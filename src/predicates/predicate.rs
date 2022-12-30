@@ -25,12 +25,13 @@ pub trait Predicate {
 }
 
 pub(super) mod prelude {
-  pub(in super::super) use super::super::super::err::{bail, ensure};
-  pub use {
+  #[allow(unused_imports)]
+  pub(in super::super) use {
     super::{
       super::{
         super::{
           editor::Editor,
+          err::{bail, ensure},
           node_utils::{
             Displayer as NodeDisplayer,
             Jumper,

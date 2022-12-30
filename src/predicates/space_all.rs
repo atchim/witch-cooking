@@ -1,6 +1,9 @@
-use {super::predicate::prelude::*, std::borrow::Cow};
+use {
+  super::{predicate::prelude::*, space::is_ascii_whitespace},
+  std::borrow::Cow,
+};
 
-fn space_rec<'tree>(
+fn space_all<'tree>(
   node: Node<'tree>,
   sep: &str,
   node_to_settings: &NodeToSettings<'tree>,
@@ -39,10 +42,10 @@ fn space_rec<'tree>(
   }
 }
 
-pub struct SpaceRec;
+pub struct SpaceAll;
 
-impl Predicate for SpaceRec {
-  fn name(&self) -> &'static str { "space-rec!" }
+impl Predicate for SpaceAll {
+  fn name(&self) -> &'static str { "space-all!" }
 
   fn apply<'tree>(
     &self,
@@ -77,10 +80,13 @@ impl Predicate for SpaceRec {
       n => bail!(Error::nargs("1, 2 or 3", n)),
     };
 
-    log::trace!("spacing recursively with \"{sep}\"");
+    match is_ascii_whitespace(sep.as_ref()) {
+      false => log::warn!("spacing with non-ASCII-whitespace \"{sep}\""),
+      true => log::trace!("spacing with \"{sep}\""),
+    }
 
     nodes_provider.nodes_for_cap_ix(cap_ix).for_each(|node| {
-      space_rec(*node, &sep, node_to_settings, editor);
+      space_all(*node, &sep, node_to_settings, editor);
     });
 
     Ok(())

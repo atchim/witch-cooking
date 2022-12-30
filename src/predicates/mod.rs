@@ -2,7 +2,7 @@ mod err;
 mod indent_offset;
 mod predicate;
 mod space;
-mod space_rec;
+mod space_all;
 
 pub use self::{err::Error, predicate::Predicate};
 use {
@@ -57,7 +57,7 @@ impl Default for Predicates {
     insert_predicates!(
       indent_offset::IndentOffset,
       space::Space,
-      space_rec::SpaceRec,
+      space_all::SpaceAll,
     );
 
     Predicates(inner)

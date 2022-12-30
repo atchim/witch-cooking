@@ -1,36 +1,12 @@
 use super::predicate::prelude::*;
 
-fn arg_to_single_node<'a, 'tree>(
-  arg: (usize, &QueryPredicateArg),
-  nodes_provider: &'a NodesProvider<'_, 'tree>,
-) -> Result<&'a Node<'tree>, Error> {
-  match arg {
-    (arg_ix, QueryPredicateArg::Capture(cap_ix)) => {
-      let mut nodes = nodes_provider.nodes_for_cap_ix(*cap_ix);
-
-      let node = nodes.next().ok_or_else(|| {
-        Error::arg(
-          arg_ix,
-          "capture capturing single node",
-          "capture capturing no node",
-        )
-      })?;
-
-      ensure!(
-        nodes.next().is_none(),
-        Error::arg(
-          arg_ix,
-          "capture capturing one node only",
-          "capture capturing multiple nodes",
-        ),
-      );
-
-      Ok(node)
-    }
-    (arg_ix, QueryPredicateArg::String(s)) => {
-      Err(Error::arg(arg_ix, "capture", format!("\"{s}\"")))
+pub fn is_ascii_whitespace(s: &str) -> bool {
+  for ch in s.chars() {
+    if !ch.is_ascii_whitespace() {
+      return false;
     }
   }
+  !s.is_empty()
 }
 
 pub struct Space;
@@ -40,48 +16,81 @@ impl Predicate for Space {
 
   fn apply<'tree>(
     &self,
-    _query: &Query,
+    query: &Query,
     args: &[QueryPredicateArg],
     nodes_provider: &NodesProvider<'_, 'tree>,
     _node_to_settings: &mut NodeToSettings<'tree>,
     _match_settings: &mut MatchSettings,
     editor: &mut Editor,
   ) -> Result<(), Error> {
-    let mut args = args.iter().enumerate().peekable();
+    let mut arg_ix = 0;
+    let mut args = args.iter().peekable();
 
     let sep = match args.peek() {
-      Some((_, QueryPredicateArg::String(s))) => {
+      Some(QueryPredicateArg::String(s)) => {
         args.next();
+        arg_ix += 1;
         s.as_ref()
       }
       _ => " ",
     };
 
-    log::trace!("spacing with \"{sep}\"");
+    match is_ascii_whitespace(sep) {
+      false => log::warn!("spacing with non-ASCII-whitespace \"{sep}\""),
+      true => log::trace!("spacing with \"{sep}\""),
+    }
 
-    let args_len = args.len();
-    ensure!(
-      args_len % 2 == 0,
-      Error::nargs("even number of capture pairs", args_len),
-    );
+    let a_cap_ix = match args.next() {
+      None => bail!(Error::arg(arg_ix, "capture", "none")),
+      Some(QueryPredicateArg::Capture(ix)) => *ix,
+      Some(QueryPredicateArg::String(s)) => {
+        bail!(Error::arg(arg_ix, "capture", format!("\"{s}\"")))
+      }
+    };
+
+    let b_cap_ix = match args.next() {
+      None => bail!(Error::arg(arg_ix, "capture", "none")),
+      Some(QueryPredicateArg::Capture(ix)) => *ix,
+      Some(QueryPredicateArg::String(s)) => {
+        bail!(Error::arg(arg_ix, "capture", format!("\"{s}\"")));
+      }
+    };
+
+    let mut a_nodes = nodes_provider.nodes_for_cap_ix(a_cap_ix);
+    let mut b_nodes = nodes_provider.nodes_for_cap_ix(b_cap_ix);
 
     loop {
-      let mut prev = match args.next() {
-        None => break,
-        Some(arg) => *arg_to_single_node(arg, nodes_provider)?,
+      let (mut a_node, mut b_node) = match (a_nodes.next(), b_nodes.next()) {
+        (None, None) => break,
+        (None, Some(_)) => {
+          log::warn!(
+            "\"{}\" did not capture, but \"{}\" did",
+            query.capture_names()[a_cap_ix as usize],
+            query.capture_names()[b_cap_ix as usize],
+          );
+          break;
+        }
+        (Some(_), None) => {
+          log::warn!(
+            "\"{}\" did capture, but \"{}\" did not",
+            query.capture_names()[a_cap_ix as usize],
+            query.capture_names()[b_cap_ix as usize],
+          );
+          break;
+        }
+        (Some(prev), Some(cur)) => (*prev, *cur),
       };
-      editor.sync(&mut prev);
 
-      let mut next =
-        *arg_to_single_node(args.next().unwrap(), nodes_provider)?;
-      editor.sync(&mut next);
+      editor.sync(&mut a_node);
+      editor.sync(&mut b_node);
 
       let range = Range {
-        start_byte: prev.end_byte(),
-        end_byte: next.start_byte(),
-        start_point: prev.end_position(),
-        end_point: next.start_position(),
+        start_byte: a_node.end_byte(),
+        end_byte: b_node.start_byte(),
+        start_point: a_node.end_position(),
+        end_point: b_node.start_position(),
       };
+
       editor.replace(&range, sep);
     }
 
