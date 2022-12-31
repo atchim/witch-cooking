@@ -87,7 +87,7 @@ mod tests {
   use {super::*, tree_sitter::Parser};
 
   #[test]
-  fn zwalker() {
+  fn jumper() {
     let text = "fn foo() { bar(); }";
 
     let mut parser = Parser::new();
