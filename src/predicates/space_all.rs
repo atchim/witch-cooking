@@ -1,5 +1,5 @@
 use {
-  super::{predicate::prelude::*, space::is_ascii_whitespace},
+  crate::predicates::{predicate::prelude::*, space::is_ascii_whitespace},
   std::borrow::Cow,
 };
 

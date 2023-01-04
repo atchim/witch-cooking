@@ -17,7 +17,7 @@ macro_rules! ensure {
   };
 }
 
-pub(super) use {bail, ensure};
+pub(crate) use {bail, ensure};
 
 #[derive(Debug, thiserror::Error)]
 pub enum Error {

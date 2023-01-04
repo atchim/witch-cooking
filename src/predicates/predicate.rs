@@ -1,11 +1,9 @@
 use {
-  super::{
-    super::{
-      editor::Editor,
-      node_utils::Provider as NodesProvider,
-      settings::{MatchSettings, NodeToSettings},
-    },
-    err::Error,
+  crate::{
+    editor::Editor,
+    node_utils::Provider as NodesProvider,
+    predicates::err::Error,
+    settings::{MatchSettings, NodeToSettings},
   },
   tree_sitter::{Query, QueryPredicateArg},
 };
@@ -24,25 +22,20 @@ pub trait Predicate {
   ) -> Result<(), Error>;
 }
 
-pub(super) mod prelude {
+pub mod prelude {
+  pub(in crate::predicates) use crate::err::{bail, ensure};
   #[allow(unused_imports)]
-  pub(in super::super) use {
-    super::{
-      super::{
-        super::{
-          editor::Editor,
-          err::{bail, ensure},
-          node_utils::{
-            Displayer as NodeDisplayer,
-            Jumper,
-            Provider as NodesProvider,
-            Walker,
-          },
-          settings::{MatchSettings, NodeToSettings},
-        },
-        err::Error,
+  pub use {
+    crate::{
+      editor::Editor,
+      node_utils::{
+        Displayer as NodeDisplayer,
+        Jumper,
+        Provider as NodesProvider,
+        Walker,
       },
-      Predicate,
+      predicates::{err::Error, predicate::Predicate},
+      settings::{MatchSettings, NodeToSettings},
     },
     tree_sitter::{Node, Point, Query, QueryPredicateArg, Range},
   };

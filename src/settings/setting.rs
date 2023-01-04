@@ -1,9 +1,7 @@
 use {
-  super::{
-    super::node_utils::Provider as NodesProvider,
-    err::Error,
-    MatchSettings,
-    NodeToSettings,
+  crate::{
+    node_utils::Provider as NodesProvider,
+    settings::{err::Error, MatchSettings, NodeToSettings},
   },
   tree_sitter::QueryProperty,
 };
@@ -20,20 +18,17 @@ pub trait Setting {
   ) -> Result<(), Error>;
 }
 
-pub(super) mod prelude {
-  pub(in super::super) use super::super::super::err::bail;
+pub mod prelude {
+  pub(in crate::settings) use crate::err::bail;
   pub use {
-    super::{
-      super::{
-        super::node_utils::{
-          Displayer as NodeDisplayer,
-          Provider as NodesProvider,
-        },
+    crate::{
+      node_utils::{Displayer as NodeDisplayer, Provider as NodesProvider},
+      settings::{
         err::Error,
+        setting::Setting,
         MatchSettings,
         NodeToSettings,
       },
-      Setting,
     },
     tree_sitter::QueryProperty,
   };

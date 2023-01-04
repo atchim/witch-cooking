@@ -1,5 +1,5 @@
 use {
-  super::err::Error,
+  crate::err::Error,
   clap::{Parser, ValueEnum},
   detect_lang::Language as DlLang,
   std::path::PathBuf,

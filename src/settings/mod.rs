@@ -4,16 +4,16 @@ mod indent_rule;
 mod indent_style;
 mod setting;
 
-pub use self::{
-  err::Error,
-  indent_rule::{IndentRule, IndentRuleErr},
-  setting::Setting,
-};
 use {
-  super::node_utils::Provider as NodesProvider,
+  crate::node_utils::Provider as NodesProvider,
   fnv::FnvHashMap,
   std::{collections::hash_map::Entry, marker::PhantomData},
   tree_sitter::{Node, QueryProperty},
+};
+pub use {
+  err::Error,
+  indent_rule::{IndentRule, IndentRuleErr},
+  setting::Setting,
 };
 
 #[derive(Default)]

@@ -1,4 +1,4 @@
-use super::setting::prelude::*;
+use crate::settings::setting::prelude::*;
 
 pub struct Ignored;
 

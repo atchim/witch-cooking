@@ -121,7 +121,8 @@ impl From<Rope> for Editor {
 #[cfg(test)]
 mod tests {
   use {
-    super::{super::node_utils::Walker, *},
+    super::*,
+    crate::node_utils::Walker,
     std::mem::zeroed,
     tree_sitter::{Parser, Tree, TreeCursor},
     tree_sitter_rust::language as rust_lang,

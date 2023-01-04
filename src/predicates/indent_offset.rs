@@ -1,4 +1,4 @@
-use super::{super::settings::IndentRule, predicate::prelude::*};
+use crate::{predicates::predicate::prelude::*, settings::IndentRule};
 
 pub struct IndentOffset;
 

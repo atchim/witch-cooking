@@ -4,9 +4,8 @@ mod predicate;
 mod space;
 mod space_all;
 
-pub use self::{err::Error, predicate::Predicate};
 use {
-  super::{
+  crate::{
     editor::Editor,
     node_utils::Provider as NodesProvider,
     settings::{MatchSettings, NodeToSettings},
@@ -14,6 +13,7 @@ use {
   fnv::FnvHashMap,
   tree_sitter::{Query, QueryPredicate},
 };
+pub use {err::Error, predicate::Predicate};
 
 type PredicatesInner = FnvHashMap<&'static str, &'static dyn Predicate>;
 

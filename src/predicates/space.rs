@@ -1,5 +1,5 @@
 use {
-  super::predicate::prelude::*,
+  crate::predicates::predicate::prelude::*,
   ropey::RopeSlice,
   std::{borrow::Cow, ops::RangeInclusive},
 };

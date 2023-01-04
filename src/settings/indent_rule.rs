@@ -1,5 +1,5 @@
 use {
-  super::setting::prelude::*,
+  crate::settings::setting::prelude::*,
   std::{fmt, num::ParseIntError, str::FromStr},
 };
 
