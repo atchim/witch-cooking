@@ -13,7 +13,6 @@ mod cli;
 mod editor;
 mod err;
 mod node_utils;
-mod predicates;
 mod settings;
 
 use {
@@ -22,8 +21,6 @@ use {
     editor::Editor,
     err::Error,
     node_utils::{Matches, Provider as NodesProvider},
-    predicates::{Error as PredicateErr, Predicates},
-    settings::{Error as SettingErr, MatchSettings, NodeToSettings, Settings},
   },
   error_stack::{bail, IntoReport, Result, ResultExt},
   ropey::{iter::Chunks, Rope, RopeSlice},
@@ -123,10 +120,7 @@ fn cook(opts: &Opts) -> Result<Rope, Error> {
   let tree = parse(&text, &mut parser)?;
   let query = query(opts, lang)?;
   let mut cursor = QueryCursor::new();
-  let mut editor = Editor::from(text.clone());
-  let mut node_to_settings = NodeToSettings::default();
-  let settings = Settings::default();
-  let predicates = Predicates::default();
+  let editor = Editor::from(text.clone());
 
   let matches = Matches::from(cursor.matches(
     &query,
@@ -136,39 +130,14 @@ fn cook(opts: &Opts) -> Result<Rope, Error> {
 
   for (pat_ix, cap_ix_to_nodes_slice) in matches.iter() {
     log::trace!("applying pattern #{pat_ix}");
-    for nodes_provider in cap_ix_to_nodes_slice.iter().map(|cap_ix_to_nodes| {
-      NodesProvider::new(cap_ix_to_nodes, matches.id_to_node())
-    }) {
-      let mut match_settings = MatchSettings::default();
+    for _nodes_provider in
+      cap_ix_to_nodes_slice.iter().map(|cap_ix_to_nodes| {
+        NodesProvider::new(cap_ix_to_nodes, matches.id_to_node())
+      })
+    {
+      for _query_prop in query.property_settings(pat_ix).iter() {}
 
-      for query_prop in query.property_settings(pat_ix).iter() {
-        settings
-          .apply(
-            query_prop,
-            &nodes_provider,
-            &mut node_to_settings,
-            &mut match_settings,
-          )
-          .report()
-          .change_context_lazy(|| {
-            Error::setting(pat_ix, query_prop.key.as_ref())
-          })?;
-      }
-
-      for query_predicate in query.general_predicates(pat_ix) {
-        let op = query_predicate.operator.as_ref();
-        predicates
-          .apply(
-            &query,
-            query_predicate,
-            &nodes_provider,
-            &mut node_to_settings,
-            &mut match_settings,
-            &mut editor,
-          )
-          .report()
-          .change_context_lazy(|| Error::predicate(op, pat_ix))?;
-      }
+      for _query_predicate in query.general_predicates(pat_ix) {}
     }
   }
 
@@ -179,21 +148,7 @@ fn cook(opts: &Opts) -> Result<Rope, Error> {
 fn handle(res: Result<Rope, Error>) -> ExitCode {
   match res {
     Err(err) => {
-      match err.current_context() {
-        predicate_err @ Error::Predicate { .. } => eprintln!(
-          "{predicate_err}: {}",
-          err.downcast_ref::<PredicateErr>().unwrap(),
-        ),
-        setting_err @ Error::Setting { .. } => {
-          eprintln!(
-            "{setting_err}: {}",
-            err.downcast_ref::<SettingErr>().unwrap(),
-          )
-        }
-        _ => {
-          eprintln!("{err}");
-        }
-      }
+      eprintln!("{err}");
       log::error!("{err:?}");
       ExitCode::FAILURE
     }
