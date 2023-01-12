@@ -3,22 +3,6 @@ use {
   tree_sitter::{LanguageError, QueryError},
 };
 
-macro_rules! bail {
-  ($err:expr) => {
-    return Err($err)
-  };
-}
-
-macro_rules! ensure {
-  ($cond:expr, $err:expr $(,)?) => {
-    if !$cond {
-      return Err($err);
-    }
-  };
-}
-
-pub(crate) use {bail, ensure};
-
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
   #[error("{0}")]

@@ -1,11 +1,11 @@
 mod cpl;
 pub mod indent_rule;
-mod parser;
+pub mod parser;
 
-pub use {cpl::Cpl, indent_rule::IndentRule, parser::Error};
+pub use {cpl::Cpl, indent_rule::IndentRule, parser::Parsers};
 use {
   fnv::FnvHashMap,
-  std::{collections::hash_map::Entry, marker::PhantomData},
+  std::{collections::hash_map::Entry, fmt, marker::PhantomData},
   tree_sitter::Node,
 };
 
@@ -115,9 +115,19 @@ impl<'tree> NodeToSettings<'tree> {
   }
 }
 
-enum Scope {
+#[derive(Clone, Copy)]
+pub enum Scope {
   Global,
   Local,
+}
+
+impl fmt::Display for Scope {
+  fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+    write!(f, "{}", match self {
+      Self::Global => "global",
+      Scope::Local => "local",
+    })
+  }
 }
 
 #[derive(Default)]
@@ -161,4 +171,20 @@ impl<'a, 'tree> Settings<'a, 'tree> {
       Scope::Local => self.local.set_indent_style(style),
     }
   }
+
+  #[inline]
+  pub fn for_node(&self, node: &Node<'tree>) -> Option<&NodeSettings<'tree>> {
+    self.node_to_settings.get(node)
+  }
+
+  #[inline]
+  pub fn node_entry(
+    &mut self,
+    node: &Node<'tree>,
+  ) -> Entry<'_, usize, NodeSettings<'tree>> {
+    self.node_to_settings.entry(node)
+  }
+
+  #[inline]
+  pub fn reset(&mut self) { self.local = Default::default(); }
 }

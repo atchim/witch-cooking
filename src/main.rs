@@ -20,19 +20,17 @@ use {
     cli::Opts,
     editor::Editor,
     err::Error,
-    node_utils::{Matches, Provider as NodesProvider},
+    node_utils::{Matches, Provider},
+    settings::{
+      parser::Error as ParseSettingErr, Parsers as SettingParsers, Scope,
+      Settings,
+    },
   },
   error_stack::{bail, IntoReport, Result, ResultExt},
   ropey::{iter::Chunks, Rope, RopeSlice},
   std::{fs, io, process::ExitCode},
   tree_sitter::{
-    Language,
-    Node,
-    Parser,
-    Query,
-    QueryCursor,
-    TextProvider,
-    Tree,
+    Language, Node, Parser, Query, QueryCursor, TextProvider, Tree,
   },
 };
 
@@ -97,7 +95,9 @@ struct ChunksBytes<'a>(Chunks<'a>);
 impl<'a> Iterator for ChunksBytes<'a> {
   type Item = &'a [u8];
 
-  fn next(&mut self) -> Option<Self::Item> { self.0.next().map(str::as_bytes) }
+  fn next(&mut self) -> Option<Self::Item> {
+    self.0.next().map(str::as_bytes)
+  }
 }
 
 #[derive(Clone)]
@@ -121,6 +121,8 @@ fn cook(opts: &Opts) -> Result<Rope, Error> {
   let query = query(opts, lang)?;
   let mut cursor = QueryCursor::new();
   let editor = Editor::from(text.clone());
+  let mut settings = Settings::default();
+  let setting_parsers = SettingParsers::default();
 
   let matches = Matches::from(cursor.matches(
     &query,
@@ -130,14 +132,31 @@ fn cook(opts: &Opts) -> Result<Rope, Error> {
 
   for (pat_ix, cap_ix_to_nodes_slice) in matches.iter() {
     log::trace!("applying pattern #{pat_ix}");
-    for _nodes_provider in
-      cap_ix_to_nodes_slice.iter().map(|cap_ix_to_nodes| {
-        NodesProvider::new(cap_ix_to_nodes, matches.id_to_node())
-      })
-    {
-      for _query_prop in query.property_settings(pat_ix).iter() {}
+
+    let is_pat_rooted = query.is_pattern_rooted(pat_ix);
+    let scope = match is_pat_rooted {
+      false => Scope::Global,
+      true => Scope::Local,
+    };
+
+    for nodes_provider in cap_ix_to_nodes_slice.iter().map(|cap_ix_to_nodes| {
+      Provider::new(cap_ix_to_nodes, matches.id_to_node())
+    }) {
+      for query_prop in query.property_settings(pat_ix).iter() {
+        setting_parsers
+          .parse(query_prop, scope, &nodes_provider, &mut settings)
+          .change_context_lazy(|| {
+            Error::setting(pat_ix, query_prop.key.as_ref())
+          })?;
+      }
 
       for _query_predicate in query.general_predicates(pat_ix) {}
+
+      settings.reset();
+
+      if !is_pat_rooted {
+        break;
+      }
     }
   }
 
@@ -148,7 +167,17 @@ fn cook(opts: &Opts) -> Result<Rope, Error> {
 fn handle(res: Result<Rope, Error>) -> ExitCode {
   match res {
     Err(err) => {
-      eprintln!("{err}");
+      match err.current_context() {
+        setting_err @ Error::Setting { .. } => {
+          eprintln!(
+            "{setting_err}: {}",
+            err.downcast_ref::<ParseSettingErr>().unwrap(),
+          )
+        }
+        _ => {
+          eprintln!("{err}");
+        }
+      }
       log::error!("{err:?}");
       ExitCode::FAILURE
     }

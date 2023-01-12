@@ -1,4 +1,8 @@
-use std::{fmt, num::NonZeroU8};
+use std::{
+  fmt,
+  num::{NonZeroU8, ParseIntError},
+  str::FromStr,
+};
 
 #[derive(Clone, Copy, Default)]
 pub struct Cpl(Option<NonZeroU8>);
@@ -9,6 +13,7 @@ impl Cpl {
 }
 
 impl From<u8> for Cpl {
+  #[inline]
   fn from(n: u8) -> Self {
     let inner = match n {
       0 => None,
@@ -25,5 +30,14 @@ impl fmt::Display for Cpl {
       Some(n) => n.into(),
     };
     write!(f, "{n}")
+  }
+}
+
+impl FromStr for Cpl {
+  type Err = ParseIntError;
+
+  fn from_str(s: &str) -> Result<Self, Self::Err> {
+    let n = s.parse::<u8>()?;
+    Ok(n.into())
   }
 }
