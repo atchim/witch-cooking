@@ -13,6 +13,7 @@ mod cli;
 mod editor;
 mod err;
 mod node_utils;
+mod predicates;
 mod settings;
 
 use {
@@ -21,8 +22,11 @@ use {
     editor::Editor,
     err::Error,
     node_utils::{Matches, Provider},
+    predicates::{Error as PredicateErr, Predicates},
     settings::{
-      parser::Error as ParseSettingErr, Parsers as SettingParsers, Scope,
+      parser::Error as ParseSettingErr,
+      Parsers as SettingParsers,
+      Scope,
       Settings,
     },
   },
@@ -30,7 +34,13 @@ use {
   ropey::{iter::Chunks, Rope, RopeSlice},
   std::{fs, io, process::ExitCode},
   tree_sitter::{
-    Language, Node, Parser, Query, QueryCursor, TextProvider, Tree,
+    Language,
+    Node,
+    Parser,
+    Query,
+    QueryCursor,
+    TextProvider,
+    Tree,
   },
 };
 
@@ -95,9 +105,7 @@ struct ChunksBytes<'a>(Chunks<'a>);
 impl<'a> Iterator for ChunksBytes<'a> {
   type Item = &'a [u8];
 
-  fn next(&mut self) -> Option<Self::Item> {
-    self.0.next().map(str::as_bytes)
-  }
+  fn next(&mut self) -> Option<Self::Item> { self.0.next().map(str::as_bytes) }
 }
 
 #[derive(Clone)]
@@ -120,9 +128,10 @@ fn cook(opts: &Opts) -> Result<Rope, Error> {
   let tree = parse(&text, &mut parser)?;
   let query = query(opts, lang)?;
   let mut cursor = QueryCursor::new();
-  let editor = Editor::from(text.clone());
+  let mut editor = Editor::from(text.clone());
   let mut settings = Settings::default();
   let setting_parsers = SettingParsers::default();
+  let predicates = Predicates::default();
 
   let matches = Matches::from(cursor.matches(
     &query,
@@ -150,7 +159,19 @@ fn cook(opts: &Opts) -> Result<Rope, Error> {
           })?;
       }
 
-      for _query_predicate in query.general_predicates(pat_ix) {}
+      for query_predicate in query.general_predicates(pat_ix) {
+        let op = query_predicate.operator.as_ref();
+        predicates
+          .parse(
+            &query,
+            query_predicate,
+            scope,
+            &nodes_provider,
+            &mut settings,
+            &mut editor,
+          )
+          .change_context_lazy(|| Error::predicate(op, pat_ix))?;
+      }
 
       settings.reset();
 
@@ -168,6 +189,10 @@ fn handle(res: Result<Rope, Error>) -> ExitCode {
   match res {
     Err(err) => {
       match err.current_context() {
+        predicate_err @ Error::Predicate { .. } => eprintln!(
+          "{predicate_err}: {}",
+          err.downcast_ref::<PredicateErr>().unwrap(),
+        ),
         setting_err @ Error::Setting { .. } => {
           eprintln!(
             "{setting_err}: {}",
