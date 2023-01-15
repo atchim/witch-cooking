@@ -21,7 +21,7 @@ pub fn end_point(
 
 #[derive(Clone)]
 pub struct Editor {
-  text: Rope,
+  src: Rope,
   edits: Vec<InputEdit>,
 }
 
@@ -44,8 +44,8 @@ impl Editor {
       new_end_position: end_point(s.chars(), Some(start_position)),
     };
     self.push(edit);
-    let char_ix = self.text.byte_to_char(start_byte);
-    self.text.insert(char_ix, s);
+    let char_ix = self.src.byte_to_char(start_byte);
+    self.src.insert(char_ix, s);
   }
 
   pub fn remove(&mut self, range: &Range) {
@@ -60,9 +60,9 @@ impl Editor {
       new_end_position: range.start_point,
     };
     self.push(edit);
-    let start_char = self.text.byte_to_char(start_byte);
-    let end_char = self.text.byte_to_char(old_end_byte);
-    self.text.remove(start_char..end_char);
+    let start_char = self.src.byte_to_char(start_byte);
+    let end_char = self.src.byte_to_char(old_end_byte);
+    self.src.remove(start_char..end_char);
   }
 
   pub fn replace(&mut self, range: &Range, s: &str) {
@@ -77,14 +77,14 @@ impl Editor {
       new_end_position: end_point(s.chars(), Some(&start_position)),
     };
     self.push(edit);
-    let start_char = self.text.byte_to_char(range.start_byte);
-    let end_char = self.text.byte_to_char(range.end_byte);
-    self.text.remove(start_char..end_char);
-    self.text.insert(start_char, s);
+    let start_char = self.src.byte_to_char(range.start_byte);
+    let end_char = self.src.byte_to_char(range.end_byte);
+    self.src.remove(start_char..end_char);
+    self.src.insert(start_char, s);
   }
 
   #[inline]
-  pub fn text(&self) -> RopeSlice<'_> { self.text.slice(..) }
+  pub fn src(&self) -> RopeSlice<'_> { self.src.slice(..) }
 
   #[inline]
   pub fn sync(&self, node: &mut Node<'_>) {
@@ -111,11 +111,11 @@ impl Editor {
 }
 
 impl From<Editor> for Rope {
-  fn from(editor: Editor) -> Self { editor.text }
+  fn from(editor: Editor) -> Self { editor.src }
 }
 
 impl From<Rope> for Editor {
-  fn from(text: Rope) -> Self { Self { text, edits: vec![] } }
+  fn from(src: Rope) -> Self { Self { src, edits: vec![] } }
 }
 
 #[cfg(test)]
@@ -136,15 +136,15 @@ mod tests {
     test("\r\u{b}\u{c}\u{85}\u{2028}\u{2029}", Point { row: 0, column: 11 });
   }
 
-  fn with_text<F>(text: &str, f: F)
+  fn with_src<F>(src: &str, f: F)
   where
     for<'tree> F: FnOnce(&mut TreeCursor<'tree>, &'tree Tree, &mut Editor),
   {
     let mut parser = Parser::new();
     parser.set_language(rust_lang()).unwrap();
-    let tree = parser.parse(text, None).unwrap();
+    let tree = parser.parse(src, None).unwrap();
     let mut cursor = unsafe { zeroed::<TreeCursor<'_>>() };
-    let mut editor = Editor::from(Rope::from_str(text));
+    let mut editor = Editor::from(Rope::from_str(src));
     f(&mut cursor, &tree, &mut editor);
   }
 
@@ -155,13 +155,13 @@ mod tests {
     op: O,
     byte_ix: usize,
     node_ix: N,
-    text: &str,
+    src: &str,
   ) where
     N: Fn(&Rope, &Node<'tree>) -> (usize, Point),
     O: FnOnce(&mut Editor),
   {
     cursor.reset(root_node);
-    let old_rope = editor.text.clone();
+    let old_rope = editor.src.clone();
     op(editor);
     Walker::from(cursor)
       .filter_map(|item| {
@@ -177,29 +177,29 @@ mod tests {
         assert_eq!(node_start_byte, node.start_byte());
         assert_eq!(node_start_point, node.start_position());
       });
-    assert_eq!(text, editor.text);
+    assert_eq!(src, editor.src);
   }
 
   #[test]
   fn editor_insert() {
-    with_text("fn f()\n{}", |cursor, tree, editor| {
-      let mut test_insert = |start_byte, start_point, s, text| {
+    with_src("fn f()\n{}", |cursor, tree, editor| {
+      let mut test_insert = |start_byte, start_point, s, src| {
         test_op(
           cursor,
           tree.root_node(),
           editor,
           |editor| editor.insert(start_byte, start_point, s),
           start_byte,
-          |old_text, old_node| {
+          |old_src, old_node| {
             let old_node_start_byte = old_node.start_byte();
             let node_start_byte = old_node_start_byte + s.len();
             let chars = s.chars().chain(
-              old_text.byte_slice(start_byte..old_node_start_byte).chars(),
+              old_src.byte_slice(start_byte..old_node_start_byte).chars(),
             );
             let node_start_point = end_point(chars, Some(start_point));
             (node_start_byte, node_start_point)
           },
-          text,
+          src,
         );
       };
 
@@ -235,24 +235,24 @@ mod tests {
 
   #[test]
   fn editor_remove() {
-    with_text("pub\nfn foo(bar: Bar)\n{ baz(); }", |cursor, tree, editor| {
-      let mut test_remove = |range: &Range, text| {
+    with_src("pub\nfn foo(bar: Bar)\n{ baz(); }", |cursor, tree, editor| {
+      let mut test_remove = |range: &Range, src| {
         test_op(
           cursor,
           tree.root_node(),
           editor,
           |editor| editor.remove(range),
           range.end_byte,
-          |old_text, old_node| {
+          |old_src, old_node| {
             let diff = range.end_byte - range.start_byte;
             let old_node_start_byte = old_node.start_byte();
             let node_start_byte = old_node_start_byte - diff;
             let chars =
-              old_text.byte_slice(range.end_byte..old_node_start_byte).chars();
+              old_src.byte_slice(range.end_byte..old_node_start_byte).chars();
             let node_start_point = end_point(chars, Some(&range.start_point));
             (node_start_byte, node_start_point)
           },
-          text,
+          src,
         );
       };
 
@@ -300,15 +300,15 @@ mod tests {
 
   #[test]
   fn editor_replace() {
-    with_text("pub\nfn foo(bar: Bar)\n{ baz(); }", |cursor, tree, editor| {
-      let mut test_replace = |range: &Range, s, text| {
+    with_src("pub\nfn foo(bar: Bar)\n{ baz(); }", |cursor, tree, editor| {
+      let mut test_replace = |range: &Range, s, src| {
         test_op(
           cursor,
           tree.root_node(),
           editor,
           |editor| editor.replace(range, s),
           range.end_byte,
-          |old_text, old_node| {
+          |old_src, old_node| {
             let old_node_start_byte = old_node.start_byte();
             let diff = range.end_byte - range.start_byte;
             let slen = s.len();
@@ -317,12 +317,12 @@ mod tests {
               true => old_node_start_byte + slen - diff,
             };
             let chars = s.chars().chain(
-              old_text.byte_slice(range.end_byte..old_node_start_byte).chars(),
+              old_src.byte_slice(range.end_byte..old_node_start_byte).chars(),
             );
             let node_start_point = end_point(chars, Some(&range.start_point));
             (node_start_byte, node_start_point)
           },
-          text,
+          src,
         );
       };
 

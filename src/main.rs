@@ -45,7 +45,7 @@ use {
 };
 
 #[inline]
-fn text(opts: &Opts) -> Result<Rope, Error> {
+fn src_rope_from_opts(opts: &Opts) -> Result<Rope, Error> {
   Ok(match &opts.src {
     None => match atty::isnt(atty::Stream::Stdin) {
       false => bail!(Error::Pipe),
@@ -64,7 +64,7 @@ fn text(opts: &Opts) -> Result<Rope, Error> {
 }
 
 #[inline]
-fn lang(opts: &Opts) -> Result<Language, Error> {
+fn ts_lang_from_opts(opts: &Opts) -> Result<Language, Error> {
   Ok(Language::from(match opts.lang {
     None => match opts.src.as_ref().and_then(detect_lang::from_path) {
       Some(lang) => {
@@ -78,11 +78,14 @@ fn lang(opts: &Opts) -> Result<Language, Error> {
 }
 
 #[inline]
-fn parse(text: &Rope, parser: &mut Parser) -> Result<Tree, Error> {
+fn parse_rope_slice(
+  src: RopeSlice<'_>,
+  parser: &mut Parser,
+) -> Result<Tree, Error> {
   parser
     .parse_with(
       &mut |byte_ix, _| {
-        let (s, chunk_byte_ix, ..) = text.chunk_at_byte(byte_ix);
+        let (s, chunk_byte_ix, ..) = src.chunk_at_byte(byte_ix);
         &s[byte_ix - chunk_byte_ix..]
       },
       None,
@@ -93,7 +96,7 @@ fn parse(text: &Rope, parser: &mut Parser) -> Result<Tree, Error> {
 }
 
 #[inline]
-fn query(opts: &Opts, lang: Language) -> Result<Query, Error> {
+fn query_from_opts(opts: &Opts, lang: Language) -> Result<Query, Error> {
   let src = fs::read_to_string(&opts.query)
     .report()
     .change_context(Error::QueryFile)?;
@@ -105,6 +108,7 @@ struct ChunksBytes<'a>(Chunks<'a>);
 impl<'a> Iterator for ChunksBytes<'a> {
   type Item = &'a [u8];
 
+  #[inline]
   fn next(&mut self) -> Option<Self::Item> { self.0.next().map(str::as_bytes) }
 }
 
@@ -114,29 +118,30 @@ struct RopeProvider<'a>(RopeSlice<'a>);
 impl<'a> TextProvider<'a> for RopeProvider<'a> {
   type I = ChunksBytes<'a>;
 
+  #[inline]
   fn text(&mut self, node: Node<'_>) -> Self::I {
     ChunksBytes(self.0.byte_slice(node.byte_range()).chunks())
   }
 }
 
-#[inline]
-fn cook(opts: &Opts) -> Result<Rope, Error> {
-  let lang = lang(opts)?;
-  let mut parser = Parser::new();
+fn cook(
+  parser: &mut Parser,
+  src: RopeSlice<'_>,
+  lang: Language,
+  query: Query,
+  query_cursor: &mut QueryCursor,
+) -> Result<Rope, Error> {
   parser.set_language(lang).map_err(Error::Lang)?;
-  let text = text(opts)?;
-  let tree = parse(&text, &mut parser)?;
-  let query = query(opts, lang)?;
-  let mut cursor = QueryCursor::new();
-  let mut editor = Editor::from(text.clone());
+  let tree = parse_rope_slice(src, parser)?;
+  let mut editor = Editor::from(Rope::from(src));
   let mut settings = Settings::default();
   let setting_parsers = SettingParsers::default();
   let predicates = Predicates::default();
 
-  let matches = Matches::from(cursor.matches(
+  let matches = Matches::from(query_cursor.matches(
     &query,
     tree.root_node(),
-    RopeProvider(text.slice(..)),
+    RopeProvider(src),
   ));
 
   for (pat_ix, cap_ix_to_nodes_slice) in matches.iter() {
@@ -176,6 +181,7 @@ fn cook(opts: &Opts) -> Result<Rope, Error> {
       settings.reset();
 
       if !is_pat_rooted {
+        log::trace!("skipping redundant non-rooted matches");
         break;
       }
     }
@@ -185,8 +191,19 @@ fn cook(opts: &Opts) -> Result<Rope, Error> {
 }
 
 #[inline]
-fn handle(res: Result<Rope, Error>) -> ExitCode {
-  match res {
+fn cook_from_cli() -> Result<Rope, Error> {
+  let opts = <Opts as clap::Parser>::parse();
+  let lang = ts_lang_from_opts(&opts)?;
+  let mut parser = Parser::new();
+  let src = src_rope_from_opts(&opts)?;
+  let query = query_from_opts(&opts, lang)?;
+  let mut query_cursor = QueryCursor::new();
+  cook(&mut parser, src.slice(..), lang, query, &mut query_cursor)
+}
+
+fn main() -> ExitCode {
+  env_logger::init();
+  match cook_from_cli() {
     Err(err) => {
       match err.current_context() {
         predicate_err @ Error::Predicate { .. } => eprintln!(
@@ -199,22 +216,14 @@ fn handle(res: Result<Rope, Error>) -> ExitCode {
             err.downcast_ref::<ParseSettingErr>().unwrap(),
           )
         }
-        _ => {
-          eprintln!("{err}");
-        }
+        _ => eprintln!("{err}"),
       }
       log::error!("{err:?}");
       ExitCode::FAILURE
     }
-    Ok(text) => {
-      println!("{text}");
+    Ok(src) => {
+      println!("{src}");
       ExitCode::SUCCESS
     }
   }
-}
-
-fn main() -> ExitCode {
-  env_logger::init();
-  let opts = <Opts as clap::Parser>::parse();
-  handle(cook(&opts))
 }

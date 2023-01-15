@@ -88,11 +88,11 @@ mod tests {
 
   #[test]
   fn jumper() {
-    let text = "fn foo() { bar(); }";
+    let src = "fn foo() { bar(); }";
 
     let mut parser = Parser::new();
     parser.set_language(tree_sitter_rust::language()).unwrap();
-    let tree = parser.parse(text, None).unwrap();
+    let tree = parser.parse(src, None).unwrap();
     let mut walker = Jumper::from(tree.root_node());
 
     let mut test_next = |kind, depth| {

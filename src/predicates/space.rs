@@ -167,7 +167,7 @@ impl Predicate for Space {
         end_point: b_node.start_position(),
       };
 
-      let s = editor.text().byte_slice(range.start_byte..range.end_byte);
+      let s = editor.src().byte_slice(range.start_byte..range.end_byte);
       if thresh.as_ref().map_or(true, |thresh| should_space(sep, thresh, s)) {
         editor.replace(&range, sep);
       }
