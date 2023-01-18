@@ -34,6 +34,8 @@ type PredicatesInner = FnvHashMap<&'static str, &'static dyn Predicate>;
 pub struct Predicates(PredicatesInner);
 
 impl Predicates {
+  pub fn empty() -> Self { Self(Default::default()) }
+
   pub fn parse<'a, 'tree>(
     &self,
     query: &Query,
@@ -53,28 +55,28 @@ impl Predicates {
       editor,
     )
   }
+
+  pub fn push(
+    &mut self,
+    predicate: &'static impl Predicate,
+  ) -> Option<&'static dyn Predicate> {
+    self.0.insert(predicate.name(), predicate)
+  }
 }
 
 impl Default for Predicates {
   fn default() -> Self {
-    let mut inner = PredicatesInner::default();
+    let mut predicates = Predicates::empty();
 
-    macro_rules! insert_predicates {
+    macro_rules! insert {
       ($($predicate:path),+ $(,)?) => {{
-        $(
-          let predicate = &$predicate;
-          assert!(inner.insert(predicate.name(), predicate).is_none());
-        )+
+        $(assert!(predicates.push(&$predicate).is_none());)+
       }};
     }
 
-    insert_predicates!(
-      indent_offset::IndentOffset,
-      space::Space,
-      spacer::Spacer,
-    );
+    insert!(indent_offset::IndentOffset, space::Space, spacer::Spacer,);
 
-    Predicates(inner)
+    predicates
   }
 }
 

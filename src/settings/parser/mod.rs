@@ -15,7 +15,7 @@ use {
   tree_sitter::QueryProperty,
 };
 
-trait Parser {
+pub trait Parser {
   fn setting(&self) -> &'static str;
 
   fn parse<'a, 'tree>(
@@ -32,6 +32,8 @@ type ParsersInner = FnvHashMap<&'static str, &'static dyn Parser>;
 pub struct Parsers(ParsersInner);
 
 impl Parsers {
+  pub fn empty() -> Self { Self(Default::default()) }
+
   pub fn parse<'a, 'tree>(
     &self,
     query_prop: &'a QueryProperty,
@@ -47,29 +49,33 @@ impl Parsers {
       settings,
     )
   }
+
+  pub fn push(
+    &mut self,
+    parser: &'static impl Parser,
+  ) -> Option<&'static dyn Parser> {
+    self.0.insert(parser.setting(), parser)
+  }
 }
 
 impl Default for Parsers {
   fn default() -> Self {
-    let mut inner = ParsersInner::default();
+    let mut parsers = Self::empty();
 
-    macro_rules! insert_settings {
-      ($($setting:path),+ $(,)?) => {
-        $({
-          let setting = &$setting;
-          inner.insert(setting.setting(), setting);
-        })+
-      };
+    macro_rules! insert {
+      ($($parser:path),+ $(,)?) => {{
+        $(assert!(parsers.push(&$parser).is_none());)+
+      }};
     }
 
-    insert_settings!(
+    insert!(
       cpl::CplParser,
       ignored::Ignored,
       indent_rule::IndentRuleParser,
       indent_style::IndentStyle,
     );
 
-    Self(inner)
+    parsers
   }
 }
 

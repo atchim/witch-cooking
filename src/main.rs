@@ -96,11 +96,8 @@ fn parse_rope_slice(
 }
 
 #[inline]
-fn query_from_opts(opts: &Opts, lang: Language) -> Result<Query, Error> {
-  let src = fs::read_to_string(&opts.query)
-    .report()
-    .change_context(Error::QueryFile)?;
-  Ok(Query::new(lang, &src).map_err(Error::Query)?)
+fn query_src_from_opts(opts: &Opts) -> Result<String, Error> {
+  fs::read_to_string(&opts.query).report().change_context(Error::QueryFile)
 }
 
 struct ChunksBytes<'a>(Chunks<'a>);
@@ -128,15 +125,16 @@ fn cook(
   parser: &mut Parser,
   src: RopeSlice<'_>,
   lang: Language,
-  query: Query,
+  query_src: &str,
   query_cursor: &mut QueryCursor,
+  setting_parsers: &SettingParsers,
+  predicates: &Predicates,
 ) -> Result<Rope, Error> {
   parser.set_language(lang).map_err(Error::Lang)?;
   let tree = parse_rope_slice(src, parser)?;
+  let query = Query::new(lang, query_src).map_err(Error::Query)?;
   let mut editor = Editor::from(Rope::from(src));
   let mut settings = Settings::default();
-  let setting_parsers = SettingParsers::default();
-  let predicates = Predicates::default();
 
   let matches = Matches::from(query_cursor.matches(
     &query,
@@ -196,9 +194,20 @@ fn cook_from_cli() -> Result<Rope, Error> {
   let lang = ts_lang_from_opts(&opts)?;
   let mut parser = Parser::new();
   let src = src_rope_from_opts(&opts)?;
-  let query = query_from_opts(&opts, lang)?;
+  let query_src = query_src_from_opts(&opts)?;
   let mut query_cursor = QueryCursor::new();
-  cook(&mut parser, src.slice(..), lang, query, &mut query_cursor)
+  let setting_parsers = SettingParsers::default();
+  let predicates = Predicates::default();
+
+  cook(
+    &mut parser,
+    src.slice(..),
+    lang,
+    &query_src,
+    &mut query_cursor,
+    &setting_parsers,
+    &predicates,
+  )
 }
 
 fn main() -> ExitCode {
