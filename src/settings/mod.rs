@@ -1,8 +1,12 @@
 mod cpl;
 pub mod indent_rule;
-pub mod parser;
+pub mod parsers;
 
-pub use {cpl::Cpl, indent_rule::IndentRule, parser::Parsers};
+pub use {
+  cpl::{Cpl, Error as CplErr},
+  indent_rule::IndentRule,
+  parsers::Parsers,
+};
 use {
   fnv::FnvHashMap,
   std::{collections::hash_map::Entry, fmt, marker::PhantomData},
@@ -11,20 +15,16 @@ use {
 
 #[derive(Default)]
 pub struct Global<'a> {
-  cpl: Cpl,
+  cpl: Option<Cpl>,
   indent_style: Option<&'a str>,
 }
 
 impl<'a> Global<'a> {
   #[inline]
-  pub fn cpl(&self) -> Cpl { self.cpl }
+  pub fn cpl(&self) -> Option<Cpl> { self.cpl }
 
   #[inline]
-  pub fn set_cpl(&mut self, cpl: impl Into<Cpl>) -> Cpl {
-    let old_cpl = self.cpl;
-    self.cpl = cpl.into();
-    old_cpl
-  }
+  pub fn set_cpl(&mut self, cpl: Cpl) -> Option<Cpl> { self.cpl.replace(cpl) }
 
   #[inline]
   pub fn indent_style(&self) -> Option<&'a str> { self.indent_style }
@@ -37,21 +37,17 @@ impl<'a> Global<'a> {
 
 #[derive(Default)]
 pub struct Local<'a> {
-  cpl: Cpl,
+  cpl: Option<Cpl>,
   ignore_query: Option<&'a str>,
   indent_style: Option<&'a str>,
 }
 
 impl<'a> Local<'a> {
   #[inline]
-  pub fn cpl(&self) -> Cpl { self.cpl }
+  pub fn cpl(&self) -> Option<Cpl> { self.cpl }
 
   #[inline]
-  pub fn set_cpl(&mut self, cpl: impl Into<Cpl>) -> Cpl {
-    let old_cpl = self.cpl;
-    self.cpl = cpl.into();
-    old_cpl
-  }
+  pub fn set_cpl(&mut self, cpl: Cpl) -> Option<Cpl> { self.cpl.replace(cpl) }
 
   #[inline]
   pub fn ignore_query(&self) -> Option<&'a str> { self.ignore_query }
@@ -115,7 +111,7 @@ impl<'tree> NodeToSettings<'tree> {
   }
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub enum Scope {
   Global,
   Local,
@@ -139,16 +135,12 @@ pub struct Settings<'a, 'tree> {
 
 impl<'a, 'tree> Settings<'a, 'tree> {
   #[inline]
-  pub fn cpl(&self) -> Cpl {
-    let cpl = self.local.cpl();
-    match cpl.value() {
-      None => self.global.cpl(),
-      Some(_) => cpl,
-    }
+  pub fn cpl(&self) -> Option<Cpl> {
+    self.local.cpl().or_else(|| self.global.cpl())
   }
 
   #[inline]
-  fn set_cpl(&mut self, cpl: impl Into<Cpl>, scope: Scope) -> Cpl {
+  pub fn set_cpl(&mut self, cpl: Cpl, scope: Scope) -> Option<Cpl> {
     match scope {
       Scope::Global => self.global.set_cpl(cpl),
       Scope::Local => self.local.set_cpl(cpl),

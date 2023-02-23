@@ -5,7 +5,7 @@ pub enum Error {
   #[error("invalid argument #{ix}; expected {expected}, got {got}")]
   Arg { ix: usize, expected: String, got: String },
 
-  #[error("error in capture \"{name}\": {msg}")]
+  #[error("error with capture \"{name}\": {msg}")]
   Cap { name: String, msg: String },
 
   #[error("invalid number of arguments; expected {expected}, got {got}")]
@@ -13,6 +13,9 @@ pub enum Error {
 
   #[error("invalid predicate operator \"{0}\"")]
   Op(String),
+
+  #[error("{0}")]
+  Other(String),
 }
 
 impl Error {
@@ -30,4 +33,6 @@ impl Error {
   }
 
   pub fn op(s: impl ToString) -> Self { Self::Op(s.to_string()) }
+
+  pub fn other(s: impl ToString) -> Self { Self::Other(s.to_string()) }
 }

@@ -1,4 +1,4 @@
-use crate::settings::parser::prelude::*;
+use crate::settings::parsers::prelude::*;
 
 pub struct IndentStyle;
 

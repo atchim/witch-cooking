@@ -24,7 +24,7 @@ use {
     node_utils::{Matches, Provider},
     predicates::{Error as PredicateErr, Predicates},
     settings::{
-      parser::Error as ParseSettingErr,
+      parsers::Error as ParseSettingErr,
       Parsers as SettingParsers,
       Scope,
       Settings,
@@ -128,7 +128,7 @@ fn cook(
   query_src: &str,
   query_cursor: &mut QueryCursor,
   setting_parsers: &SettingParsers,
-  predicates: &Predicates,
+  predicates: &Predicates<'_>,
 ) -> Result<Rope, Error> {
   parser.set_language(lang).map_err(Error::Lang)?;
   let tree = parse_rope_slice(src, parser)?;

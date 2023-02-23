@@ -1,4 +1,4 @@
-use crate::settings::{indent_rule::IndentRule, parser::prelude::*};
+use crate::settings::{indent_rule::IndentRule, parsers::prelude::*};
 
 pub struct IndentRuleParser;
 

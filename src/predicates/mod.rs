@@ -1,8 +1,14 @@
 mod err;
+mod indent;
 mod indent_offset;
 mod space;
 mod spacer;
 
+#[cfg(test)]
+mod debugger;
+
+#[cfg(test)]
+pub(crate) use debugger::Debugger;
 pub use err::Error;
 use {
   crate::{
@@ -29,20 +35,20 @@ pub trait Predicate {
   ) -> Result<(), Error>;
 }
 
-type PredicatesInner = FnvHashMap<&'static str, &'static dyn Predicate>;
+type PredicatesInner<'a> = FnvHashMap<&'a str, &'a dyn Predicate>;
 
-pub struct Predicates(PredicatesInner);
+pub struct Predicates<'a>(PredicatesInner<'a>);
 
-impl Predicates {
+impl<'a> Predicates<'a> {
   pub fn empty() -> Self { Self(Default::default()) }
 
-  pub fn parse<'a, 'tree>(
+  pub fn parse<'b, 'tree>(
     &self,
     query: &Query,
-    query_predicate: &'a QueryPredicate,
+    query_predicate: &'b QueryPredicate,
     scope: Scope,
     nodes_provider: &Provider<'_, 'tree>,
-    settings: &mut Settings<'a, 'tree>,
+    settings: &mut Settings<'b, 'tree>,
     editor: &mut Editor,
   ) -> Result<(), Error> {
     let op = query_predicate.operator.as_ref();
@@ -58,13 +64,13 @@ impl Predicates {
 
   pub fn push(
     &mut self,
-    predicate: &'static impl Predicate,
-  ) -> Option<&'static dyn Predicate> {
+    predicate: &'a impl Predicate,
+  ) -> Option<&'a dyn Predicate> {
     self.0.insert(predicate.name(), predicate)
   }
 }
 
-impl Default for Predicates {
+impl<'a> Default for Predicates<'a> {
   fn default() -> Self {
     let mut predicates = Predicates::empty();
 
