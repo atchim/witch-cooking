@@ -14,6 +14,8 @@ mod editor;
 mod err;
 mod node_utils;
 mod predicates;
+#[cfg(test)]
+mod query_testing;
 mod settings;
 
 use {
@@ -127,7 +129,7 @@ fn cook(
   lang: Language,
   query_src: &str,
   query_cursor: &mut QueryCursor,
-  setting_parsers: &SettingParsers,
+  setting_parsers: &SettingParsers<'_>,
   predicates: &Predicates<'_>,
 ) -> Result<Rope, Error> {
   parser.set_language(lang).map_err(Error::Lang)?;

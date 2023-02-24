@@ -33,23 +33,10 @@ impl Parser for Ignored {
 
 #[cfg(test)]
 mod tests {
-  use {
-    super::*,
-    crate::{
-      cook,
-      node_utils::Provider,
-      predicates::{Debugger, Predicates},
-      settings::{Parsers, Scope, Settings},
-      Editor,
-      Error as CrateErr,
-    },
-    error_stack::Result,
-    ropey::{Rope, RopeSlice},
-    tree_sitter::{Parser as TsParser, Query, QueryCursor, QueryPredicateArg},
-    tree_sitter_rust::language as rs_lang,
-  };
+  use {super::*, crate::query_testing::prelude::*};
 
-  fn cook_debugging<'a, F>(
+  #[inline]
+  fn cook_debugging_ignored<F>(
     src: &str,
     query_src: &str,
     debugger_fn: F,
@@ -64,27 +51,20 @@ mod tests {
       &Editor,
     ),
   {
-    let mut ts_parser = TsParser::new();
-    let mut query_cursor = QueryCursor::new();
-    let mut setting_parsers = Parsers::empty();
-    setting_parsers.push(&Ignored);
-    let mut predicates = Predicates::empty();
-    let debugger = Debugger::new("dbg!", debugger_fn);
-    predicates.push(&debugger);
-    cook(
-      &mut ts_parser,
-      RopeSlice::from(src),
-      rs_lang(),
+    cook_debugging(
+      src,
       query_src,
-      &mut query_cursor,
-      &setting_parsers,
-      &predicates,
+      debugger_fn,
+      |setting_parsers| {
+        setting_parsers.push(&Ignored);
+      },
+      |_| {},
     )
   }
 
   #[test]
   fn ignored() {
-    let res = cook_debugging(
+    let res = cook_debugging_ignored(
       "fn foo() {}",
       "
         ((identifier) @id (#set! @id ignored))
@@ -114,5 +94,34 @@ mod tests {
       },
     );
     assert!(res.is_ok());
+  }
+
+  #[test]
+  fn ignored_err_cap_missing() {
+    let res =
+      cook_debugging_ignored("", "(#set! ignored)", |_, _, _, _, _, _| {});
+    match res {
+      Err(err) => {
+        let parse_err = err.downcast_ref::<Error>().unwrap();
+        assert!(matches!(parse_err, Error::CapMissing));
+      }
+      _ => unreachable!(),
+    }
+  }
+
+  #[test]
+  fn ignored_err_value() {
+    let res = cook_debugging_ignored(
+      "fn foo() {}",
+      "((function_item) @fn (#set! @fn ignored false))",
+      |_, _, _, _, _, _| {},
+    );
+    match res {
+      Err(err) => {
+        let parse_err = err.downcast_ref::<Error>().unwrap();
+        assert!(matches!(parse_err, Error::Value { .. }));
+      }
+      _ => unreachable!(),
+    }
   }
 }

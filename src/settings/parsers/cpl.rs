@@ -37,22 +37,12 @@ impl Parser for CplParser {
 mod tests {
   use {
     super::*,
-    crate::{
-      cook,
-      node_utils::Provider,
-      predicates::{Debugger, Predicates},
-      settings::{cpl::Error as CplErr, Parsers, Scope, Settings},
-      Editor,
-      Error as CrateErr,
-    },
-    error_stack::Result,
-    ropey::{Rope, RopeSlice},
+    crate::{query_testing::prelude::*, settings::CplErr},
     std::num::IntErrorKind,
-    tree_sitter::{Parser as TsParser, Query, QueryCursor, QueryPredicateArg},
-    tree_sitter_rust::language as rs_lang,
   };
 
-  fn cook_debugging<'a, F>(
+  #[inline]
+  fn cook_debugging_cpl<F>(
     src: &str,
     query_src: &str,
     debugger_fn: F,
@@ -67,27 +57,20 @@ mod tests {
       &Editor,
     ),
   {
-    let mut ts_parser = TsParser::new();
-    let mut query_cursor = QueryCursor::new();
-    let mut setting_parsers = Parsers::empty();
-    setting_parsers.push(&CplParser);
-    let mut predicates = Predicates::empty();
-    let debugger = Debugger::new("dbg!", debugger_fn);
-    predicates.push(&debugger);
-    cook(
-      &mut ts_parser,
-      RopeSlice::from(src),
-      rs_lang(),
+    cook_debugging(
+      src,
       query_src,
-      &mut query_cursor,
-      &setting_parsers,
-      &predicates,
+      debugger_fn,
+      |setting_parsers| {
+        setting_parsers.push(&CplParser);
+      },
+      |_| {},
     )
   }
 
   #[test]
   fn cpl_global() {
-    let res = cook_debugging(
+    let res = cook_debugging_cpl(
       "",
       "(#set! cpl 79) (#dbg!)",
       |_query, _args, scope, _provider, settings, _editor| {
@@ -102,7 +85,7 @@ mod tests {
 
   #[test]
   fn cpl_local() {
-    let res = cook_debugging(
+    let res = cook_debugging_cpl(
       "fn foo() { bar(); }",
       "(#set! cpl 79) (function_item (#set! cpl 0) (#dbg!))",
       |_query, _args, scope, _provider, settings, _editor| {
@@ -115,7 +98,7 @@ mod tests {
 
   #[test]
   fn cpl_err_too_big() {
-    let res = cook_debugging("", "(#set! cpl 133)", |_, _, _, _, _, _| {});
+    let res = cook_debugging_cpl("", "(#set! cpl 133)", |_, _, _, _, _, _| {});
     match res {
       Err(err) => {
         let cpl_err = err.downcast_ref::<CplErr>().unwrap();
@@ -127,7 +110,7 @@ mod tests {
 
   #[test]
   fn cpl_err_too_little() {
-    let res = cook_debugging("", "(#set! cpl 29)", |_, _, _, _, _, _| {});
+    let res = cook_debugging_cpl("", "(#set! cpl 29)", |_, _, _, _, _, _| {});
     match res {
       Err(err) => {
         let cpl_err = err.downcast_ref::<CplErr>().unwrap();
@@ -139,7 +122,7 @@ mod tests {
 
   #[test]
   fn cpl_err_parse_int() {
-    let res = cook_debugging("", "(#set! cpl XXX)", |_, _, _, _, _, _| {});
+    let res = cook_debugging_cpl("", "(#set! cpl XXX)", |_, _, _, _, _, _| {});
     match res {
       Err(err) => {
         let cpl_err = err.downcast_ref::<CplErr>().unwrap();
@@ -154,7 +137,7 @@ mod tests {
 
   #[test]
   fn cpl_overwrite() {
-    let res = cook_debugging(
+    let res = cook_debugging_cpl(
       "fn foo() { bar(); }",
       "
         (#dbg! empty-cpl)

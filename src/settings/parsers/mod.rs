@@ -27,19 +27,19 @@ pub trait Parser {
   ) -> Result<(), Error>;
 }
 
-type ParsersInner = FnvHashMap<&'static str, &'static dyn Parser>;
+type ParsersInner<'a> = FnvHashMap<&'a str, &'a dyn Parser>;
 
-pub struct Parsers(ParsersInner);
+pub struct Parsers<'a>(ParsersInner<'a>);
 
-impl Parsers {
+impl<'a> Parsers<'a> {
   pub fn empty() -> Self { Self(Default::default()) }
 
-  pub fn parse<'a, 'tree>(
+  pub fn parse<'b, 'tree>(
     &self,
-    query_prop: &'a QueryProperty,
+    query_prop: &'b QueryProperty,
     scope: Scope,
     nodes_provider: &Provider<'_, 'tree>,
-    settings: &mut Settings<'a, 'tree>,
+    settings: &mut Settings<'b, 'tree>,
   ) -> Result<(), Error> {
     let key = query_prop.key.as_ref();
     self.0.get(key).ok_or_else(|| Error::key(key))?.parse(
@@ -50,15 +50,12 @@ impl Parsers {
     )
   }
 
-  pub fn push(
-    &mut self,
-    parser: &'static impl Parser,
-  ) -> Option<&'static dyn Parser> {
+  pub fn push(&mut self, parser: &'a impl Parser) -> Option<&'a dyn Parser> {
     self.0.insert(parser.setting(), parser)
   }
 }
 
-impl Default for Parsers {
+impl<'a> Default for Parsers<'a> {
   fn default() -> Self {
     let mut parsers = Self::empty();
 
