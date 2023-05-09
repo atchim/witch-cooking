@@ -1,0 +1,367 @@
+\documentclass[11pt, openright, twoside, a4paper, english, brazil]{abntex2}
+
+% Preamble {{{1
+%%%%%%%%%%%%%%%
+
+% Packages {{{2
+%%%%%%%%%%%%%%%
+
+% General {{{3
+%%%%%%%%%%%%%%
+
+\usepackage{palatino}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{indentfirst}
+\usepackage{nomencl}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{csquotes}
+\usepackage[style = abnt]{biblatex}
+\usepackage{paralist}
+\let\glossitem\undefined
+\usepackage[portuguese]{gloss}
+
+% Cover & Title Page Info {{{2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\titulo
+  { Witch Cooking: Formatação de Código via Linguagem de Consulta do
+    Tree-Sitter}
+\autor{Átila Gama Silva}
+\local{Irecê}
+\data{\the\year}
+\orientador{Rafael Xavier}
+\instituicao
+  { Instituto Federal de Educação, Ciência e Tecnologia da Bahia – Campus
+    Irecê}
+\tipotrabalho{Trabalho de Conclusão de Curso}
+\preambulo
+  { Trabalho de Conclusão de Curso apresentado ao Curso Técnico em Análise e
+    Desenvolvimento de Sistemas do Instituto Federal de Educação, Ciência e
+    Tecnologia da Bahia – Campus Irecê, como requisito parcial para obtenção do
+    diploma de Técnico(a) em Análise e Desenvolvimento de Sistemas, mediante a
+    orientação do professor \imprimirorientador.}
+
+% Configuration {{{2
+%%%%%%%%%%%%%%%%%%%%
+
+% PDF {{{3
+%%%%%%%%%%
+
+\definecolor{blue}{RGB}{41,5,195}
+\makeatletter
+\hypersetup
+  { pdftitle = {\@title},
+    pdfauthor = {\@author},
+    pdfsubject =
+      { Witch Cooking: Formatação de Código via Linguagem de Consulta do
+        Tree-Sitter},
+    pdfcreator = {\LaTeX with \abnTeX},
+    pdfkeywords =
+      {formatação de código}
+      {\textit{Tree-Sitter}}
+      {customização},
+    colorlinks = true,
+    linkcolor = blue,
+    citecolor = blue,
+    filecolor = magenta,
+    urlcolor = blue,
+    bookmarksdepth = 4}
+\makeatother
+
+% Figures & Tables {{{3
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\makeatletter
+\setlength{\@fptop}{5pt}
+\makeatother
+
+% ABNT's NBR 14724 Metrics Compliance {{{3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{1.3cm}
+\setlength{\parskip}{0.2cm}
+
+% IFBA's Cover {{{3
+%%%%%%%%%%%%%%%%%%%
+
+\renewcommand
+  {\imprimircapa}
+  { \begin{capa}
+      \center\ABNTEXchapterfont\bfseries\Large
+      \includegraphics[width=\textwidth]{ifba-irece-logo.png}
+      \par\vfill\imprimirautor
+      \par\vfill\imprimirtitulo\vfill\vfill
+      \par\large\imprimirlocal\break\imprimirdata
+    \end{capa}}
+
+% IFBA's Title Page {{{3
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makeatletter
+\renewcommand
+  {\folhaderostocontent}
+  { \begin{center}
+      \ABNTEXchapterfont\bfseries\Large
+      \imprimirautor
+      \par\vfill\vfill\imprimirtitulo
+      \vfill
+      { \normalsize
+        \mdseries
+        \hspace{.45\textwidth}
+        \begin{minipage}{.5\textwidth}
+          \SingleSpacing
+          \imprimirpreambulo
+        \end{minipage}}
+      \vfill\vfill
+      \large\imprimirlocal\break\imprimirdata
+    \end{center}}
+\makeatother
+
+% Glossary {{{3
+%%%%%%%%%%%%%%%
+
+\setglosslabel{\sffamily\bfseries#2\ifglossshort{ (#3)}{}}
+\renewenvironment{thegloss}
+  { \chapter*{\glossname}
+    \addcontentsline
+      {toc}
+      {chapter}
+      {\texorpdfstring{\MakeTextUppercase{\glossname}}{\glossname}}}
+  {\stopglosslist}
+\makegloss
+% }}}3
+
+\addbibresource{references.bib}
+\setdefaultenum{(I)}{(A)}{}{}
+% }}}2
+
+\makeindex
+
+% Document {{{1
+%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\selectlanguage{brazil}
+\frenchspacing
+
+% Pretextual {{{2
+%%%%%%%%%%%%%%%%%
+
+\imprimircapa
+\imprimirfolhaderosto
+
+% Abstracts {{{3
+%%%%%%%%%%%%%%%%
+
+\setlength{\absparsep}{18pt}
+
+\begin{resumo}
+	A formatação de código é fundamental no desenvolvimento de software,
+	permitindo estabelecer aspectos desejados como a padronização e legibilidade
+	do código, que impactam positivamente o ciclo de vida do software. Em
+	ambientes de desenvolvimento modernos, é comum o uso de ferramentas para
+	automatizar a formatação de código. No entanto, essas ferramentas apresentam
+	limitações no número de linguagens suportadas, nas opções de configuração e
+	não permitem a definição de regras de formatação personalizadas. Visando
+	superar ou reduzir as limitações frequentemente encontradas nas ferramentas
+	convencionais de formatação, neste trabalho é apresentado o
+	\textit{Witch Cooking}, um software protótipo que tem como objetivos:
+	\begin{inparaenum}
+		\item abranger uma gama de linguagens de programação; além de
+		\item permitir que o usuário defina suas próprias regras de formatação.
+	\end{inparaenum}
+
+	\noindent
+	\textbf{Palavras-chave}:
+	formatação de código;
+	\textit{Tree-Sitter};
+	customização.
+\end{resumo}
+
+% Table of Contents {{{3
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+
+% Textual Elements {{{2
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\textual
+
+% Introduction {{{3
+%%%%%%%%%%%%%%%%%%%
+
+\chapter{Introdução}
+
+A flexibilidade presente na sintaxe de linguagens de programação permite que
+diferentes arranjos dum mesmo código compartilhem um valor sintático
+equivalente. Essa característica possibilita a formatação do código de acordo
+com aspectos desejados, como a legibilidade, que é fundamental no ciclo de vida
+do software \cites{buse-2009-learning}{oliveira-2020-evaluating}.
+Consequentemente, a formatação é frequentemente utilizada para estabelecer um
+nível satisfatório de legibilidade em bases de código.
+
+A formatação do código pode ser realizada manualmente pelo programador, embora
+esse processo possa ser demorado, especialmente em grandes bases de código,
+exigindo do programador um tempo que poderia ser empregado em outra tarefa.
+Além disso, a formatação manual também pode ser falha e inconsistente devido à
+suscetibilidade humana ao erro, podendo ser agravada quando há múltiplos
+programadores em uma base de código.
+
+Para evitar os problemas inerentes da formatação manual, é comum a utilização
+de softwares que automatizam a formatação de forma determinística, tornando o
+código padronizado e consistente. No entanto, é comum que essas ferramentas de
+formatação sejam limitadas a uma linguagem ou a uma família de linguagens de
+programação. Além disso, algumas delas são \textit{\gloss{opinionated}}, assim
+restringindo as possiblidades de customização do usuário. Finalmente, é também
+comum que essas ferramentas de formatação não permitam que o usuário defina
+regras de formatação personalizadas.
+
+Em ambientes de desenvolvimento modernos, além da utilização de ferramentas que
+automatizam a formatação do código, é também comum a utilização do
+\textit{Tree-Sitter} \cite{tree-sitter-2018-tree}: um sistema de análise
+sintática de código aberto que foi disponibilizado ao público geral no GitHub
+primeiramente em 2019, tendo sido inicialmente desenvolvido por Max Brunsfeld.
+Desde seu lançamento, o \textit{Tree-Sitter} tem ganhado popularidade na
+comunidade de desenvolvedores devido dentre outros motivos à:
+\begin{inparaenum}
+	\item sua capacidade de suportar várias linguagens de programação; além de
+	\item sua linguagem de consulta, a qual permite a realização de buscas
+	complexas na árvore analisada de um código fonte.
+\end{inparaenum}
+
+Visando superar ou reduzir as limitações previamente mencionadas, quais são
+frequentemente presentes nas ferramentas convencionais de formatação, este
+trabalho tem como objetivo geral desenvolver um software protótipo para a
+formatação de código. Nomeada antecipadamente de \textit{Witch Cooking}
+\cite{silva-2023-witch} pelo autor, a ferramenta a ser desenvolvida tem como
+objetivos:
+\begin{inparaenum}
+	\item abranger uma gama de linguagens de programação; além de
+	\item permitir que o usuário defina suas próprias regras de formatação.
+\end{inparaenum}
+
+Para alcançar o objetivo geral proposto, este trabalho tem como objetivos
+específicos:
+\begin{inparaenum}
+	\item apresentar e contextualizar ferramentas de formatação de código
+	      conceituadas, além de abordar seus métodos de formatação;
+	\item conceituar, contextualizar e abordar as tecnologias do sistema
+	      \textit{Tree-Sitter}; e, por fim,
+	\item utilizar o \textit{Tree-Sitter} para desenvolver e atender às
+	      aspirações do \textit{Witch Cooking}.
+\end{inparaenum}
+
+\chapter{A Formatação de Código}
+
+\chapter{O Sistema \textit{Tree-Sitter}}
+
+O \textit{Tree-Sitter} é um sistema multilingual de análise sintática para
+ferramentas de programação inicialmente desenvolvido como um projeto secundário
+por Max Brunsfeld. Como relatado pelo próprio autor em \cite{github-2017-tree},
+o \textit{Tree-Sitter} surgiu como uma tentativa de solucionar problemas
+presentes nas ferramentas de análise sintática da época. Mais especificamente,
+o sistema tinha como objetivos:
+\begin{inparaenum}
+	\item ser utilizado no ambiente de desenvolvimento para produzir árvores de
+	      sintaxe a partir da análise de códigos escritos em várias linguagens;
+	\item implementar a análise incremental, permitindo a atualização da árvore
+	      de sintaxe em tempo real;
+	\item expor através da árvore de sintaxe os nós representando suas
+	      construções gramaticais no código (\textit{e.g.}, classes, funções,
+	      declarações, etc.), diferentemente das ferramentas contemporâneas, que
+	      utilizavam uma abordagem simplística baseada em expressões regulares;
+	      e, por fim,
+	\item ser livre de dependências, assim beneficiando sua adoção e
+	      aplicabilidade.
+\end{inparaenum}
+
+Além das funcionalidades previamente mencionadas presentes no
+\textit{Tree-Sitter}, o sistema também conta uma ferramenta de linha de comando
+que pode ser utilizada para gerar \textit{\gloss{parser}s} para uma linguagem a
+partir de sua gramática. A gramática é definida via a linguagem de programação
+JavaScript, a qual:
+\begin{inparaenum}
+	\item foi eleita 15 vezes seguidas pela
+	      \textit{Stack Overflow Developer Survey}
+	      \cite{stack-overflow-2022-stack} como a linguagem de programação mais
+	      comumente usada;
+	\item além de ser amplamente considerada pela comunidade de programadores
+	      como uma das linguagens mais fáceis de aprender e programar
+	      \cites {berkeley-2023-11}{goel-2023-how}{w3schools-2023-javascript}.
+\end{inparaenum}
+A ferramenta de geração de \textit{parsers} também disponibiliza funções
+preestabelecidas para permitir a criação de gramáticas com diferentes níveis de
+complexidade. Não é surpreendente que, devido a essas características e
+facilidades presentes na criação de \textit{parsers}, exista uma variedade de
+linguagens de programação e formatos de arquivos que têm parsers gerados pelo
+\textit{Tree-Sitter} e são suportados pelo sistema. Esses formatos variam de
+linguagens com sintaxes complexas, como C++ e Perl, a formatos de arquivos mais
+específicos, como \textit{.vhs} e \textit{.rasi}.
+
+Na análise de código, é comum realizar tarefas que envolvem a busca de padrões
+em árvores sintáticas. Para isso, o \textit{Tree-Sitter} oferece uma pequena
+linguagem de consulta declarativa que é capaz de expressar esses padrões por
+meio de \textit{\gloss[Word]{sexp}} e buscar correspondências. A linguagem de
+consulta suporta operadores que permitem:
+\begin{inparaenum}
+	\item a captura de nós;
+	\item a quantificação de nós, análoga às expressões regulares;
+	\item o agrupamento de nós;
+	\item as alternâncias de nós;
+	\item o uso de \textit{\gloss{wildcard}s}; e
+	\item a ordenação de nós.
+\end{inparaenum}
+Adicionalmente, é possível definir propriedades nos nós da árvore sintática
+usando a linguagem de consulta do \textit{Tree-Sitter}. Também é permitido o
+uso de predicados -- funções arbitrárias para filtrar nós ou realizar
+verificações mais complexas durante a busca de padrões -- sejam eles
+\textit{\gloss{builtin}s} ou estendidos por meio de uma API.
+
+Um exemplo da relevância e utilidade da linguagem de consulta é o plugin
+\textit{nvim-treesitter} \cite{nvim-treesitter-2023-nvim}, que é frequentemente
+utilizado no editor \textit{Neovim} \cite{neovim-2014-hyperextensible}. Esse
+plugin utiliza a linguagem de consulta para definir diferentes recursos, tais
+como:
+\begin{inparaenum}
+  \item \textit{\gloss{fold}s}, que permitem agrupar blocos de código;
+  \item highlights, que realçam a sintaxe do código;
+  \item indentações, que definem a estrutura do código;
+  \item injeções, que permitem adicionar novas sintaxes a arquivos existentes;
+        além de
+  \item captura de nós correspondentes a elementos (\textit{e.g.}, funções,
+        classes, métodos, etc.), os quais são frequentemente utilizados em
+        rotinas de programação tais como a remoção e navegação do código.
+\end{inparaenum}
+
+Em suma, o sistema \textit{Tree-Sitter} se mostrou uma solução inovadora e
+eficiente para a análise sintática de códigos em diversas linguagens de
+programação, com uma abordagem diferenciada e sofisticada que possibilita a
+atualização em tempo real das árvores sintáticas e a identificação precisa das
+construções gramaticais presentes no código. Além disso, a ferramenta de linha
+de comando disponível no sistema facilita a geração de parsers a partir de
+gramáticas definidas em JavaScript, o que torna o processo mais acessível e
+personalizável para os programadores. Finalmente, a linguagem de consulta
+declarativa oferecida pelo \textit{Tree-Sitter} também se mostrou uma
+importante funcionalidade, sendo utilizada em diversos plugins de editores de
+código para realizar tarefas variadas e sofisticadas, contribuindo
+significativamente no ambiente de desenvolvimento.
+
+% Post Textual Elements {{{2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\postextual
+\printbibliography
+\printgloss{glossary}
+% }}}2
+
+\end{document}
+% }}}1
+
+% vim:fdm=marker
