@@ -1,13 +1,8 @@
-\documentclass[11pt, openright, twoside, a4paper, english, brazil]{abntex2}
+\documentclass[11pt, a4paper, english, openright, twoside, brazil]{abntex2}
 
-% Preamble {{{1
-%%%%%%%%%%%%%%%
-
-% Packages {{{2
-%%%%%%%%%%%%%%%
-
-% General {{{3
-%%%%%%%%%%%%%%
+%%%%%%%%%%%%
+% Packages %
+%%%%%%%%%%%%
 
 \usepackage{palatino}
 \usepackage[utf8]{inputenc}
@@ -18,13 +13,14 @@
 \usepackage{graphicx}
 \usepackage{microtype}
 \usepackage{csquotes}
-\usepackage[style = abnt]{biblatex}
+\usepackage[backend = biber, style = abnt]{biblatex}
 \usepackage{paralist}
 \let\glossitem\undefined
 \usepackage[portuguese]{gloss}
 
-% Cover & Title Page Info {{{2
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Cover & Title Page Info %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \titulo
   { Witch Cooking: Formatação de Código via Linguagem de Consulta do
@@ -44,11 +40,9 @@
     diploma de Técnico(a) em Análise e Desenvolvimento de Sistemas, mediante a
     orientação do professor \imprimirorientador.}
 
-% Configuration {{{2
-%%%%%%%%%%%%%%%%%%%%
-
-% PDF {{{3
-%%%%%%%%%%
+%%%%%%%
+% PDF %
+%%%%%%%
 
 \definecolor{blue}{RGB}{41,5,195}
 \makeatletter
@@ -71,21 +65,24 @@
     bookmarksdepth = 4}
 \makeatother
 
-% Figures & Tables {{{3
-%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+% Figures & Tables %
+%%%%%%%%%%%%%%%%%%%%
 
 \makeatletter
 \setlength{\@fptop}{5pt}
 \makeatother
 
-% ABNT's NBR 14724 Metrics Compliance {{{3
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ABNT's NBR 14724 Metrics Compliance %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \setlength{\parindent}{1.3cm}
 \setlength{\parskip}{0.2cm}
 
-% IFBA's Cover {{{3
-%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+% IFBA's Cover %
+%%%%%%%%%%%%%%%%
 
 \renewcommand
   {\imprimircapa}
@@ -97,8 +94,9 @@
       \par\large\imprimirlocal\break\imprimirdata
     \end{capa}}
 
-% IFBA's Title Page {{{3
-%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%
+% IFBA's Title Page %
+%%%%%%%%%%%%%%%%%%%%%
 
 \makeatletter
 \renewcommand
@@ -120,8 +118,15 @@
     \end{center}}
 \makeatother
 
-% Glossary {{{3
-%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+% Bibliography %
+%%%%%%%%%%%%%%%%
+
+\addbibresource{references.bib}
+
+%%%%%%%%%%%%
+% Glossary %
+%%%%%%%%%%%%
 
 \setglosslabel{\sffamily\bfseries#2\ifglossshort{ (#3)}{}}
 \renewenvironment{thegloss}
@@ -132,70 +137,75 @@
       {\texorpdfstring{\MakeTextUppercase{\glossname}}{\glossname}}}
   {\stopglosslist}
 \makegloss
-% }}}3
 
-\addbibresource{references.bib}
+%%%%%%%%%%%%
+% Paralist %
+%%%%%%%%%%%%
+
 \setdefaultenum{(I)}{(A)}{}{}
-% }}}2
 
-\makeindex
-
-% Document {{{1
-%%%%%%%%%%%%%%%
+%%%%%%%%%%%%
+% Document %
+%%%%%%%%%%%%
 
 \begin{document}
 
 \selectlanguage{brazil}
 \frenchspacing
 
-% Pretextual {{{2
-%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%
+% Pretextual %
+%%%%%%%%%%%%%%
 
 \imprimircapa
 \imprimirfolhaderosto
 
-% Abstracts {{{3
-%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%
+% Abstract %
+%%%%%%%%%%%%
 
 \setlength{\absparsep}{18pt}
 
 \begin{resumo}
-	A formatação de código é fundamental no desenvolvimento de software,
-	permitindo estabelecer aspectos desejados como a padronização e legibilidade
-	do código, que impactam positivamente o ciclo de vida do software. Em
-	ambientes de desenvolvimento modernos, é comum o uso de ferramentas para
-	automatizar a formatação de código. No entanto, essas ferramentas apresentam
-	limitações no número de linguagens suportadas, nas opções de configuração e
-	não permitem a definição de regras de formatação personalizadas. Visando
-	superar ou reduzir as limitações frequentemente encontradas nas ferramentas
-	convencionais de formatação, neste trabalho é apresentado o
-	\textit{Witch Cooking}, um software protótipo que tem como objetivos:
-	\begin{inparaenum}
-		\item abranger uma gama de linguagens de programação; além de
-		\item permitir que o usuário defina suas próprias regras de formatação.
-	\end{inparaenum}
+  A formatação de código é fundamental no desenvolvimento de software,
+  permitindo estabelecer aspectos desejados como a padronização e legibilidade
+  do código, que impactam positivamente o ciclo de vida do software. Em
+  ambientes de desenvolvimento modernos, é comum o uso de ferramentas para
+  automatizar a formatação de código. No entanto, essas ferramentas apresentam
+  limitações no número de linguagens suportadas, nas opções de configuração e
+  não permitem a definição de regras de formatação personalizadas. Visando
+  superar ou reduzir as limitações frequentemente encontradas nas ferramentas
+  convencionais de formatação, neste trabalho é apresentado o
+  \textit{Witch Cooking}, um software protótipo que tem como objetivos:
+  \begin{inparaenum}
+    \item abranger uma gama de linguagens de programação; além de
+    \item permitir que o usuário defina suas próprias regras de formatação.
+  \end{inparaenum}
 
-	\noindent
-	\textbf{Palavras-chave}:
-	formatação de código;
-	\textit{Tree-Sitter};
-	customização.
+  \noindent
+  \textbf{Palavras-chave}:
+  formatação de código;
+  \textit{Tree-Sitter};
+  customização.
 \end{resumo}
 
-% Table of Contents {{{3
-%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%
+% Table of Contents %
+%%%%%%%%%%%%%%%%%%%%%
 
 \pdfbookmark[0]{\contentsname}{toc}
 \tableofcontents*
 \cleardoublepage
 
-% Textual Elements {{{2
-%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+% Textual Elements %
+%%%%%%%%%%%%%%%%%%%%
 
 \textual
 
-% Introduction {{{3
-%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+% Introduction %
+%%%%%%%%%%%%%%%%
 
 \chapter{Introdução}
 
@@ -231,9 +241,9 @@ primeiramente em 2019, tendo sido inicialmente desenvolvido por Max Brunsfeld.
 Desde seu lançamento, o \textit{Tree-Sitter} tem ganhado popularidade na
 comunidade de desenvolvedores devido dentre outros motivos à:
 \begin{inparaenum}
-	\item sua capacidade de suportar várias linguagens de programação; além de
-	\item sua linguagem de consulta, a qual permite a realização de buscas
-	complexas na árvore analisada de um código fonte.
+  \item sua capacidade de suportar várias linguagens de programação; além de
+  \item sua linguagem de consulta, a qual permite a realização de buscas
+  complexas na árvore analisada de um código fonte.
 \end{inparaenum}
 
 Visando superar ou reduzir as limitações previamente mencionadas, quais são
@@ -243,22 +253,30 @@ formatação de código. Nomeada antecipadamente de \textit{Witch Cooking}
 \cite{silva-2023-witch} pelo autor, a ferramenta a ser desenvolvida tem como
 objetivos:
 \begin{inparaenum}
-	\item abranger uma gama de linguagens de programação; além de
-	\item permitir que o usuário defina suas próprias regras de formatação.
+  \item abranger uma gama de linguagens de programação; além de
+  \item permitir que o usuário defina suas próprias regras de formatação.
 \end{inparaenum}
 
 Para alcançar o objetivo geral proposto, este trabalho tem como objetivos
 específicos:
 \begin{inparaenum}
-	\item apresentar e contextualizar ferramentas de formatação de código
-	      conceituadas, além de abordar seus métodos de formatação;
-	\item conceituar, contextualizar e abordar as tecnologias do sistema
-	      \textit{Tree-Sitter}; e, por fim,
-	\item utilizar o \textit{Tree-Sitter} para desenvolver e atender às
-	      aspirações do \textit{Witch Cooking}.
+  \item apresentar e contextualizar ferramentas de formatação de código
+        conceituadas, além de abordar seus métodos de formatação;
+  \item conceituar, contextualizar e abordar as tecnologias do sistema
+        \textit{Tree-Sitter}; e, por fim,
+  \item utilizar o \textit{Tree-Sitter} para desenvolver e atender às
+        aspirações do \textit{Witch Cooking}.
 \end{inparaenum}
 
+%%%%%%%%%%%%%%%%%%%%%%%
+% The Code Formatting %
+%%%%%%%%%%%%%%%%%%%%%%%
+
 \chapter{A Formatação de Código}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The Tree-Sitter System %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{O Sistema \textit{Tree-Sitter}}
 
@@ -269,17 +287,17 @@ o \textit{Tree-Sitter} surgiu como uma tentativa de solucionar problemas
 presentes nas ferramentas de análise sintática da época. Mais especificamente,
 o sistema tinha como objetivos:
 \begin{inparaenum}
-	\item ser utilizado no ambiente de desenvolvimento para produzir árvores de
-	      sintaxe a partir da análise de códigos escritos em várias linguagens;
-	\item implementar a análise incremental, permitindo a atualização da árvore
-	      de sintaxe em tempo real;
-	\item expor através da árvore de sintaxe os nós representando suas
-	      construções gramaticais no código (\textit{e.g.}, classes, funções,
-	      declarações, etc.), diferentemente das ferramentas contemporâneas, que
-	      utilizavam uma abordagem simplística baseada em expressões regulares;
-	      e, por fim,
-	\item ser livre de dependências, assim beneficiando sua adoção e
-	      aplicabilidade.
+  \item ser utilizado no ambiente de desenvolvimento para produzir árvores de
+        sintaxe a partir da análise de códigos escritos em várias linguagens;
+  \item implementar a análise incremental, permitindo a atualização da árvore
+        de sintaxe em tempo real;
+  \item expor através da árvore de sintaxe os nós representando suas
+        construções gramaticais no código (\textit{e.g.}, classes, funções,
+        declarações, etc.), diferentemente das ferramentas contemporâneas, que
+        utilizavam uma abordagem simplística baseada em expressões regulares;
+        e, por fim,
+  \item ser livre de dependências, assim beneficiando sua adoção e
+        aplicabilidade.
 \end{inparaenum}
 
 Além das funcionalidades previamente mencionadas presentes no
@@ -288,13 +306,13 @@ que pode ser utilizada para gerar \textit{\gloss{parser}s} para uma linguagem a
 partir de sua gramática. A gramática é definida via a linguagem de programação
 JavaScript, a qual:
 \begin{inparaenum}
-	\item foi eleita 15 vezes seguidas pela
-	      \textit{Stack Overflow Developer Survey}
-	      \cite{stack-overflow-2022-stack} como a linguagem de programação mais
-	      comumente usada;
-	\item além de ser amplamente considerada pela comunidade de programadores
-	      como uma das linguagens mais fáceis de aprender e programar
-	      \cites {berkeley-2023-11}{goel-2023-how}{w3schools-2023-javascript}.
+  \item foi eleita 15 vezes seguidas pela
+        \textit{Stack Overflow Developer Survey}
+        \cite{stack-overflow-2022-stack} como a linguagem de programação mais
+        comumente usada;
+  \item além de ser amplamente considerada pela comunidade de programadores
+        como uma das linguagens mais fáceis de aprender e programar
+        \cites {berkeley-2023-11}{goel-2023-how}{w3schools-2023-javascript}.
 \end{inparaenum}
 A ferramenta de geração de \textit{parsers} também disponibiliza funções
 preestabelecidas para permitir a criação de gramáticas com diferentes níveis de
@@ -311,12 +329,12 @@ linguagem de consulta declarativa que é capaz de expressar esses padrões por
 meio de \textit{\gloss[Word]{sexp}} e buscar correspondências. A linguagem de
 consulta suporta operadores que permitem:
 \begin{inparaenum}
-	\item a captura de nós;
-	\item a quantificação de nós, análoga às expressões regulares;
-	\item o agrupamento de nós;
-	\item as alternâncias de nós;
-	\item o uso de \textit{\gloss{wildcard}s}; e
-	\item a ordenação de nós.
+  \item a captura de nós;
+  \item a quantificação de nós, análoga às expressões regulares;
+  \item o agrupamento de nós;
+  \item as alternâncias de nós;
+  \item o uso de \textit{\gloss{wildcard}s}; e
+  \item a ordenação de nós.
 \end{inparaenum}
 Adicionalmente, é possível definir propriedades nos nós da árvore sintática
 usando a linguagem de consulta do \textit{Tree-Sitter}. Também é permitido o
@@ -353,15 +371,14 @@ importante funcionalidade, sendo utilizada em diversos plugins de editores de
 código para realizar tarefas variadas e sofisticadas, contribuindo
 significativamente no ambiente de desenvolvimento.
 
-% Post Textual Elements {{{2
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Post Textual Elements %
+%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \postextual
 \printbibliography
 \printgloss{glossary}
-% }}}2
 
 \end{document}
-% }}}1
 
 % vim:fdm=marker

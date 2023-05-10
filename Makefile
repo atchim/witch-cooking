@@ -12,6 +12,9 @@ doc:
 
 doc-all: doc undergraduate-thesis
 
+open: undergraduate-thesis
+	open doc/undergraduate-thesis/main.pdf
+
 release:
 	cargo build --release
 
