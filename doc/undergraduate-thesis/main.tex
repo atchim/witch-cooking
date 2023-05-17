@@ -129,6 +129,7 @@
 \setglosslabel{\sffamily\bfseries#2\ifglossshort{ (#3)}{}}
 \renewenvironment{thegloss}
   { \chapter*{\glossname}
+    \markboth{\glossname}{\glossname}
     \addcontentsline
       {toc}
       {chapter}
@@ -273,6 +274,8 @@
 
   \chapter{A Formatação de Código}
 
+  \section{Contextualização}
+
   Desde os primórdios da computação, métodos foram desenvolvidos para garantir
   que a saída impressa fosse formatada de maneira esteticamente agradável
   \apud{harris-1956-keyboard}[1]{yelland-2015-rfmt}. Esses métodos se
@@ -288,24 +291,32 @@
     \item \textit{beautifiers}.
   \end{inparaenum}
 
-  No final dos anos 1960 e início dos anos 1970, surgiram os primeiros
-  formatadores automáticos de código, também conhecidos como "pretty printers".
+  A formatação de código é uma prática historicamente comum no desenvolvimento
+  de software, que envolve estabelecer convenções estilísticas para estruturar
+  o código-fonte. Desde seu surgimento, a formatação de código tem sido
+  aprimorada para acompanhar a complexidade e o tamanho do código-fonte, bem
+  como as demandas contemporâneas do ambiente de desenvolvimento. Inicialmente,
+  a formatação de código se limitava a operações simples, como quebra de linhas
+  e inserção de espaços em branco. No entanto, atualmente existem ferramentas
+  mais sofisticadas, como o \textit{rustfmt} \cite{rust-lang-2023-rustfmt} e o
+  \textit{clang-format} \cite{llvm-2023-clang}, capazes de realizar operações
+  avançadas com base na análise semântica.
 
-  A formatação de código é uma prática comum no desenvolvimento de software que
-  se refere ao estabelecimento de convenções estilísticas para formatar o
-  código-fonte. Isso inclui a definição de regras para a organização do código,
-  como o uso de indentação, espaçamento, quebras de linha, ordem das
-  declarações, entre outros aspectos. Em geral, a formatação de código tem como
-  objetivos:
+  De acordo com \textcite{buse-2009-learning}, a \textit{readability}%
+  \footnote
+    { Segundo \textcite{oliveira-2020-evaluating}, na engenharia de software,
+      os termos \textit{readability}, \textit{legibility},
+      \textit{understandability} e \textit{comprehensibility} têm significados
+      sobrepostos.}
+  de um programa está relacionada à sua manutenibilidade e, portanto, é um
+  fator-chave na qualidade geral do software.
+  Nesse contexto, a formatação de código moderna desempenha um papel
+  fundamental, visando principalmente:
   \begin{inparaenum}
     \item arranjar o código de forma padronizada e consistente;
-    \item beneficiar a leitura e compreensão do código; e, por fim,
+    \item beneficiar a legibilidade e compreensão do código; e, por fim,
     \item facilitar a manutenção do código.
   \end{inparaenum}
-
-  Com o avanço das tecnologias associadas à programação, a formatação de código
-  foi constantemente aprimorada, adaptando-se às demandas dinâmicas do ambiente
-  de desenvolvimento.
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%
   % The Tree-Sitter System %
@@ -342,8 +353,8 @@
     \item foi eleita 15 vezes seguidas pela
           \textit{Stack Overflow Developer Survey}
           \cite{stack-overflow-2022-stack} como a linguagem de programação mais
-          comumente usada;
-    \item além de ser amplamente considerada pela comunidade de programadores
+          comumente usada; além de
+    \item ser amplamente considerada pela comunidade de programadores
           como uma das linguagens mais fáceis de aprender e programar
           \cites {berkeley-2023-11}{goel-2023-how}{w3schools-2023-javascript}.
   \end{inparaenum}
@@ -386,9 +397,10 @@
     \item indentações, que definem a estrutura do código;
     \item injeções, que permitem adicionar novas sintaxes a arquivos
           existentes; além de
-    \item captura de nós correspondentes a elementos (\textit{e.g.}, funções,
-          classes, métodos, etc.), os quais são frequentemente utilizados em
-          rotinas de programação tais como a remoção e navegação do código.
+    \item captura de nós correspondentes a construções gramaticais
+          (\textit{e.g.}, funções, classes, métodos, etc.), os quais são
+          frequentemente utilizados em rotinas de programação tais como a
+          remoção e navegação do código.
   \end{inparaenum}
 
   Em suma, o sistema \textit{Tree-Sitter} se mostrou uma solução inovadora e
