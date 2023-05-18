@@ -17,13 +17,19 @@
 \usepackage{paralist}
 \let\glossitem\undefined\usepackage[portuguese]{gloss}
 
+%%%%%%%%%%%
+% abntex2 %
+%%%%%%%%%%%
+
+\renewcommand{\ABNTEXchapterfont}{\fontseries{b}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Cover & Title Page Info %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \titulo
-  { Witch Cooking: Formatação de Código via Linguagem de Consulta do
-    Tree-Sitter}
+  { \textit{Witch Cooking}: Formatação de Código via Linguagem de Consulta do
+    \textit{Tree-Sitter}}
 \autor{Átila Gama Silva}
 \local{Irecê}
 \data{\the\year}
@@ -85,11 +91,14 @@
 \renewcommand
   {\imprimircapa}
   { \begin{capa}
-      \center\ABNTEXchapterfont\bfseries\Large
+      \ABNTEXchapterfont
+      \ABNTEXsectionfontsize
+      \center
       \includegraphics[width=\textwidth]{ifba-irece-logo.png}
       \par\vfill\imprimirautor
-      \par\vfill\imprimirtitulo\vfill\vfill
-      \par\large\imprimirlocal\break\imprimirdata
+      \par\vfill{\ABNTEXchapterfontsize\imprimirtitulo}
+      \vfill\vfill
+      \par\imprimirlocal\break\imprimirdata
     \end{capa}}
 
 %%%%%%%%%%%%%%%%%%%%%
@@ -100,9 +109,10 @@
 \renewcommand
   {\folhaderostocontent}
   { \begin{center}
-      \ABNTEXchapterfont\bfseries\Large
+      \ABNTEXchapterfont
+      \ABNTEXsectionfontsize
       \imprimirautor
-      \par\vfill\vfill\imprimirtitulo
+      \par\vfill\vfill{\ABNTEXchapterfontsize\imprimirtitulo}
       \vfill
       { \normalsize
         \mdseries
@@ -112,7 +122,7 @@
           \imprimirpreambulo
         \end{minipage}}
       \vfill\vfill
-      \large\imprimirlocal\break\imprimirdata
+      \imprimirlocal\break\imprimirdata
     \end{center}}
 \makeatother
 
@@ -126,7 +136,7 @@
 % Glossary %
 %%%%%%%%%%%%
 
-\setglosslabel{\sffamily\bfseries#2\ifglossshort{ (#3)}{}}
+\setglosslabel{\bfseries#2\ifglossshort{ (#3)}{}}
 \renewenvironment{thegloss}
   { \chapter*{\glossname}
     \markboth{\glossname}{\glossname}
@@ -272,9 +282,9 @@
   % The Code Formatting %
   %%%%%%%%%%%%%%%%%%%%%%%
 
-  \chapter{A Formatação de Código}
+  \chapter{A Formatação do Código-Fonte}
 
-  \section{Contextualização}
+  \section{Introdução à Formatação do Código-Fonte: Conceitos e Importância}
 
   Desde os primórdios da computação, métodos foram desenvolvidos para garantir
   que a saída impressa fosse formatada de maneira esteticamente agradável
@@ -302,7 +312,7 @@
   \textit{clang-format} \cite{llvm-2023-clang}, capazes de realizar operações
   avançadas com base na análise semântica.
 
-  De acordo com \textcite{buse-2009-learning}, a \textit{readability}%
+  De acordo com \textcite[1]{buse-2009-learning}, a \textit{readability}%
   \footnote
     { Segundo \textcite{oliveira-2020-evaluating}, na engenharia de software,
       os termos \textit{readability}, \textit{legibility},
@@ -317,6 +327,8 @@
     \item beneficiar a legibilidade e compreensão do código; e, por fim,
     \item facilitar a manutenção do código.
   \end{inparaenum}
+
+  \section{A História da Evolução dos Algoritmos de Formatação do Código-Fonte}
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%
   % The Tree-Sitter System %
@@ -411,8 +423,8 @@
   linha de comando disponível no sistema facilita a geração de parsers a partir
   de gramáticas definidas em JavaScript, o que torna o processo mais acessível
   e personalizável para os programadores. Finalmente, a linguagem de consulta
-  declarativa oferecida pelo \textit{Tree-Sitter} também se mostrou uma
-  importante funcionalidade, sendo utilizada em diversos plugins de editores de
+  declarativa oferecida pelo \textit{Tree-Sitter} se mostrou uma importante
+  \textit{\gloss{feature}}, sendo utilizada em diversos plugins de editores de
   código para realizar tarefas variadas e sofisticadas, contribuindo
   significativamente no ambiente de desenvolvimento.
 
