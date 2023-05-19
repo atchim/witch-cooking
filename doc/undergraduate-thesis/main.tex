@@ -30,22 +30,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \titulo
-  { \textit{Witch Cooking}: Formatação de Código via Linguagem de Consulta do
-    \textit{Tree-Sitter}}
+  {\textit{Witch Cooking}: Formatação de Código via Linguagem de Consulta do
+   \textit{Tree-Sitter}}
 \autor{Átila Gama Silva}
 \local{Irecê}
 \data{\the\year}
 \orientador{Rafael Xavier}
 \instituicao
-  { Instituto Federal de Educação, Ciência e Tecnologia da Bahia – Campus
-    Irecê}
+  {Instituto Federal de Educação, Ciência e Tecnologia da Bahia – Campus Irecê}
 \tipotrabalho{Trabalho de Conclusão de Curso}
 \preambulo
-  { Trabalho de Conclusão de Curso apresentado ao Curso Técnico em Análise e
-    Desenvolvimento de Sistemas do Instituto Federal de Educação, Ciência e
-    Tecnologia da Bahia – Campus Irecê, como requisito parcial para obtenção do
-    diploma de Técnico(a) em Análise e Desenvolvimento de Sistemas, mediante a
-    orientação do professor \imprimirorientador.}
+  {Trabalho de Conclusão de Curso apresentado ao Curso Técnico em Análise e
+   Desenvolvimento de Sistemas do Instituto Federal de Educação, Ciência e
+   Tecnologia da Bahia – Campus Irecê, como requisito parcial para obtenção do
+   diploma de Técnico(a) em Análise e Desenvolvimento de Sistemas, mediante a
+   orientação do professor \imprimirorientador.}
 
 %%%%%%%
 % PDF %
@@ -54,21 +53,21 @@
 \definecolor{blue}{RGB}{41,5,195}
 \makeatletter
 \hypersetup
-  { pdftitle       = {\@title},
-    pdfauthor      = {\@author},
-    pdfsubject     = { \textit{Witch Cooking}: Formatação de Código via
-                       Linguagem de Consulta do \textit{Tree-Sitter}},
-    pdfcreator     = {\LaTeX with \abnTeX},
-    pdfkeywords    = {formatação de código}
-                     {\textit{Tree-Sitter}}
-                     {\textit{prettyprint}}
-                     {customização},
-    colorlinks     = true,
-    linkcolor      = blue,
-    citecolor      = blue,
-    filecolor      = magenta,
-    urlcolor       = blue,
-    bookmarksdepth = 4}
+  {pdftitle       = {\@title},
+   pdfauthor      = {\@author},
+   pdfsubject     = {\textit{Witch Cooking}: Formatação de Código via Linguagem
+                     de Consulta do \textit{Tree-Sitter}},
+   pdfcreator     = {\LaTeX with \abnTeX},
+   pdfkeywords    = {formatação de código}
+                    {\textit{Tree-Sitter}}
+                    {\textit{prettyprint}}
+                    {customização},
+   colorlinks     = true,
+   linkcolor      = blue,
+   citecolor      = blue,
+   filecolor      = magenta,
+   urlcolor       = blue,
+   bookmarksdepth = 4}
 \makeatother
 
 %%%%%%%%%%%
@@ -90,8 +89,8 @@
 
 \renewcommand
   {\tocinnonumchapter}
-  { \addtocontents{toc}{\cftsetindents{chapter}{\cftlastnumwidth}{2em}}
-    \cftinserthook{toc}{A}}
+  {\addtocontents{toc}{\cftsetindents{chapter}{\cftlastnumwidth}{2em}}
+   \cftinserthook{toc}{A}}
 
 \renewcommand
   {\tocprintchapternonum}
@@ -99,13 +98,13 @@
 
 \renewcommand
   {\tocpartapendices}
-  { \addtocontents{toc}{\cftsetindents{part}{\cftlastnumwidth}{2em}}
-    \cftinserthook{toc}{A}}
+  {\addtocontents{toc}{\cftsetindents{part}{\cftlastnumwidth}{2em}}
+   \cftinserthook{toc}{A}}
 
 \renewcommand
   {\tocpartanexos}
-  { \addtocontents{toc}{\cftsetindents{part}{\cftlastnumwidth}{2em}}
-    \cftinserthook{toc}{A}}
+  {\addtocontents{toc}{\cftsetindents{part}{\cftlastnumwidth}{2em}}
+   \cftinserthook{toc}{A}}
 
 \setlength{\cftbeforechapterskip}{1em}
 
@@ -130,16 +129,16 @@
 
 \renewcommand
   {\imprimircapa}
-  { \begin{capa}
-      \ABNTEXchapterfont
-      \ABNTEXsectionfontsize
-      \center
-      \includegraphics[width=\textwidth]{ifba-irece-logo.png}
-      \par\vfill\imprimirautor
-      \par\vfill{\ABNTEXchapterfontsize\imprimirtitulo}
-      \vfill\vfill
-      \par\imprimirlocal\break\imprimirdata
-    \end{capa}}
+  {\begin{capa}
+     \ABNTEXchapterfont
+     \ABNTEXsectionfontsize
+     \center
+     \includegraphics[width=\textwidth]{ifba-irece-logo.png}
+     \par\vfill\imprimirautor
+     \par\vfill{\ABNTEXchapterfontsize\imprimirtitulo}
+     \vfill\vfill
+     \par\imprimirlocal\break\imprimirdata
+   \end{capa}}
 
 %%%%%%%%%%%%%%%%%%%%%
 % IFBA's Title Page %
@@ -148,22 +147,22 @@
 \makeatletter
 \renewcommand
   {\folhaderostocontent}
-  { \begin{center}
-      \ABNTEXchapterfont
-      \ABNTEXsectionfontsize
-      \imprimirautor
-      \par\vfill\vfill{\ABNTEXchapterfontsize\imprimirtitulo}
-      \vfill
-      { \normalsize
-        \mdseries
-        \hspace{.45\textwidth}
-        \begin{minipage}{.5\textwidth}
-          \SingleSpacing
-          \imprimirpreambulo
-        \end{minipage}}
-      \vfill\vfill
-      \imprimirlocal\break\imprimirdata
-    \end{center}}
+  {\begin{center}
+     \ABNTEXchapterfont
+     \ABNTEXsectionfontsize
+     \imprimirautor
+     \par\vfill\vfill{\ABNTEXchapterfontsize\imprimirtitulo}
+     \vfill
+     {\normalsize
+      \mdseries
+      \hspace{.45\textwidth}
+      \begin{minipage}{.5\textwidth}
+        \SingleSpacing
+        \imprimirpreambulo
+      \end{minipage}}
+     \vfill\vfill
+     \imprimirlocal\break\imprimirdata
+   \end{center}}
 \makeatother
 
 %%%%%%%%%%%%%%%%
@@ -178,9 +177,9 @@
 
 \setglosslabel{\bfseries#2\ifglossshort{ (#3)}{}}
 \renewenvironment{thegloss}
-  { \chapter*{\glossname}
-    \markboth{\glossname}{\glossname}
-    \addcontentsline{toc}{chapter}{\glossname}}
+  {\chapter*{\glossname}
+   \markboth{\glossname}{\glossname}
+   \addcontentsline{toc}{chapter}{\glossname}}
   {\stopglosslist}
 \makegloss
 
@@ -365,7 +364,9 @@
     \item facilitar a manutenção do código.
   \end{inparaenum}
 
-  \section{A História da Evolução dos Algoritmos de Formatação de Código-Fonte}
+  \section
+    {A Evolução dos Algoritmos de Formatação de Código-Fonte: Um Breve
+     Panorama}
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%
   % The Tree-Sitter System %
