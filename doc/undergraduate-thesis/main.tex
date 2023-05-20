@@ -324,17 +324,34 @@
 
   Desde os primórdios da computação, métodos foram desenvolvidos para garantir
   que a saída impressa fosse formatada de maneira esteticamente agradável
-  \apud{harris-1956-keyboard}[1]{yelland-2015-rfmt}. Esses métodos se
-  popularizaram como \textit{\gloss{prettyprinting}}, termo que se refere à
-  formatação visual de diversos tipos de conteúdo, incluindo o código-fonte.
-  Mais especificamente, a formatação de código é conhecida como uma forma
-  especializada de \textit{prettyprinting}. Além disso, existem várias
-  terminologias para se referir às ferramentas que executam o
-  \textit{prettyprinting} no código-fonte, tais como:
+  \apud{harris-1956-keyboard}[1]{yelland-2015-rfmt}. Esses métodos ganharam
+  popularidade sob o termo \textit{\gloss{prettyprinting}}, que se refere à
+  formatação visual de diversos tipos de conteúdo. No contexto do
+  desenvolvimento de software, o \textit{prettyprinting} é conhecido como
+  formatação de código: uma prática histórica e comum que envolve a adoção de
+  convenções estilísticas para estruturar o código-fonte. Existem diversas
+  terminologias utilizadas para se referir às ferramentas que realizam a
+  formatação do código-fonte, incluindo:
   \begin{inparaenum}
     \item formatadores de código, ou \textit{code formatters} em inglês;
     \item \textit{prettyprinters}; ou ainda
     \item \textit{beautifiers}.
+  \end{inparaenum}
+
+  Inicialmente, a formatação de código era amplamente restrita a operações
+  simples, como a quebra de linhas e a inserção de espaços em branco
+  \cite[1]{yelland-2015-rfmt}. No entanto, ao longo do tempo, houve a
+  necessidade de adaptação à crescente complexidade e tamanho do código-fonte,
+  bem como às demandas contemporâneas do ambiente de desenvolvimento.
+  Consequentemente, existem atualmente ferramentas mais avançadas capazes de,
+  por exemplo:
+  \begin{inparaenum}
+    \item realizar operações sofisticadas com base na análise semântica,
+          superando, assim, a abordagem tradicional restrita à análise
+          sintática; além de
+    \item formatar o código para tornar ``a revisão de código mais
+          rápida, produzindo os menores \textit{\gloss{diff}s} possíveis''
+          \cite[tradução nossa]{black-2023-black}.
   \end{inparaenum}
 
   A formatação de código é uma prática historicamente comum no desenvolvimento
@@ -363,10 +380,6 @@
     \item beneficiar a legibilidade e compreensão do código; e, por fim,
     \item facilitar a manutenção do código.
   \end{inparaenum}
-
-  \section
-    {A Evolução dos Algoritmos de Formatação de Código-Fonte: Um Breve
-     Panorama}
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%
   % The Tree-Sitter System %
