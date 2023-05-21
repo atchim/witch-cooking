@@ -107,7 +107,7 @@
 %%%% Summary %
 %%%%%%%%%%%%%%
 
-\setlength{\cftlastnumwidth}{\cftsectionnumwidth}
+\setlength{\cftlastnumwidth}{\cftchapternumwidth}
 \cftsetindents{part}{0em}{\cftlastnumwidth}
 \cftsetindents{chapter}{0em}{\cftlastnumwidth}
 \cftsetindents{section}{0em}{\cftlastnumwidth}
@@ -348,9 +348,21 @@
   \cite[2]{yelland-2015-rfmt}.
   \begin{inparaenum}
     \item LISP apresentava uma sintaxe distinta e expressiva, baseada em listas
-          e estruturas aninhadas delimitadas por parênteses, o que tornava o
-          código-fonte praticamente incompreensível caso não fosse devidamente
-          organizado. Além disso,
+          e estruturas aninhadas delimitadas por parênteses%
+          \footnote
+            {Na notação original de McCarthy, eram utilizadas
+             \textit{M-expressions} entre colchetes para representar
+             expressões. Essas \textit{M-expressions} seriam posteriormente
+             traduzidas em \textit{S-expressions}. Por exemplo, a
+             \textit{M-expression} ``\texttt{car[cons[A; B]]}'' seria
+             equivalente à \textit{S-expression} ``\texttt{(car (cons A B))}''.
+             No entanto, assim que a linguagem LISP foi implementada, os
+             programadores prontamente adotaram o uso das
+             \textit{S-expressions} em vez das \textit{M-expressions}, tornando
+             as \textit{S-expressions} a forma predominante de representar a
+             estrutura do código na linguagem.},
+          o que tornava o código-fonte praticamente incompreensível caso não
+          fosse devidamente organizado. Além disso,
     \item LISP era \gloss{homoiconic}, ou seja, permitia a manipulação do
           código via dados da própria linguagem.
   \end{inparaenum}
