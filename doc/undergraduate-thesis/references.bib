@@ -5,32 +5,17 @@
    url          = {https://bootcamp.berkeley.edu/blog/most-in-demand-programming-languages},
    urldate      = {2023-05-05}}
 
-@online
-  {black-2023-black,
-   organization  = {Black},
-   title         = {Black},
-   subtitle      = {The uncompromising Python code formatter},
-   url           = {https://black.readthedocs.io/},
-   urlaccessdate = {2023-05-08}}
-
 @article
   {buse-2009-learning,
-   author    = {Buse, Raymond P. L. and Weimer, Westley R.},
-   title     = {Learning a Metric for Code Readability},
-   journal   = {IEEE Transactions on Software Engineering},
-   publisher = {IEEE},
-   year      = {2009},
-   volume    = {36},
-   number    = {4},
-   pages     = {546--558},
-   doi       = {10.1109/TSE.2009.70}}
-
-@online
-  {llvm-2023-clang,
-   organization = {LLVM},
-   title        = {Clang 17.0.0git documentation},
-   url          = {https://clang.llvm.org/docs/ClangFormat.html},
-   urldate      = {2023-05-15}}
+   author       = {Buse, Raymond P. L. and Weimer, Westley R.},
+   title        = {Learning a Metric for Code Readability},
+   journaltitle = {IEEE Transactions on Software Engineering},
+   publisher    = {IEEE},
+   year         = {2009},
+   volume       = {36},
+   number       = {4},
+   pages        = {546--558},
+   doi          = {10.1109/TSE.2009.70}}
 
 @online
   {github-2017-tree,
@@ -50,37 +35,21 @@
    url     = {https://hackr.io/blog/how-to-learn-javascript},
    urldate = {2023-05-04}}
 
-@techreport
-  {goldstein-1973-pretty,
-   author      = {Goldstein, Ira},
-   title       = {Pretty printing},
-   subtitle    = {Converting list to linear structure},
-   institution = {Massachusetts Institute of Technology},
-   year        = {1973},
-   month       = {February}}
-
 @article
   {harris-1956-keyboard,
-   author  = {Harris, R. W.},
-   title   = {Keyboard Standardization},
-   journal = {Western Union Technical Review},
-   year    = {1956},
-   volume  = {10},
-   number  = {1},
-   pages   = {37--42}}
-
-@online
-  {neovim-2014-hyperextensible,
-   organization = {Neovim},
-   title        = {hyperextensible Vim-based text editor},
-   url          = {https://neovim.io/},
-   urldate      = {2023-05-07}}
+   author       = {Harris, R. W.},
+   title        = {Keyboard Standardization},
+   journaltitle = {Western Union Technical Review},
+   year         = {1956},
+   volume       = {10},
+   number       = {1},
+   pages        = {37--42}}
 
 @article
   {mccarthy-1960-recursive,
    author       = {McCarthy, John},
    title        = {Recursive Functions of Symbolic Expressions and Their
-                   Computation by Machine, Part I},
+                   Computation by Machine, Part {I}},
    journaltitle = {Communications of the ACM},
    date         = {1960-04-01},
    volume       = {3},
@@ -89,9 +58,18 @@
    doi          = {10.1145/367177.367199}}
 
 @online
+  {neovim-2014-hyperextensible,
+   organization = {Neovim},
+   title        = {hyperextensible Vim-based text editor},
+   version      = {0.9.0},
+   url          = {https://neovim.io/},
+   urldate      = {2023-05-07}}
+
+@online
   {nvim-treesitter-2023-nvim,
    organization = {nvim-treesitter},
    title        = {Nvim Treesitter configurations and abstraction layer},
+   version      = {0.9.0},
    url          = {https://github.com/nvim-treesitter/nvim-treesitter},
    urldate      = {2023-05-07}}
 
@@ -110,15 +88,8 @@
    doi          = {10.1109/icsme46990.2020.00041}}
 
 @online
-  {rust-lang-2023-rustfmt,
-   organization = {rust-lang},
-   title        = {Rustfmt},
-   url          = {https://rust-lang.github.io/rustfmt},
-   urldate      = {2023-05-15}}
-
-@online
   {silva-2023-witch,
-   author   = {Silva, {\'{A}}tila Gama},
+   author   = {Silva, Átila Gama},
    title    = {Witch Cooking},
    subtitle = {Experimental multilingual code formatter based on Tree-Sitter's
                query},
@@ -138,6 +109,7 @@
    organization = {Tree-Sitter},
    title        = {Tree-Sitter},
    subtitle     = {a parsing system for programming tools},
+   version      = {0.20.8},
    url          = {https://tree-sitter.github.io/},
    urldate      = {2023-04-06}}
 
@@ -152,7 +124,55 @@
   {yelland-2015-rfmt,
    author       = {Yelland, Phillip M.},
    title        = {A New Approach to Optimal Code Formatting},
-   journal      = {Google Research},
+   journaltitle = {Google Research},
    year         = {2015},
    url          = {https://research.google.com/pubs/archive/44667.pdf},
    urldate      = {2023-04-07}}
+
+%%%%%%%%%%%%%%
+% To Be Used %
+%%%%%%%%%%%%%%
+
+@online
+  {griesemer-2022-the,
+   author       = {Griesemer, Robert},
+   title        = {The Cultural Evolution of gofmt},
+   organization = {Google Research},
+   year         = {2022},
+   url          = {https://go.dev/talks/2015/gofmt-en.slide},
+   urldate      = {2023-05-20}}
+
+##################
+# Unused Entries #
+##################
+
+@online
+  {black-2023-black,
+   organization  = {Black},
+   title         = {Black},
+   subtitle      = {The uncompromising Python code formatter},
+   url           = {https://black.readthedocs.io/},
+   urlaccessdate = {2023-05-08}}
+
+@online
+  {llvm-2023-clang,
+   organization = {LLVM},
+   title        = {Clang 17.0.0git documentation},
+   url          = {https://clang.llvm.org/docs/ClangFormat.html},
+   urldate      = {2023-05-15}}
+
+@techreport
+  {goldstein-1973-pretty,
+   author      = {Goldstein, Ira},
+   title       = {Pretty printing},
+   subtitle    = {Converting list to linear structure},
+   institution = {Massachusetts Institute of Technology},
+   year        = {1973},
+   month       = {February}}
+
+@online
+  {rust-lang-2023-rustfmt,
+   organization = {rust-lang},
+   title        = {Rustfmt},
+   url          = {https://rust-lang.github.io/rustfmt},
+   urldate      = {2023-05-15}}

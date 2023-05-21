@@ -3,8 +3,12 @@
   {abntex2}
 
 %%%%%%%%%%%%
-% Packages %
+% Preamble %
 %%%%%%%%%%%%
+
+%%%%%%%%%%%%%
+%% Packages %
+%%%%%%%%%%%%%
 
 \usepackage{palatino}
 \usepackage[utf8]{inputenc}
@@ -15,19 +19,30 @@
 \usepackage{graphicx}
 \usepackage{microtype}
 \usepackage{csquotes}
-\usepackage[backend = biber, style = abnt]{biblatex}
+\usepackage[backend = biber, indent, ittitles, style = abnt]{biblatex}
 \usepackage{paralist}
 \let\glossitem\undefined\usepackage[portuguese]{gloss}
 
-%%%%%%%%%%%
-% abntex2 %
-%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%
+%% Configuration %
+%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% ABNT's NBR 14724 Metrics Compliance %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{1.3cm}
+\setlength{\parskip}{0.2cm}
+
+%%%%%%%%%%%%%
+%%% abntex2 %
+%%%%%%%%%%%%%
 
 \renewcommand{\ABNTEXchapterfont}{\fontseries{b}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Cover & Title Page Info %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Cover & Title Page Info %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \titulo
   {\textit{Witch Cooking}: Formatação de Código via Linguagem de Consulta do
@@ -43,36 +58,54 @@
   {Trabalho de Conclusão de Curso apresentado ao Curso Técnico em Análise e
    Desenvolvimento de Sistemas do Instituto Federal de Educação, Ciência e
    Tecnologia da Bahia – Campus Irecê, como requisito parcial para obtenção do
-   diploma de Técnico(a) em Análise e Desenvolvimento de Sistemas, mediante a
+   diploma de Técnico em Análise e Desenvolvimento de Sistemas, mediante a
    orientação do professor \imprimirorientador.}
 
-%%%%%%%
-% PDF %
-%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%%% IFBA's Cover %
+%%%%%%%%%%%%%%%%%%%
 
-\definecolor{blue}{RGB}{41,5,195}
+\renewcommand
+  {\imprimircapa}
+  {\begin{capa}
+     \ABNTEXchapterfont
+     \ABNTEXsectionfontsize
+     \center
+     \includegraphics[width=\textwidth]{ifba-irece-logo.png}
+     \par\vfill\imprimirautor
+     \par\vfill{\ABNTEXchapterfontsize\imprimirtitulo}
+     \vfill\vfill
+     \par\imprimirlocal\break\imprimirdata
+   \end{capa}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% IFBA's Title Page %
+%%%%%%%%%%%%%%%%%%%%%%%%
+
 \makeatletter
-\hypersetup
-  {pdftitle       = {\@title},
-   pdfauthor      = {\@author},
-   pdfsubject     = {\textit{Witch Cooking}: Formatação de Código via Linguagem
-                     de Consulta do \textit{Tree-Sitter}},
-   pdfcreator     = {\LaTeX with \abnTeX},
-   pdfkeywords    = {formatação de código}
-                    {\textit{Tree-Sitter}}
-                    {\textit{prettyprint}}
-                    {customização},
-   colorlinks     = true,
-   linkcolor      = blue,
-   citecolor      = blue,
-   filecolor      = magenta,
-   urlcolor       = blue,
-   bookmarksdepth = 4}
+\renewcommand
+  {\folhaderostocontent}
+  {\begin{center}
+     \ABNTEXchapterfont
+     \ABNTEXsectionfontsize
+     \imprimirautor
+     \par\vfill\vfill{\ABNTEXchapterfontsize\imprimirtitulo}
+     \vfill
+     {\normalsize
+      \mdseries
+      \hspace{.45\textwidth}
+      \begin{minipage}{.5\textwidth}
+        \SingleSpacing
+        \imprimirpreambulo
+      \end{minipage}}
+     \vfill\vfill
+     \imprimirlocal\break\imprimirdata
+   \end{center}}
 \makeatother
 
-%%%%%%%%%%%
-% Summary %
-%%%%%%%%%%%
+%%%%%%%%%%%%%%
+%%%% Summary %
+%%%%%%%%%%%%%%
 
 \setlength{\cftlastnumwidth}{\cftsectionnumwidth}
 \cftsetindents{part}{0em}{\cftlastnumwidth}
@@ -108,72 +141,15 @@
 
 \setlength{\cftbeforechapterskip}{1em}
 
-%%%%%%%%%%%%%%%%%%%%
-% Figures & Tables %
-%%%%%%%%%%%%%%%%%%%%
-
-\makeatletter
-\setlength{\@fptop}{5pt}
-\makeatother
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ABNT's NBR 14724 Metrics Compliance %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\setlength{\parindent}{1.3cm}
-\setlength{\parskip}{0.2cm}
-
-%%%%%%%%%%%%%%%%
-% IFBA's Cover %
-%%%%%%%%%%%%%%%%
-
-\renewcommand
-  {\imprimircapa}
-  {\begin{capa}
-     \ABNTEXchapterfont
-     \ABNTEXsectionfontsize
-     \center
-     \includegraphics[width=\textwidth]{ifba-irece-logo.png}
-     \par\vfill\imprimirautor
-     \par\vfill{\ABNTEXchapterfontsize\imprimirtitulo}
-     \vfill\vfill
-     \par\imprimirlocal\break\imprimirdata
-   \end{capa}}
-
-%%%%%%%%%%%%%%%%%%%%%
-% IFBA's Title Page %
-%%%%%%%%%%%%%%%%%%%%%
-
-\makeatletter
-\renewcommand
-  {\folhaderostocontent}
-  {\begin{center}
-     \ABNTEXchapterfont
-     \ABNTEXsectionfontsize
-     \imprimirautor
-     \par\vfill\vfill{\ABNTEXchapterfontsize\imprimirtitulo}
-     \vfill
-     {\normalsize
-      \mdseries
-      \hspace{.45\textwidth}
-      \begin{minipage}{.5\textwidth}
-        \SingleSpacing
-        \imprimirpreambulo
-      \end{minipage}}
-     \vfill\vfill
-     \imprimirlocal\break\imprimirdata
-   \end{center}}
-\makeatother
-
-%%%%%%%%%%%%%%%%
-% Bibliography %
-%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%
+%%% Bibliography %
+%%%%%%%%%%%%%%%%%%
 
 \addbibresource{references.bib}
 
-%%%%%%%%%%%%
-% Glossary %
-%%%%%%%%%%%%
+%%%%%%%%%%%%%%
+%%% Glossary %
+%%%%%%%%%%%%%%
 
 \setglosslabel{\bfseries#2\ifglossshort{ (#3)}{}}
 \renewenvironment{thegloss}
@@ -183,11 +159,35 @@
   {\stopglosslist}
 \makegloss
 
-%%%%%%%%%%%%
-% Paralist %
-%%%%%%%%%%%%
+%%%%%%%%%%%%%%
+%%% Paralist %
+%%%%%%%%%%%%%%
 
 \setdefaultenum{(I)}{(A)}{}{}
+
+%%%%%%%%%
+%%% PDF %
+%%%%%%%%%
+
+\definecolor{blue}{RGB}{41,5,195}
+\makeatletter
+\hypersetup
+  {pdftitle       = {\@title},
+   pdfauthor      = {\@author},
+   pdfsubject     = {\textit{Witch Cooking}: Formatação de Código via Linguagem
+                     de Consulta do \textit{Tree-Sitter}},
+   pdfcreator     = {\LaTeX with \abnTeX},
+   pdfkeywords    = {formatação de código}
+                    {\textit{Tree-Sitter}}
+                    {\textit{prettyprint}}
+                    {customização},
+   colorlinks     = true,
+   linkcolor      = blue,
+   citecolor      = blue,
+   filecolor      = magenta,
+   urlcolor       = blue,
+   bookmarksdepth = 4}
+\makeatother
 
 %%%%%%%%%%%%
 % Document %
@@ -249,9 +249,9 @@
 
   \textual
 
-  %%%%%%%%%%%%%%%%
-  % Introduction %
-  %%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%
+  %% Introduction %
+  %%%%%%%%%%%%%%%%%
 
   \chapter{Introdução}
 
@@ -259,7 +259,7 @@
   diferentes arranjos dum mesmo código compartilhem um valor sintático
   equivalente. Essa característica possibilita a formatação do código de acordo
   com aspectos desejados, como a legibilidade, que é fundamental no ciclo de
-  vida do software \cites{buse-2009-learning}{oliveira-2020-evaluating}.
+  vida do software \cites[1]{buse-2009-learning}[1]{oliveira-2020-evaluating}.
   Consequentemente, a formatação é frequentemente utilizada para estabelecer um
   nível satisfatório de legibilidade em bases de código.
 
@@ -314,13 +314,11 @@
           aspirações do \textit{Witch Cooking}.
   \end{inparaenum}
 
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  % The Source Code Formatting %
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %% The Source Code Formatting %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   \chapter{A Formatação de Código-Fonte}
-
-  \section{Introdução à Formatação de Código-Fonte: Conceitos e Importância}
 
   Desde os primórdios da computação, métodos foram desenvolvidos para garantir
   que a saída impressa fosse formatada de maneira esteticamente agradável
@@ -338,52 +336,36 @@
     \item \textit{beautifiers}.
   \end{inparaenum}
 
-  Inicialmente, a formatação de código era amplamente restrita a operações
-  simples, como a quebra de linhas e a inserção de espaços em branco
-  \cite[1]{yelland-2015-rfmt}. No entanto, ao longo do tempo, houve a
-  necessidade de adaptação à crescente complexidade e tamanho do código-fonte,
-  bem como às demandas contemporâneas do ambiente de desenvolvimento.
-  Consequentemente, existem atualmente ferramentas mais avançadas capazes de,
-  por exemplo:
-  \begin{inparaenum}
-    \item realizar operações sofisticadas com base na análise semântica,
-          superando, assim, a abordagem tradicional restrita à análise
-          sintática; além de
-    \item formatar o código para tornar ``a revisão de código mais
-          rápida, produzindo os menores \textit{\gloss{diff}s} possíveis''
-          \cite[tradução nossa]{black-2023-black}.
-  \end{inparaenum}
-
-  A formatação de código é uma prática historicamente comum no desenvolvimento
-  de software, que envolve estabelecer convenções estilísticas para estruturar
-  o código-fonte. Desde seu surgimento, a formatação de código tem sido
-  aprimorada para acompanhar a complexidade e o tamanho do código-fonte, bem
-  como as demandas contemporâneas do ambiente de desenvolvimento. Inicialmente,
-  a formatação de código se limitava a operações simples, como quebra de linhas
-  e inserção de espaços em branco. No entanto, atualmente existem ferramentas
-  mais sofisticadas, como o \textit{rustfmt} \cite{rust-lang-2023-rustfmt} e o
-  \textit{clang-format} \cite{llvm-2023-clang}, capazes de realizar operações
-  avançadas com base na análise semântica.
-
-  De acordo com \textcite[1]{buse-2009-learning}, a \textit{readability}%
+  Durante as décadas de 60 e 70, a linguagem de programação LISP%
   \footnote
-    { Segundo \textcite{oliveira-2020-evaluating}, na engenharia de software,
-      os termos \textit{readability}, \textit{legibility},
-      \textit{understandability} e \textit{comprehensibility} têm significados
-      sobrepostos.}
-  de um programa está relacionada à sua manutenibilidade e, portanto, é um
-  fator-chave na qualidade geral do software.
-  Nesse contexto, a formatação de código moderna desempenha um papel
-  fundamental, visando principalmente:
+    {O termo \textit{LISP} (acrônimo para
+     \textit{\textbf{LIS}t \textbf{P}rocessing}) inicialmente se referia à
+     linguagem de programação desenvolvida por
+     \textcite{mccarthy-1960-recursive}, porém, com a disseminação de dialetos
+     da linguagem, o termo também passou a ser utilizado para se referir à
+     família de linguagens derivadas da original.}
+  proporcionou condições favoráveis para o avanço da formatação de código
+  \cite[2]{yelland-2015-rfmt}.
   \begin{inparaenum}
-    \item arranjar o código de forma padronizada e consistente;
-    \item beneficiar a legibilidade e compreensão do código; e, por fim,
-    \item facilitar a manutenção do código.
+    \item LISP apresentava uma sintaxe distinta e expressiva, baseada em listas
+          e estruturas aninhadas delimitadas por parênteses, o que tornava o
+          código-fonte praticamente incompreensível caso não fosse devidamente
+          organizado. Além disso,
+    \item LISP era \gloss{homoiconic}, ou seja, permitia a manipulação do
+          código via dados da própria linguagem.
   \end{inparaenum}
+  Essas duas características intrínsecas do LISP fundamentaram o surgimento de:
+  \begin{inparaenum}
+    \item \textit{prettyprinters} para a linguagem, visando aperfeiçoar a
+          legibilidade do código-fonte escrito; além de
+    \item novas técnicas e abordagens para a formatação de código em geral.
+  \end{inparaenum}
+  Esses avanços contribuíram significativamente para o conhecimento e o
+  aprimoramento de práticas de formatação de código em trabalhos subsequentes.
 
-  %%%%%%%%%%%%%%%%%%%%%%%%%%
-  % The Tree-Sitter System %
-  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %% The Tree-Sitter System %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   \chapter{O Sistema \textit{Tree-Sitter}}
 
@@ -447,7 +429,7 @@
   usando a linguagem de consulta do \textit{Tree-Sitter}. Também é permitido o
   uso de predicados -- funções arbitrárias para filtrar nós ou realizar
   verificações mais complexas durante a busca de padrões -- sejam eles
-  \textit{\gloss{builtin}s} ou estendidos por meio de uma API.
+  \textit{\gloss{builtin}} ou estendidos por meio de uma API.
 
   Um exemplo da relevância e utilidade da linguagem de consulta é o plugin
   \textit{nvim-treesitter} \cite{nvim-treesitter-2023-nvim}, que é
@@ -455,7 +437,7 @@
   \cite{neovim-2014-hyperextensible}. Esse plugin utiliza a linguagem de
   consulta para definir diferentes recursos, tais como:
   \begin{inparaenum}
-    \item \textit{\gloss{fold}s}, que permitem agrupar blocos de código;
+    \item \textit{\gloss{code-folding}}, que permite ocultar blocos de código;
     \item highlights, que realçam a sintaxe do código;
     \item indentações, que definem a estrutura do código;
     \item injeções, que permitem adicionar novas sintaxes a arquivos
@@ -479,19 +461,6 @@
   código para realizar tarefas variadas e sofisticadas, contribuindo
   significativamente no ambiente de desenvolvimento.
 
-  %%%%%%%%%%%%%%%%%%%%%
-  % The Witch Cooking %
-  %%%%%%%%%%%%%%%%%%%%%
-
-  \chapter{O \textit{Witch Cooking}}
-
-  O \textit{Witch Cooking} surgiu das necessidades do autor de:
-  \begin{inparaenum}
-    \item formatar código utilizando estilos não convencionais;
-    \item formatar linguagens não-populares, as quais eram desprovidas de
-          formatadores mais sofisticados.
-  \end{inparaenum}
-
   %%%%%%%%%%%%%%%%%%%%%%%%%
   % Post Textual Elements %
   %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -500,5 +469,3 @@
   \printbibliography
   \printgloss{glossary}
 \end{document}
-
-% vim:fdm=marker

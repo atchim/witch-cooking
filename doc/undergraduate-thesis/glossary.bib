@@ -1,86 +1,99 @@
 @gd
   {builtin,
    word       = {builtin},
-   definition = {Termo usado na programação para descrever funções ou comandos
-                 que fazem parte do próprio sistema ou ambiente de programação,
-                 em oposição a funções ou comandos definidos pelo próprio
-                 usuário. Por exemplo, em Python, \textit{print} é um comando
-                 \textit{builtin} porque faz parte do próprio ambiente de
-                 programação, enquanto uma função definida pelo usuário seria
-                 algo criado pelo próprio programador para atender às suas
-                 necessidades específicas. Esses comandos ou funções
-                 \textit{builtin} estão geralmente disponíveis para o usuário
-                 em tempo de execução, sem precisar serem definidos ou
-                 importados explicitamente no código}}
+   definition = {No desenvolvimento de software, \textit{builtin} é um termo
+                 utilizado para descrever funções ou comandos que são
+                 incorporados no próprio sistema ou ambiente de programação, em
+                 contraste com funções ou comandos definidos pelo usuário ou
+                 programador. Por exemplo, em Python, a função \textit{print} é
+                 um exemplo de função \textit{builtin}. Essas funções ou
+                 comandos \textit{builtin} estão prontamente disponíveis, o que
+                 significa que não é necessário definir ou importá-los
+                 explicitamente por parte do usuário ou programador}}
 
 @gd
-  {diff,
-   word = {diff},
-   definition = {No desenvolvimento de software, \textit{diff} (ou diferença)
-                 se refere à comparação entre duas versões de um arquivo ou
-                 conjunto de arquivos. Especificamente, o \textit{diff} mostra
-                 as alterações feitas entre as versões, destacando as linhas
-                 adicionadas, removidas ou modificadas. O \textit{diff} é
-                 comumente utilizado para visualizar e revisar as mudanças
-                 feitas no código-fonte durante o processo de desenvolvimento
-                 colaborativo}}
+  {code-folding,
+   word       = {code folding},
+   definition = {No desenvolvimento de software, \textit{code folding} é uma
+                 \textit{feature} que permite a ocultação seletiva de partes de
+                 um documento ou código-fonte, permitindo ao usuário ou
+                 programdor visualizar apenas as seções de interesse. Esse
+                 recurso é especialmente útil ao lidar com grandes volumes de
+                 informações, possibilitando uma melhor organização e foco em
+                 seções específicas. O \textit{code folding} é comumente
+                 utilizado em ambientes de programação que possuem estruturas
+                 hierárquicas, como árvores ou blocos aninhados, facilitando a
+                 navegação e a compreensão do código}}
 
 @gd
   {feature,
    word       = {feature},
-   definition = {Característica distintiva de um item de software (por exemplo,
-                 desempenho, portabilidade ou funcionalidade)}}
-
-@gd
-  {fold,
-   word       = {fold},
-   definition = {No contexto de editores de texto e IDEs, \textit{fold}
-                 geralmente se refere a um recurso que permite esconder (ou
-                 "dobrar") um bloco de código ou texto para tornar mais fácil a
-                 navegação e a visualização do conteúdo}}
+   definition = {Na programação de computadores, uma \textit{feature} é uma
+                 funcionalidade específica ou capacidade de um software que
+                 agrega valor ao sistema. Uma \textit{feature} pode ser um
+                 componente, uma função, um conjunto de comandos ou qualquer
+                 outra característica que ofereça uma determinada
+                 funcionalidade aos usuários do software. Ela pode abranger
+                 desde recursos básicos até funcionalidades mais avançadas e
+                 personalizadas, e é projetada para atender às necessidades e
+                 demandas dos usuários, melhorar a usabilidade do software e
+                 fornecer uma experiência mais completa}}
 
 @gd
   {homoiconic,
    word       = {homoicônico},
-   definition = {Na programação de computadores, uma linguagem é homoicônica se
-                 um programa escrito nela pode ser manipulado como dados usando
-                 a linguagem, e assim a representação interna do programa pode
-                 ser inferida apenas lendo o próprio programa. Essa propriedade
-                 é frequentemente resumida dizendo que a linguagem trata o
-                 código como dados}}
+   definition = {Na programação de computadores, a homoiconicidade (das
+                 palavras gregas \textit{homo-}, que significa ``o mesmo'', e
+                 \textit{icon}, que significa ``representação'') é uma
+                 propriedade de algumas linguagens de programação. Uma
+                 linguagem é homoicônica se um programa escrito nela pode ser
+                 manipulado como dados utilizando a própria linguagem,
+                 permitindo inferir a representação interna do programa apenas
+                 lendo o próprio programa. Essa propriedade é frequentemente
+                 resumida dizendo que a linguagem trata o
+                 \textbf{código como dados}}}
 
 @gd
   {opinionated,
    word       = {opinionated},
-   definition = {Termo utilizado no desenvolvimento de software para se referir
-                 a um conjunto de práticas preestabelecidas sobre como abordar
-                 uma determinada tarefa, podendo não permitir customizações ou
-                 desvio das abordagens}}
+   definition = {No desenvolvimento de software, \textit{opinionated} é um
+                 termo utilizado para se referir a um conjunto de práticas
+                 preestabelecidas sobre como abordar uma determinada tarefa,
+                 podendo não permitir customizações ou desvio das abordagens}}
 
 @gd
   {parser,
    word       = {parser},
-   definition = {Software que analisa a estrutura sintática de uma sequência de
-                 símbolos, geralmente de acordo com uma gramática formal. Ele é
-                 comumente utilizado na compilação de linguagens de programação
-                 para verificar se o código fonte está escrito corretamente de
-                 acordo com as regras da linguagem. O \textit{parser} recebe
-                 como entrada o código fonte e produz uma representação interna
-                 da estrutura sintática do código em uma forma que possa ser
-                 manipulada pelo compilador ou outro programa}}
+   definition = {Na programação de computadores, um \textit{parser} (ou
+                 analisador) é um componente de software que recebe dados de
+                 entrada (frequentemente texto) e constrói uma estrutura de
+                 dados -- frequentemente algum tipo de árvore de análise,
+                 árvore de sintaxe abstrata ou outra estrutura hierárquica --
+                 fornecendo uma representação estrutural da entrada enquanto
+                 verifica a sintaxe correta. A análise pode ser precedida ou
+                 seguida por outras etapas, ou essas etapas podem ser
+                 combinadas em uma única etapa. O \textit{parser} é
+                 frequentemente precedido por um analisador léxico
+                 (\textit{lexer}) separado, que cria tokens a partir da
+                 sequência de caracteres de entrada; alternativamente, esses
+                 elementos podem ser combinados na análise sem scanner.
+                 \textit{Parsers} podem ser programados manualmente ou podem
+                 ser gerados automaticamente ou semi-automaticamente por um
+                 gerador de \textit{parser}}}
 
 @gd
   {prettyprinting,
    word       = {prettyprinting},
-   definition = {\textit{prettyprinting} é a aplicação de diversas convenções
-                 estilísticas de formatação a arquivos de texto, como
-                 código-fonte, marcação e conteúdos similares. Essas convenções
-                 de formatação podem incluir o uso de estilos de indentação,
-                 cores e tipos de fonte diferentes para destacar elementos
-                 sintáticos do código-fonte, ou ajustes de tamanho, para tornar
-                 o conteúdo mais fácil de ser lido e compreendido por pessoas.
-                 \textit{Prettyprinters} para código-fonte são às vezes
-                 chamados de formatadores de código ou \textit{beautifiers}}}
+   definition = {Na programação de computadores, \textit{prettyprinting} é a
+                 aplicação de diversas convenções estilísticas de formatação a
+                 arquivos de texto, como código-fonte, marcação e conteúdos
+                 similares. Essas convenções de formatação podem incluir o uso
+                 de estilos de indentação, cores e tipos de fonte diferentes
+                 para destacar elementos sintáticos do código-fonte, ou ajustes
+                 de tamanho, para tornar o conteúdo mais fácil de ser lido e
+                 compreendido por pessoas. \textit{Prettyprinters} para
+                 código-fonte são às vezes chamados de formatadores de código
+                 ou \textit{beautifiers}}}
 
 @gd
   {sexp,
@@ -97,13 +110,36 @@
 @gd
   {wildcard,
    word       = {wildcard},
-   definition = {Termo usado em várias áreas da computação para se referir a um
-                 caractere ou símbolo especial que pode ser usado para
-                 representar qualquer outro caractere ou conjunto de caracteres
-                 em uma determinada operação. Em geral, o \textit{wildcard} é
-                 utilizado para permitir a busca ou correspondência de padrões
-                 mais flexíveis e abrangentes em textos, arquivos ou expressões
-                 regulares. O uso mais comum de \textit{wildcards} é em
-                 expressões regulares, onde um caractere especial é usado para
+   definition = {No software, um \textit{wildcard} é um tipo de espaço
+                 reservado geralmente representado por um único caractere --
+                 como um asterisco (`*') -- ou símbolo especial, que pode
+                 representar:
+                 \begin{inparaenum}
+                   \item qualquer outro caractere;
+                   \item um conjunto de caracteres;
+                   \item objetos; ou até
+                   \item nada, ou seja, nenhum caractere ou objeto.
+                 \end{inparaenum}
+                 Em geral, o \textit{wildcard} é utilizado para permitir a
+                 busca ou correspondência de padrões mais flexíveis e
+                 abrangentes em textos, arquivos ou expressões regulares. O uso
+                 mais comum de \textit{wildcards} é em expressões regulares
+                 (\textit{regex}), onde um caractere especial é usado para
                  representar um conjunto de caracteres desconhecidos ou
                  variáveis em uma string}}
+
+######################
+# Unused Definitions #
+######################
+
+@gd
+  {diff,
+   word = {diff},
+   definition = {No desenvolvimento de software, \textit{diff} (ou diferença)
+                 se refere à comparação entre duas versões de um arquivo ou
+                 conjunto de arquivos. Especificamente, o \textit{diff} mostra
+                 as alterações feitas entre as versões, destacando as linhas
+                 adicionadas, removidas ou modificadas. O \textit{diff} é
+                 comumente utilizado para visualizar e revisar as mudanças
+                 feitas no código-fonte durante o processo de desenvolvimento
+                 colaborativo}}
