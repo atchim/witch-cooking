@@ -180,7 +180,8 @@
    pdfkeywords    = {formatação de código}
                     {\textit{Tree-Sitter}}
                     {\textit{prettyprint}}
-                    {customização},
+                    {customização}
+                    {\textit{query}},
    colorlinks     = true,
    linkcolor      = blue,
    citecolor      = blue,
@@ -232,7 +233,8 @@
     formatação de código;
     \textit{Tree-Sitter};
     \textit{prettyprint};
-    customização.
+    customização;
+    \textit{query}.
   \end{resumo}
 
   %%%%%%%%%%%%%%%%%%%%%
@@ -384,14 +386,14 @@
   ), considerado o primeiro \textit{prettyprinter} a mensurar o tamanho das
   linhas e ter ciência de sua localização no arquivo
   \cites{gosper-2023-twubblesome}{griesemer-2022-cultural}. Essa ferramenta
-  implementava o algoritmo \textit{recursive re-predictor}, que percorria as
-  árvores de nós representando as listas e imprimia os nós considerando
-  seus tamanhos e a quantidade máxima de caracteres que ainda poderiam ser
-  inseridos em uma linha \cite{goldstein-1973-pretty}.
+  implementava o algoritmo \textit{recursive re-predictor}, que, como descrito
+  por \textcite{goldstein-1973-pretty}, percorria as árvores de nós
+  representando as listas e imprimia os nós considerando seus tamanhos e a
+  quantidade máxima de caracteres que ainda poderiam ser inseridos em uma
+  linha.
 
-  No artigo \textit{A one-pass prettyprinter}, \textcite{hearn-1979-one}
-  propuseram um algoritmo mais elaborado para \textit{prettyprinting} que
-  utilizava um par de corrotinas%
+  Posteriormente, \textcite{hearn-1979-one} propuseram um algoritmo mais
+  elaborado para \textit{prettyprinting} que utilizava um par de corrotinas%
   \footnote
     {Na obra, os autores enfatizam que a implementação com o uso de corrotinas
      é tão simples que poderia ser simulada -- sem grandes dificuldades -- em
@@ -406,6 +408,22 @@
   Essas corrotinas se comunicavam por meio de um buffer \textit{\gloss{fifo}},
   permitindo que as decisões de formatação fossem adiadas até que houvesse
   informações suficientes disponíveis para tomá-las com confiabilidade.
+
+  No ano seguinte, \textcite{oppen-1980-prettyprinting} apresentou em sua
+  influente obra, intitulada \textit{Prettyprinting}, um algoritmo inovador
+  de formatação de código-fonte. Embora apresentasse semelhanças ao algoritmo
+  proposto por \textcite{hearn-1979-one}, destacava-se por sua capacidade de
+  formatar código derivado de qualquer linguagem de programação. Para realizar
+  essa tarefa, o algoritmo necessitava que o código-fonte fosse anotado com
+  espaços em branco%
+  \footnote
+    {Quebras de linha, avanços de formulário e alimentações de linha também
+     eram tratados como espaços em branco pelo algoritmo.}
+  e delimitadores especiais para marcar o início e fim de blocos logicamente
+  contíguos. Assim, o código a ser fornecido ao algoritmo precisaria ser
+  processado por uma ferramenta intermediária capaz de compreender a sintaxe da
+  linguagem e fornecer um código anotado de forma adequada, permitindo que o
+  algoritmo realizasse a formatação apropriada.
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%
   %% The Tree-Sitter System %
