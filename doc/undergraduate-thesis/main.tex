@@ -19,7 +19,7 @@
 \usepackage{graphicx}
 \usepackage{microtype}
 \usepackage{csquotes}
-\usepackage[backend = biber, indent, ittitles, style = abnt]{biblatex}
+\usepackage[backend = biber, indent, style = abnt]{biblatex}
 \usepackage{paralist}
 \let\glossitem\undefined\usepackage[portuguese]{gloss}
 
@@ -324,12 +324,12 @@
   que a saída impressa fosse formatada de maneira esteticamente agradável
   \apud{harris-1956-keyboard}[1]{yelland-2015-rfmt}. Esses métodos ganharam
   popularidade sob o termo \textit{\gloss{prettyprinting}}, que se refere à
-  formatação visual de diversos tipos de conteúdo. No contexto do
-  desenvolvimento de software, o \textit{prettyprinting} é conhecido como
-  formatação de código: uma prática histórica e comum que envolve a adoção de
-  convenções estilísticas para estruturar o código-fonte. Existem diversas
-  terminologias utilizadas para se referir às ferramentas que realizam a
-  formatação do código-fonte, incluindo:
+  formatação visual de diversos tipos de conteúdo. No desenvolvimento de
+  software, o \textit{prettyprinting} é conhecido como formatação de código:
+  uma prática histórica e comum que envolve a adoção de convenções estilísticas
+  para estruturar o código-fonte. Existem diversas terminologias utilizadas
+  para se referir às ferramentas que realizam a formatação do código-fonte,
+  incluindo:
   \begin{inparaenum}
     \item formatadores de código, ou \textit{code formatters} em inglês;
     \item \textit{prettyprinters}; ou ainda
@@ -360,19 +360,52 @@
              \textit{S-expressions} em vez das \textit{M-expressions}, tornando
              as \textit{S-expressions} a forma predominante de representar a
              estrutura do código na linguagem.},
-          o que tornava o código-fonte praticamente incompreensível caso não
-          fosse devidamente organizado. Além disso,
+          o que tornava o código-fonte praticamente ilegível e incompreensível
+          caso não fosse devidamente organizado. Além disso,
     \item LISP era \gloss{homoiconic}, ou seja, permitia a manipulação do
           código via dados da própria linguagem.
   \end{inparaenum}
   Essas duas características intrínsecas do LISP fundamentaram o surgimento de:
   \begin{inparaenum}
     \item \textit{prettyprinters} para a linguagem, visando aperfeiçoar a
-          legibilidade do código-fonte escrito; além de
+          legibilidade do código-fonte escrito ou emitido; além de
     \item novas técnicas e abordagens para a formatação de código em geral.
   \end{inparaenum}
   Esses avanços contribuíram significativamente para o conhecimento e o
   aprimoramento de práticas de formatação de código em trabalhos subsequentes.
+
+  Em 1967, Bill Gosper desenvolveu o \textit{GRINDEF} (acrônimo para
+  \textit
+    {\textbf{GRIND}%
+     \footnote
+       {O termo \textit{grind} era utilizado em alguns círculos de LISP como
+        sinônimo para \textit{prettyprinters}.}
+     \textbf{F}unction}%
+  ), considerado o primeiro \textit{prettyprinter} a mensurar o tamanho das
+  linhas e ter ciência de sua localização no arquivo
+  \cites{gosper-2023-twubblesome}{griesemer-2022-cultural}. Essa ferramenta
+  implementava o algoritmo \textit{recursive re-predictor}, que percorria as
+  árvores de nós representando as listas e imprimia os nós considerando
+  seus tamanhos e a quantidade máxima de caracteres que ainda poderiam ser
+  inseridos em uma linha \cite{goldstein-1973-pretty}.
+
+  No artigo \textit{A one-pass prettyprinter}, \textcite{hearn-1979-one}
+  propuseram um algoritmo mais elaborado para \textit{prettyprinting} que
+  utilizava um par de corrotinas%
+  \footnote
+    {Na obra, os autores enfatizam que a implementação com o uso de corrotinas
+     é tão simples que poderia ser simulada -- sem grandes dificuldades -- em
+     linguagens que não possuíam suporte nativo para corrotinas
+     \cite[53]{hearn-1979-one}.}:
+  uma
+  \begin{inparaenum}
+    \item responsável por produzir uma sequência de caracteres que
+          representavam o programa sendo impresso; e outra
+    \item responsável por decidir como esses caracteres seriam exibidos.
+  \end{inparaenum}
+  Essas corrotinas se comunicavam por meio de um buffer \textit{\gloss{fifo}},
+  permitindo que as decisões de formatação fossem adiadas até que houvesse
+  informações suficientes disponíveis para tomá-las com confiabilidade.
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%
   %% The Tree-Sitter System %
@@ -445,7 +478,7 @@
   Um exemplo da relevância e utilidade da linguagem de consulta é o plugin
   \textit{nvim-treesitter} \cite{nvim-treesitter-2023-nvim}, que é
   frequentemente utilizado no editor \textit{Neovim}
-  \cite{neovim-2014-hyperextensible}. Esse plugin utiliza a linguagem de
+  \cite{neovim-2023-hyperextensible}. Esse plugin utiliza a linguagem de
   consulta para definir diferentes recursos, tais como:
   \begin{inparaenum}
     \item \textit{\gloss{code-folding}}, que permite ocultar blocos de código;
