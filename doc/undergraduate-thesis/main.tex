@@ -346,7 +346,7 @@
      da linguagem, o termo também passou a ser utilizado para se referir à
      família de linguagens derivadas da original.}
   proporcionou condições favoráveis para o avanço da formatação de código
-  \cite[2]{yelland-2015-rfmt}.
+  \cite[2]{yelland-2015-new}.
   \begin{inparaenum}
     \item LISP apresentava uma sintaxe distinta e expressiva, baseada em listas
           e estruturas aninhadas delimitadas por parênteses%
@@ -424,6 +424,14 @@
   processado por uma ferramenta intermediária capaz de compreender a sintaxe da
   linguagem e fornecer um código anotado de forma adequada, permitindo que o
   algoritmo realizasse a formatação apropriada.
+
+  Desde então, uma ampla variedade de \textit{prettyprinters} e trabalhos
+  relacionados ao tema têm sido lançados e publicados. Mais recentemente, por
+  exemplo, em \textit{A New Approach to Optimal Code Formatting},
+  \textcite{yelland-2015-new} descreveu os fundamentos do algoritmo (de
+  formatação de código) utilizado no \textit{rfmt} \cite{yelland-2015-rfmt},
+  além das abstrações utilizadas para facilitar a implementação do algoritmo em
+  uma variedade de linguagens e políticas de layout.
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%
   %% The Tree-Sitter System %
@@ -522,6 +530,40 @@
   \textit{\gloss{feature}}, sendo utilizada em diversos plugins de editores de
   código para realizar tarefas variadas e sofisticadas, contribuindo
   significativamente no ambiente de desenvolvimento.
+
+  %%%%%%%%%%%%%%%%%%%%%%
+  %% The Witch Cooking %
+  %%%%%%%%%%%%%%%%%%%%%%
+
+  \chapter{O \textit{Witch Cooking}}
+
+  Desenvolver um \textit{prettyprinter} não é uma tarefa simples
+  \cite[2]{hughes-1995-design}. Durante o processo de formatação, é necessário
+  \begin{inparaenum}
+    \item ter conhecimento das estruturas gramaticais da sintaxe específica em
+          questão. Além disso, o objetivo do \textit{prettyprinter} é
+        \item\label{pl2} formatar o código de maneira otimizada e agradável
+          para o leitor \cite[2]{hughes-1995-design}, levando em consideração
+          as melhores práticas de formatação. Em alguns casos, também é
+          importante
+    \item permitir que o usuário possa optar por estilos de formatação
+          personalizados, atendendo às suas preferências individuais.
+          Adicionalmente, as sintaxes das linguagens de programação costumam
+          ser flexíveis em relação à estruturação do código-fonte. Assim, para
+          atender o item \ref{pl2}, geralmente é necessário
+    \item utilizar algoritmos que calculem o layout mais adequado de acordo
+          com o contexto.
+  \end{inparaenum}
+  Fatalmente, essas características essenciais de um \textit{prettyprinter}
+  normalmente o restringem a uma linguagem específica ou, em alguns casos, a
+  uma família de linguagens que compartilham semelhanças sintáticas ou
+  estruturais.
+
+  %%%%%%%%%%%%%%%
+  %% Conclusion %
+  %%%%%%%%%%%%%%%
+
+  \chapter{Conclusão}
 
   %%%%%%%%%%%%%%%%%%%%%%%%%
   % Post Textual Elements %
