@@ -261,7 +261,7 @@
   diferentes arranjos dum mesmo código compartilhem um valor sintático
   equivalente. Essa característica possibilita a formatação do código de acordo
   com aspectos desejados, como a legibilidade, que é fundamental no ciclo de
-  vida do software \cites[1]{buse-2009-learning}[1]{oliveira-2020-evaluating}.
+  vida do software \cites[546]{buse-2009-learning}[1]{oliveira-2020-evaluating}.
   Consequentemente, a formatação é frequentemente utilizada para estabelecer um
   nível satisfatório de legibilidade em bases de código.
 
@@ -538,21 +538,25 @@
   \chapter{O \textit{Witch Cooking}}
 
   Desenvolver um \textit{prettyprinter} não é uma tarefa simples
-  \cite[2]{hughes-1995-design}. Durante o processo de formatação, é necessário
+  \cite[55]{hughes-1995-design}. Durante o processo de formatação, é necessário
   \begin{inparaenum}
     \item ter conhecimento das estruturas gramaticais da sintaxe específica em
           questão. Além disso, o objetivo do \textit{prettyprinter} é
-        \item\label{pl2} formatar o código de maneira otimizada e agradável
-          para o leitor \cite[2]{hughes-1995-design}, levando em consideração
-          as melhores práticas de formatação. Em alguns casos, também é
-          importante
+    \item\label{pl2} formatar o código de maneira otimizada e agradável para o
+          leitor \cite[55]{hughes-1995-design}, levando em consideração as
+          melhores práticas de formatação. Em alguns casos, também é importante
     \item permitir que o usuário possa optar por estilos de formatação
-          personalizados, atendendo às suas preferências individuais.
-          Adicionalmente, as sintaxes das linguagens de programação costumam
-          ser flexíveis em relação à estruturação do código-fonte. Assim, para
-          atender o item \ref{pl2}, geralmente é necessário
+          que atenda às suas preferências individuais. Adicionalmente, as
+          sintaxes das linguagens de programação costumam ser flexíveis em
+          relação à estruturação do código-fonte. Assim, para atender o item
+          \ref{pl2}, geralmente é necessário
     \item utilizar algoritmos que calculem o layout mais adequado de acordo
-          com o contexto.
+          com o contexto
+          \cites
+            {llvm-2023-clangformat}
+            {goldstein-1973-pretty}
+            {hughes-1995-design}
+            {yelland-2015-new}.
   \end{inparaenum}
   Fatalmente, essas características essenciais de um \textit{prettyprinter}
   normalmente o restringem a uma linguagem específica ou, em alguns casos, a
