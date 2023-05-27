@@ -276,10 +276,10 @@
   de softwares que automatizam a formatação de forma determinística, tornando o
   código padronizado e consistente. No entanto, é comum que essas ferramentas
   de formatação sejam limitadas a uma linguagem ou a uma família de linguagens
-  de programação. Além disso, algumas delas são \textit{\gloss{opinionated}},
-  assim restringindo as possiblidades de customização do usuário. Finalmente, é
-  também comum que essas ferramentas de formatação não permitam que o usuário
-  defina regras de formatação personalizadas.
+  de programação. Além disso, algumas delas são opinativas, assim restringindo
+  as possiblidades de customização do usuário. Finalmente, é também comum que
+  essas ferramentas de formatação não permitam que o usuário defina regras de
+  formatação personalizadas.
 
   Em ambientes de desenvolvimento modernos, além da utilização de ferramentas
   que automatizam a formatação de código, é também comum a utilização do
@@ -425,13 +425,46 @@
   linguagem e fornecer um código anotado de forma adequada, permitindo que o
   algoritmo realizasse a formatação apropriada.
 
-  Desde então, uma ampla variedade de \textit{prettyprinters} e trabalhos
-  relacionados ao tema têm sido lançados e publicados. Mais recentemente, por
-  exemplo, em \textit{A New Approach to Optimal Code Formatting},
-  \textcite{yelland-2015-new} descreveu os fundamentos do algoritmo (de
-  formatação de código) utilizado no \textit{rfmt} \cite{yelland-2015-rfmt},
-  além das abstrações utilizadas para facilitar a implementação do algoritmo em
-  uma variedade de linguagens e políticas de layout.
+  Recentemente, tem se tornado cada vez mais evidente a crescente relevância
+  dos \textit{\gloss{opinionated} softwares} \cite{eccles-2015-rise}, também
+  conhecidos como softwares opinados. Esses softwares preestabelecem práticas
+  que devem ser seguidas rigorosamente, visando deliberadamente frustrar ou
+  dificultar práticas destoantes \cite{lance-2021-about}. Os
+  \textit{prettyprinters} primitivos, tais como o \textit{SOAP}
+  \cite{scowen-1971-soap}, eram naturalmente opinativos devido à simplicidade e
+  às limitações dos algoritmos de formatação existentes. Conforme mencionado
+  anteriormente, à medida que os algoritmos de formatação de código-fonte eram
+  aprimorados, tornando-se mais robustos e sofisticados, os
+  \textit{prettyprinters} passaram a proporcionar mais customizações aos
+  usuários. No entanto, atualmente, a abordagem opinativa tem se tornado
+  relevante também nos softwares de formatação de código-fonte
+  \cites[5--6,8]{griesemer-2022-cultural}.
+
+  Sumarizando, desenvolver um \textit{prettyprinter} não é uma tarefa simples
+  \cite[55]{hughes-1995-design}. Durante o processo de formatação, é necessário
+  \begin{inparaenum}
+    \item ter conhecimento das estruturas gramaticais da sintaxe específica em
+          questão. Além disso, o objetivo do \textit{prettyprinter} é
+    \item\label{pl2} formatar o código de maneira otimizada e agradável para o
+          leitor \cite[55]{hughes-1995-design}, levando em consideração as
+          melhores práticas de formatação. Em alguns casos, também é importante
+    \item permitir que o usuário possa optar por estilos de formatação
+          que atenda às suas preferências individuais. Adicionalmente, as
+          sintaxes das linguagens de programação costumam ser flexíveis em
+          relação à estruturação do código-fonte. Assim, para atender o item
+          \ref{pl2}, geralmente é necessário
+    \item utilizar algoritmos que calculem o layout mais adequado de acordo
+          com o contexto
+          \cites
+            [12]{jasper-2023-clang}
+            {goldstein-1973-pretty}
+            {hughes-1995-design}
+            {yelland-2015-new}.
+  \end{inparaenum}
+  Fatalmente, essas características essenciais de um \textit{prettyprinter}
+  normalmente o restringem a uma linguagem específica ou, em alguns casos, a
+  uma família de linguagens que compartilham semelhanças sintáticas ou
+  estruturais.
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%
   %% The Tree-Sitter System %
@@ -536,32 +569,6 @@
   %%%%%%%%%%%%%%%%%%%%%%
 
   \chapter{O \textit{Witch Cooking}}
-
-  Desenvolver um \textit{prettyprinter} não é uma tarefa simples
-  \cite[55]{hughes-1995-design}. Durante o processo de formatação, é necessário
-  \begin{inparaenum}
-    \item ter conhecimento das estruturas gramaticais da sintaxe específica em
-          questão. Além disso, o objetivo do \textit{prettyprinter} é
-    \item\label{pl2} formatar o código de maneira otimizada e agradável para o
-          leitor \cite[55]{hughes-1995-design}, levando em consideração as
-          melhores práticas de formatação. Em alguns casos, também é importante
-    \item permitir que o usuário possa optar por estilos de formatação
-          que atenda às suas preferências individuais. Adicionalmente, as
-          sintaxes das linguagens de programação costumam ser flexíveis em
-          relação à estruturação do código-fonte. Assim, para atender o item
-          \ref{pl2}, geralmente é necessário
-    \item utilizar algoritmos que calculem o layout mais adequado de acordo
-          com o contexto
-          \cites
-            {llvm-2023-clangformat}
-            {goldstein-1973-pretty}
-            {hughes-1995-design}
-            {yelland-2015-new}.
-  \end{inparaenum}
-  Fatalmente, essas características essenciais de um \textit{prettyprinter}
-  normalmente o restringem a uma linguagem específica ou, em alguns casos, a
-  uma família de linguagens que compartilham semelhanças sintáticas ou
-  estruturais.
 
   %%%%%%%%%%%%%%%
   %% Conclusion %

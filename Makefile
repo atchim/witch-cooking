@@ -10,15 +10,16 @@ debug:
 doc:
 	cargo doc
 
-doc-all: doc doc-thesis
+doc-all: doc doc-undergraduate-thesis
 
-doc-thesis:
+doc-undergraduate-thesis:
 	$(MAKE) -C doc/undergraduate-thesis
 
-open-thesis:
+open-undergraduate-thesis:
 	$(MAKE) -C doc/undergraduate-thesis open
 
 release:
 	cargo build --release
 
-.PHONY: all clean debug doc doc-all doc-thesis open-thesis release
+.PHONY: all clean debug doc doc-all doc-undergraduate-thesis
+.PHONY: open-undergraduate-thesis release
