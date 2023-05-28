@@ -425,20 +425,46 @@
   linguagem e fornecer um código anotado de forma adequada, permitindo que o
   algoritmo realizasse a formatação apropriada.
 
+  \dots % FIXME
+
   Recentemente, tem se tornado cada vez mais evidente a crescente relevância
-  dos \textit{\gloss{opinionated} softwares} \cite{eccles-2015-rise}, também
-  conhecidos como softwares opinados. Esses softwares preestabelecem práticas
-  que devem ser seguidas rigorosamente, visando deliberadamente frustrar ou
-  dificultar práticas destoantes \cite{lance-2021-about}. Os
-  \textit{prettyprinters} primitivos, tais como o \textit{SOAP}
-  \cite{scowen-1971-soap}, eram naturalmente opinativos devido à simplicidade e
-  às limitações dos algoritmos de formatação existentes. Conforme mencionado
-  anteriormente, à medida que os algoritmos de formatação de código-fonte eram
-  aprimorados, tornando-se mais robustos e sofisticados, os
-  \textit{prettyprinters} passaram a proporcionar mais customizações aos
-  usuários. No entanto, atualmente, a abordagem opinativa tem se tornado
-  relevante também nos softwares de formatação de código-fonte
-  \cites[5--6,8]{griesemer-2022-cultural}.
+  dos softwares opinativos \cite{eccles-2015-rise}, também conhecidos em inglês
+  como \textit{\gloss{opinionated} softwares}. Esses softwares preestabelecem
+  práticas estritivas, visando deliberadamente frustrar ou dificultar práticas
+  destoantes \cite{lance-2021-about}. Similarmente, os \textit{prettyprinters}
+  primitivos, tais como o \textit{SOAP} \cite{scowen-1971-soap}, eram
+  naturalmente restritivos devido à simplicidade e às limitações dos algoritmos
+  de formatação existentes. Conforme mencionado anteriormente, à medida que os
+  algoritmos de formatação de código-fonte eram aprimorados, tornando-se mais
+  robustos e sofisticados, os \textit{prettyprinters} passaram a proporcionar
+  mais customizações aos usuários. No entanto, atualmente, a abordagem
+  opinativa também tem sido adotada por softwares modernos de formatação de
+  código-fonte \cites{black-2023-black}[5--6,8]{griesemer-2022-cultural}. Esses
+  softwares geralmente têm como objetivos:
+  \begin{inparaenum}
+    \item padronizar e
+    \item garantir a consistência do código; além
+    \item eliminar o tempo e esforços necessários para escolher os estilos
+          ideais de formatação; e, finalmente, consequentemente e
+          principalmente
+    \item aprimorar o ambiente de desenvolvimento colaborativo.
+  \end{inparaenum}
+
+  Um exemplo proeminente de \textit{prettyprinter} opinativo é o
+  \textit{Black} \cite{black-2023-black}, um formatador de código Python, cuja
+  logomarca parodia a da fabricante automobilística Ford, e cujo irônico slogan
+  \textit{``any color you like''} faz alusão à famosa frase
+  \textit
+    {``any customer can have a car painted \textbf{any colour that he wants so
+     long as it is black}''}
+  \cite[p. 72, grifo nosso]{ford-1922-my}, dita por Henry Ford, o fundador da
+  fabricante. Assim como Ford adotou uma abordagem de produção em massa na
+  fabricação dos \textit{Model Ts} com uma única opção de cor para aumentar a
+  eficiência \cite{ford-1922-my}, o \textit{Black} segue um princípio análogo.
+  Ao impor um estilo estrito de formatação, minimizando o espaço para
+  personalização ou preferências individuais, o \textit{Black} oferece
+  velocidade, determinismo, além de economia de tempo e esforços para questões
+  mais importantes \cite{black-2023-black}.
 
   Sumarizando, desenvolver um \textit{prettyprinter} não é uma tarefa simples
   \cite[55]{hughes-1995-design}. Durante o processo de formatação, é necessário
