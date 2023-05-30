@@ -469,8 +469,8 @@
   Sumarizando, desenvolver um \textit{prettyprinter} não é uma tarefa simples
   \cite[55]{hughes-1995-design}. Durante o processo de formatação, é necessário
   \begin{inparaenum}
-    \item ter conhecimento das estruturas gramaticais da sintaxe específica em
-          questão. Além disso, o objetivo do \textit{prettyprinter} é
+    \item ter conhecimento das estruturas gramaticais da linguagem específica
+          em questão. Além disso, o objetivo do \textit{prettyprinter} é
     \item\label{pl2} formatar o código de maneira otimizada e agradável para o
           leitor \cite[55]{hughes-1995-design}, levando em consideração as
           melhores práticas de formatação. Em alguns casos, também é importante
@@ -577,7 +577,7 @@
           remoção e navegação do código.
   \end{inparaenum}
 
-  Em suma, o sistema \textit{Tree-Sitter} se mostrou uma solução inovadora e
+  Em resumo, o sistema \textit{Tree-Sitter} se mostrou uma solução inovadora e
   eficiente para a análise sintática de códigos em diversas linguagens de
   programação, com uma abordagem diferenciada e sofisticada que possibilita a
   atualização em tempo real das árvores sintáticas e a identificação precisa
@@ -595,6 +595,22 @@
   %%%%%%%%%%%%%%%%%%%%%%
 
   \chapter{O \textit{Witch Cooking}}
+
+  As motivações para o desenvolvimento do \textit{Witch Cooking} surgiram das
+  dificuldades enfrentadas pelo autor ao estudar estilos de formatação de
+  código-fonte em diversas linguagens de programação com as quais ele
+  trabalhava. O estudo envolvia a exploração e análise tanto de estilos
+  convencionais%
+  \footnote
+    {Neste trabalho, são considerados convencionais os estilos de formatação
+     abordados nas páginas da Wikipédia
+     \cites{wiki-2023-indentation}{wiki-2023-programming}.},
+  dos quais muitos eram amplamente adotados, quanto de estilos
+  não-convencionais. Durante a análise dos estilos convencionais de formatação,
+  era imprescindível recorrer a diferentes \textit{prettyprinters}, cada um com
+  suas próprias configurações e níveis de suporte para esses estilos. Por outro
+  lado, os estilos não-convencionais exigiam inevitavelmente uma aplicação
+  manual, o que consumia considerável tempo e esforço.
 
   %%%%%%%%%%%%%%%
   %% Conclusion %
