@@ -2,6 +2,7 @@
 *.bbl
 *.bcf
 *.blg
+*.dvi
 *.fdb_latexmk
 *.fls
 *.gls.*
@@ -9,5 +10,7 @@
 *.ilg
 *.ind
 *.log
+*.log
+*.out.ps
 *.run.xml
 *.toc
