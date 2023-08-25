@@ -110,7 +110,7 @@
 %%%% Summary %
 %%%%%%%%%%%%%%
 
-\setlength{\cftlastnumwidth}{\cftchapternumwidth}
+\setlength{\cftlastnumwidth}{\cftsectionnumwidth}
 \cftsetindents{part}{0em}{\cftlastnumwidth}
 \cftsetindents{chapter}{0em}{\cftlastnumwidth}
 \cftsetindents{section}{0em}{\cftlastnumwidth}
@@ -161,6 +161,13 @@
    \addcontentsline{toc}{chapter}{\glossname}}
   {\stopglosslist}
 \makegloss
+
+%%%%%%%%%%%%%%
+%%% hyperref %
+%%%%%%%%%%%%%%
+
+\def\chapterautorefname{capítulo}
+\def\Itemautorefname{item}
 
 %%%%%%%%%%%%%%
 %%% Paralist %
@@ -479,14 +486,15 @@
   \begin{inparaenum}
     \item ter conhecimento das estruturas gramaticais da linguagem específica
           em questão. Além disso, o objetivo do \textit{prettyprinter} é
-    \item\label{pl2} formatar o código de maneira otimizada e agradável para o
-          leitor \cite[55]{hughes-1995-design}, levando em consideração as
-          melhores práticas de formatação. Em alguns casos, também é importante
+    \item \label{inparaenum:format} formatar o código de maneira otimizada e
+          agradável para o leitor \cite[55]{hughes-1995-design}, levando em
+          consideração as melhores práticas de formatação. Em alguns casos,
+          também é importante
     \item permitir que o usuário possa optar por estilos de formatação
           que atenda às suas preferências individuais. Adicionalmente, as
           sintaxes das linguagens de programação costumam ser flexíveis em
-          relação à estruturação do código-fonte. Assim, para atender o item
-          \ref{pl2}, geralmente é necessário
+          relação à estruturação do código-fonte. Assim, para atender o
+          \autoref{inparaenum:format}, geralmente é necessário
     \item utilizar algoritmos que calculem o layout mais adequado de acordo
           com o contexto
           \cites
@@ -505,6 +513,7 @@
   %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   \chapter{O Sistema \textit{Tree-Sitter}}
+  \label{chapter:tree-sitter}
 
   O \textit{Tree-Sitter} é um sistema multilíngue de análise sintática para
   ferramentas de programação inicialmente desenvolvido como um projeto
@@ -518,7 +527,7 @@
     \item implementar a análise incremental, permitindo a atualização da árvore
           de sintaxe em tempo real;
     \item expor através da árvore de sintaxe os nós representando suas
-          construções gramaticais no código (\textit{e.g.}, classes, funções,
+          construções gramaticais no código (e.g., classes, funções,
           declarações, etc.), diferentemente das ferramentas contemporâneas,
           que utilizavam uma abordagem simplística baseada em expressões
           regulares; e, por fim,
@@ -581,12 +590,12 @@
     \item injeções, que permitem adicionar novas sintaxes a arquivos
           existentes; além de
     \item captura de nós correspondentes a construções gramaticais
-          (\textit{e.g.}, funções, classes, métodos, etc.), os quais são
+          (e.g., funções, classes, métodos, etc.), os quais são
           frequentemente utilizados em rotinas de programação tais como a
           remoção e navegação do código.
   \end{inparaenum}
 
-  Em resumo, o sistema \textit{Tree-Sitter} se mostrou uma solução inovadora e
+  Em resumo, o sistema \textit{Tree-Sitter} se mostra uma solução inovadora e
   eficiente para a análise sintática de códigos em diversas linguagens de
   programação, com uma abordagem diferenciada e sofisticada que possibilita a
   atualização em tempo real das árvores sintáticas e a identificação precisa
@@ -594,7 +603,7 @@
   linha de comando disponível no sistema facilita a geração de parsers a partir
   de gramáticas definidas em JavaScript, o que torna o processo mais acessível
   e personalizável para os programadores. Finalmente, a linguagem de consulta
-  declarativa oferecida pelo \textit{Tree-Sitter} se mostrou uma importante
+  declarativa oferecida pelo \textit{Tree-Sitter} se mostra uma importante
   \textit{\gloss{feature}}, sendo utilizada em diversos plugins de editores de
   código para realizar tarefas variadas e sofisticadas, contribuindo
   significativamente no ambiente de desenvolvimento.
@@ -604,6 +613,8 @@
   %%%%%%%%%%%%%%%%%%%%%%
 
   \chapter{O \textit{Witch Cooking}}
+
+  \section{Motivações, Propósitos e Panorama}
 
   As motivações para o desenvolvimento do \textit{Witch Cooking} surgiram das
   dificuldades enfrentadas pelo autor ao estudar estilos de formatação de
@@ -635,10 +646,10 @@
   o \textit{Witch Cooking} foi desenvolvido como um software de linha de
   comando, de natureza prototípica, para a formatação de código-fonte. Para
   tal finalidade, a ferramenta requer a submissão do código-fonte a ser
-  formatado, juntamente com o arquivo contendo as regras de formatação. Em
+  formatado, juntamente com o arquivo contendo as instruções de formatação. Em
   alinhamento com sua natureza experimental, o \textit{Witch Cooking}
   proporciona o código-fonte formatado resultante como saída, sem modificar o
-  conteúdo original, efetivamente estabelecendo um procedimento seguro.
+  conteúdo original, efetivamente estabelecendo uma formatação segura.
 
   A ferramenta apresenta a seguinte usagem
   \boxed
@@ -653,17 +664,35 @@
           explicitar a linguagem do código-fonte a ser formatado,
     \item \boxed{\texttt{\textbf{-q} \textit{QUERY}}} é utilizado para
           definir o caminho para o arquivo -- escrito na linguagem de consulta
-          do \textit{Tree-Sitter} -- no qual as regras de formatação estão
+          do \textit{Tree-Sitter} -- no qual as instruções de formatação estão
           definidas, e
     \item \boxed{\texttt{[\textit{SRC}]}} é um argumento opcional para
           especificar o caminho para o arquivo a ser formatado.
   \end{inparaenum}
   Quando \boxed{\texttt{[\textit{SRC}]}} é provido e
   \boxed{\texttt{[\textbf{-l} \textit{LANG}]}} é omitido, o software tentará
-  inferir uma linguagem de acordo com a extenção do nome do arquivo. Quando
-  \boxed{\texttt{[\textit{SRC}]}} é omitido, o código-fonte a ser formatado
-  deve ser provido via \textit{\gloss{pipeline}}, e a sua linguagem deve
-  ser explicitada via \boxed{\texttt{[\textbf{-l} \textit{LANG}]}}.
+  inferir uma linguagem de acordo com a extenção do nome do arquivo. Por outro
+  lado, quando \boxed{\texttt{[\textit{SRC}]}} é omitido, o código-fonte a ser
+  formatado deve ser provido via \textit{\gloss{pipeline}}, e a sua linguagem
+  deve ser explicitada via \boxed{\texttt{[\textbf{-l} \textit{LANG}]}}.
+
+  \section{Instruindo a Formatação}
+
+  Como mencionado na seção anterior, o \textit{Witch Cooking} formata o
+  código-fonte conforme as instruções presentes no arquivo submetido via
+  \boxed{\texttt{\textbf{-q} \textit{QUERY}}}, o qual é escrito na linguagem de
+  consulta do \textit{Tree-Sitter}. Essas instruções constituem-se da
+  \begin{inparaenum}
+    \item busca de padrões -- i.e., \textit{pattern matching} -- em árvores
+          sintáticas, da
+    \item configuração, e da
+    \item aplicação de predicados.
+  \end{inparaenum}
+  No entanto, como abordado no \autoref{chapter:tree-sitter}, a linguagem de
+  consulta do \textit{Tree-Sitter} concebia originalmente a busca de padrões em
+  árvores sintáticas. Portanto, para viabilizar a formatação de código-fonte, o
+  \textit{Witch Cooking} introduz um conjunto adicional de configurações e
+  predicados.
 
   %%%%%%%%%%%%%%%
   %% Conclusion %
