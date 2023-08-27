@@ -329,14 +329,14 @@
   \begin{inparaenum}
     \item sua capacidade de suportar várias linguagens de programação; além de
     \item sua linguagem de consulta, a qual permite a realização de buscas
-          complexas na árvore analisada de um código fonte.
+          complexas na árvore analisada de um código-fonte.
   \end{inparaenum}
 
   Visando superar ou reduzir as limitações previamente mencionadas, quais são
   frequentemente presentes nas ferramentas convencionais de formatação, este
   trabalho tem como objetivo geral desenvolver um software prototípico para a
-  formatação de código. Nomeada antecipadamente de \witchcooking por
-  \textcite{silva-2023-witch}, a ferramenta a ser desenvolvida tem como
+  formatação de código. Nomeada antecipadamente de \witchcooking
+  \cite{silva-2023-witch}, a ferramenta a ser desenvolvida tem como
   objetivos
   \begin{inparaenum}
     \item abranger uma gama de linguagens de programação; além de
@@ -428,10 +428,9 @@
   linhas e ter ciência de sua localização no arquivo
   \cites{gosper-2023-twubblesome}{griesemer-2022-cultural}. Essa ferramenta
   implementava o algoritmo \textit{recursive re-predictor}, que, como descrito
-  por \textcite{goldstein-1973-pretty}, percorria as árvores de nós
-  representando as listas e imprimia os nós considerando seus tamanhos e a
-  quantidade máxima de caracteres que ainda poderiam ser inseridos em uma
-  linha.
+  por \textcite{goldstein-1973-pretty}, percorria a árvore de nós representando
+  as listas e imprimia os nós considerando seus tamanhos e a quantidade máxima
+  de caracteres que ainda poderiam ser inseridos em uma linha.
 
   Posteriormente, \textcite{hearn-1979-one} propuseram um algoritmo mais
   elaborado para \textit{prettyprinting} que utilizava um par de corrotinas%
@@ -465,8 +464,6 @@
   processado por uma ferramenta intermediária capaz de compreender a sintaxe da
   linguagem e fornecer um código anotado de forma adequada, permitindo que o
   algoritmo realizasse a formatação apropriada.
-
-  \dots % FIXME
 
   Recentemente, tem se tornado cada vez mais evidente a crescente relevância
   dos softwares opinativos \cite{eccles-2015-rise}, também conhecidos em inglês
@@ -587,7 +584,7 @@
   sistema.
 
   Na análise de código, é comum realizar tarefas que envolvem a busca de
-  padrões em árvores sintáticas. Para isso, o \treesitter oferece uma pequena
+  padrões na árvore sintática. Para isso, o \treesitter oferece uma pequena
   linguagem de consulta declarativa que é capaz de expressar esses padrões por
   meio de \textit{\gloss[Word]{sexp}s} e buscar correspondências. A linguagem
   de consulta suporta operadores que permitem
@@ -599,11 +596,10 @@
     \item o uso de \textit{\gloss{wildcard}s}; e
     \item a ordenação de nós.
   \end{inparaenum}
-  Adicionalmente, é possível definir propriedades nos nós da árvore sintática
-  usando a linguagem de consulta do \treesitter. Também é permitido o uso de
-  predicados -- funções arbitrárias para filtrar nós ou realizar verificações
-  mais complexas durante a busca de padrões -- sejam eles
-  \textit{\gloss{builtin}} ou estendidos por meio de uma API.
+  Adicionalmente, é permitido o uso de predicados -- funções arbitrárias
+  geralmente utilizadas para filtrar nós ou realizar verificações mais
+  complexas durante a busca de padrões -- sejam eles \textit{\gloss{builtin}s}
+  ou estendidos por meio de uma API.
 
   Um exemplo da relevância e utilidade da linguagem de consulta é o plugin
   \textit{nvim-treesitter} \cite{nvim-treesitter-2023-nvim}, que é
@@ -619,13 +615,13 @@
     \item captura de nós correspondentes a construções gramaticais
           (e.g., funções, classes, métodos, etc.), os quais são
           frequentemente utilizados em rotinas de programação tais como a
-          remoção e navegação do código.
+          remoção e navegação de código.
   \end{inparaenum}
 
   Em resumo, o sistema \treesitter se mostra uma solução inovadora e eficiente
   para a análise sintática de códigos em diversas linguagens de programação,
   com uma abordagem diferenciada e sofisticada que possibilita a atualização em
-  tempo real das árvores sintáticas e a identificação precisa das construções
+  tempo real da árvore sintática e a identificação precisa das construções
   gramaticais presentes no código. Além disso, a ferramenta de linha de comando
   disponível no sistema facilita a geração de parsers a partir de gramáticas
   definidas em JavaScript, o que torna o processo mais acessível e
@@ -703,21 +699,20 @@
   formatado deve ser provido via \textit{\gloss{pipeline}}, e a sua linguagem
   deve ser explicitada via \boxed{\texttt{[\textbf{-l} \textit{LANG}]}}.
 
-  \section{Instruindo a Formatação}
+  \section{Fazendo Consultas}
 
-  Como mencionado na seção anterior, o \witchcooking formata o código-fonte
+  Como mencionado anteriormente, o \witchcooking formata o código-fonte
   conforme as instruções presentes no arquivo submetido via
   \boxed{\texttt{\textbf{-q} \textit{QUERY}}}, o qual é escrito na linguagem de
   consulta do \treesitter. Essas instruções constituem-se da
   \begin{inparaenum}
-    \item busca de padrões -- i.e., \textit{pattern matching} -- em árvores
-          sintáticas, da
-    \item configuração, e da
+    \item busca de padrões na árvore sintática,
+    \item configuração, e
     \item aplicação de predicados.
   \end{inparaenum}
   No entanto, como abordado no \autoref{chapter:tree-sitter}, a linguagem de
-  consulta do \treesitter concebia originalmente a busca de padrões em árvores
-  sintáticas. Portanto, para viabilizar a formatação de código-fonte, o
+  consulta do \treesitter concebia originalmente a busca de padrões na árvore
+  sintática. Portanto, para viabilizar a formatação de código-fonte, o
   \witchcooking introduz um conjunto adicional de configurações e
   predicados.
 
