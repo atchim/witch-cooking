@@ -1,25 +1,21 @@
-all: debug
+debug ?=
+release := $(if $(debug),,--release)
 
-clean:
-	cargo clean
-	$(MAKE) -C doc/undergraduate-thesis clean
+.PHONY: all
+all: build
 
-debug:
-	cargo build
+.PHONY: clean clean-cargo clean-doc
+clean: clean-cargo clean-doc
+clean-cargo: ; cargo clean
+clean-doc: ; $(MAKE) -C doc/undergraduate-thesis clean
 
-doc:
-	cargo doc
+.PHONY: build
+build: ; cargo build $(release)
 
-doc-all: doc doc-undergraduate-thesis
+.PHONY: doc doc-cargo doc-undergraduate-thesis
+doc: doc-cargo doc-undergraduate-thesis
+doc-cargo: ; cargo doc
+doc-undergraduate-thesis: ; $(MAKE) -C doc/undergraduate-thesis
 
-doc-undergraduate-thesis:
-	$(MAKE) -C doc/undergraduate-thesis
-
-open-undergraduate-thesis:
-	$(MAKE) -C doc/undergraduate-thesis open
-
-release:
-	cargo build --release
-
-.PHONY: all clean debug doc doc-all doc-undergraduate-thesis
-.PHONY: open-undergraduate-thesis release
+.PHONY: open-undergraduate-thesis
+open-undergraduate-thesis: ; $(MAKE) -C doc/undergraduate-thesis open
