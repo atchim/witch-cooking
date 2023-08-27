@@ -1,28 +1,48 @@
-\documentclass
-  [11pt, a4paper, english, openright, sumario = tradicional, twoside, brazil]
-  {abntex2}
-
 %%%%%%%%%%%%
 % Preamble %
 %%%%%%%%%%%%
+
+\documentclass
+  [11pt, a4paper, english, openright, sumario = tradicional, twoside, brazil]
+  {abntex2}
 
 %%%%%%%%%%%%%
 %% Packages %
 %%%%%%%%%%%%%
 
-\usepackage{palatino}
+%%%%%%%%%%%%%%
+%%% Encoding %
+%%%%%%%%%%%%%%
+
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+
+%%%%%%%%%%%%%%%%%%%%%
+%%% ABNT Compliance %
+%%%%%%%%%%%%%%%%%%%%%
+
 \usepackage{indentfirst}
-\usepackage{nomencl}
-\usepackage{color}
-\usepackage{graphicx}
 \usepackage{microtype}
-\usepackage{csquotes}
-\usepackage[backend = biber, indent, style = abnt]{biblatex}
-\usepackage{paralist}
-\let\glossitem\undefined\usepackage[portuguese]{gloss}
+
+%%%%%%%%%%%%%%
+%%% Glossary %
+%%%%%%%%%%%%%%
+
+\let\glossitem\undefined
+\usepackage[portuguese]{gloss}
+
+%%%%%%%%%%%%%%%%%%%
+%%% Miscellaneous %
+%%%%%%%%%%%%%%%%%%%
+
 \usepackage{amsmath}
+\usepackage[backend = biber, indent, style = abnt]{biblatex}
+\usepackage{color}
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{nomencl}
+\usepackage{palatino}
+\usepackage{paralist}
 
 %%%%%%%%%%%%%%%%%%
 %% Configuration %
