@@ -42,6 +42,14 @@
 \usepackage{graphicx}
 \usepackage{palatino}
 \usepackage{paralist}
+\usepackage{xspace}
+
+%%%%%%%%%%%%%%%%%%
+%% Handy Aliases %
+%%%%%%%%%%%%%%%%%%
+
+\newcommand{\treesitter}{\textit{Tree-Sitter}\xspace}
+\newcommand{\witchcooking}{\textit{Witch Cooking}\xspace}
 
 %%%%%%%%%%%%%%%%%%
 %% Configuration %
@@ -65,8 +73,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \titulo
-  {\textit{Witch Cooking}: Formatação de Código via Linguagem de Consulta do
-   \textit{Tree-Sitter}}
+  {\witchcooking: Formatação de Código via Linguagem de Consulta do
+   \treesitter}
 \autor{Átila Gama Silva}
 \local{Irecê}
 \data{\the\year}
@@ -203,13 +211,13 @@
 \hypersetup
   {pdftitle       = {\@title},
    pdfauthor      = {\@author},
-   pdfsubject     = {\textit{Witch Cooking}: Formatação de Código via Linguagem
-                     de Consulta do \textit{Tree-Sitter}},
+   pdfsubject     = {\witchcooking: Formatação de Código via Linguagem de
+                     Consulta do \treesitter},
    pdfcreator     = {\LaTeX with \abnTeX},
    pdfkeywords    = {formatação de código}
                     {\textit{prettyprint}}
                     {formatação personalizada}
-                    {\textit{Tree-Sitter}}
+                    {\treesitter}
                     {linguagem de consulta},
    colorlinks     = true,
    linkcolor      = blue,
@@ -250,8 +258,8 @@
     suportadas, nas opções de configuração e não permitem a definição de
     estilos de formatação personalizados. Visando superar ou reduzir as
     limitações frequentemente encontradas nas ferramentas convencionais de
-    formatação, neste trabalho é apresentado o \textit{Witch Cooking}, um
-    software prototípico que tem como objetivos
+    formatação, neste trabalho é apresentado o \witchcooking, um software
+    prototípico que tem como objetivos
     \begin{inparaenum}
       \item abranger uma gama de linguagens de programação; além de
       \item permitir que o usuário defina seus próprios estilos de formatação.
@@ -262,7 +270,7 @@
     formatação de código;
     \textit{prettyprint};
     formatação personalizada;
-    \textit{Tree-Sitter};
+    \treesitter;
     linguagem de consulta.
   \end{resumo}
 
@@ -313,11 +321,11 @@
 
   Em ambientes de desenvolvimento modernos, além da utilização de ferramentas
   que automatizam a formatação de código, é também comum a utilização do
-  \textit{Tree-Sitter} \cite{tree-sitter-2018-tree}, um sistema de análise
-  sintática de código aberto que foi disponibilizado ao público geral no GitHub
+  \treesitter \cite{tree-sitter-2018-tree}, um sistema de análise sintática de
+  código aberto que foi disponibilizado ao público geral no GitHub
   primeiramente em 2019, tendo sido inicialmente desenvolvido por Max
-  Brunsfeld. Desde seu lançamento, o \textit{Tree-Sitter} tem ganhado
-  popularidade na comunidade de desenvolvedores devido dentre outros motivos à
+  Brunsfeld. Desde seu lançamento, o \treesitter tem ganhado popularidade na
+  comunidade de desenvolvedores devido dentre outros motivos à
   \begin{inparaenum}
     \item sua capacidade de suportar várias linguagens de programação; além de
     \item sua linguagem de consulta, a qual permite a realização de buscas
@@ -327,8 +335,8 @@
   Visando superar ou reduzir as limitações previamente mencionadas, quais são
   frequentemente presentes nas ferramentas convencionais de formatação, este
   trabalho tem como objetivo geral desenvolver um software prototípico para a
-  formatação de código. Nomeada antecipadamente de \textit{Witch Cooking}
-  por \textcite{silva-2023-witch}, a ferramenta a ser desenvolvida tem como
+  formatação de código. Nomeada antecipadamente de \witchcooking por
+  \textcite{silva-2023-witch}, a ferramenta a ser desenvolvida tem como
   objetivos
   \begin{inparaenum}
     \item abranger uma gama de linguagens de programação; além de
@@ -341,9 +349,9 @@
     \item apresentar e contextualizar ferramentas de formatação de código
           conceituadas, além de abordar seus métodos de formatação;
     \item conceituar, contextualizar e abordar as tecnologias do sistema
-          \textit{Tree-Sitter}; e, por fim,
-    \item utilizar o \textit{Tree-Sitter} para desenvolver e atender às
-          aspirações do \textit{Witch Cooking}.
+          \treesitter; e, por fim,
+    \item utilizar o \treesitter para desenvolver e atender às aspirações do
+          \witchcooking.
   \end{inparaenum}
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -531,15 +539,15 @@
   %% The Tree-Sitter System %
   %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-  \chapter{O Sistema \textit{Tree-Sitter}}
+  \chapter{O Sistema \treesitter}
   \label{chapter:tree-sitter}
 
-  O \textit{Tree-Sitter} é um sistema multilíngue de análise sintática para
-  ferramentas de programação inicialmente desenvolvido como um projeto
-  secundário por Max Brunsfeld. Como relatado pelo próprio autor
-  \cite{github-2017-tree}, o \textit{Tree-Sitter} surgiu como uma tentativa de
-  solucionar problemas presentes nas ferramentas de análise sintática da época.
-  Mais especificamente, o sistema tinha como objetivos
+  O \treesitter é um sistema multilíngue de análise sintática para ferramentas
+  de programação inicialmente desenvolvido como um projeto secundário por Max
+  Brunsfeld. Como relatado pelo próprio autor \cite{github-2017-tree}, o
+  \treesitter surgiu como uma tentativa de solucionar problemas presentes nas
+  ferramentas de análise sintática da época. Mais especificamente, o sistema
+  tinha como objetivos
   \begin{inparaenum}
     \item ser utilizado no ambiente de desenvolvimento para produzir árvores de
           sintaxe a partir da análise de códigos escritos em várias linguagens;
@@ -554,11 +562,11 @@
           aplicabilidade.
   \end{inparaenum}
 
-  Além das funcionalidades previamente mencionadas presentes no
-  \textit{Tree-Sitter}, o sistema também conta uma ferramenta de linha de
-  comando que pode ser utilizada para gerar \textit{\gloss{parser}s} para uma
-  linguagem a partir de sua gramática. A gramática é definida via a linguagem
-  de programação JavaScript, a qual
+  Além das funcionalidades previamente mencionadas presentes no \treesitter, o
+  sistema também conta uma ferramenta de linha de comando que pode ser
+  utilizada para gerar \textit{\gloss{parser}s} para uma linguagem a partir de
+  sua gramática. A gramática é definida via a linguagem de programação
+  JavaScript, a qual
   \begin{inparaenum}
     \item foi eleita 15 vezes seguidas pela
           \textit{Stack Overflow Developer Survey}
@@ -575,14 +583,14 @@
   linguagens de programação e formatos de arquivos -- variando de linguagens
   com sintaxes complexas, como C++ e Perl, a formatos de arquivos mais
   específicos, como \boxed{\texttt{.vhs}} e \boxed{\texttt{.rasi}} --, os quais
-  têm parsers gerados pelo \textit{Tree-Sitter} e, consequentemente, são
-  suportados pelo sistema.
+  têm parsers gerados pelo \treesitter e, consequentemente, são suportados pelo
+  sistema.
 
   Na análise de código, é comum realizar tarefas que envolvem a busca de
-  padrões em árvores sintáticas. Para isso, o \textit{Tree-Sitter} oferece uma
-  pequena linguagem de consulta declarativa que é capaz de expressar esses
-  padrões por meio de \textit{\gloss[Word]{sexp}s} e buscar correspondências. A
-  linguagem de consulta suporta operadores que permitem
+  padrões em árvores sintáticas. Para isso, o \treesitter oferece uma pequena
+  linguagem de consulta declarativa que é capaz de expressar esses padrões por
+  meio de \textit{\gloss[Word]{sexp}s} e buscar correspondências. A linguagem
+  de consulta suporta operadores que permitem
   \begin{inparaenum}
     \item a captura de nós;
     \item a quantificação de nós, análoga às expressões regulares;
@@ -592,9 +600,9 @@
     \item a ordenação de nós.
   \end{inparaenum}
   Adicionalmente, é possível definir propriedades nos nós da árvore sintática
-  usando a linguagem de consulta do \textit{Tree-Sitter}. Também é permitido o
-  uso de predicados -- funções arbitrárias para filtrar nós ou realizar
-  verificações mais complexas durante a busca de padrões -- sejam eles
+  usando a linguagem de consulta do \treesitter. Também é permitido o uso de
+  predicados -- funções arbitrárias para filtrar nós ou realizar verificações
+  mais complexas durante a busca de padrões -- sejam eles
   \textit{\gloss{builtin}} ou estendidos por meio de uma API.
 
   Um exemplo da relevância e utilidade da linguagem de consulta é o plugin
@@ -614,15 +622,15 @@
           remoção e navegação do código.
   \end{inparaenum}
 
-  Em resumo, o sistema \textit{Tree-Sitter} se mostra uma solução inovadora e
-  eficiente para a análise sintática de códigos em diversas linguagens de
-  programação, com uma abordagem diferenciada e sofisticada que possibilita a
-  atualização em tempo real das árvores sintáticas e a identificação precisa
-  das construções gramaticais presentes no código. Além disso, a ferramenta de
-  linha de comando disponível no sistema facilita a geração de parsers a partir
-  de gramáticas definidas em JavaScript, o que torna o processo mais acessível
-  e personalizável para os programadores. Finalmente, a linguagem de consulta
-  declarativa oferecida pelo \textit{Tree-Sitter} se mostra uma importante
+  Em resumo, o sistema \treesitter se mostra uma solução inovadora e eficiente
+  para a análise sintática de códigos em diversas linguagens de programação,
+  com uma abordagem diferenciada e sofisticada que possibilita a atualização em
+  tempo real das árvores sintáticas e a identificação precisa das construções
+  gramaticais presentes no código. Além disso, a ferramenta de linha de comando
+  disponível no sistema facilita a geração de parsers a partir de gramáticas
+  definidas em JavaScript, o que torna o processo mais acessível e
+  personalizável para os programadores. Finalmente, a linguagem de consulta
+  declarativa oferecida pelo \treesitter se mostra uma importante
   \textit{\gloss{feature}}, sendo utilizada em diversos plugins de editores de
   código para realizar tarefas variadas e sofisticadas, contribuindo
   significativamente no ambiente de desenvolvimento.
@@ -631,11 +639,11 @@
   %% The Witch Cooking %
   %%%%%%%%%%%%%%%%%%%%%%
 
-  \chapter{O \textit{Witch Cooking}}
+  \chapter{O \witchcooking}
 
   \section{Motivações, Propósitos e Panorama}
 
-  As motivações para o desenvolvimento do \textit{Witch Cooking} surgiram das
+  As motivações para o desenvolvimento do \witchcooking surgiram das
   dificuldades enfrentadas pelo autor ao estudar estilos de formatação de
   código-fonte em diversas linguagens de programação com as quais ele
   trabalhava. O estudo envolvia a exploração e análise tanto de estilos
@@ -662,13 +670,13 @@
     \item complexidade envolvida no \textit{prettyprinting} --
     \item agravada pela proposta de formatação multilíngue --,
   \end{inparaenum}
-  o \textit{Witch Cooking} foi desenvolvido como um software de linha de
-  comando, de natureza prototípica, para a formatação de código-fonte. Para
-  tal finalidade, a ferramenta requer a submissão do código-fonte a ser
-  formatado, juntamente com o arquivo contendo as instruções de formatação. Em
-  alinhamento com sua natureza experimental, o \textit{Witch Cooking}
-  proporciona o código-fonte formatado resultante como saída, sem modificar o
-  conteúdo original, efetivamente estabelecendo uma formatação segura.
+  o \witchcooking foi desenvolvido como um software de linha de comando, de
+  natureza prototípica, para a formatação de código-fonte. Para tal finalidade,
+  a ferramenta requer a submissão do código-fonte a ser formatado, juntamente
+  com o arquivo contendo as instruções de formatação. Em alinhamento com sua
+  natureza experimental, o \witchcooking proporciona o código-fonte formatado
+  resultante como saída, sem modificar o conteúdo original, efetivamente
+  estabelecendo uma formatação segura.
 
   A ferramenta apresenta a seguinte usagem
   \boxed
@@ -683,7 +691,7 @@
           explicitar a linguagem do código-fonte a ser formatado,
     \item \boxed{\texttt{\textbf{-q} \textit{QUERY}}} é utilizado para
           definir o caminho para o arquivo -- escrito na linguagem de consulta
-          do \textit{Tree-Sitter} -- no qual as instruções de formatação estão
+          do \treesitter{} -- no qual as instruções de formatação estão
           definidas, e
     \item \boxed{\texttt{[\textit{SRC}]}} é um argumento opcional para
           especificar o caminho para o arquivo a ser formatado.
@@ -697,10 +705,10 @@
 
   \section{Instruindo a Formatação}
 
-  Como mencionado na seção anterior, o \textit{Witch Cooking} formata o
-  código-fonte conforme as instruções presentes no arquivo submetido via
+  Como mencionado na seção anterior, o \witchcooking formata o código-fonte
+  conforme as instruções presentes no arquivo submetido via
   \boxed{\texttt{\textbf{-q} \textit{QUERY}}}, o qual é escrito na linguagem de
-  consulta do \textit{Tree-Sitter}. Essas instruções constituem-se da
+  consulta do \treesitter. Essas instruções constituem-se da
   \begin{inparaenum}
     \item busca de padrões -- i.e., \textit{pattern matching} -- em árvores
           sintáticas, da
@@ -708,9 +716,9 @@
     \item aplicação de predicados.
   \end{inparaenum}
   No entanto, como abordado no \autoref{chapter:tree-sitter}, a linguagem de
-  consulta do \textit{Tree-Sitter} concebia originalmente a busca de padrões em
-  árvores sintáticas. Portanto, para viabilizar a formatação de código-fonte, o
-  \textit{Witch Cooking} introduz um conjunto adicional de configurações e
+  consulta do \treesitter concebia originalmente a busca de padrões em árvores
+  sintáticas. Portanto, para viabilizar a formatação de código-fonte, o
+  \witchcooking introduz um conjunto adicional de configurações e
   predicados.
 
   %%%%%%%%%%%%%%%
