@@ -1,5 +1,5 @@
 debug ?=
-release := $(if $(debug),,--release)
+release = $(if $(debug),,--release)
 
 .PHONY: all
 all: build

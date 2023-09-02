@@ -3,7 +3,7 @@
 %%%%%%%%%%%%
 
 \documentclass
-  [11pt, a4paper, english, openright, sumario = tradicional, twoside, brazil]
+  [11pt,a4paper,english,brazil,openright,sumario=tradicional,twoside]
   {abntex2}
 
 %%%%%%%%%%%%%
@@ -36,11 +36,11 @@
 %%%%%%%%%%%%%%%%%%%
 
 \usepackage{amsmath}
-\usepackage[backend = biber, indent, style = abnt]{biblatex}
+\usepackage[backend=biber,indent,style=abnt]{biblatex}
 \usepackage{color}
+\usepackage[listings,minted,skins]{tcolorbox}
 \usepackage{csquotes}
 \usepackage{graphicx}
-\usepackage{listings}
 \usepackage{palatino}
 \usepackage{paralist}
 \usepackage{xspace}
@@ -178,12 +178,34 @@
 
 \addbibresource{references.bib}
 
+%%%%%%%%%%%%%%%%%%%
+%%% Code Snippets %
+%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\theFancyVerbLine}{\ttfamily\arabic{FancyVerbLine}}
+
+\newtcblisting
+  [auto counter,list inside=codesnippets]
+  {codesnippet}
+  [2]
+  {enhanced,
+   center title,
+   list entry={\protect\numberline{\thetcbcounter}#1},
+   listing engine=minted,
+   listing only,
+   listing options={language=c},
+   minted language=#2,
+   minted options={autogobble,linenos,xleftmargin=1em},
+   sharp corners,
+   title={Trecho de Código \thetcbcounter{} -- #1}}
+
 %%%%%%%%%%%%%%
 %%% Glossary %
 %%%%%%%%%%%%%%
 
 \setglosslabel{\bfseries#2\ifglossshort{ (#3)}{}}
-\renewenvironment{thegloss}
+\renewenvironment
+  {thegloss}
   {\chapter*{\glossname}
    \markboth{\glossname}{\glossname}
    \addcontentsline{toc}{chapter}{\glossname}}
@@ -196,40 +218,6 @@
 
 \def\chapterautorefname{capítulo}
 \def\Itemautorefname{item}
-
-%%%%%%%%%%%%%%%%%%%%%
-%%% Code Snippeting %
-%%%%%%%%%%%%%%%%%%%%%
-
-\lstset{basicstyle = {\small\ttfamily}, frame = single, tabsize = 2}
-
-%%%%%%%%%%%%%%%%%%%%%%
-%%%% ABNT Compliance %
-%%%%%%%%%%%%%%%%%%%%%%
-
-\renewcommand{\lstlistingname}{Trecho de Código}
-\renewcommand{\lstlistlistingname}{Lista de Trechos de Código}
-
-\begingroup
-  \makeatletter
-  \let\newcounter\@gobble
-  \let\setcounter\@gobbletwo
-  \globaldefs\@ne
-  \let\c@loldepth\@ne
-  \newlistof{listings}{lol}{\lstlistlistingname}
-  \newlistentry{lstlisting}{lol}{0}
-\endgroup
-
-\renewcommand{\cftlstlistingaftersnum}{\hfill--\hfill}
-
-\let\oldlstlistoflistings\lstlistoflistings
-\renewcommand
-  {\lstlistoflistings}
-  {\begingroup%
-   \let\oldnumberline\numberline%
-   \renewcommand{\numberline}{\lstlistingname\space\oldnumberline}%
-   \oldlstlistoflistings%
-   \endgroup}
 
 %%%%%%%%%%%%%%
 %%% Paralist %
@@ -313,8 +301,9 @@
   % Table of Code Snippets %
   %%%%%%%%%%%%%%%%%%%%%%%%%%
 
-  \pdfbookmark[0]{\lstlistlistingname}{lol}
-  \begin{KeepFromToc}\lstlistoflistings\end{KeepFromToc}
+  \begin{KeepFromToc}
+    \tcblistof[\chapter*]{codesnippets}{Lista de Trechos de Código}
+  \end{KeepFromToc}
   \cleardoublepage
 
   %%%%%%%%%%%%%%%%%%%%%
@@ -759,12 +748,12 @@
   correspondência variam de acordo com a linguagem em questão devido ao seu
   conjunto específico de construções gramaticais.
 
-  \begin{lstlisting}[language = C, caption = Foo bar, gobble = 4]
+  \begin{codesnippet}{Foo bar}{c}
     // aisuhdaius
     int foo(x) {
       return x + 1;
     }
-  \end{lstlisting}
+  \end{codesnippet}
 
   %%%%%%%%%%%%%%%
   %% Conclusion %
