@@ -38,7 +38,7 @@
 \usepackage{amsmath}
 \usepackage[backend=biber,indent,style=abnt]{biblatex}
 \usepackage{color}
-\usepackage[listings,minted,skins]{tcolorbox}
+\usepackage[listings,minted,skins,xparse]{tcolorbox}
 \usepackage{csquotes}
 \usepackage{graphicx}
 \usepackage{palatino}
@@ -184,20 +184,30 @@
 
 \renewcommand{\theFancyVerbLine}{\ttfamily\arabic{FancyVerbLine}}
 
-\newtcblisting
+\NewTCBListing
   [auto counter,list inside=codesnippets]
   {codesnippet}
-  [2]
+  {sO{c}m!O{}}
   {enhanced,
    center title,
-   list entry={\protect\numberline{\thetcbcounter}#1},
+   coltitle=black,
+   frame hidden,
+   list entry={Trecho de Código \thetcbcounter{} -- #3},
    listing engine=minted,
    listing only,
-   listing options={language=c},
    minted language=#2,
-   minted options={autogobble,linenos,xleftmargin=1em},
+   minted options
+     ={autogobble,linenos,xleftmargin=\IfBooleanTF{#1}{1.5}{1}em},
+   overlay
+     ={\begin{tcbclipinterior}
+         \fill[gray!25]
+         (frame.south west)
+         rectangle
+         ([xshift=\IfBooleanTF{#1}{2.5}{2}em]frame.north west);
+       \end{tcbclipinterior}},
    sharp corners,
-   title={Trecho de Código \thetcbcounter{} -- #1}}
+   title={Trecho de Código \thetcbcounter{} -- #3},
+   #4}
 
 %%%%%%%%%%%%%%
 %%% Glossary %
@@ -748,7 +758,7 @@
   correspondência variam de acordo com a linguagem em questão devido ao seu
   conjunto específico de construções gramaticais.
 
-  \begin{codesnippet}{Foo bar}{c}
+  \begin{codesnippet}{Foo bar}
     // aisuhdaius
     int foo(x) {
       return x + 1;
