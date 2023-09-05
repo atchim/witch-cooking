@@ -87,8 +87,8 @@
   {\textit{Trabalho de Conclusão de Curso} apresentado ao
    \textit
      {Curso Técnico em Análise e Desenvolvimento de Sistemas do Instituto
-      Federal de Educação, Ciência e Tecnologia da Bahia – Campus Irecê},
-   como requisito parcial para obtenção do diploma de
+      Federal de Educação, Ciência e Tecnologia da Bahia – Campus Irecê}%
+   , como requisito parcial para obtenção do diploma de
    \textit{Técnico em Análise e Desenvolvimento de Sistemas}, mediante a
    orientação do professor \imprimirorientador.}
 
@@ -294,7 +294,7 @@
     formatação, neste trabalho é apresentado o \witchcooking, um software
     prototípico que tem como objetivos
     \begin{inparaenum}
-      \item abranger uma gama de linguagens de programação; além de
+      \item abranger uma gama de linguagens de programação, além de
       \item permitir que o usuário defina seus próprios estilos de formatação.
     \end{inparaenum}
 
@@ -378,10 +378,9 @@
   frequentemente presentes nas ferramentas convencionais de formatação, este
   trabalho tem como objetivo geral desenvolver um software prototípico para a
   formatação de código. Nomeada antecipadamente de \witchcooking
-  \cite{silva-2023-witch}, a ferramenta a ser desenvolvida tem como
-  objetivos
+  \cite{silva-2023-witch}, a ferramenta a ser desenvolvida tem como objetivos
   \begin{inparaenum}
-    \item abranger uma gama de linguagens de programação; além de
+    \item abranger uma gama de linguagens de programação, além de
     \item permitir que o usuário defina seus próprios estilos de formatação.
   \end{inparaenum}
 
@@ -444,9 +443,9 @@
              programadores prontamente adotaram o uso das
              \textit{S-expressions} em vez das \textit{M-expressions}, tornando
              as \textit{S-expressions} a forma predominante de representar a
-             estrutura do código na linguagem.},
-          o que tornava o código-fonte praticamente ilegível e incompreensível
-          caso não fosse devidamente organizado. Além disso,
+             estrutura do código na linguagem.}%
+          , o que tornava o código-fonte praticamente ilegível e
+          incompreensível caso não fosse devidamente organizado. Além disso,
     \item LISP era \gloss{homoiconic}, ou seja, permitia a manipulação do
           código via dados da própria linguagem.
   \end{inparaenum}
@@ -480,8 +479,8 @@
     {Na obra, os autores enfatizam que a implementação com o uso de corrotinas
      é tão simples que poderia ser simulada -- sem grandes dificuldades -- em
      linguagens que não possuíam suporte nativo para corrotinas
-     \cite[53]{hearn-1979-one}.},
-  uma
+     \cite[53]{hearn-1979-one}.}%
+  , uma
   \begin{inparaenum}
     \item responsável por produzir uma sequência de caracteres que
           representavam o programa sendo impresso; e outra
@@ -690,8 +689,8 @@
     {Neste trabalho, são considerados convencionais os estilos de formatação
      abordados nas páginas \textit{Indentation style} e
      \textit{Programming style} da Wikipédia.
-     \cites{wiki-2023-indentation}{wiki-2023-programming}},
-  dos quais muitos eram amplamente adotados, quanto de estilos
+     \cites{wiki-2023-indentation}{wiki-2023-programming}}%
+  , dos quais muitos eram amplamente adotados, quanto de estilos
   não-convencionais. Durante a análise dos estilos convencionais de formatação,
   \begin{inparaenum}
     \item era imprescindível recorrer a diferentes \textit{prettyprinters},
@@ -706,23 +705,23 @@
   \begin{inparaenum}
     \item as dificuldades mencionadas anteriormente; além da
     \item complexidade envolvida no \textit{prettyprinting} --
-    \item agravada pela proposta de formatação multilíngue --,
+    \item agravada pela proposta de formatação multilíngue
   \end{inparaenum}
-  o \witchcooking foi desenvolvido como um software de linha de comando, de
-  natureza prototípica, para a formatação de código-fonte. Para essa finalidade,
-  a ferramenta requer a submissão do código-fonte a ser formatado, juntamente
-  com o arquivo contendo as instruções de formatação. Em alinhamento com sua
-  natureza experimental, o \witchcooking proporciona o código-fonte formatado
-  resultante como saída, sem modificar o conteúdo original, efetivamente
-  estabelecendo uma formatação segura.
+  --, o \witchcooking foi desenvolvido como um software de linha de comando, de
+  natureza prototípica, para a formatação de código-fonte. Para essa
+  finalidade, a ferramenta requer a submissão do código-fonte a ser formatado,
+  juntamente com o arquivo contendo as instruções de formatação. Em alinhamento
+  com sua natureza experimental, o \witchcooking proporciona o código-fonte
+  formatado resultante como saída, sem modificar o conteúdo original,
+  efetivamente estabelecendo uma formatação segura.
 
   A ferramenta apresenta a seguinte usagem
   \boxed
     {\texttt{\textbf{cook}
      [\textbf{-l} \textit{LANG}]
      \textbf{-q} \textit{QUERY}
-     [\textit{SRC}]}},
-  onde
+     [\textit{SRC}]}}%
+  , onde
   \begin{inparaenum}
     \item \boxed{\texttt{\textbf{cook}}} é o nome do executável,
     \item \boxed{\texttt{[\textbf{-l} \textit{LANG}]}} é uma opção para
