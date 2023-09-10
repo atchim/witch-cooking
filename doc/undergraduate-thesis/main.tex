@@ -37,6 +37,7 @@
 
 \usepackage{amsmath}
 \usepackage[backend=biber,indent,style=abnt]{biblatex}
+\usepackage{caption}
 \usepackage{color}
 \usepackage[listings,minted,skins,xparse]{tcolorbox}
 \usepackage{csquotes}
@@ -740,14 +741,61 @@
  \end{inparaenum}
  Os predicados disponíveis nativamente pelo \treesitter são agnósticos quanto à
  linguagem de programação utilizada. Por outro lado, os padrões de
- correspondência variam de acordo com a linguagem em questão devido ao seu
- conjunto específico de construções gramaticais.
+ correspondência variam de acordo com a linguagem devido às suas construções
+ gramaticais específicas, que são posteriormente traduzidas como nós na árvore
+ de sintaxe.
 
- \begin{codesnippet}{Foo bar}
-  // aisuhdaius
-  int foo(x) {
-    return x + 1;
-  }
+ Considere, por exemplo, os trechos de código \ref{snippet:hello-c} e
+ \ref{snippet:hello-rust}, os quais
+
+ \noindent
+ \begin{minipage}{.5\textwidth}
+  \begin{codesnippet}{\textit{``Hello, World!''} em C}[label={snippet:hello-c}]
+   #include <stdio.h>
+   int main() {
+     printf("Hello, world!\n");
+     return 0;
+   }
+  \end{codesnippet}
+  \vspace{-3ex}
+  \captionof*{listing}{Fonte: autor.}
+ \end{minipage}
+ %
+ \begin{minipage}{.5\textwidth}
+  \begin
+   {codesnippet}%
+   [rust]%
+   {\textit{``Hello, World!''} em Rust}%
+   [label={snippet:hello-rust}]
+   fn main() {
+     println!("Hello, world!");
+   }
+  \end{codesnippet}
+  \vspace{-3ex}
+  \captionof*{listing}{Fonte: autor.}
+ \end{minipage}
+
+ \begin{codesnippet}*%
+  [text]%
+  {\textit{``Hello, World!''} em C}%
+  [label={snippet:c-hello}]
+  preproc_include
+    path: system_lib_string
+  function_definition
+    type: primitive_type
+    declarator: function_declarator
+      declarator: identifier
+      parameters: parameter_list
+    body: compound_statement
+      expression_statement
+        call_expression
+          function: identifier
+          arguments: argument_list
+            string_literal
+              string_content
+              escape_sequence
+      return_statement
+        number_literal
  \end{codesnippet}
 
  %%%%%%%%%%%%%%%
