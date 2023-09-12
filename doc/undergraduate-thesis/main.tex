@@ -207,6 +207,9 @@
        listing only,
     minted language=#2,
      minted options={ autogobble,
+                      breakautoindent=false,
+                      breaklines,
+                      breaksymbol={},
                       linenos,
                       xleftmargin=\IfBooleanTF{#1}{1.5}{1}em},
             overlay={%
@@ -779,61 +782,69 @@
   gramaticais específicas, que são posteriormente traduzidas como nós na árvore
   de sintaxe.
 
-  Considere, por exemplo, os trechos de código \ref{snippet:hello-c} e
-  \ref{snippet:hello-rust}, os quais
+  Considere, por exemplo, os trechos de código \ref{snippet:add-two-c} e
+  \ref{snippet:add-two-rust}, os quais apresentam uma função que retorna a soma
+  do parâmetro com 2.
 
   \noindent
-  \begin{minipage}{.5\textwidth}
+  \begin{minipage}[t]{.49\textwidth}
     \begin
       {codesnippet}%
-      {\textit{``Hello, World!''} em C}%
-      [label={snippet:hello-c}]
-      #include <stdio.h>
-      int main() {
-        printf("Hello, world!\n");
-        return 0;
+      {Função \texttt{``add\_two''} em C}%
+      [label={snippet:add-two-c}]
+      int add_two(int x) {
+        return x + 2;
       }
     \end{codesnippet}
-    \vspace{-3ex}
-    \captionof*{listing}{Fonte: autor.}
+
+    \begin{codesnippet}*%
+      [text]%
+      {Árvore Sintática da Função \texttt{``add\_two''} em C}%
+      [label={snippet:add-two-c-tree}]
+      function_definition
+        type: primitive_type
+        declarator: function_declarator
+          declarator: identifier
+          parameters: parameter_list
+            parameter_declaration
+              type: primitive_type
+              declarator: identifier
+        body: compound_statement
+          return_statement
+            binary_expression
+              left: identifier
+              right: number_literal
+    \end{codesnippet}
   \end{minipage}
-  %
-  \begin{minipage}{.5\textwidth}
+  \hfill
+  \begin{minipage}[t]{.49\textwidth}
     \begin
       {codesnippet}%
       [rust]%
-      {\textit{``Hello, World!''} em Rust}%
-      [label={snippet:hello-rust}]
-      fn main() {
-        println!("Hello, world!");
+      {Função \texttt{``add\_two''} em Rust}%
+      [label={snippet:add-two-rust}]
+      fn add_two(x: i32) -> i32 {
+          x + 2
       }
     \end{codesnippet}
-    \vspace{-3ex}
-    \captionof*{listing}{Fonte: autor.}
-  \end{minipage}
 
-  \begin{codesnippet}*%
-    [text]%
-    {\textit{``Hello, World!''} em C}%
-    [label={snippet:c-hello}]
-    preproc_include
-      path: system_lib_string
-    function_definition
-      type: primitive_type
-      declarator: function_declarator
-        declarator: identifier
-        parameters: parameter_list
-      body: compound_statement
-        expression_statement
-          call_expression
-            function: identifier
-            arguments: argument_list
-              string_literal
-                string_content
-                escape_sequence
-        return_statement
-          number_literal
-  \end{codesnippet}
+    \begin{codesnippet}*%
+      [text]%
+      {Árvore Sintática da Função \texttt{``add\_two''} em Rust}%
+      [label={snippet:add-two-rust-tree}]
+      function_item
+        name: identifier
+        parameters: parameters
+          parameter
+            pattern: identifier
+            type: primitive_type
+        return_type: primitive_type
+        body: block
+          binary_expression
+            left: identifier
+            right: integer_literal
+    \end{codesnippet}
+  \end{minipage}
 
   %%%%%%%%%%%%%%%
   %% Conclusion %
