@@ -180,7 +180,11 @@
     \addtocontents{toc}{\cftsetindents{part}{\cftlastnumwidth}{0em}}
     \cftinserthook{toc}{A}}
 
-\setlength{\cftbeforechapterskip}{1em}
+\renewcommand{\cftchapterfont}{\bfseries}
+\renewcommand{\cftchapterpagefont}{\cftchapterfont}
+\renewcommand{\cftsectionfont}{\cftchapterfont\ABNTEXfontereduzida}
+\renewcommand{\cftsectionpagefont}{\cftsectionfont}
+\renewcommand{\postextual}{}
 
 %%%%%%%%%%%%%%%%%%
 %%% Bibliography %
@@ -197,21 +201,26 @@
 \NewTCBListing
   [auto counter,list inside=codesnippets]
   {codesnippet}
-  {sO{c}m!O{}}
+  {sO{c}m!O{}!O{}}
   {        enhanced,
        center title,
            coltitle=black,
+          fonttitle=\ABNTEXfontereduzida,
        frame hidden,
          list entry={Trecho de Código \thetcbcounter{} -- #3},
      listing engine=minted,
        listing only,
     minted language=#2,
      minted options={ autogobble,
+                      breakanywhere,
+                      breakanywheresymbolpre={},
                       breakautoindent=false,
                       breaklines,
                       breaksymbol={},
                       linenos,
-                      xleftmargin=\IfBooleanTF{#1}{1.5}{1}em},
+                      spacecolor=gray!50,
+                      xleftmargin=\IfBooleanTF{#1}{1.5}{1}em,
+                      #4},
             overlay={%
                       \begin{tcbclipinterior}
                         \fill[gray!25]
@@ -221,7 +230,7 @@
                       \end{tcbclipinterior}},
       sharp corners,
               title={Trecho de Código \thetcbcounter{} -- #3},
-                 #4}
+                 #5}
 
 %%%%%%%%%%%%%%
 %%% Glossary %
@@ -791,6 +800,7 @@
     \begin
       {codesnippet}%
       {Função \texttt{``add\_two''} em C}%
+      []%
       [label={snippet:add-two-c}]
       int add_two(int x) {
         return x + 2;
@@ -800,6 +810,7 @@
     \begin{codesnippet}*%
       [text]%
       {Árvore Sintática da Função \texttt{``add\_two''} em C}%
+      [showspaces]%
       [label={snippet:add-two-c-tree}]
       function_definition
         type: primitive_type
@@ -822,6 +833,7 @@
       {codesnippet}%
       [rust]%
       {Função \texttt{``add\_two''} em Rust}%
+      []%
       [label={snippet:add-two-rust}]
       fn add_two(x: i32) -> i32 {
           x + 2
@@ -831,6 +843,7 @@
     \begin{codesnippet}*%
       [text]%
       {Árvore Sintática da Função \texttt{``add\_two''} em Rust}%
+      [showspaces]%
       [label={snippet:add-two-rust-tree}]
       function_item
         name: identifier
