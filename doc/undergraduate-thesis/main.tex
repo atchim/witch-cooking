@@ -141,11 +141,12 @@
     \end{center}}
 \makeatother
 
-%%%%%%%%%%%%%%
-%%%% Summary %
-%%%%%%%%%%%%%%
+%%%%%%%%%%
+%%%% TOC %
+%%%%%%%%%%
 
 \setlength{\cftlastnumwidth}{\cftsectionnumwidth}
+
 \cftsetindents{part}{0em}{\cftlastnumwidth}
 \cftsetindents{chapter}{0em}{\cftlastnumwidth}
 \cftsetindents{section}{0em}{\cftlastnumwidth}
@@ -184,6 +185,7 @@
 \renewcommand{\cftchapterpagefont}{\cftchapterfont}
 \renewcommand{\cftsectionfont}{\cftchapterfont\ABNTEXfontereduzida}
 \renewcommand{\cftsectionpagefont}{\cftsectionfont}
+
 \renewcommand{\postextual}{}
 
 %%%%%%%%%%%%%%%%%%
@@ -198,10 +200,25 @@
 
 \renewcommand{\theFancyVerbLine}{\ttfamily\arabic{FancyVerbLine}}
 
+\NewTotalTCBox
+  {\codesnippetinline}
+  {O{}O{text}v}
+  {%
+    bottom=0pt,
+    enhanced,
+    frame hidden,
+    left=0pt,
+    minted options={fontsize=\Large},
+    on line,
+    right=0pt,
+    sharp corners,
+    top=0pt}
+  {\mintinline[#1]{#2}{#3}}%
+
 \NewTCBListing
   [auto counter,list inside=codesnippets]
   {codesnippet}
-  {sO{c}m!O{}!O{}}
+  {sO{text}m!O{}!O{}}
   {        enhanced,
        center title,
            coltitle=black,
@@ -442,6 +459,16 @@
     \item \textit{``beautifiers''}.
   \end{inparaenum}
 
+  \newsavebox\mexpressionexample
+  \begin{lrbox}{\mexpressionexample}
+    \codesnippetinline[fontsize=\footnotesize]{car[cons[A; B]]}
+  \end{lrbox}
+
+  \newsavebox\sexpressionexample
+  \begin{lrbox}{\sexpressionexample}
+    \codesnippetinline[fontsize=\footnotesize][lisp]{(car (cons A B))}
+  \end{lrbox}
+
   Durante as décadas de 60 e 70, a linguagem de programação LISP%
   \footnote
     {%
@@ -462,14 +489,13 @@
               \textit{M-expressions} entre colchetes para representar
               expressões. Essas \textit{M-expressions} seriam posteriormente
               traduzidas em \textit{\gloss[Word]{sexp}s}. Por exemplo, a
-              \textit{M-expression} \boxed{\texttt{car[cons[A; B]]}} seria
-              equivalente à \textit{S-expression}
-              \boxed{\texttt{(car (cons A B))}}. No entanto, assim que a
-              linguagem LISP foi implementada, os programadores prontamente
-              adotaram o uso das \textit{S-expressions} em vez das
-              \textit{M-expressions}, tornando as \textit{S-expressions} a
-              forma predominante de representar a estrutura do código na
-              linguagem.}%
+              \textit{M-expression} \usebox{\mexpressionexample} seria
+              equivalente à \textit{S-expression} \usebox{\sexpressionexample}.
+              No entanto, assim que a linguagem LISP foi implementada, os
+              programadores prontamente adotaram o uso das
+              \textit{S-expressions} em vez das \textit{M-expressions},
+              tornando as \textit{S-expressions} a forma predominante de
+              representar a estrutura do código na linguagem.}%
           , o que tornava o código-fonte praticamente ilegível e
           incompreensível caso não fosse devidamente organizado. Além disso,
     \item LISP era \gloss{homoiconic}, ou seja, permitia a manipulação do
@@ -651,9 +677,8 @@
   facilidades presentes na criação de \textit{parsers}, exista uma variedade de
   linguagens de programação e formatos de arquivos -- variando de linguagens
   com sintaxes complexas, como C++ e Perl, a formatos de arquivos mais
-  específicos, como \boxed{\texttt{.vhs}} e \boxed{\texttt{.rasi}} --, os quais
-  têm parsers gerados pelo \treesitter e, consequentemente, são suportados pelo
-  sistema.
+  específicos, como ``.vhs''' e ``.rasi''' --, os quais têm parsers gerados
+  pelo \treesitter e, consequentemente, são suportados pelo sistema.
 
   Na análise de código, é comum realizar tarefas que envolvem a busca de
   padrões na árvore sintática. Para isso, o \treesitter oferece uma pequena
@@ -748,39 +773,32 @@
   efetivamente estabelecendo uma formatação segura.
 
   A ferramenta apresenta a seguinte usagem
-  \boxed
-    {%
-      \texttt{\textbf{cook}
-      [\textbf{-l} \textit{LANG}]
-      \textbf{-q} \textit{QUERY}
-      [\textit{SRC}]}}%
+  \codesnippetinline{cook [-l LANG] -q QUERY [SRC]}%
   , onde
   \begin{inparaenum}
-    \item \boxed{\texttt{\textbf{cook}}} é o nome do executável,
-    \item \boxed{\texttt{[\textbf{-l} \textit{LANG}]}} é uma opção para
-          explicitar a linguagem do código-fonte a ser formatado,
-    \item \boxed{\texttt{\textbf{-q} \textit{QUERY}}} é utilizado para definir
-          o caminho para o arquivo -- escrito na linguagem de consulta do
-          \treesitter{} -- no qual as instruções de formatação estão definidas,
-          e
-    \item \boxed{\texttt{[\textit{SRC}]}} é um argumento opcional para
-          especificar o caminho para o arquivo a ser formatado.
+    \item \codesnippetinline{cook} é o nome do executável,
+    \item \codesnippetinline{[-l LANG]} é uma opção para explicitar a linguagem
+          do código-fonte a ser formatado,
+    \item \codesnippetinline{-q QUERY} é utilizado para definir o caminho para
+          o arquivo -- escrito na linguagem de consulta do \treesitter{} -- no
+          qual as instruções de formatação estão definidas, e
+    \item \codesnippetinline{[SRC]} é um argumento opcional para especificar o
+          caminho para o arquivo a ser formatado.
   \end{inparaenum}
-  Quando \boxed{\texttt{[\textit{SRC}]}} é provido e
-  \boxed{\texttt{[\textbf{-l} \textit{LANG}]}} é omitido, o software tentará
+  Quando \codesnippetinline{[SRC]} é provido e \codesnippetinline{[-l LANG]} é
+  omitido, o software tentará
   inferir uma linguagem de acordo com a extenção do nome do arquivo. Por outro
-  lado, quando \boxed{\texttt{[\textit{SRC}]}} é omitido, o código-fonte a ser
+  lado, quando \codesnippetinline{[SRC]} é omitido, o código-fonte a ser
   formatado deve ser provido via \textit{\gloss{pipeline}}, e a sua linguagem
-  deve ser explicitada via \boxed{\texttt{[\textbf{-l} \textit{LANG}]}}.
+  deve ser explicitada via \codesnippetinline{[-l LANG]}.
 
   \section{Fazendo Consultas}
 
   Como mencionado anteriormente, o \witchcooking formata o código-fonte
   conforme as instruções presentes no arquivo submetido via
-  \boxed{\texttt{\textbf{-q} \textit{QUERY}}}, o qual é escrito na linguagem de
-  consulta do \treesitter. Como abordado no \autoref{chapter:tree-sitter}, essa
-  linguagem foi originalmente concebida para buscar padrões na árvore sintática
-  via
+  \codesnippetinline{-q QUERY}, o qual é escrito na linguagem de consulta do
+  \treesitter. Como abordado no \autoref{chapter:tree-sitter}, essa linguagem
+  foi originalmente concebida para buscar padrões na árvore sintática via
   \begin{inparaenum}
     \item definição de padrões de correspondência e
     \item aplicação de predicados.
@@ -799,6 +817,7 @@
   \begin{minipage}[t]{.49\textwidth}
     \begin
       {codesnippet}%
+      [c]%
       {Função \texttt{``add\_two''} em C}%
       []%
       [label={snippet:add-two-c}]
@@ -808,7 +827,6 @@
     \end{codesnippet}
 
     \begin{codesnippet}*%
-      [text]%
       {Árvore Sintática da Função \texttt{``add\_two''} em C}%
       [showspaces]%
       [label={snippet:add-two-c-tree}]
@@ -841,7 +859,6 @@
     \end{codesnippet}
 
     \begin{codesnippet}*%
-      [text]%
       {Árvore Sintática da Função \texttt{``add\_two''} em Rust}%
       [showspaces]%
       [label={snippet:add-two-rust-tree}]
