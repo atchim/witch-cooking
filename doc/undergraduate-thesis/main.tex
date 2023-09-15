@@ -38,6 +38,7 @@
 \usepackage{amsmath}
 \usepackage[backend=biber,indent,style=abnt]{biblatex}
 \usepackage{caption}
+\usepackage[brazilian]{cleveref}
 \usepackage{color}
 \usepackage[listings,minted,skins,xparse]{tcolorbox}
 \usepackage{csquotes}
@@ -195,6 +196,12 @@
 
 \addbibresource{references.bib}
 
+%%%%%%%%%%%%%%
+%%% cleveref %
+%%%%%%%%%%%%%%
+
+\crefname{listing}{trecho de código}{trechos de código}
+
 %%%%%%%%%%%%%%%%%%%
 %%% Code Snippets %
 %%%%%%%%%%%%%%%%%%%
@@ -225,6 +232,7 @@
            coltitle=black,
           fonttitle=\ABNTEXfontereduzida,
        frame hidden,
+         label type=listing,
          list entry={Trecho de Código \thetcbcounter{} -- #3},
      listing engine=minted,
        listing only,
@@ -263,13 +271,6 @@
     \addcontentsline{toc}{chapter}{\glossname}}
   {\stopglosslist}
 \makegloss
-
-%%%%%%%%%%%%%%
-%%% hyperref %
-%%%%%%%%%%%%%%
-
-\def\chapterautorefname{capítulo}
-\def\Itemautorefname{item}
 
 %%%%%%%%%%%%%%
 %%% Paralist %
@@ -609,7 +610,7 @@
   \begin{inparaenum}
     \item ter conhecimento das estruturas gramaticais da linguagem específica
           em questão. Além disso, o objetivo do \textit{prettyprinter} é
-    \item \label{inparaenum:format} formatar o código de maneira otimizada e
+    \item \label{item:format} formatar o código de maneira otimizada e
           agradável para o leitor \cite[55]{hughes-1995-design}, levando em
           consideração as melhores práticas de formatação. Em alguns casos,
           também é importante
@@ -617,7 +618,7 @@
           atenda às suas preferências individuais. Adicionalmente, as sintaxes
           das linguagens de programação costumam ser flexíveis em relação à
           estruturação do código-fonte. Assim, para atender o
-          \autoref{inparaenum:format}, geralmente é necessário
+          \cref{item:format}, geralmente é necessário
     \item utilizar algoritmos que calculem o layout mais adequado de acordo com
           o contexto
           \cites
@@ -814,8 +815,8 @@
   Como mencionado anteriormente, o \witchcooking formata o código-fonte
   conforme as instruções presentes no arquivo submetido via
   \codesnippetinline{-q QUERY}, o qual é escrito na linguagem de consulta do
-  \treesitter. Como abordado no \autoref{chapter:tree-sitter}, essa linguagem
-  foi originalmente concebida para buscar padrões na árvore sintática via
+  \treesitter. Como abordado no \cref{chapter:tree-sitter}, essa linguagem foi
+  originalmente concebida para buscar padrões na árvore sintática via
   \begin{inparaenum}
     \item definição de padrões de correspondência e
     \item aplicação de predicados.
@@ -826,17 +827,16 @@
   gramaticais específicas, que são posteriormente traduzidas como nós na árvore
   de sintaxe analisada.
 
-  Considere, por exemplo, os trechos de código \ref{snippet:add-two-c} e
-  \ref{snippet:add-two-rust}, escritos nas linguagens de programação C e Rust,
-  respectivamente. Embora ambos os trechos desempenhem papéis idênticos --
-  i.e., definem uma função que retorna a soma do parâmetro \textit{x} com 2 --,
-  suas respectivas árvores de sintaxe analisadas -- apresentadas nos trechos de
-  código \ref{snippet:add-two-c-tree} e \ref{snippet:add-two-rust-tree} --
-  exibem diferenças significativas. Dessa forma, para buscar a correspondência
-  do trecho em que o parâmetro \textit{x} é definido em ambos os códigos
-  \ref{snippet:add-two-c} e \ref{snippet:add-two-rust}, é necessário distintas
-  consultas, apresentadas pelos trechos de código \ref{snippet:add-two-query-c}
-  e \ref{snippet:add-two-query-rust}, respectivamente.
+  Por exemplo, considere os \cref{snippet:add-two-c,snippet:add-two-rust},
+  escritos nas linguagens de programação C e Rust, respectivamente. Embora
+  ambos desempenhem papéis idênticos -- i.e., definem uma função que retorna a
+  soma do parâmetro \textit{x} com 2 --, suas árvores de sintaxe analisadas --
+  apresentadas respectivamente nos
+  \cref{snippet:add-two-c-tree,snippet:add-two-rust-tree} -- exibem diferenças
+  significativas. Portanto, para buscar a correspondência do trecho em que o
+  parâmetro \textit{x} é definido em ambos os códigos, são necessárias
+  consultas distintas, apresentadas pelos
+  \cref{snippet:add-two-query-c,snippet:add-two-query-rust}, respectivamente.
 
   \noindent
   \begin{minipage}[t]{.49\textwidth}
@@ -852,11 +852,29 @@
     \end{codesnippet}
     \vspace{-3ex}
     \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{.49\textwidth}
+    \begin
+      {codesnippet}%
+      [rust]%
+      {Função \textit{add\_two} em Rust}%
+      []%
+      [label={snippet:add-two-rust}]
+      fn add_two(x: i32) -> i32 {
+        x + 2
+      }
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
+  \end{minipage}
 
+  \noindent
+  \begin{minipage}[t]{.51\textwidth}
     \begin
       {codesnippet}*%
       {Árvore Sintática da Função \textit{add\_two} em C}%
-      [showspaces,fontsize=\ABNTEXfontereduzida]%
+      [fontsize=\ABNTEXfontereduzida]%
       [label={snippet:add-two-c-tree}]
       function_definition
         type: primitive_type
@@ -875,27 +893,10 @@
     \vspace{-3ex}
     \captionof*
       {listing}
-      { \ABNTEXfontereduzida
-        Fonte autoral.
-        Nós anônimos foram omitidos.
-        Quebra de linha presente.
-        Espaços estão representados pelo caractere `\textvisiblespace'.}
+      {\ABNTEXfontereduzida Fonte autoral. Nós anônimos foram omitidos.}
   \end{minipage}
   \hfill
-  \begin{minipage}[t]{.49\textwidth}
-    \begin
-      {codesnippet}%
-      [rust]%
-      {Função \textit{add\_two} em Rust}%
-      []%
-      [label={snippet:add-two-rust}]
-      fn add_two(x: i32) -> i32 {
-          x + 2
-      }
-    \end{codesnippet}
-    \vspace{-3ex}
-    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
-
+  \begin{minipage}[t]{.47\textwidth}
     \begin
       {codesnippet}*%
       {Árvore Sintática da Função \textit{add\_two} em Rust}%
@@ -951,6 +952,7 @@
     \vspace{-3ex}
     \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
   \end{minipage}
+
   %%%%%%%%%%%%%%%
   %% Conclusion %
   %%%%%%%%%%%%%%%
