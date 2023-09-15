@@ -801,14 +801,13 @@
           caminho para o arquivo a ser formatado.
   \end{inparaenum}
   Quando \codesnippetinline{[SRC]} é provido e \codesnippetinline{[-l LANG]} é
-  omitido, o software tentará
-  inferir uma linguagem de acordo com a extenção do nome do arquivo. Por outro
-  lado, quando \codesnippetinline{[SRC]} é omitido, o código-fonte a ser
-  formatado deve ser provido via \textit{\gloss{pipeline}}, e a sua linguagem
-  deve ser explicitada via \codesnippetinline{[-l LANG]}. Em alinhamento com
-  sua natureza experimental, o \witchcooking proporciona o código-fonte
-  formatado resultante como saída, sem modificar o conteúdo original,
-  efetivamente estabelecendo uma formatação segura.
+  omitido, o software tentará inferir uma linguagem conforme a extenção do nome
+  do arquivo. Por outro lado, quando \codesnippetinline{[SRC]} é omitido, o
+  código-fonte a ser formatado deve ser provido via \textit{\gloss{pipeline}},
+  e a sua linguagem deve ser explicitada via \codesnippetinline{[-l LANG]}. Em
+  alinhamento com sua natureza experimental, o \witchcooking proporciona o
+  código-fonte formatado resultante como saída, sem modificar o conteúdo
+  original, efetivamente estabelecendo uma formatação segura.
 
   \section{Fazendo Consultas}
 
@@ -833,7 +832,11 @@
   i.e., definem uma função que retorna a soma do parâmetro \textit{x} com 2 --,
   suas respectivas árvores de sintaxe analisadas -- apresentadas nos trechos de
   código \ref{snippet:add-two-c-tree} e \ref{snippet:add-two-rust-tree} --
-  exibem diferenças significativas.
+  exibem diferenças significativas. Dessa forma, para buscar a correspondência
+  do trecho em que o parâmetro \textit{x} é definido em ambos os códigos
+  \ref{snippet:add-two-c} e \ref{snippet:add-two-rust}, é necessário distintas
+  consultas, apresentadas pelos trechos de código \ref{snippet:add-two-query-c}
+  e \ref{snippet:add-two-query-rust}, respectivamente.
 
   \noindent
   \begin{minipage}[t]{.49\textwidth}
@@ -850,7 +853,8 @@
     \vspace{-3ex}
     \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
 
-    \begin{codesnippet}*%
+    \begin
+      {codesnippet}*%
       {Árvore Sintática da Função \textit{add\_two} em C}%
       [showspaces,fontsize=\ABNTEXfontereduzida]%
       [label={snippet:add-two-c-tree}]
@@ -892,7 +896,8 @@
     \vspace{-3ex}
     \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
 
-    \begin{codesnippet}*%
+    \begin
+      {codesnippet}*%
       {Árvore Sintática da Função \textit{add\_two} em Rust}%
       [fontsize=\ABNTEXfontereduzida]%
       [label={snippet:add-two-rust-tree}]
@@ -914,6 +919,38 @@
       {\ABNTEXfontereduzida Fonte autoral. Nós anônimos foram omitidos.}
   \end{minipage}
 
+  \clearpage
+
+  \noindent
+  \begin{minipage}[t]{.51\textwidth}
+    \begin
+      {codesnippet}*%
+      [scheme]%
+      {Consulta para função \textit{add\_two} em C}%
+      []%
+      [label={snippet:add-two-query-c}]
+      (parameter_declaration
+        type: (primitive_type)
+        declarator: (identifier))
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{.47\textwidth}
+    \begin
+      {codesnippet}*%
+      [scheme]%
+      {Consulta para função \textit{add\_two} em Rust}%
+      []%
+      [label={snippet:add-two-query-rust}]
+      (parameter
+        pattern: (identifier)
+        type: (primitive_type))
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
+  \end{minipage}
   %%%%%%%%%%%%%%%
   %% Conclusion %
   %%%%%%%%%%%%%%%
