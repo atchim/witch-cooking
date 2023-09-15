@@ -42,6 +42,7 @@
 \usepackage[listings,minted,skins,xparse]{tcolorbox}
 \usepackage{csquotes}
 \usepackage{graphicx}
+\usepackage{minted}
 \usepackage{palatino}
 \usepackage{paralist}
 \usepackage{xspace}
@@ -677,8 +678,8 @@
   facilidades presentes na criação de \textit{parsers}, exista uma variedade de
   linguagens de programação e formatos de arquivos -- variando de linguagens
   com sintaxes complexas, como C++ e Perl, a formatos de arquivos mais
-  específicos, como ``.vhs''' e ``.rasi''' --, os quais têm parsers gerados
-  pelo \treesitter e, consequentemente, são suportados pelo sistema.
+  específicos, como \textit{.vhs} e \textit{.rasi} --, os quais têm parsers
+  gerados pelo \treesitter e, consequentemente, são suportados pelo sistema.
 
   Na análise de código, é comum realizar tarefas que envolvem a busca de
   padrões na árvore sintática. Para isso, o \treesitter oferece uma pequena
@@ -764,13 +765,27 @@
     \item complexidade envolvida no \textit{prettyprinting} --
     \item agravada pela proposta de formatação multilíngue
   \end{inparaenum}
-  --, o \witchcooking foi desenvolvido como um software de linha de comando, de
-  natureza prototípica, para a formatação de código-fonte. Para essa
-  finalidade, a ferramenta requer a submissão do código-fonte a ser formatado,
-  juntamente com o arquivo contendo as instruções de formatação. Em alinhamento
-  com sua natureza experimental, o \witchcooking proporciona o código-fonte
-  formatado resultante como saída, sem modificar o conteúdo original,
-  efetivamente estabelecendo uma formatação segura.
+  --, o \witchcooking foi concebido como um software de linha de comando -- de
+  natureza prototípica -- para a formatação de código-fonte. A ferramenta
+  elaborada tem como objetivos
+  \begin{inparaenum}
+    \item abranger uma gama de linguagens de programação e
+    \item permitir que o usuário defina seus próprios estilos de formatação
+          de código-fonte.
+  \end{inparaenum}
+  Para atender a seus objetivos, o \witchcooking foi desenvolvido com base na
+  biblioteca \treesitter \cite{tree-sitter-2018-tree}, a qual
+  \begin{inparaenum}
+    \item suporta uma ampla variedade de linguagens de programação e formatos
+          de arquivos, além de
+    \item possuir uma linguagem de consulta versátil e extensível que, dentre
+          outras características, permite a
+          \begin{inparaenum}
+          \item realização de buscas complexas na árvore de sintaxe analisada
+                de um código-fonte, bem como a
+          \item adição de predicados personalizados.
+          \end{inparaenum}
+  \end{inparaenum}
 
   A ferramenta apresenta a seguinte usagem
   \codesnippetinline{cook [-l LANG] -q QUERY [SRC]}%
@@ -790,7 +805,10 @@
   inferir uma linguagem de acordo com a extenção do nome do arquivo. Por outro
   lado, quando \codesnippetinline{[SRC]} é omitido, o código-fonte a ser
   formatado deve ser provido via \textit{\gloss{pipeline}}, e a sua linguagem
-  deve ser explicitada via \codesnippetinline{[-l LANG]}.
+  deve ser explicitada via \codesnippetinline{[-l LANG]}. Em alinhamento com
+  sua natureza experimental, o \witchcooking proporciona o código-fonte
+  formatado resultante como saída, sem modificar o conteúdo original,
+  efetivamente estabelecendo uma formatação segura.
 
   \section{Fazendo Consultas}
 
@@ -807,28 +825,34 @@
   à linguagem de programação utilizada. Por outro lado, os padrões de
   correspondência variam de acordo com a linguagem devido às suas construções
   gramaticais específicas, que são posteriormente traduzidas como nós na árvore
-  de sintaxe.
+  de sintaxe analisada.
 
   Considere, por exemplo, os trechos de código \ref{snippet:add-two-c} e
-  \ref{snippet:add-two-rust}, os quais apresentam uma função que retorna a soma
-  do parâmetro com 2.
+  \ref{snippet:add-two-rust}, escritos nas linguagens de programação C e Rust,
+  respectivamente. Embora ambos os trechos desempenhem papéis idênticos --
+  i.e., definem uma função que retorna a soma do parâmetro \textit{x} com 2 --,
+  suas respectivas árvores de sintaxe analisadas -- apresentadas nos trechos de
+  código \ref{snippet:add-two-c-tree} e \ref{snippet:add-two-rust-tree} --
+  exibem diferenças significativas.
 
   \noindent
   \begin{minipage}[t]{.49\textwidth}
     \begin
       {codesnippet}%
       [c]%
-      {Função \texttt{``add\_two''} em C}%
+      {Função \textit{add\_two} em C}%
       []%
       [label={snippet:add-two-c}]
       int add_two(int x) {
         return x + 2;
       }
     \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
 
     \begin{codesnippet}*%
-      {Árvore Sintática da Função \texttt{``add\_two''} em C}%
-      [showspaces]%
+      {Árvore Sintática da Função \textit{add\_two} em C}%
+      [showspaces,fontsize=\ABNTEXfontereduzida]%
       [label={snippet:add-two-c-tree}]
       function_definition
         type: primitive_type
@@ -844,23 +868,33 @@
               left: identifier
               right: number_literal
     \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*
+      {listing}
+      { \ABNTEXfontereduzida
+        Fonte autoral.
+        Nós anônimos foram omitidos.
+        Quebra de linha presente.
+        Espaços estão representados pelo caractere `\textvisiblespace'.}
   \end{minipage}
   \hfill
   \begin{minipage}[t]{.49\textwidth}
     \begin
       {codesnippet}%
       [rust]%
-      {Função \texttt{``add\_two''} em Rust}%
+      {Função \textit{add\_two} em Rust}%
       []%
       [label={snippet:add-two-rust}]
       fn add_two(x: i32) -> i32 {
           x + 2
       }
     \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
 
     \begin{codesnippet}*%
-      {Árvore Sintática da Função \texttt{``add\_two''} em Rust}%
-      [showspaces]%
+      {Árvore Sintática da Função \textit{add\_two} em Rust}%
+      [fontsize=\ABNTEXfontereduzida]%
       [label={snippet:add-two-rust-tree}]
       function_item
         name: identifier
@@ -874,6 +908,10 @@
             left: identifier
             right: integer_literal
     \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*
+      {listing}
+      {\ABNTEXfontereduzida Fonte autoral. Nós anônimos foram omitidos.}
   \end{minipage}
 
   %%%%%%%%%%%%%%%
