@@ -208,6 +208,9 @@
 
 \renewcommand{\theFancyVerbLine}{\ttfamily\arabic{FancyVerbLine}}
 
+\definecolor{codehighlight}{RGB}{240,240,150}
+\setminted{highlightcolor={codehighlight},spacecolor=gray!50}
+
 \NewTotalTCBox
   {\codesnippetinline}
   {O{}O{text}v}
@@ -216,7 +219,6 @@
     enhanced,
     frame hidden,
     left=0pt,
-    minted options={fontsize=\Large},
     on line,
     right=0pt,
     sharp corners,
@@ -226,12 +228,13 @@
 \NewTCBListing
   [auto counter,list inside=codesnippets]
   {codesnippet}
-  {sO{text}m!O{}!O{}}
+  {sO{text}mm!O{}!O{}}
   {        enhanced,
        center title,
            coltitle=black,
           fonttitle=\ABNTEXfontereduzida,
        frame hidden,
+              label={snippet:#4},
          label type=listing,
          list entry={Trecho de Código \thetcbcounter{} -- #3},
      listing engine=minted,
@@ -244,9 +247,8 @@
                       breaklines,
                       breaksymbol={},
                       linenos,
-                      spacecolor=gray!50,
                       xleftmargin=\IfBooleanTF{#1}{1.5}{1}em,
-                      #4},
+                      #5},
             overlay={%
                       \begin{tcbclipinterior}
                         \fill[gray!25]
@@ -256,7 +258,7 @@
                       \end{tcbclipinterior}},
       sharp corners,
               title={Trecho de Código \thetcbcounter{} -- #3},
-                 #5}
+                 #6}
 
 %%%%%%%%%%%%%%
 %%% Glossary %
@@ -354,8 +356,10 @@
   % Table of Code Snippets %
   %%%%%%%%%%%%%%%%%%%%%%%%%%
 
+  \newcommand{\codesnippetsname}{Lista de Trechos de Código}
   \begin{KeepFromToc}
-    \tcblistof[\chapter*]{codesnippets}{Lista de Trechos de Código}
+    \pdfbookmark[0]{\codesnippetsname}{codesnippets}
+    \tcblistof[\chapter*]{codesnippets}{\codesnippetsname}
   \end{KeepFromToc}
   \cleardoublepage
 
@@ -836,7 +840,7 @@
   significativas. Portanto, para buscar a correspondência do trecho em que o
   parâmetro \textit{x} é definido em ambos os códigos, são necessárias
   consultas distintas, apresentadas pelos
-  \cref{snippet:add-two-query-c,snippet:add-two-query-rust}, respectivamente.
+  \cref{snippet:add-two-query-c,snippet:add-two-query-rust}.
 
   \noindent
   \begin{minipage}[t]{.49\textwidth}
@@ -844,8 +848,7 @@
       {codesnippet}%
       [c]%
       {Função \textit{add\_two} em C}%
-      []%
-      [label={snippet:add-two-c}]
+      {add-two-c}
       int add_two(int x) {
         return x + 2;
       }
@@ -859,8 +862,7 @@
       {codesnippet}%
       [rust]%
       {Função \textit{add\_two} em Rust}%
-      []%
-      [label={snippet:add-two-rust}]
+      {add-two-rust}
       fn add_two(x: i32) -> i32 {
         x + 2
       }
@@ -874,8 +876,8 @@
     \begin
       {codesnippet}*%
       {Árvore Sintática da Função \textit{add\_two} em C}%
-      [fontsize=\ABNTEXfontereduzida]%
-      [label={snippet:add-two-c-tree}]
+      {add-two-c-tree}%
+      [fontsize=\ABNTEXfontereduzida]
       function_definition
         type: primitive_type
         declarator: function_declarator
@@ -900,8 +902,8 @@
     \begin
       {codesnippet}*%
       {Árvore Sintática da Função \textit{add\_two} em Rust}%
-      [fontsize=\ABNTEXfontereduzida]%
-      [label={snippet:add-two-rust-tree}]
+      {add-two-rust-tree}%
+      [fontsize=\ABNTEXfontereduzida]
       function_item
         name: identifier
         parameters: parameters
@@ -928,8 +930,7 @@
       {codesnippet}*%
       [scheme]%
       {Consulta para função \textit{add\_two} em C}%
-      []%
-      [label={snippet:add-two-query-c}]
+      {add-two-query-c}
       (parameter_declaration
         type: (primitive_type)
         declarator: (identifier))
@@ -943,8 +944,7 @@
       {codesnippet}*%
       [scheme]%
       {Consulta para função \textit{add\_two} em Rust}%
-      []%
-      [label={snippet:add-two-query-rust}]
+      {add-two-query-rust}
       (parameter
         pattern: (identifier)
         type: (primitive_type))
