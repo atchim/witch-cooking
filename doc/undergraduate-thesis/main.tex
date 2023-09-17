@@ -209,6 +209,7 @@
 \renewcommand{\theFancyVerbLine}{\ttfamily\arabic{FancyVerbLine}}
 
 \definecolor{codehighlight}{RGB}{240,240,150}
+\newcommand{\hi}[1]{\colorbox{codehighlight}{#1}}
 \setminted{highlightcolor={codehighlight},spacecolor=gray!50}
 
 \NewTotalTCBox
@@ -838,8 +839,17 @@
   apresentadas respectivamente nos
   \cref{snippet:add-two-c-tree,snippet:add-two-rust-tree} -- exibem diferenças
   significativas. Portanto, para buscar a correspondência do trecho em que o
-  parâmetro \textit{x} é definido em ambos os códigos, são necessárias
-  consultas distintas, apresentadas pelos
+  parâmetro \textit{x} é definido em ambos os códigos (i.e.,
+  \codesnippetinline
+    [escapeinside=||]
+    [c]
+    $int add_two(|\colorbox{codehighlight}{int x}|) {$
+  e
+  \codesnippetinline
+    [escapeinside=||]
+    [rust]
+    $fn add_two(|\colorbox{codehighlight}{x: i32}|) -> i32 {$%
+  ), são necessárias consultas distintas, apresentadas pelos
   \cref{snippet:add-two-query-c,snippet:add-two-query-rust}.
 
   \noindent
@@ -929,7 +939,7 @@
     \begin
       {codesnippet}*%
       [scheme]%
-      {Consulta para função \textit{add\_two} em C}%
+      {Consulta Para a Função \textit{add\_two} em C}%
       {add-two-query-c}
       (parameter_declaration
         type: (primitive_type)
@@ -943,11 +953,44 @@
     \begin
       {codesnippet}*%
       [scheme]%
-      {Consulta para função \textit{add\_two} em Rust}%
+      {Consulta Para a Função \textit{add\_two} em Rust}%
       {add-two-query-rust}
       (parameter
         pattern: (identifier)
         type: (primitive_type))
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
+  \end{minipage}
+
+  Dado que os padrões correspondem a qualquer uma de suas ocorrências, é
+  importante garantir maior especificidade em sua definição. Isso pode ser
+  obtido por meio de
+  \begin{inparaenum}
+    \item especificação de campos,
+    \item especificação de nós anônimos e
+    \item aplicação de predicados.
+  \end{inparaenum}
+  Para ilustrar, ao aplicar a consulta apresentada no
+  \cref{snippet:add-two-query-c} ao seguinte código em linha
+  \codesnippetinline[][c]$int add(int x, int y);$, obtêm-se duas
+  correspondências, como destacadas no seguinte trecho
+  \codesnippetinline[escapeinside=||][c]$int add(|\hi{int x}, \hi{int y}|);$.
+  Logo, para corresponder somente ao parâmetro \textit{x}, deve-se utilizar uma
+  consulta mais elaborada, conforme exemplificada no
+  \cref{snippet:add-query-c}.
+
+  \noindent
+  \begin{minipage}[H]{\textwidth}
+    \begin
+      {codesnippet}*%
+      [scheme]%
+      {Consulta Elaborada Correspondendo ao Parâmetro \textit{x}}%
+      {add-query-c}
+      ( (parameter_declaration
+          type: (primitive_type)
+          declarator: (identifier) @id)
+        (#eq? @id "x"))
     \end{codesnippet}
     \vspace{-3ex}
     \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
