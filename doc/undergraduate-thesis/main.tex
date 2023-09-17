@@ -214,7 +214,7 @@
 
 \NewTotalTCBox
   {\codesnippetinline}
-  {O{}O{text}v}
+  {O{text}vO{}}
   {%
     bottom=0pt,
     enhanced,
@@ -224,7 +224,7 @@
     right=0pt,
     sharp corners,
     top=0pt}
-  {\mintinline[#1]{#2}{#3}}%
+  {\mintinline[#3]{#1}{#2}}%
 
 \NewTCBListing
   [auto counter,list inside=codesnippets]
@@ -468,12 +468,12 @@
 
   \newsavebox\mexpressionexample
   \begin{lrbox}{\mexpressionexample}
-    \codesnippetinline[fontsize=\footnotesize]{car[cons[A; B]]}
+    \codesnippetinline{car[cons[A; B]]}[fontsize=\footnotesize]
   \end{lrbox}
 
   \newsavebox\sexpressionexample
   \begin{lrbox}{\sexpressionexample}
-    \codesnippetinline[fontsize=\footnotesize][lisp]{(car (cons A B))}
+    \codesnippetinline[lisp]{(car (cons A B))}[fontsize=\footnotesize]
   \end{lrbox}
 
   Durante as décadas de 60 e 70, a linguagem de programação LISP%
@@ -841,14 +841,14 @@
   significativas. Portanto, para buscar a correspondência do trecho em que o
   parâmetro \textit{x} é definido em ambos os códigos (i.e.,
   \codesnippetinline
-    [escapeinside=||]
     [c]
     $int add_two(|\colorbox{codehighlight}{int x}|) {$
+    [escapeinside=||]
   e
   \codesnippetinline
-    [escapeinside=||]
     [rust]
-    $fn add_two(|\colorbox{codehighlight}{x: i32}|) -> i32 {$%
+    $fn add_two(|\colorbox{codehighlight}{x: i32}|) -> i32 {$
+    [escapeinside=||]%
   ), são necessárias consultas distintas, apresentadas pelos
   \cref{snippet:add-two-query-c,snippet:add-two-query-rust}.
 
@@ -973,9 +973,9 @@
   \end{inparaenum}
   Para ilustrar, ao aplicar a consulta apresentada no
   \cref{snippet:add-two-query-c} ao seguinte código em linha
-  \codesnippetinline[][c]$int add(int x, int y);$, obtêm-se duas
+  \codesnippetinline[c]{int add(int x, int y);}, obtêm-se duas
   correspondências, como destacadas no seguinte trecho
-  \codesnippetinline[escapeinside=||][c]$int add(|\hi{int x}, \hi{int y}|);$.
+  \codesnippetinline[c]{int add(|\hi{int x}, \hi{int y}|);}[escapeinside=||].
   Logo, para corresponder somente ao parâmetro \textit{x}, deve-se utilizar uma
   consulta mais elaborada, conforme exemplificada no
   \cref{snippet:add-query-c}.
