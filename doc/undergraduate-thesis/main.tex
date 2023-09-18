@@ -772,9 +772,9 @@
     \item agravada pela proposta de formatação multilíngue
   \end{inparaenum}
   --, o \witchcooking foi concebido como um software de linha de comando --
-  escrito na linguagem de programação \textit{Rust} \cite{rust-2023-rust}, e de
-  natureza prototípica -- para a formatação de código-fonte. A ferramenta
-  elaborada tem como objetivos
+  escrito na linguagem de programação Rust \cite{rust-2023-rust}, e de natureza
+  prototípica -- para a formatação de código-fonte. A ferramenta elaborada tem
+  como objetivos
   \begin{inparaenum}
     \item abranger uma gama de linguagens de programação e
     \item permitir que o usuário defina seus próprios estilos de formatação
@@ -821,7 +821,13 @@
   Como mencionado anteriormente, o \witchcooking formata o código-fonte
   conforme as instruções presentes no arquivo submetido via
   \codesnippetinline{-q QUERY}, o qual é escrito na linguagem de consulta do
-  \treesitter. Como abordado no \cref{chapter:tree-sitter}, essa linguagem foi
+  \treesitter. Devido à importância fundamental desempenhada por essa linguagem
+  na ferramenta, é essencial possuir um conhecimento básico sobre o seu
+  funcionamento. Portanto, nesta seção, será abordado o funcionamento da
+  linguagem de consulta do \treesitter, permitindo assim uma melhor compreensão
+  da base em que o \witchcooking foi desenvolvido.
+
+  Como abordado no \cref{chapter:tree-sitter}, essa linguagem foi
   originalmente concebida para buscar padrões na árvore sintática via
   \begin{inparaenum}
     \item definição de padrões de correspondência e
