@@ -208,7 +208,7 @@
 
 \renewcommand{\theFancyVerbLine}{\ttfamily\arabic{FancyVerbLine}}
 
-\definecolor{codehighlight}{RGB}{240,240,150}
+\definecolor{codehighlight}{RGB}{240,240,170}
 \newcommand{\hi}[1]{\colorbox{codehighlight}{#1}}
 \setminted{highlightcolor={codehighlight},spacecolor=gray!50}
 
@@ -771,7 +771,8 @@
     \item complexidade envolvida no \textit{prettyprinting} --
     \item agravada pela proposta de formatação multilíngue
   \end{inparaenum}
-  --, o \witchcooking foi concebido como um software de linha de comando -- de
+  --, o \witchcooking foi concebido como um software de linha de comando --
+  escrito na linguagem de programação \textit{Rust} \cite{rust-2023-rust}, e de
   natureza prototípica -- para a formatação de código-fonte. A ferramenta
   elaborada tem como objetivos
   \begin{inparaenum}
@@ -850,7 +851,7 @@
     $fn add_two(|\colorbox{codehighlight}{x: i32}|) -> i32 {$
     [escapeinside=||]%
   ), são necessárias consultas distintas, apresentadas pelos
-  \cref{snippet:add-two-query-c,snippet:add-two-query-rust}.
+  \cref{snippet:param-query-c,snippet:param-query-rust}.
 
   \noindent
   \begin{minipage}[t]{.49\textwidth}
@@ -939,8 +940,8 @@
     \begin
       {codesnippet}*%
       [scheme]%
-      {Consulta Para a Função \textit{add\_two} em C}%
-      {add-two-query-c}
+      {Consulta Correspondendo a um Parâmetro de Função em C}%
+      {param-query-c}
       (parameter_declaration
         type: (primitive_type)
         declarator: (identifier))
@@ -953,8 +954,8 @@
     \begin
       {codesnippet}*%
       [scheme]%
-      {Consulta Para a Função \textit{add\_two} em Rust}%
-      {add-two-query-rust}
+      {Consulta Correspondendo a um Parâmetro de Função em Rust}%
+      {param-query-rust}
       (parameter
         pattern: (identifier)
         type: (primitive_type))
@@ -972,13 +973,13 @@
     \item aplicação de predicados.
   \end{inparaenum}
   Para ilustrar, ao aplicar a consulta apresentada no
-  \cref{snippet:add-two-query-c} ao seguinte código em linha
+  \cref{snippet:param-query-c} ao seguinte código em linha
   \codesnippetinline[c]{int add(int x, int y);}, obtêm-se duas
   correspondências, como destacadas no seguinte trecho
   \codesnippetinline[c]{int add(|\hi{int x}, \hi{int y}|);}[escapeinside=||].
   Logo, para corresponder somente ao parâmetro \textit{x}, deve-se utilizar uma
   consulta mais elaborada, conforme exemplificada no
-  \cref{snippet:add-query-c}.
+  \cref{snippet:x-param-query}.
 
   \noindent
   \begin{minipage}[H]{\textwidth}
@@ -986,15 +987,30 @@
       {codesnippet}*%
       [scheme]%
       {Consulta Elaborada Correspondendo ao Parâmetro \textit{x}}%
-      {add-query-c}
-      ( (parameter_declaration
-          type: (primitive_type)
-          declarator: (identifier) @id)
+      {x-param-query}
+      (parameter_declaration
+        type: (primitive_type)
+        declarator: (identifier) @id
         (#eq? @id "x"))
     \end{codesnippet}
     \vspace{-3ex}
     \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
   \end{minipage}
+
+  No trecho de código acima, é possível notar algumas diferenças em relação à
+  sua versão original, que foi apresentada no \cref{snippet:param-query-c}.
+  \begin{inparaenum}
+    \item O nó \textit{identifier} é capturado com o nome \textit{id}, como
+          destacado no seguinte trecho de código
+          \codesnippetinline
+            [scheme]
+            {declarator: |\hi{(identifier) @id}|}
+            [escapeinside=||]%
+          . Além disso,
+    \item o predicado \textit{eq?} é aplicado para garantir que o conteúdo da
+          captura \textit{id} corresponda à string ``x'' o que, por
+          consequência, impede a correspondência do parâmetro \textit{y}.
+  \end{inparaenum}
 
   %%%%%%%%%%%%%%%
   %% Conclusion %
