@@ -898,7 +898,8 @@
   linguagem de consulta e sua aplicação em conjunto com o \witchcooking na
   formatação do código-fonte.
 
-  \newpage
+  \clearpage
+
   \noindent
   \begin{minipage}[t]{.49\textwidth}
     \begin
@@ -1023,6 +1024,20 @@
     \vspace{-3ex}
     \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
   \end{minipage}
+
+  \clearpage
+
+  \section{O Algoritmo de Formatação}
+
+  O \witchcooking permite a formatação de código-fonte via seu algoritmo
+  fundamentado no \treesitter e sua linguagem de consulta. Esse algoritmo
+  utiliza a biblioteca para gerar uma árvore de sintaxe a partir do
+  código-fonte submetido pelo usuário. Adicionalmente, complementando os
+  predicados \textit{builtins} do \treesitter -- os quais foram concebidos para
+  a busca de padrões correspondentes --, o algoritmo inclui predicados
+  desenvolvidos para executar procedimentos variados de formatação.
+  Consequentemente, ao utilizar esses predicados nos padrões da consulta, é
+  possível instruir a formatação de nós específicos da árvore de sintaxe.
 
   %%%%%%%%%%%%%%%
   %% Conclusion %
