@@ -425,11 +425,12 @@
   Visando superar ou reduzir as limitações previamente mencionadas, quais são
   frequentemente presentes nas ferramentas convencionais de formatação, este
   trabalho tem como objetivo geral desenvolver um software prototípico para a
-  formatação de código. Nomeada antecipadamente de \witchcooking
-  \cite{silva-2023-witch}, a ferramenta a ser desenvolvida tem como objetivos
+  formatação de código. Nomeada de \witchcooking \cite{silva-2023-witch}, a
+  ferramenta desenvolvida tem como objetivos
   \begin{inparaenum}
     \item abranger uma gama de linguagens de programação, além de
-    \item permitir que o usuário defina seus próprios estilos de formatação.
+    \item permitir que o usuário defina seus estilos personalizados de
+          formatação.
   \end{inparaenum}
 
   Para alcançar o objetivo geral proposto, este trabalho tem como objetivos
@@ -1033,8 +1034,8 @@
   fundamentado no \treesitter e sua linguagem de consulta. Esse algoritmo
   utiliza a biblioteca para gerar uma árvore de sintaxe a partir do
   código-fonte submetido pelo usuário. Adicionalmente, complementando os
-  predicados \textit{builtins} do \treesitter -- os quais foram concebidos para
-  a busca de padrões correspondentes --, o algoritmo inclui predicados
+  predicados \textit{builtins} do \treesitter{} -- os quais foram concebidos
+  para a busca de padrões correspondentes --, o algoritmo inclui predicados
   desenvolvidos para executar procedimentos variados de formatação.
   Consequentemente, ao utilizar esses predicados nos padrões da consulta, é
   possível instruir a formatação de nós específicos da árvore de sintaxe.
