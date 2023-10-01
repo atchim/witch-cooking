@@ -743,6 +743,7 @@
   \chapter{O \witchcooking}
 
   \section{Motivações, Propósitos e Panorama}
+  \label{section:motivations}
 
   As motivações para o desenvolvimento do \witchcooking surgiram das
   dificuldades enfrentadas pelo autor ao estudar estilos de formatação de
@@ -817,10 +818,50 @@
   código-fonte formatado resultante como saída, sem modificar o conteúdo
   original, efetivamente estabelecendo uma formatação segura.
 
+  \section{Materiais e Métodos}
+
+  O \witchcooking foi programado em Rust \cite{rust-2023-rust}, que é uma
+  linguagem amplamente reconhecida na comunidade de programadores
+  \cite{stack-overflow-2023-stack}. Dentre os motivos que levaram à escolha
+  dessa linguagem para o desenvolvimento, destacam-se
+  \begin{inparaenum}
+    \item seu gerenciamento de memória seguro%
+          \footnote
+            { Embora Rust não apresente \textit{\gloss{garbage-collection}} --
+              o que contribui significativamente para o desempenho --, a
+              linguagem emprega \textit{features} e conceitos como
+              \textit{borrow checker}, \textit{ownership} e \textit{lifetime},
+              garantindo um gerenciamento de memória seguro. Isso é
+              especialmente relevante em linguagens de alto desempenho que não
+              possuem coleta de lixo (e.g., C e C++). Estudos estimam que,
+              nesse contexto, pelo menos 65\% das vulnerabilidades de segurança
+              sejam causadas por falta de segurança no gerenciamento de memória
+              \cite{gaynor-2020-what}.}
+          \cite[3]{nsa-2022-software};
+    \item seu excelente desempenho, a par às linguagens C e C++;
+    \item seus recursos de linguagens modernas, incluindo
+          \begin{inparaenum}
+            \item expressividade,
+            \item \textit{\gloss{zero-cost-abs}},
+            \item correspondência de padrões,
+            \item \textit{closures},
+            \item macros, etc.;
+          \end{inparaenum}
+    \item seu suporte a múltiplas plataformas; além de
+    \item seu ecossistema de desenvolvimento fértil, que oferece
+          \begin{inparaenum}
+            \item uma ampla variedade de bibliotecas,
+            \item \textit{Cargo}, o gerenciador de pacotes,
+            \item \textit{Rust Analyzer}, uma implementação do
+                  \textit{Language Server Protocol} (LSP) para a linguagem,
+                  etc.
+          \end{inparaenum}
+  \end{inparaenum}
+
   \section{Fazendo Consultas}
 
-  Como mencionado anteriormente, o \witchcooking formata o código-fonte
-  conforme as instruções presentes no arquivo submetido via
+  Como mencionado na \cref{section:motivations}, o \witchcooking formata o
+  código-fonte conforme as instruções presentes no arquivo submetido via
   \codesnippetinline{-q QUERY}, o qual é escrito na linguagem de consulta do
   \treesitter. Devido à importância fundamental desempenhada por essa linguagem
   na ferramenta, é essencial possuir um conhecimento básico sobre o seu
