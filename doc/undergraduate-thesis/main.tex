@@ -742,8 +742,7 @@
 
   \chapter{O \witchcooking}
 
-  \section{Motivações, Propósitos e Panorama}
-  \label{section:motivations}
+  \section{Motivações e Propósitos}
 
   As motivações para o desenvolvimento do \witchcooking surgiram das
   dificuldades enfrentadas pelo autor ao estudar estilos de formatação de
@@ -774,29 +773,18 @@
     \item agravada pela proposta de formatação multilíngue
   \end{inparaenum}
   --, o \witchcooking foi concebido como um software de linha de comando --
-  escrito na linguagem de programação Rust \cite{rust-2023-rust}, e de natureza
-  prototípica -- para a formatação de código-fonte. A ferramenta elaborada tem
-  como objetivos
+  de natureza prototípica -- para a formatação de código-fonte. A ferramenta
+  elaborada tem como objetivos
   \begin{inparaenum}
     \item abranger uma gama de linguagens de programação e
     \item permitir que o usuário defina seus próprios estilos de formatação
           de código-fonte.
   \end{inparaenum}
-  Para atender a seus objetivos, o \witchcooking foi desenvolvido com base na
-  biblioteca \treesitter \cite{tree-sitter-2018-tree}, a qual
-  \begin{inparaenum}
-    \item suporta uma ampla variedade de linguagens de programação e formatos
-          de arquivos, além de
-    \item possuir uma linguagem de consulta versátil e extensível que, dentre
-          outras características, permite a
-          \begin{inparaenum}
-          \item realização de buscas complexas na árvore de sintaxe analisada
-                de um código-fonte, bem como a
-          \item adição de predicados personalizados.
-          \end{inparaenum}
-  \end{inparaenum}
 
-  A ferramenta apresenta a seguinte usagem
+  \section{Usagem}
+  \label{section:usage}
+
+  O \witchcooking apresenta a seguinte usagem
   \codesnippetinline{cook [-l LANG] -q QUERY [SRC]}%
   , onde
   \begin{inparaenum}
@@ -852,15 +840,49 @@
           \begin{inparaenum}
             \item uma ampla variedade de bibliotecas,
             \item \textit{Cargo}, o gerenciador de pacotes,
-            \item \textit{Rust Analyzer}, uma implementação do
-                  \textit{Language Server Protocol} (LSP) para a linguagem,
-                  etc.
+            \item \textit{rust-analyzer} \cite{rust-analyzer-2023-rust}, uma
+                  implementação do \textit{Language Server Protocol} (LSP) para
+                  a linguagem, etc.
           \end{inparaenum}
+  \end{inparaenum}
+
+  Para atender a seus objetivos, o \witchcooking foi desenvolvido com base na
+  biblioteca \treesitter \cite{tree-sitter-2018-tree}, a qual
+  \begin{inparaenum}
+    \item suporta uma ampla variedade de linguagens de programação e formatos
+          de arquivos, além de
+    \item possuir uma linguagem de consulta versátil e extensível que, dentre
+          outras características, permite a
+          \begin{inparaenum}
+            \item realização de buscas complexas na árvore de sintaxe analisada
+                  de um código-fonte, bem como a
+            \item adição de predicados personalizados.
+          \end{inparaenum}
+  \end{inparaenum}
+  Embora essa biblioteca não tenha sido originalmente projetada para formatação
+  de código-fonte, o autor deste trabalho reconheceu o potencial do
+  \treesitter, mais precisamente, o potencial de sua linguagem de consulta, que
+  -- como já ressaltado -- é extensível. Assim, para realizar a formatação, o
+  \witchcooking baseou-se na extensão e disponibilização de predicados
+  designados a executar operações específicas de formatação.
+
+  Para escrever o código do \witchcooking, foi utilizado o editor de texto
+  \textit{Neovim} \cite{neovim-2023-hyperextensible}, com configurações
+  personalizadas \cite{silva-2023-uma}. Essas configurações possibilitaram a
+  integração com o \textit{rust-analyzer}, o que resultou em melhorias
+  significativas na experiência de programação. Dentre os plugins utilizados na
+  configuração, destacam-se o
+  \begin{inparaenum}
+    \item \textit{nvim-treesitter} \cite{nvim-treesitter-2023-nvim}, que
+          permitiu a integração com o \treesitter; além do
+    \item \textit{playground} \cite{nvim-treesitter-2023-playground}, que
+          disponibilizou ferramentas para uma melhor compreensão do \treesitter
+          e de sua linguagem de consulta.
   \end{inparaenum}
 
   \section{Fazendo Consultas}
 
-  Como mencionado na \cref{section:motivations}, o \witchcooking formata o
+  Como mencionado na \cref{section:usage}, o \witchcooking formata o
   código-fonte conforme as instruções presentes no arquivo submetido via
   \codesnippetinline{-q QUERY}, o qual é escrito na linguagem de consulta do
   \treesitter. Devido à importância fundamental desempenhada por essa linguagem
@@ -881,66 +903,6 @@
   correspondência variam de acordo com a linguagem devido às suas construções
   gramaticais específicas, que são posteriormente traduzidas como nós na árvore
   de sintaxe analisada.
-
-  Por exemplo, considere os \cref{snippet:add-two-c,snippet:add-two-rust},
-  escritos nas linguagens de programação C e Rust, respectivamente. Embora
-  ambos desempenhem papéis idênticos -- i.e., definem uma função que retorna a
-  soma do parâmetro \textit{x} com 2 --, suas árvores de sintaxe analisadas --
-  apresentadas respectivamente nos
-  \cref{snippet:add-two-c-tree,snippet:add-two-rust-tree} -- exibem diferenças
-  significativas. Portanto, para buscar a correspondência do trecho em que o
-  parâmetro \textit{x} é definido em ambos os códigos (i.e.,
-  \codesnippetinline
-    [c]
-    $int add_two(|\colorbox{codehighlight}{int x}|) {$
-    [escapeinside=||]
-  e
-  \codesnippetinline
-    [rust]
-    $fn add_two(|\colorbox{codehighlight}{x: i32}|) -> i32 {$
-    [escapeinside=||]%
-  ), são necessárias consultas distintas, apresentadas pelos
-  \cref{snippet:param-query-c,snippet:param-query-rust}.
-
-  Dado que os padrões correspondem a qualquer uma de suas ocorrências, é
-  importante garantir maior especificidade em sua definição. Isso pode ser
-  obtido por meio de
-  \begin{inparaenum}
-    \item especificação de campos,
-    \item especificação de nós anônimos e
-    \item aplicação de predicados.
-  \end{inparaenum}
-  Para ilustrar, ao aplicar a consulta apresentada no
-  \cref{snippet:param-query-c} ao seguinte código em linha
-  \codesnippetinline[c]{int add(int x, int y);}, obtêm-se duas
-  correspondências, como destacadas no seguinte trecho
-  \codesnippetinline[c]{int add(|\hi{int x}, \hi{int y}|);}[escapeinside=||].
-  Logo, para corresponder somente ao parâmetro \textit{x}, deve-se utilizar uma
-  consulta mais elaborada, conforme exemplificada no
-  \cref{snippet:x-param-query}. Nesse trecho, é possível notar algumas
-  diferenças em relação à sua versão original, que foi apresentada no
-  \cref{snippet:param-query-c}.
-  \begin{inparaenum}
-    \item O nó \textit{identifier} é capturado com o nome \textit{id}, como
-          destacado no seguinte trecho de código
-          \codesnippetinline
-            [scheme]
-            {declarator: |\hi{(identifier) @id}|}
-            [escapeinside=||]%
-          . Além disso,
-    \item o predicado \textit{eq?} é aplicado para garantir que o conteúdo da
-          captura \textit{id} corresponda à string ``x'' o que, por
-          consequência, impede a correspondência do parâmetro \textit{y}.
-  \end{inparaenum}
-
-  Por fim, é importante ressaltar que a linguagem de consulta do \treesitter
-  disponibiliza recursos adicionais \cite{tree-sitter-2023-using} que vão além
-  do escopo desta seção. No entanto, as informações abordadas até então
-  estabelecem uma base fundamental para compreender o funcionamento da
-  linguagem de consulta e sua aplicação em conjunto com o \witchcooking na
-  formatação do código-fonte.
-
-  \clearpage
 
   \noindent
   \begin{minipage}[t]{.49\textwidth}
@@ -1067,7 +1029,63 @@
     \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
   \end{minipage}
 
-  \clearpage
+  Por exemplo, considere os \cref{snippet:add-two-c,snippet:add-two-rust},
+  escritos nas linguagens de programação C e Rust, respectivamente. Embora
+  ambos desempenhem papéis idênticos -- i.e., definem uma função que retorna a
+  soma do parâmetro \textit{x} com 2 --, suas árvores de sintaxe analisadas --
+  apresentadas respectivamente nos
+  \cref{snippet:add-two-c-tree,snippet:add-two-rust-tree} -- exibem diferenças
+  significativas. Portanto, para buscar a correspondência do trecho em que o
+  parâmetro \textit{x} é definido em ambos os códigos (i.e.,
+  \codesnippetinline
+    [c]
+    $int add_two(|\colorbox{codehighlight}{int x}|) {$
+    [escapeinside=||]
+  e
+  \codesnippetinline
+    [rust]
+    $fn add_two(|\colorbox{codehighlight}{x: i32}|) -> i32 {$
+    [escapeinside=||]%
+  ), são necessárias consultas distintas, apresentadas pelos
+  \cref{snippet:param-query-c,snippet:param-query-rust}.
+
+  Dado que os padrões correspondem a qualquer uma de suas ocorrências, é
+  importante garantir maior especificidade em sua definição. Isso pode ser
+  obtido por meio de
+  \begin{inparaenum}
+    \item especificação de campos,
+    \item especificação de nós anônimos e
+    \item aplicação de predicados.
+  \end{inparaenum}
+  Para ilustrar, ao aplicar a consulta apresentada no
+  \cref{snippet:param-query-c} ao seguinte código em linha
+  \codesnippetinline[c]{int add(int x, int y);}, obtêm-se duas
+  correspondências, como destacadas no seguinte trecho
+  \codesnippetinline[c]{int add(|\hi{int x}, \hi{int y}|);}[escapeinside=||].
+  Logo, para corresponder somente ao parâmetro \textit{x}, deve-se utilizar uma
+  consulta mais elaborada, conforme exemplificada no
+  \cref{snippet:x-param-query}. Nesse trecho, é possível notar algumas
+  diferenças em relação à sua versão original, que foi apresentada no
+  \cref{snippet:param-query-c}.
+  \begin{inparaenum}
+    \item O nó \textit{identifier} é capturado com o nome \textit{id}, como
+          destacado no seguinte trecho de código
+          \codesnippetinline
+            [scheme]
+            {declarator: |\hi{(identifier) @id}|}
+            [escapeinside=||]%
+          . Além disso,
+    \item o predicado \textit{eq?} é aplicado para garantir que o conteúdo da
+          captura \textit{id} corresponda à string ``x'' o que, por
+          consequência, impede a correspondência do parâmetro \textit{y}.
+  \end{inparaenum}
+
+  Por fim, é importante ressaltar que a linguagem de consulta do \treesitter
+  disponibiliza recursos adicionais \cite{tree-sitter-2023-using} que vão além
+  do escopo desta seção. No entanto, as informações abordadas até então
+  estabelecem uma base fundamental para compreender o funcionamento da
+  linguagem de consulta e sua aplicação em conjunto com o \witchcooking na
+  formatação do código-fonte.
 
   \section{O Algoritmo de Formatação}
 
