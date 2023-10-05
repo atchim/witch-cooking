@@ -806,7 +806,7 @@
   código-fonte formatado resultante como saída, sem modificar o conteúdo
   original, efetivamente estabelecendo uma formatação segura.
 
-  \section{Materiais e Métodos}
+  \section{Materiais}
 
   O \witchcooking foi programado em Rust \cite{rust-2023-rust}, que é uma
   linguagem amplamente reconhecida na comunidade de programadores
@@ -839,10 +839,10 @@
     \item seu ecossistema de desenvolvimento fértil, que oferece
           \begin{inparaenum}
             \item uma ampla variedade de bibliotecas,
-            \item \textit{Cargo}, o gerenciador de pacotes,
+            \item \textit{Cargo}, o gerenciador de pacotes, além do
             \item \textit{rust-analyzer} \cite{rust-analyzer-2023-rust}, uma
                   implementação do \textit{Language Server Protocol} (LSP) para
-                  a linguagem, etc.
+                  a linguagem.
           \end{inparaenum}
   \end{inparaenum}
 
@@ -859,12 +859,6 @@
             \item adição de predicados personalizados.
           \end{inparaenum}
   \end{inparaenum}
-  Embora essa biblioteca não tenha sido originalmente projetada para formatação
-  de código-fonte, o autor deste trabalho reconheceu o potencial do
-  \treesitter, mais precisamente, o potencial de sua linguagem de consulta, que
-  -- como já ressaltado -- é extensível. Assim, para realizar a formatação, o
-  \witchcooking baseou-se na extensão e disponibilização de predicados
-  designados a executar operações específicas de formatação.
 
   Para escrever o código do \witchcooking, foi utilizado o editor de texto
   \textit{Neovim} \cite{neovim-2023-hyperextensible}, com configurações
@@ -879,6 +873,35 @@
           disponibilizou ferramentas para uma melhor compreensão do \treesitter
           e de sua linguagem de consulta.
   \end{inparaenum}
+
+  \section{Métodos}
+
+  Embora o \treesitter não tenha sido originalmente projetado para formatação
+  de código-fonte, o autor deste trabalho identificou o potencial da
+  biblioteca, particularmente em relação à sua linguagem de consulta, que --
+  como já ressaltado -- é extensível. Assim, para permitir a formatação
+  instruída, o \witchcooking baseou-se na extensão e disponibilização de
+  predicados designados a executar operações específicas de formatação. Em
+  outras palavras, a concepção do autor era que a formatação ocorresse conforme
+  a aplicação dos predicados estendidos em padrões especificados no arquivo de
+  instruções, escrito na linguagem de consulta do \treesitter.
+
+  No desenvolvimento deste trabalho, foram utilizados diferentes procedimentos,
+  incluindo
+  \begin{inparaenum}
+    \item pesquisa bibliográfica e
+    \item pesquisa documental, com o intuito de aprofundar o conhecimento sobre
+          o funcionamento do \treesitter; além de
+    \item pesquisa experimental, assim como
+    \item estudo de caso, com as respectivas finalidades de
+          \begin{inparaenum}
+            \item entender como o \treesitter e sua linguagem de consulta
+                  poderiam permitir a formatação de código-fonte, além de
+            \item analisar a eficácia do algoritmo de formatação desenvolvido.
+          \end{inparaenum}
+  \end{inparaenum}
+  Essa abordagem metodológica se caracteriza como predominantemente
+  qualitativa, de natureza básica e orientada por objetivos exploratórios.
 
   \section{Fazendo Consultas}
 
