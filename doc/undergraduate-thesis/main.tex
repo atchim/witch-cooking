@@ -927,131 +927,6 @@
   gramaticais específicas, que são posteriormente traduzidas como nós na árvore
   de sintaxe analisada.
 
-  \noindent
-  \begin{minipage}[t]{.49\textwidth}
-    \begin
-      {codesnippet}%
-      [c]%
-      {Função \textit{add\_two} em C}%
-      {add-two-c}
-      int add_two(int x) {
-        return x + 2;
-      }
-    \end{codesnippet}
-    \vspace{-3ex}
-    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[t]{.49\textwidth}
-    \begin
-      {codesnippet}%
-      [rust]%
-      {Função \textit{add\_two} em Rust}%
-      {add-two-rust}
-      fn add_two(x: i32) -> i32 {
-        x + 2
-      }
-    \end{codesnippet}
-    \vspace{-3ex}
-    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
-  \end{minipage}
-
-  \noindent
-  \begin{minipage}[t]{.51\textwidth}
-    \begin
-      {codesnippet}*%
-      {Árvore Sintática da Função \textit{add\_two} em C}%
-      {add-two-c-tree}%
-      [fontsize=\ABNTEXfontereduzida]
-      function_definition
-        type: primitive_type
-        declarator: function_declarator
-          declarator: identifier
-          parameters: parameter_list
-            parameter_declaration
-              type: primitive_type
-              declarator: identifier
-        body: compound_statement
-          return_statement
-            binary_expression
-              left: identifier
-              right: number_literal
-    \end{codesnippet}
-    \vspace{-3ex}
-    \captionof*
-      {listing}
-      {\ABNTEXfontereduzida Fonte autoral. Nós anônimos foram omitidos.}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[t]{.47\textwidth}
-    \begin
-      {codesnippet}*%
-      {Árvore Sintática da Função \textit{add\_two} em Rust}%
-      {add-two-rust-tree}%
-      [fontsize=\ABNTEXfontereduzida]
-      function_item
-        name: identifier
-        parameters: parameters
-          parameter
-            pattern: identifier
-            type: primitive_type
-        return_type: primitive_type
-        body: block
-          binary_expression
-            left: identifier
-            right: integer_literal
-    \end{codesnippet}
-    \vspace{-3ex}
-    \captionof*
-      {listing}
-      {\ABNTEXfontereduzida Fonte autoral. Nós anônimos foram omitidos.}
-  \end{minipage}
-
-  \noindent
-  \begin{minipage}[t]{.51\textwidth}
-    \begin
-      {codesnippet}*%
-      [scheme]%
-      {Consulta Correspondendo a um Parâmetro de Função em C}%
-      {param-query-c}
-      (parameter_declaration
-        type: (primitive_type)
-        declarator: (identifier))
-    \end{codesnippet}
-    \vspace{-3ex}
-    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[t]{.47\textwidth}
-    \begin
-      {codesnippet}*%
-      [scheme]%
-      {Consulta Correspondendo a um Parâmetro de Função em Rust}%
-      {param-query-rust}
-      (parameter
-        pattern: (identifier)
-        type: (primitive_type))
-    \end{codesnippet}
-    \vspace{-3ex}
-    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
-  \end{minipage}
-
-  \noindent
-  \begin{minipage}[t]{\textwidth}
-    \begin
-      {codesnippet}*%
-      [scheme]%
-      {Consulta Correspondendo ao Parâmetro \textit{x} de uma Função em C}%
-      {x-param-query}
-      (parameter_declaration
-        type: (primitive_type)
-        declarator: (identifier) @id
-        (#eq? @id "x"))
-    \end{codesnippet}
-    \vspace{-3ex}
-    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
-  \end{minipage}
-
   Por exemplo, considere os \cref{snippet:add-two-c,snippet:add-two-rust},
   escritos nas linguagens de programação C e Rust, respectivamente. Embora
   ambos desempenhem papéis idênticos -- i.e., definem uma função que retorna a
@@ -1109,6 +984,135 @@
   estabelecem uma base fundamental para compreender o funcionamento da
   linguagem de consulta e sua aplicação em conjunto com o \witchcooking na
   formatação do código-fonte.
+
+  \clearpage
+
+  \noindent
+  \begin{minipage}[t]{.49\textwidth}
+    \begin
+      {codesnippet}%
+      [c]%
+      {Função \textit{add\_two} em C}%
+      {add-two-c}
+      int add_two(int x) {
+        return x + 2;
+      }
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{.49\textwidth}
+    \begin
+      {codesnippet}%
+      [rust]%
+      {Função \textit{add\_two} em Rust}%
+      {add-two-rust}
+      fn add_two(x: i32) -> i32 {
+        x + 2
+      }
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
+  \end{minipage}
+  \vfill
+  \noindent
+  \begin{minipage}[t]{.51\textwidth}
+    \begin
+      {codesnippet}*%
+      {Árvore Sintática da Função \textit{add\_two} em C}%
+      {add-two-c-tree}%
+      [fontsize=\ABNTEXfontereduzida]
+      function_definition
+        type: primitive_type
+        declarator: function_declarator
+          declarator: identifier
+          parameters: parameter_list
+            parameter_declaration
+              type: primitive_type
+              declarator: identifier
+        body: compound_statement
+          return_statement
+            binary_expression
+              left: identifier
+              right: number_literal
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*
+      {listing}
+      {\ABNTEXfontereduzida Fonte autoral. Nós anônimos foram omitidos.}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{.47\textwidth}
+    \begin
+      {codesnippet}*%
+      {Árvore Sintática da Função \textit{add\_two} em Rust}%
+      {add-two-rust-tree}%
+      [fontsize=\ABNTEXfontereduzida]
+      function_item
+        name: identifier
+        parameters: parameters
+          parameter
+            pattern: identifier
+            type: primitive_type
+        return_type: primitive_type
+        body: block
+          binary_expression
+            left: identifier
+            right: integer_literal
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*
+      {listing}
+      {\ABNTEXfontereduzida Fonte autoral. Nós anônimos foram omitidos.}
+  \end{minipage}
+  \vfill
+  \noindent
+  \begin{minipage}[t]{.51\textwidth}
+    \begin
+      {codesnippet}*%
+      [scheme]%
+      {Consulta Correspondendo a um Parâmetro de Função em C}%
+      {param-query-c}
+      (parameter_declaration
+        type: (primitive_type)
+        declarator: (identifier))
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{.47\textwidth}
+    \begin
+      {codesnippet}*%
+      [scheme]%
+      {Consulta Correspondendo a um Parâmetro de Função em Rust}%
+      {param-query-rust}
+      (parameter
+        pattern: (identifier)
+        type: (primitive_type))
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
+  \end{minipage}
+  \vfill
+  \noindent
+  \begin{minipage}[t]{\textwidth}
+    \begin
+      {codesnippet}*%
+      [scheme]%
+      {Consulta Correspondendo ao Parâmetro \textit{x} de uma Função em C}%
+      {x-param-query}
+      (parameter_declaration
+        type: (primitive_type)
+        declarator: (identifier) @id
+        (#eq? @id "x"))
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
+  \end{minipage}
+
+  \clearpage
 
   \section{O Algoritmo de Formatação}
 
