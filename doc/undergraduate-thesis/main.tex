@@ -415,10 +415,10 @@
   código aberto que foi disponibilizado ao público geral no GitHub
   primeiramente em 2019, tendo sido inicialmente desenvolvido por Max
   Brunsfeld. Desde seu lançamento, o \treesitter tem ganhado popularidade na
-  comunidade de desenvolvedores devido dentre outros motivos à
+  comunidade de desenvolvedores devido dentre outros motivos à sua
   \begin{inparaenum}
-    \item sua capacidade de suportar várias linguagens de programação; além de
-    \item sua linguagem de consulta, a qual permite a realização de buscas
+    \item capacidade de suportar várias linguagens de programação; além de sua
+    \item linguagem de consulta, a qual permite a realização de buscas
           complexas na árvore analisada de um código-fonte.
   \end{inparaenum}
 
@@ -692,14 +692,14 @@
   padrões na árvore sintática. Para isso, o \treesitter oferece uma pequena
   linguagem de consulta declarativa que é capaz de expressar esses padrões por
   meio de \textit{\gloss[Word]{sexp}s} e buscar correspondências. A linguagem
-  de consulta suporta operadores que permitem
+  de consulta suporta operadores que permitem a
   \begin{inparaenum}
-    \item a captura de nós;
-    \item a quantificação de nós, análoga às expressões regulares;
-    \item o agrupamento de nós;
-    \item as alternâncias de nós;
-    \item o uso de \textit{\gloss{wildcard}s}; e
-    \item a ordenação de nós.
+    \item captura de nós; a
+    \item quantificação de nós, análoga às expressões regulares; o
+    \item agrupamento de nós; as
+    \item alternâncias de nós; o
+    \item uso de \textit{\gloss{wildcard}s}; e a
+    \item ordenação de nós.
   \end{inparaenum}
   Adicionalmente, é permitido o uso de predicados -- funções arbitrárias
   geralmente utilizadas para filtrar nós ou realizar verificações mais
@@ -761,14 +761,14 @@
     \item era imprescindível recorrer a diferentes \textit{prettyprinters},
     \item cada um com suas próprias configurações e níveis de suporte para
           esses estilos. Por outro lado, durante a análise dos estilos
-          não-convencionais,
-    \item a aplicação manual era inevitável, consumindo consideravelmente tempo
-          e esforço.
+          não-convencionais, a
+    \item aplicação manual era inevitável, consumindo consideravelmente tempo e
+          esforço.
   \end{inparaenum}
 
-  Tendo em vista
+  Tendo em vista as
   \begin{inparaenum}
-    \item as dificuldades mencionadas anteriormente; além da
+    \item dificuldades mencionadas anteriormente; além da
     \item complexidade envolvida no \textit{prettyprinting} --
     \item agravada pela proposta de formatação multilíngue
   \end{inparaenum}
@@ -811,9 +811,9 @@
   O \witchcooking foi programado em Rust \cite{rust-2023-rust}, que é uma
   linguagem amplamente reconhecida na comunidade de programadores
   \cite{stack-overflow-2023-stack}. Dentre os motivos que levaram à escolha
-  dessa linguagem para o desenvolvimento, destacam-se
+  dessa linguagem para o desenvolvimento, destacam-se seu
   \begin{inparaenum}
-    \item seu gerenciamento de memória seguro%
+    \item gerenciamento de memória seguro%
           \footnote
             { Embora Rust não apresente \textit{\gloss{garbage-collection}} --
               o que contribui significativamente para o desempenho --, a
@@ -825,18 +825,18 @@
               nesse contexto, pelo menos 65\% das vulnerabilidades de segurança
               sejam causadas por falta de segurança no gerenciamento de memória
               \cite{gaynor-2020-what}.}
-          \cite[3]{nsa-2022-software};
-    \item seu excelente desempenho, a par às linguagens C e C++;
-    \item seus recursos de linguagens modernas, incluindo
+          \cite[3]{nsa-2022-software}; seu
+    \item excelente desempenho, a par às linguagens C e C++; seus
+    \item recursos de linguagens modernas, incluindo
           \begin{inparaenum}
             \item expressividade,
             \item \textit{\gloss{zero-cost-abs}},
             \item correspondência de padrões,
             \item \textit{closures},
-            \item macros, etc.;
+            \item macros, etc.; seu
           \end{inparaenum}
-    \item seu suporte a múltiplas plataformas; além de
-    \item seu ecossistema de desenvolvimento fértil, que oferece
+    \item suporte a múltiplas plataformas; além de seu
+    \item ecossistema de desenvolvimento fértil, que oferece
           \begin{inparaenum}
             \item uma ampla variedade de bibliotecas,
             \item \textit{Cargo}, o gerenciador de pacotes, além do
@@ -964,16 +964,16 @@
   consulta mais elaborada, conforme exemplificada no
   \cref{snippet:x-param-query}. Nesse trecho, é possível notar algumas
   diferenças em relação à sua versão original, que foi apresentada no
-  \cref{snippet:param-query-c}.
+  \cref{snippet:param-query-c}. O
   \begin{inparaenum}
-    \item O nó \textit{identifier} é capturado com o nome \textit{id}, como
+    \item nó \textit{identifier} é capturado com o nome \textit{id}, como
           destacado no seguinte trecho de código
           \codesnippetinline
             [scheme]
             {declarator: |\hi{(identifier) @id}|}
             [escapeinside=||]%
-          . Além disso,
-    \item o predicado \textit{eq?} é aplicado para garantir que o conteúdo da
+          . Além disso, o
+    \item predicado \textit{eq?} é aplicado para garantir que o conteúdo da
           captura \textit{id} corresponda à string ``x'' o que, por
           consequência, impede a correspondência do parâmetro \textit{y}.
   \end{inparaenum}
@@ -1125,6 +1125,29 @@
   desenvolvidos para executar procedimentos variados de formatação.
   Consequentemente, ao utilizar esses predicados nos padrões da consulta, é
   possível instruir a formatação de nós específicos da árvore de sintaxe.
+
+  O algoritmo opera da seguinte maneira. Primeiramente, a
+  \begin{inparaenum}
+    \item árvore de sintaxe -- derivada do código-fonte submetido para
+          formatação -- é analisada. Em seguida, um
+    \item objeto de consulta é gerado a partir do arquivo contendo as
+          instruções de formatação, escrito na linguagem de consulta do
+          \treesitter. Esse objeto
+          \begin{inparaenum}
+            \item contém informações sobre padrões, capturas, propriedades e
+                  predicados; e
+            \item é posteriormente utilizado para obter as correspondências
+                  dos seus padrões. Além disso, um
+          \end{inparaenum}
+    \item objeto editor é instanciado, que contém o
+          \begin{inparaenum}
+            \item texto do código-fonte em edição -- originado do código
+                  submetido pelo usuário --, juntamente com um
+            \item vetor de edições.
+          \end{inparaenum}
+          Esse objeto é utilizado pelos predicados para realizar as edições no
+          código e armazená-las.
+  \end{inparaenum}
 
   %%%%%%%%%%%%%%%
   %% Conclusion %
