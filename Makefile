@@ -5,9 +5,9 @@ release = $(if $(debug),,--release)
 all: build
 
 .PHONY: clean clean-cargo clean-doc
-clean: clean-cargo clean-doc
+clean: clean-cargo clean-undergraduate-thesis
 clean-cargo: ; cargo clean
-clean-doc: ; $(MAKE) -C doc/undergraduate-thesis clean
+clean-undergraduate-thesis: ; $(MAKE) -C doc/undergraduate-thesis clean
 
 .PHONY: build
 build: ; cargo build $(release)

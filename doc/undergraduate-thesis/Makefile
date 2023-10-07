@@ -6,7 +6,7 @@ all: main.pdf
 .PHONY: clean
 clean:
 	latexmk -CA
-	rm -fr _minted-main *.{bbl,codesnippet{,s},gls.*,run.xml}
+	rm -fr _minted-main *.{bbl,codesnippet{,s},gls.*,listings,run.xml}
 
 main.pdf: main.tex glossary.bib references.bib
 	latexmk -pdf -pdflatex=$(pdflatex-args) -use-make $<
