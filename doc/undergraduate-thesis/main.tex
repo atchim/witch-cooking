@@ -1126,10 +1126,10 @@
   Consequentemente, ao utilizar esses predicados nos padrões da consulta, é
   possível instruir a formatação de nós específicos da árvore de sintaxe.
 
-  A operação do algoritmo de formatação divide-se em três etapas, que são a
+  A operação do algoritmo de formatação divide-se nas etapas de
   \begin{inparaenum}
-    \item inicialização, a
-    \item iteração das correspondências dos padrões, e o
+    \item inicialização,
+    \item iteração das correspondências dos padrões, e
     \item retorno do resultado.
   \end{inparaenum}
   Durante a etapa de inicialização -- onde estruturas são instanciadas --,
@@ -1151,8 +1151,8 @@
                   dos seus padrões.
           \end{inparaenum}
 
-          Além disso, uma
-    \item estrutura editora é instanciada, que contém o
+          Além disso,
+    \item é instanciada uma estrutura editora que contém o
           \begin{inparaenum}
             \item texto do código-fonte em edição -- originado do código
                   submetido pelo usuário --, juntamente com um
@@ -1171,6 +1171,9 @@
             \item árvore analisada e o
             \item texto do código-fonte submetido.
           \end{inparaenum}
+          Simplificadamente, essa estrutura pode ser descrita como um iterador
+          que fornece nós que correspondem a capturas presentes em padrões
+          específicos.
   \end{inparaenum}
 
   %%%%%%%%%%%%%%%
