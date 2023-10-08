@@ -2,9 +2,9 @@
 *.bbl
 *.bcf
 *.blg
-*.codesnippet
 *.codesnippets
 *.fdb_latexmk
+*.figureswrapper
 *.fls
 *.gls.*
 *.listing

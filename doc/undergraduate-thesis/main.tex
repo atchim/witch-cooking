@@ -46,6 +46,7 @@
 \usepackage{minted}
 \usepackage{palatino}
 \usepackage{paralist}
+\usepackage{tikz}
 \usepackage{xspace}
 
 %%%%%%%%%%%%%%%%%%
@@ -261,6 +262,35 @@
               title={Trecho de Código \thetcbcounter{} -- #3},
                  #6}
 
+%%%%%%%%%%%%%
+%%% Figures %
+%%%%%%%%%%%%%
+
+\NewTotalTCBox
+  [auto counter,list inside=figureswrapper]
+  {\figurewrapper}
+  {mmO{}m}
+  {      enhanced,
+     center title,
+         coltitle=black,
+        fonttitle=\ABNTEXfontereduzida,
+     frame hidden,
+            label={figure:#2},
+       label type=figure,
+       list entry={Figura \thetcbcounter{} -- #1},
+    sharp corners,
+            title={Figura \thetcbcounter{} -- #1},
+               #3}
+  {#4}
+
+%%%%%%%%%%%
+%%% Float %
+%%%%%%%%%%%
+
+\makeatletter
+\setlength{\@fptop}{5pt}
+\makeatother
+
 %%%%%%%%%%%%%%
 %%% Glossary %
 %%%%%%%%%%%%%%
@@ -305,6 +335,12 @@
           urlcolor=blue,
     bookmarksdepth=4}
 \makeatother
+
+%%%%%%%%%%
+%%% TikZ %
+%%%%%%%%%%
+
+\usetikzlibrary{calc,decorations.pathmorphing,positioning}
 
 %%%%%%%%%%%%
 % Document %
@@ -352,6 +388,17 @@
     \treesitter;
     linguagem de consulta.
   \end{resumo}
+
+  %%%%%%%%%%%%%%%%%%%%
+  % Table of Figures %
+  %%%%%%%%%%%%%%%%%%%%
+
+  \newcommand{\figureswrappername}{Lista de Ilustrações}
+  \begin{KeepFromToc}
+    \pdfbookmark[0]{\figureswrappername}{figureswrapper}
+    \tcblistof[\chapter*]{figureswrapper}{\figureswrappername}
+  \end{KeepFromToc}
+  \cleardoublepage
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%
   % Table of Code Snippets %
@@ -1175,6 +1222,35 @@
           que fornece nós que correspondem a capturas presentes em padrões
           específicos.
   \end{inparaenum}
+
+  { \centering
+    \figurewrapper
+      {Fluxograma do Algoritmo de Formatação}
+      {algorithm-flowchart}
+      { \begin{tikzpicture}[node distance=1em]
+          \node (init) {
+            \begin{tikzpicture}[nodes=draw]
+              \node (I) {Analisa a árvore de sintaxe};
+              \node (II) [below=of I] {Gera o objeto de consulta};
+              \node (III) [below=of II] {Instancia a estrutura editora};
+              \node (IV) [below=of III] {Inicializa o objeto de configurações};
+              \node (V) [below=of IV] {Deriva a estrutura de correspondências};
+              \draw [->] (I) -- (II);
+              \draw [->] (II) -- (III);
+              \draw [->] (III) -- (IV);
+              \draw [->] (IV) -- (V);
+            \end{tikzpicture}
+          };
+          \node (init-label) [left=of init] {Inicialização};
+          \draw
+            [decorate,decoration=snake]
+            let
+              \p1=(init-label.south west),\p2=(init.south east)
+              in
+              (\x1,\y2-1em) -- (\x2,\y2-1em);
+        \end{tikzpicture}}
+    \vspace{-2ex}
+    \captionof*{figure}{\ABNTEXfontereduzida Fonte autoral.}}
 
   %%%%%%%%%%%%%%%
   %% Conclusion %
