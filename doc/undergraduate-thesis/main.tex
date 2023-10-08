@@ -216,8 +216,7 @@
 \NewTotalTCBox
   {\codesnippetinline}
   {O{text}vO{}}
-  {%
-    bottom=0pt,
+  { bottom=0pt,
     enhanced,
     frame hidden,
     left=0pt,
@@ -231,36 +230,38 @@
   [auto counter,list inside=codesnippets]
   {codesnippet}
   {sO{text}mm!O{}!O{}}
-  {        enhanced,
-       center title,
-           coltitle=black,
-          fonttitle=\ABNTEXfontereduzida,
-       frame hidden,
-              label={snippet:#4},
-         label type=listing,
-         list entry={Trecho de Código \thetcbcounter{} -- #3},
-     listing engine=minted,
-       listing only,
+  { enhanced,
+    center title,
+    coltitle=black,
+    fonttitle=\ABNTEXfontereduzida,
+    frame hidden,
+    label={snippet:#4},
+    label type=listing,
+    list entry={Trecho de Código \thetcbcounter{} -- #3},
+    listing engine=minted,
+    listing only,
     minted language=#2,
-     minted options={ autogobble,
-                      breakanywhere,
-                      breakanywheresymbolpre={},
-                      breakautoindent=false,
-                      breaklines,
-                      breaksymbol={},
-                      linenos,
-                      xleftmargin=\IfBooleanTF{#1}{1.5}{1}em,
-                      #5},
-            overlay={%
-                      \begin{tcbclipinterior}
-                        \fill[gray!25]
-                        (frame.south west)
-                        rectangle
-                        ([xshift=\IfBooleanTF{#1}{2.5}{2}em]frame.north west);
-                      \end{tcbclipinterior}},
-      sharp corners,
-              title={Trecho de Código \thetcbcounter{} -- #3},
-                 #6}
+    minted options=
+      { autogobble,
+        breakanywhere,
+        breakanywheresymbolpre={},
+        breakautoindent=false,
+        breaklines,
+        breaksymbol={},
+        linenos,
+        xleftmargin=\IfBooleanTF{#1}{1.5}{1}em,
+        #5},
+    overlay=
+      {%
+        \begin{tcbclipinterior}
+          \fill[gray!25]
+          (frame.south west)
+          rectangle
+          ([xshift=\IfBooleanTF{#1}{2.5}{2}em]frame.north west);
+        \end{tcbclipinterior}},
+    sharp corners,
+    title={Trecho de Código \thetcbcounter{} -- #3},
+    #6}
 
 %%%%%%%%%%%%%
 %%% Figures %
@@ -270,17 +271,17 @@
   [auto counter,list inside=figureswrapper]
   {\figurewrapper}
   {mmO{}m}
-  {      enhanced,
-     center title,
-         coltitle=black,
-        fonttitle=\ABNTEXfontereduzida,
-     frame hidden,
-            label={figure:#2},
-       label type=figure,
-       list entry={Figura \thetcbcounter{} -- #1},
+  { enhanced,
+    center title,
+    coltitle=black,
+    fonttitle=\ABNTEXfontereduzida,
+    frame hidden,
+    label={figure:#2},
+    label type=figure,
+    list entry={Figura \thetcbcounter{} -- #1},
     sharp corners,
-            title={Figura \thetcbcounter{} -- #1},
-               #3}
+    title={Figura \thetcbcounter{} -- #1},
+    #3}
   {#4}
 
 %%%%%%%%%%%
@@ -318,21 +319,24 @@
 \definecolor{blue}{RGB}{41,5,195}
 \makeatletter
 \hypersetup
-  {       pdftitle={\@title},
-         pdfauthor={\@author},
-        pdfsubject={\witchcooking: Formatação de Código via Linguagem de
-                    Consulta do \treesitter},
-        pdfcreator={\LaTeX with \abnTeX},
-       pdfkeywords={formatação de código}
-                   {\textit{prettyprint}}
-                   {formatação personalizada}
-                   {\treesitter}
-                   {linguagem de consulta},
-        colorlinks=true,
-         linkcolor=blue,
-         citecolor=blue,
-         filecolor=magenta,
-          urlcolor=blue,
+  { pdftitle={\@title},
+    pdfauthor={\@author},
+    pdfsubject=
+      {%
+        \witchcooking: Formatação de Código via Linguagem de Consulta do
+        \treesitter},
+    pdfcreator={\LaTeX with \abnTeX},
+    pdfkeywords=
+      {formatação de código}
+      {\textit{prettyprint}}
+      {formatação personalizada}
+      {\treesitter}
+      {linguagem de consulta},
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    filecolor=magenta,
+    urlcolor=blue,
     bookmarksdepth=4}
 \makeatother
 
@@ -389,9 +393,9 @@
     linguagem de consulta.
   \end{resumo}
 
-  %%%%%%%%%%%%%%%%%%%%
-  % Table of Figures %
-  %%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%
+  % List of Figures %
+  %%%%%%%%%%%%%%%%%%%
 
   \newcommand{\figureswrappername}{Lista de Ilustrações}
   \begin{KeepFromToc}
@@ -400,9 +404,9 @@
   \end{KeepFromToc}
   \cleardoublepage
 
-  %%%%%%%%%%%%%%%%%%%%%%%%%%
-  % Table of Code Snippets %
-  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%
+  % List of Code Snippets %
+  %%%%%%%%%%%%%%%%%%%%%%%%%
 
   \newcommand{\codesnippetsname}{Lista de Trechos de Código}
   \begin{KeepFromToc}
@@ -526,8 +530,7 @@
 
   Durante as décadas de 60 e 70, a linguagem de programação LISP%
   \footnote
-    {%
-      O termo ``LISP'' (acrônimo para
+    { O termo ``LISP'' (acrônimo para
       \textit{``\textbf{LIS}t \textbf{P}rocessing''}) inicialmente se referia à
       linguagem de programação desenvolvida por
       \textcite{mccarthy-1960-recursive}, porém, com a disseminação de dialetos
@@ -539,8 +542,7 @@
     \item LISP apresentava uma sintaxe distinta e expressiva, baseada em listas
           e estruturas aninhadas delimitadas por parênteses%
           \footnote
-            {%
-              Na notação original de McCarthy, eram utilizadas
+            { Na notação original de McCarthy, eram utilizadas
               \textit{M-expressions} entre colchetes para representar
               expressões. Essas \textit{M-expressions} seriam posteriormente
               traduzidas em \textit{\gloss[Word]{sexp}s}. Por exemplo, a
@@ -570,8 +572,7 @@
     {%
       ``\textbf{GRIND}%
       \footnote
-        {%
-          O termo \textit{``grind''} era utilizado em alguns círculos de LISP
+        { O termo \textit{``grind''} era utilizado em alguns círculos de LISP
           como sinônimo para \textit{prettyprinters}.}
       \textbf{F}unction''}%
   ), considerado o primeiro \textit{prettyprinter} a mensurar o tamanho das
@@ -585,8 +586,7 @@
   Posteriormente, \textcite{hearn-1979-one} propuseram um algoritmo mais
   elaborado para \textit{prettyprinting} que utilizava um par de corrotinas%
   \footnote
-    {%
-      Na obra, os autores enfatizam que a implementação com o uso de corrotinas
+    { Na obra, os autores enfatizam que a implementação com o uso de corrotinas
       é tão simples que poderia ser simulada -- sem grandes dificuldades -- em
       linguagens que não possuíam suporte nativo para corrotinas
       \cite[53]{hearn-1979-one}.}%
@@ -608,8 +608,7 @@
   essa tarefa, o algoritmo necessitava que o código-fonte fosse anotado com
   espaços em branco%
   \footnote
-    {%
-      Quebras de linha, avanços de formulário e alimentações de linha também
+    { Quebras de linha, avanços de formulário e alimentações de linha também
       eram tratados como espaços em branco pelo algoritmo.}
   e delimitadores especiais para marcar o início e fim de blocos logicamente
   contíguos. Assim, o código a ser fornecido ao algoritmo precisaria ser
@@ -797,8 +796,7 @@
   trabalhava. O estudo envolvia a exploração e análise tanto de estilos
   convencionais%
   \footnote
-    {%
-      Neste trabalho, são considerados convencionais os estilos de formatação
+    { Neste trabalho, são considerados convencionais os estilos de formatação
       abordados nas páginas \textit{Indentation style} e
       \textit{Programming style} da Wikipédia.
       \cites{wiki-2023-indentation}{wiki-2023-programming}}%
@@ -1243,7 +1241,7 @@
           };
           \node (init-label) [left=of init] {Inicialização};
           \draw
-            [decorate,decoration=snake]
+            [decorate,decoration=zigzag]
             let
               \p1=(init-label.south west),\p2=(init.south east)
               in
