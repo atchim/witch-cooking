@@ -466,10 +466,10 @@
   código aberto que foi disponibilizado ao público geral no GitHub
   primeiramente em 2019, tendo sido inicialmente desenvolvido por Max
   Brunsfeld. Desde seu lançamento, o \treesitter tem ganhado popularidade na
-  comunidade de desenvolvedores devido dentre outros motivos à sua
+  comunidade de desenvolvedores devido dentre outros motivos à
   \begin{inparaenum}
-    \item capacidade de suportar várias linguagens de programação; além de sua
-    \item linguagem de consulta, a qual permite a realização de buscas
+    \item sua capacidade de suportar várias linguagens de programação; além de
+    \item sua linguagem de consulta, a qual permite a realização de buscas
           complexas na árvore analisada de um código-fonte.
   \end{inparaenum}
 
@@ -590,11 +590,11 @@
       é tão simples que poderia ser simulada -- sem grandes dificuldades -- em
       linguagens que não possuíam suporte nativo para corrotinas
       \cite[53]{hearn-1979-one}.}%
-  , uma
+  ,
   \begin{inparaenum}
-    \item responsável por produzir uma sequência de caracteres que
-          representavam o programa sendo impresso; e outra
-    \item responsável por decidir como esses caracteres seriam exibidos.
+    \item uma responsável por produzir uma sequência de caracteres que
+          representavam o programa sendo impresso; e
+    \item outra responsável por decidir como esses caracteres seriam exibidos.
   \end{inparaenum}
   Essas corrotinas se comunicavam por meio de um buffer \gloss{fifo},
   permitindo que as decisões de formatação fossem adiadas até que houvesse
@@ -738,14 +738,14 @@
   padrões na árvore sintática. Para isso, o \treesitter oferece uma pequena
   linguagem de consulta declarativa que é capaz de expressar esses padrões por
   meio de \textit{\gloss[Word]{sexp}s} e buscar correspondências. A linguagem
-  de consulta suporta operadores que permitem a
+  de consulta suporta operadores que permitem
   \begin{inparaenum}
-    \item captura de nós; a
-    \item quantificação de nós, análoga às expressões regulares; o
-    \item agrupamento de nós; as
-    \item alternâncias de nós; o
-    \item uso de \textit{\gloss{wildcard}s}; e a
-    \item ordenação de nós.
+    \item a captura de nós;
+    \item a quantificação de nós, análoga às expressões regulares;
+    \item o agrupamento de nós;
+    \item as alternâncias de nós;
+    \item o uso de \textit{\gloss{wildcard}s}; e
+    \item a ordenação de nós.
   \end{inparaenum}
   Adicionalmente, é permitido o uso de predicados -- funções arbitrárias
   geralmente utilizadas para filtrar nós ou realizar verificações mais
@@ -806,14 +806,14 @@
     \item era imprescindível recorrer a diferentes \textit{prettyprinters},
     \item cada um com suas próprias configurações e níveis de suporte para
           esses estilos. Por outro lado, durante a análise dos estilos
-          não-convencionais, a
-    \item aplicação manual era inevitável, consumindo consideravelmente tempo e
-          esforço.
+          não-convencionais,
+    \item a aplicação manual era inevitável, consumindo consideravelmente tempo
+          e esforço.
   \end{inparaenum}
 
-  Tendo em vista as
+  Tendo em vista
   \begin{inparaenum}
-    \item dificuldades mencionadas anteriormente; além da
+    \item as dificuldades mencionadas anteriormente; além da
     \item complexidade envolvida no \textit{prettyprinting} --
     \item agravada pela proposta de formatação multilíngue
   \end{inparaenum}
@@ -856,9 +856,9 @@
   O \witchcooking foi programado em Rust \cite{rust-2023-rust}, que é uma
   linguagem amplamente reconhecida na comunidade de programadores
   \cite{stack-overflow-2023-stack}. Dentre os motivos que levaram à escolha
-  dessa linguagem para o desenvolvimento, destacam-se seu
+  dessa linguagem para o desenvolvimento, destacam-se
   \begin{inparaenum}
-    \item gerenciamento de memória seguro%
+    \item seu gerenciamento de memória seguro%
           \footnote
             { Embora Rust não apresente \textit{\gloss{garbage-collection}} --
               o que contribui significativamente para o desempenho --, a
@@ -870,18 +870,18 @@
               nesse contexto, pelo menos 65\% das vulnerabilidades de segurança
               sejam causadas por falta de segurança no gerenciamento de memória
               \cite{gaynor-2020-what}.}
-          \cite[3]{nsa-2022-software}; seu
-    \item excelente desempenho, a par às linguagens C e C++; seus
-    \item recursos de linguagens modernas, incluindo
+          \cite[3]{nsa-2022-software};
+    \item seu excelente desempenho, a par às linguagens C e C++;
+    \item seus recursos de linguagens modernas, incluindo
           \begin{inparaenum}
             \item expressividade,
             \item \textit{\gloss{zero-cost-abs}},
             \item correspondência de padrões,
             \item \textit{closures},
-            \item macros, etc.; seu
+            \item macros, etc.;
           \end{inparaenum}
-    \item suporte a múltiplas plataformas; além de seu
-    \item ecossistema de desenvolvimento fértil, que oferece
+    \item seu suporte a múltiplas plataformas; além de
+    \item seu ecossistema de desenvolvimento fértil, que oferece
           \begin{inparaenum}
             \item uma ampla variedade de bibliotecas,
             \item \textit{Cargo}, o gerenciador de pacotes, além do
@@ -897,11 +897,11 @@
     \item suporta uma ampla variedade de linguagens de programação e formatos
           de arquivos, além de
     \item possuir uma linguagem de consulta versátil e extensível que, dentre
-          outras características, permite a
+          outras características, permite
           \begin{inparaenum}
-            \item realização de buscas complexas na árvore de sintaxe analisada
-                  de um código-fonte, bem como a
-            \item adição de predicados personalizados.
+            \item a realização de buscas complexas na árvore de sintaxe
+                  analisada de um código-fonte, bem como
+            \item a adição de predicados personalizados.
           \end{inparaenum}
   \end{inparaenum}
 
@@ -910,9 +910,9 @@
   personalizadas \cite{silva-2023-uma}. Essas configurações possibilitaram a
   integração com o \textit{rust-analyzer}, o que resultou em melhorias
   significativas na experiência de programação. Dentre os plugins utilizados na
-  configuração, destacam-se o
+  configuração, destacam-se
   \begin{inparaenum}
-    \item \textit{nvim-treesitter} \cite{nvim-treesitter-2023-nvim}, que
+    \item o \textit{nvim-treesitter} \cite{nvim-treesitter-2023-nvim}, que
           permitiu a integração com o \treesitter; além do
     \item \textit{playground} \cite{nvim-treesitter-2023-playground}, que
           disponibilizou ferramentas para uma melhor compreensão do \treesitter
@@ -1009,16 +1009,16 @@
   consulta mais elaborada, conforme exemplificada no
   \cref{snippet:x-param-query}. Nesse trecho, é possível notar algumas
   diferenças em relação à sua versão original, que foi apresentada no
-  \cref{snippet:param-query-c}. O
+  \cref{snippet:param-query-c}.
   \begin{inparaenum}
-    \item nó \textit{identifier} é capturado com o nome \textit{id}, como
+    \item O nó \textit{identifier} é capturado com o nome \textit{id}, como
           destacado no seguinte trecho de código
           \codesnippetinline
             [scheme]
             {declarator: |\hi{(identifier) @id}|}
             [escapeinside=||]%
-          . Além disso, o
-    \item predicado \textit{eq?} é aplicado para garantir que o conteúdo da
+          . Além disso,
+    \item o predicado \textit{eq?} é aplicado para garantir que o conteúdo da
           captura \textit{id} corresponda à string ``x'' o que, por
           consequência, impede a correspondência do parâmetro \textit{y}.
   \end{inparaenum}
@@ -1174,15 +1174,16 @@
   A operação do algoritmo de formatação divide-se nas etapas de
   \begin{inparaenum}
     \item inicialização,
-    \item iteração das correspondências dos padrões, e
-    \item retorno do resultado.
+    \item formatação, e
+    \item retorno,
   \end{inparaenum}
+  como ilustrado na \cref{figure:algorithm-flowchart}.
   Durante a etapa de inicialização -- onde estruturas são instanciadas --,
-  primeiramente, a
+  primeiramente,
   \begin{inparaenum}
-    \item árvore de sintaxe -- derivada do código-fonte submetido para
-          formatação -- é analisada. Em seguida, um
-    \item objeto%
+    \item a árvore de sintaxe -- derivada do código-fonte submetido para
+          formatação -- é analisada. Em seguida,
+    \item um objeto%
           \footnote
             { Neste contexto, o termo ``objeto'' é utilizado como uma
               alternativa para descrever uma estrutura em Rust.}
@@ -1197,11 +1198,11 @@
           \end{inparaenum}
 
           Além disso,
-    \item é instanciada uma estrutura editora que contém o
+    \item é instanciada uma estrutura editora que contém
           \begin{inparaenum}
-            \item texto do código-fonte em edição -- originado do código
-                  submetido pelo usuário --, juntamente com um
-            \item vetor de edições.
+            \item o texto do código-fonte em edição -- originado do código
+                  submetido pelo usuário --, juntamente com
+            \item um vetor de edições.
           \end{inparaenum}
           Essa estrutura é utilizada pelos predicados para realizar as edições
           no código e armazená-las. Na sequência,
@@ -1209,26 +1210,53 @@
           empregado pelos predicados para obter e definir configurações em
           diferentes níveis de escopo, sejam eles globais -- i.e., abrangendo
           toda a consulta -- ou locais -- i.e., restrito a um padrão.
-          Finalizando a etapa de inicialização, a
-    \item estrutura de correspondências é derivada do
+          Finalizando a etapa de inicialização,
+    \item a estrutura de correspondências é derivada do
           \begin{inparaenum}
-            \item objeto de consulta, juntamente com a
-            \item árvore analisada e o
-            \item texto do código-fonte submetido.
+            \item objeto de consulta, juntamente com
+            \item a árvore analisada e
+            \item o texto do código-fonte submetido.
           \end{inparaenum}
           Simplificadamente, essa estrutura pode ser descrita como um iterador
           que fornece nós que correspondem a capturas presentes em padrões
           específicos.
   \end{inparaenum}
 
-  { \centering
+  O processo efetivo de formatação de código-fonte inicia na segunda etapa.
+  Nessa fase, a dinâmica se baseia em um \textit{\gloss{loop}} que
+  \begin{inparaenum}
+    \item itera sobre todos os padrões especificados no arquivo de instruções
+          de formatação. Em cada iteração, inicialmente,
+    \item é checado se o padrão é enraizado%
+          \footnote
+            { Na linguagem de consulta do \treesitter, embora a biblioteca não
+              forneça uma definição exata, um padrão enraizado é geralmente
+              caracterizado por especificar pelo menos um nó inicial para a
+              correspondência, e vice-versa.}
+          ou não, determinando assim se o escopo de atuação do padrão é local
+          ou global, respectivamente. Em seguida,
+    \item um segundo \textit{loop} percorre as coleções de nós capturados para
+          cada correspondência do padrão em questão. No corpo dessa estrutura
+          de repetição,
+    \item são aplicadas as configurações especificadas no padrão via o
+          predicado \textit{builtin} \textit{set!}.
+  \end{inparaenum}
+
+  { \clearpage
+    \centering
     \figurewrapper
       {Fluxograma do Algoritmo de Formatação}
       {algorithm-flowchart}
-      { \begin{tikzpicture}[node distance=1em]
+      { \begin
+          {tikzpicture}
+          [node distance=1em,every node/.style={draw,inner sep=1em}]
           \node (init) {
-            \begin{tikzpicture}[nodes=draw]
-              \node (I) {Analisa a árvore de sintaxe};
+            \begin
+              {tikzpicture}
+              [ every node/.style=
+                  {align=center,draw,inner sep=.5em,text width=16em}]
+              \node [draw=none] (label) {Inicialização};
+              \node (I) [below=of label] {Analisa a árvore de sintaxe};
               \node (II) [below=of I] {Gera o objeto de consulta};
               \node (III) [below=of II] {Instancia a estrutura editora};
               \node (IV) [below=of III] {Inicializa o objeto de configurações};
@@ -1239,13 +1267,25 @@
               \draw [->] (IV) -- (V);
             \end{tikzpicture}
           };
-          \node (init-label) [left=of init] {Inicialização};
-          \draw
-            [decorate,decoration=zigzag]
-            let
-              \p1=(init-label.south west),\p2=(init.south east)
-              in
-              (\x1,\y2-1em) -- (\x2,\y2-1em);
+          \node (fmt) [below=of init] {
+            \begin
+              {tikzpicture}
+              [ every node/.style=
+                  {align=center,draw,inner sep=.5em,text width=16em}]
+              \node [draw=none] (label) {Formatação};
+              \node (I) [below=of label] {Itera sobre as correspondências};
+              \node (II) [below=of I] {Define o escopo de atuação};
+              \node
+                (III)
+                [below=of II]
+                {Itera sobre as coleções\\de nós capturados};
+              \node (IV) [below=of III] {Aplica as configurações};
+              \draw [->] (I) -- (II);
+              \draw [->] (II) -- (III);
+              \draw [->] (III) -- (IV);
+            \end{tikzpicture}
+          };
+          \draw [->] (init) -- (fmt);
         \end{tikzpicture}}
     \vspace{-2ex}
     \captionof*{figure}{\ABNTEXfontereduzida Fonte autoral.}}
