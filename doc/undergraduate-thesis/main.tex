@@ -1235,11 +1235,15 @@
               correspondência, e vice-versa.}
           ou não, determinando assim se o escopo de atuação do padrão é local
           ou global, respectivamente. Em seguida,
-    \item um segundo \textit{loop} percorre as coleções de nós capturados para
-          cada correspondência do padrão em questão. No corpo dessa estrutura
-          de repetição,
+    \item \label{item:loop} um segundo \textit{loop} percorre as coleções de
+          nós capturados para cada correspondência do padrão em questão. No
+          corpo dessa estrutura de repetição,
     \item são aplicadas as configurações especificadas no padrão via o
-          predicado \textit{builtin} \textit{set!}.
+          predicado \textit{builtin} \textit{set!}. Além disso,
+    \item são aplicados os predicados gerais -- i.e., predicados
+          não-\textit{builtins} -- especificados no padrão em iteração.
+          Pressupõe-se que esses predicados estejam dentre os providos pelo
+          \witchcooking para instruir a formatação.
   \end{inparaenum}
 
   { \clearpage
@@ -1271,18 +1275,32 @@
             \begin
               {tikzpicture}
               [ every node/.style=
-                  {align=center,draw,inner sep=.5em,text width=16em}]
-              \node [draw=none] (label) {Formatação};
-              \node (I) [below=of label] {Itera sobre as correspondências};
+                  {align=center,draw,inner sep=.5em,text width=14em}]
+              \node [draw=none,text width=16em] (label) {Formatação};
+              \path
+                let \p1=(label.south)
+                in coordinate (I-coord) at ($ (\x1-1em,\y1-1em) $);
+              \node (I) at (I-coord) {Itera sobre os padrões};
               \node (II) [below=of I] {Define o escopo de atuação};
               \node
                 (III)
                 [below=of II]
                 {Itera sobre as coleções\\de nós capturados};
               \node (IV) [below=of III] {Aplica as configurações};
+              \node (V) [below=of IV] {Aplica os predicados gerais};
+              \node (VI) [below=of V] {Redefine as\\configurações locais};
+              \node
+                (VII)
+                [below=of VI]
+                {Interrompe o \cref{item:loop} se o padrão é enraizado};
               \draw [->] (I) -- (II);
               \draw [->] (II) -- (III);
               \draw [->] (III) -- (IV);
+              \draw [->] (IV) -- (V);
+              \draw [->] (V) -- (VI);
+              \draw [->] (VI) -- (VII);
+              \draw [->] (VII.east) -- ++(1em,0) |- (III.east);
+              \draw [->] (VII.east) -- ++(2em,0) |- (I.east);
             \end{tikzpicture}
           };
           \draw [->] (init) -- (fmt);
