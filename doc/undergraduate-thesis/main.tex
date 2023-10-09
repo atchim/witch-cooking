@@ -1204,8 +1204,8 @@
                   submetido pelo usuário --, juntamente com
             \item um vetor de edições.
           \end{inparaenum}
-          Essa estrutura é utilizada pelos predicados para realizar as edições
-          no código e armazená-las. Na sequência,
+          Essa estrutura é utilizada pelos predicados para realizar edições no
+          código. Na sequência,
     \item é inicializado um objeto de configurações, que é futuramente
           empregado pelos predicados para obter e definir configurações em
           diferentes níveis de escopo, sejam eles globais -- i.e., abrangendo
@@ -1223,10 +1223,11 @@
   \end{inparaenum}
 
   O processo efetivo de formatação de código-fonte inicia na segunda etapa.
-  Nessa fase, a dinâmica se baseia em um \textit{\gloss{loop}} que
+  Nessa fase, a dinâmica se baseia em
   \begin{inparaenum}
-    \item itera sobre todos os padrões especificados no arquivo de instruções
-          de formatação. Em cada iteração, inicialmente,
+    \item \label{item:pattern-loop} um \textit{\gloss{loop}} que itera sobre
+          todos os padrões especificados no arquivo de instruções de
+          formatação. Em cada iteração, inicialmente,
     \item é checado se o padrão é enraizado%
           \footnote
             { Na linguagem de consulta do \treesitter, embora a biblioteca não
@@ -1235,8 +1236,8 @@
               correspondência, e vice-versa.}
           ou não, determinando assim se o escopo de atuação do padrão é local
           ou global, respectivamente. Em seguida,
-    \item \label{item:loop} um segundo \textit{loop} percorre as coleções de
-          nós capturados para cada correspondência do padrão em questão. No
+    \item \label{item:nodes-loop} um segundo \textit{loop} percorre as coleções
+          de nós capturados para cada correspondência do padrão em questão. No
           corpo dessa estrutura de repetição,
     \item são aplicadas as configurações especificadas no padrão via o
           predicado \textit{builtin} \textit{set!}. Além disso,
@@ -1244,14 +1245,25 @@
           não-\textit{builtins} -- especificados no padrão em iteração.
           Pressupõe-se que esses predicados estejam dentre os providos pelo
           \witchcooking para instruir a formatação.
-  \end{inparaenum}
 
-  { \clearpage
-    \centering
+          Encerando o \cref{item:nodes-loop} e, subsequentemente, o
+          \cref{item:pattern-loop}, bem como a etapa de formatação como um
+          todo,
+    \item as configurações locais -- i.e, configurações a nível de
+          correspondência -- são redefinidas para seus valores padrões. Logo em
+          seguida,
+    \item é interrompido o \cref{item:nodes-loop} caso o padrão em iteração não
+          seja enraizado.
+  \end{inparaenum}
+  Por fim, na etapa de retorno, o algoritmo conclui retornando o código-fonte
+  resultante do processo de formatação.
+
+  { \centering
     \figurewrapper
       {Fluxograma do Algoritmo de Formatação}
       {algorithm-flowchart}
-      { \begin
+      { \ABNTEXfontereduzida
+        \begin
           {tikzpicture}
           [node distance=1em,every node/.style={draw,inner sep=1em}]
           \node (init) {
@@ -1292,7 +1304,7 @@
               \node
                 (VII)
                 [below=of VI]
-                {Interrompe o \cref{item:loop} se o padrão é enraizado};
+                {Interrompe o \cref{item:nodes-loop} se o padrão é enraizado};
               \draw [->] (I) -- (II);
               \draw [->] (II) -- (III);
               \draw [->] (III) -- (IV);
@@ -1304,6 +1316,19 @@
             \end{tikzpicture}
           };
           \draw [->] (init) -- (fmt);
+          \node (ret) [below=of fmt] {
+            \begin
+              {tikzpicture}
+              [ every node/.style=
+                  {align=center,draw,inner sep=.5em,text width=16em}]
+              \node [draw=none] (label) {Retorno};
+              \node
+                (label)
+                [below=of label]
+                {Retorna o código-fonte formatado};
+            \end{tikzpicture}
+          };
+          \draw [->] (fmt) -- (ret);
         \end{tikzpicture}}
     \vspace{-2ex}
     \captionof*{figure}{\ABNTEXfontereduzida Fonte autoral.}}
