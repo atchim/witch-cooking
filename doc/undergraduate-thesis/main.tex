@@ -1,0 +1,1381 @@
+%%%%%%%%%%%%
+% Preamble %
+%%%%%%%%%%%%
+
+\documentclass
+  [11pt,a4paper,english,brazil,openright,sumario=tradicional,twoside]
+  {abntex2}
+
+%%%%%%%%%%%%%
+%% Packages %
+%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%
+%%% Encoding %
+%%%%%%%%%%%%%%
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%%%%%%%%%%%%%%%%%%%%%
+%%% ABNT Compliance %
+%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{indentfirst}
+\usepackage{microtype}
+
+%%%%%%%%%%%%%%
+%%% Glossary %
+%%%%%%%%%%%%%%
+
+\let\glossitem\undefined
+\usepackage[portuguese]{gloss}
+
+%%%%%%%%%%%%%%%%%%%
+%%% Miscellaneous %
+%%%%%%%%%%%%%%%%%%%
+
+\usepackage{amsmath}
+\usepackage[backend=biber,indent,style=abnt]{biblatex}
+\usepackage{caption}
+\usepackage[brazilian]{cleveref}
+\usepackage{color}
+\usepackage[listings,minted,skins,xparse]{tcolorbox}
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{minted}
+\usepackage{palatino}
+\usepackage{paralist}
+\usepackage{tikz}
+\usepackage{xspace}
+
+%%%%%%%%%%%%%%%%%%
+%% Handy Aliases %
+%%%%%%%%%%%%%%%%%%
+
+\newcommand{\treesitter}{\textit{Tree-Sitter}\xspace}
+\newcommand{\witchcooking}{\textit{Witch Cooking}\xspace}
+
+%%%%%%%%%%%%%%%%%%
+%% Configuration %
+%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% ABNT's NBR 14724 Metrics Compliance %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{1.3cm}
+\setlength{\parskip}{0.2cm}
+
+%%%%%%%%%%%%%
+%%% abntex2 %
+%%%%%%%%%%%%%
+
+\renewcommand{\ABNTEXchapterfont}{\fontseries{b}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Cover & Title Page Info %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\titulo
+  {%
+    \witchcooking: Formatação de Código via Linguagem de Consulta do
+    \treesitter}
+\autor{Átila Gama Silva}
+\local{Irecê}
+\data{\the\year}
+\orientador{Rafael Xavier}
+\instituicao
+  {Instituto Federal de Educação, Ciência e Tecnologia da Bahia – Campus Irecê}
+\tipotrabalho{Trabalho de Conclusão de Curso}
+\preambulo
+  {%
+    \textit{Trabalho de Conclusão de Curso} apresentado ao
+    \textit
+      {%
+        Curso Técnico em Análise e Desenvolvimento de Sistemas do Instituto
+        Federal de Educação, Ciência e Tecnologia da Bahia – Campus Irecê}%
+    , como requisito parcial para obtenção do diploma de
+    \textit{Técnico em Análise e Desenvolvimento de Sistemas}, mediante a
+    orientação do professor \imprimirorientador.}
+
+%%%%%%%%%%%%%%%%%%%
+%%%% IFBA's Cover %
+%%%%%%%%%%%%%%%%%%%
+
+\renewcommand
+  {\imprimircapa}
+  {%
+    \begin{capa}
+      \ABNTEXchapterfont
+      \ABNTEXsectionfontsize
+      \center
+      \includegraphics[width=\textwidth]{ifba-irece-logo.png}
+      \par\vfill\imprimirautor
+      \par\vfill{\ABNTEXchapterfontsize\imprimirtitulo}
+      \vfill\vfill
+      \par\imprimirlocal\break\imprimirdata
+    \end{capa}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% IFBA's Title Page %
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makeatletter
+\renewcommand
+  {\folhaderostocontent}
+  {%
+    \begin{center}
+      \ABNTEXchapterfont
+      \ABNTEXsectionfontsize
+      \imprimirautor
+      \par\vfill\vfill{\ABNTEXchapterfontsize\imprimirtitulo}
+      \vfill
+      {%
+        \normalsize
+        \mdseries
+        \hspace{.45\textwidth}
+        \begin{minipage}{.5\textwidth}
+          \SingleSpacing
+          \imprimirpreambulo
+        \end{minipage}}
+      \vfill\vfill
+      \imprimirlocal\break\imprimirdata
+    \end{center}}
+\makeatother
+
+%%%%%%%%%%
+%%%% TOC %
+%%%%%%%%%%
+
+\setlength{\cftlastnumwidth}{\cftsectionnumwidth}
+
+\cftsetindents{part}{0em}{\cftlastnumwidth}
+\cftsetindents{chapter}{0em}{\cftlastnumwidth}
+\cftsetindents{section}{0em}{\cftlastnumwidth}
+\cftsetindents{subsection}{0em}{\cftlastnumwidth}
+\cftsetindents{subsubsection}{0em}{\cftlastnumwidth}
+\cftsetindents{paragraph}{0em}{\cftlastnumwidth}
+\cftsetindents{subparagraph}{0em}{\cftlastnumwidth}
+
+\renewcommand
+  {\tocprintchapter}
+  {\addtocontents{toc}{\cftsetindents{chapter}{0em}{\cftlastnumwidth}}}
+
+\renewcommand
+  {\tocinnonumchapter}
+  {%
+    \addtocontents{toc}{\cftsetindents{chapter}{\cftlastnumwidth}{0em}}
+    \cftinserthook{toc}{A}}
+
+\renewcommand
+  {\tocprintchapternonum}
+  {\addtocontents{toc}{\cftsetindents{chapter}{\cftlastnumwidth}{0em}}}
+
+\renewcommand
+  {\tocpartapendices}
+  {%
+    \addtocontents{toc}{\cftsetindents{part}{\cftlastnumwidth}{0em}}
+    \cftinserthook{toc}{A}}
+
+\renewcommand
+  {\tocpartanexos}
+  {%
+    \addtocontents{toc}{\cftsetindents{part}{\cftlastnumwidth}{0em}}
+    \cftinserthook{toc}{A}}
+
+\renewcommand{\cftchapterfont}{\bfseries}
+\renewcommand{\cftchapterpagefont}{\cftchapterfont}
+\renewcommand{\cftsectionfont}{\cftchapterfont\ABNTEXfontereduzida}
+\renewcommand{\cftsectionpagefont}{\cftsectionfont}
+
+\renewcommand{\postextual}{}
+
+%%%%%%%%%%%%%%%%%%
+%%% Bibliography %
+%%%%%%%%%%%%%%%%%%
+
+\addbibresource{references.bib}
+
+%%%%%%%%%%%%%%
+%%% cleveref %
+%%%%%%%%%%%%%%
+
+\crefname{listing}{trecho de código}{trechos de código}
+
+%%%%%%%%%%%%%%%%%%%
+%%% Code Snippets %
+%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\theFancyVerbLine}{\ttfamily\arabic{FancyVerbLine}}
+
+\definecolor{codehighlight}{RGB}{240,240,170}
+\newcommand{\hi}[1]{\colorbox{codehighlight}{#1}}
+\setminted{highlightcolor={codehighlight},spacecolor=gray!50}
+
+\NewTotalTCBox
+  {\codesnippetinline}
+  {O{text}vO{}}
+  { bottom=0pt,
+    enhanced,
+    frame hidden,
+    left=0pt,
+    on line,
+    right=0pt,
+    sharp corners,
+    top=0pt}
+  {\mintinline[#3]{#1}{#2}}%
+
+\NewTCBListing
+  [auto counter,list inside=codesnippets]
+  {codesnippet}
+  {sO{text}mm!O{}!O{}}
+  { enhanced,
+    center title,
+    coltitle=black,
+    fonttitle=\ABNTEXfontereduzida,
+    frame hidden,
+    label={snippet:#4},
+    label type=listing,
+    list entry={Trecho de Código \thetcbcounter{} -- #3},
+    listing engine=minted,
+    listing only,
+    minted language=#2,
+    minted options=
+      { autogobble,
+        breakanywhere,
+        breakanywheresymbolpre={},
+        breakautoindent=false,
+        breaklines,
+        breaksymbol={},
+        linenos,
+        xleftmargin=\IfBooleanTF{#1}{1.5}{1}em,
+        #5},
+    overlay=
+      {%
+        \begin{tcbclipinterior}
+          \fill[gray!25]
+          (frame.south west)
+          rectangle
+          ([xshift=\IfBooleanTF{#1}{2.5}{2}em]frame.north west);
+        \end{tcbclipinterior}},
+    sharp corners,
+    title={Trecho de Código \thetcbcounter{} -- #3},
+    #6}
+
+%%%%%%%%%%%%%
+%%% Figures %
+%%%%%%%%%%%%%
+
+\NewTotalTCBox
+  [auto counter,list inside=figureswrapper]
+  {\figurewrapper}
+  {mmO{}m}
+  { enhanced,
+    center title,
+    coltitle=black,
+    fonttitle=\ABNTEXfontereduzida,
+    frame hidden,
+    label={figure:#2},
+    label type=figure,
+    list entry={Figura \thetcbcounter{} -- #1},
+    sharp corners,
+    title={Figura \thetcbcounter{} -- #1},
+    #3}
+  {#4}
+
+%%%%%%%%%%%
+%%% Float %
+%%%%%%%%%%%
+
+\makeatletter
+\setlength{\@fptop}{5pt}
+\makeatother
+
+%%%%%%%%%%%%%%
+%%% Glossary %
+%%%%%%%%%%%%%%
+
+\setglosslabel{\bfseries#2\ifglossshort{ (#3)}{}}
+\renewenvironment
+  {thegloss}
+  {%
+    \chapter*{\glossname}
+    \markboth{\glossname}{\glossname}
+    \addcontentsline{toc}{chapter}{\glossname}}
+  {\stopglosslist}
+\makegloss
+
+%%%%%%%%%%%%%%
+%%% Paralist %
+%%%%%%%%%%%%%%
+
+\setdefaultenum{(I)}{(A)}{}{}
+
+%%%%%%%%%
+%%% PDF %
+%%%%%%%%%
+
+\definecolor{blue}{RGB}{41,5,195}
+\makeatletter
+\hypersetup
+  { pdftitle={\@title},
+    pdfauthor={\@author},
+    pdfsubject=
+      {%
+        \witchcooking: Formatação de Código via Linguagem de Consulta do
+        \treesitter},
+    pdfcreator={\LaTeX with \abnTeX},
+    pdfkeywords=
+      {formatação de código}
+      {\textit{prettyprint}}
+      {formatação personalizada}
+      {\treesitter}
+      {linguagem de consulta},
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    filecolor=magenta,
+    urlcolor=blue,
+    bookmarksdepth=4}
+\makeatother
+
+%%%%%%%%%%
+%%% TikZ %
+%%%%%%%%%%
+
+\usetikzlibrary{calc,decorations.pathmorphing,positioning}
+
+%%%%%%%%%%%%
+% Document %
+%%%%%%%%%%%%
+
+\begin{document}
+  \selectlanguage{brazil}
+  \frenchspacing
+
+  %%%%%%%%%%%%%%
+  % Pretextual %
+  %%%%%%%%%%%%%%
+
+  \imprimircapa
+  \imprimirfolhaderosto
+
+  %%%%%%%%%%%%
+  % Abstract %
+  %%%%%%%%%%%%
+
+  \setlength{\absparsep}{18pt}
+
+  \begin{resumo}
+    A formatação de código é fundamental no desenvolvimento de software,
+    permitindo estabelecer aspectos desejados como a padronização e
+    legibilidade do código, que impactam positivamente o ciclo de vida do
+    software. Em ambientes de desenvolvimento modernos, é comum o uso de
+    ferramentas para automatizar a formatação de código. No entanto, essas
+    ferramentas geralmente apresentam limitações no número de linguagens
+    suportadas, nas opções de configuração e não permitem a definição de
+    estilos de formatação personalizados. Visando superar ou reduzir as
+    limitações frequentemente encontradas nas ferramentas convencionais de
+    formatação, neste trabalho é apresentado o \witchcooking, um software
+    prototípico que tem como objetivos
+    \begin{inparaenum}
+      \item abranger uma gama de linguagens de programação, além de
+      \item permitir que o usuário defina seus próprios estilos de formatação.
+    \end{inparaenum}
+
+    \noindent
+    \textbf{Palavras-chave}:
+    formatação de código;
+    \textit{prettyprint};
+    formatação personalizada;
+    \treesitter;
+    linguagem de consulta.
+  \end{resumo}
+
+  %%%%%%%%%%%%%%%%%%%
+  % List of Figures %
+  %%%%%%%%%%%%%%%%%%%
+
+  \newcommand{\figureswrappername}{Lista de Ilustrações}
+  \begin{KeepFromToc}
+    \pdfbookmark[0]{\figureswrappername}{figureswrapper}
+    \tcblistof[\chapter*]{figureswrapper}{\figureswrappername}
+  \end{KeepFromToc}
+  \cleardoublepage
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%
+  % List of Code Snippets %
+  %%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \newcommand{\codesnippetsname}{Lista de Trechos de Código}
+  \begin{KeepFromToc}
+    \pdfbookmark[0]{\codesnippetsname}{codesnippets}
+    \tcblistof[\chapter*]{codesnippets}{\codesnippetsname}
+  \end{KeepFromToc}
+  \cleardoublepage
+
+  %%%%%%%%%%%%%%%%%%%%%
+  % Table of Contents %
+  %%%%%%%%%%%%%%%%%%%%%
+
+  \pdfbookmark[0]{\contentsname}{toc}
+  \tableofcontents*
+  \cleardoublepage
+
+  %%%%%%%%%%%%%%%%%%%%
+  % Textual Elements %
+  %%%%%%%%%%%%%%%%%%%%
+
+  \textual
+
+  %%%%%%%%%%%%%%%%%
+  %% Introduction %
+  %%%%%%%%%%%%%%%%%
+
+  \chapter{Introdução}
+
+  A flexibilidade presente na sintaxe de linguagens de programação permite que
+  diferentes arranjos dum mesmo código compartilhem um valor sintático
+  equivalente. Essa característica possibilita a formatação do código de acordo
+  com aspectos desejados, como a legibilidade, que é fundamental no ciclo de
+  vida do software
+  \cites[546]{buse-2009-learning}[1]{oliveira-2020-evaluating}.
+  Consequentemente, a formatação é frequentemente utilizada para estabelecer um
+  nível satisfatório de legibilidade em bases de código.
+
+  A formatação de código pode ser realizada manualmente pelo programador,
+  embora esse processo possa ser demorado, especialmente em grandes bases de
+  código, exigindo do programador um tempo que poderia ser empregado em outra
+  tarefa. Além disso, a formatação manual também pode ser falha e inconsistente
+  devido à suscetibilidade humana ao erro, podendo ser agravada quando há
+  múltiplos programadores em uma base de código.
+
+  Para evitar os problemas inerentes da formatação manual, é comum a utilização
+  de softwares que automatizam a formatação de forma determinística, tornando o
+  código padronizado e consistente. No entanto, é comum que essas ferramentas
+  de formatação sejam limitadas a uma linguagem ou a uma família de linguagens
+  de programação. Além disso, algumas delas são opinativas, assim restringindo
+  as possiblidades de personalização pelo usuário. Finalmente, é também comum
+  que essas ferramentas de formatação não permitam que o usuário defina estilos
+  de formatação personalizados.
+
+  Em ambientes de desenvolvimento modernos, além da utilização de ferramentas
+  que automatizam a formatação de código, é também comum a utilização do
+  \treesitter \cite{tree-sitter-2018-tree}, um sistema de análise sintática de
+  código aberto que foi disponibilizado ao público geral no GitHub
+  primeiramente em 2019, tendo sido inicialmente desenvolvido por Max
+  Brunsfeld. Desde seu lançamento, o \treesitter tem ganhado popularidade na
+  comunidade de desenvolvedores devido dentre outros motivos à
+  \begin{inparaenum}
+    \item sua capacidade de suportar várias linguagens de programação; além de
+    \item sua linguagem de consulta, a qual permite a realização de buscas
+          complexas na árvore analisada de um código-fonte.
+  \end{inparaenum}
+
+  Visando superar ou reduzir as limitações previamente mencionadas, quais são
+  frequentemente presentes nas ferramentas convencionais de formatação, este
+  trabalho tem como objetivo geral desenvolver um software prototípico para a
+  formatação de código. Nomeada de \witchcooking \cite{silva-2023-witch}, a
+  ferramenta desenvolvida tem como objetivos
+  \begin{inparaenum}
+    \item abranger uma gama de linguagens de programação, além de
+    \item permitir que o usuário defina seus estilos personalizados de
+          formatação.
+  \end{inparaenum}
+
+  Para alcançar o objetivo geral proposto, este trabalho tem como objetivos
+  específicos
+  \begin{inparaenum}
+    \item apresentar e contextualizar ferramentas de formatação de código
+          conceituadas, além de abordar seus métodos de formatação;
+    \item conceituar, contextualizar e abordar as tecnologias do sistema
+          \treesitter; e, por fim,
+    \item utilizar o \treesitter para desenvolver e atender às aspirações do
+          \witchcooking.
+  \end{inparaenum}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %% The Source Code Formatting %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \chapter{A Formatação de Código-Fonte}
+
+  Desde os primórdios da computação, métodos foram desenvolvidos para garantir
+  que a saída impressa fosse formatada de maneira esteticamente agradável
+  \apud{harris-1956-keyboard}[1]{yelland-2015-rfmt}. Esses métodos ganharam
+  popularidade sob o termo \textit{``\gloss{prettyprinting}''}, que se refere à
+  formatação visual de diversos tipos de conteúdo. No desenvolvimento de
+  software, o \textit{prettyprinting} é conhecido como formatação de código,
+  uma prática histórica e comum que envolve a adoção de convenções estilísticas
+  para estruturar o código-fonte. Existem diversas terminologias utilizadas
+  para se referir às ferramentas que realizam a formatação do código-fonte,
+  incluindo
+  \begin{inparaenum}
+    \item ``formatadores de código'', ou \textit{``code formatters''} em
+          inglês;
+    \item \textit{``prettyprinters''}; ou ainda
+    \item \textit{``beautifiers''}.
+  \end{inparaenum}
+
+  \newsavebox\mexpressionexample
+  \begin{lrbox}{\mexpressionexample}
+    \codesnippetinline{car[cons[A; B]]}[fontsize=\footnotesize]
+  \end{lrbox}
+
+  \newsavebox\sexpressionexample
+  \begin{lrbox}{\sexpressionexample}
+    \codesnippetinline[lisp]{(car (cons A B))}[fontsize=\footnotesize]
+  \end{lrbox}
+
+  Durante as décadas de 60 e 70, a linguagem de programação LISP%
+  \footnote
+    { O termo ``LISP'' (acrônimo para
+      \textit{``\textbf{LIS}t \textbf{P}rocessing''}) inicialmente se referia à
+      linguagem de programação desenvolvida por
+      \textcite{mccarthy-1960-recursive}, porém, com a disseminação de dialetos
+      da linguagem, o termo também passou a ser utilizado para se referir à
+      família de linguagens derivadas da original.}
+  proporcionou condições favoráveis para o avanço da formatação de código
+  \cite[2]{yelland-2015-new}.
+  \begin{inparaenum}
+    \item LISP apresentava uma sintaxe distinta e expressiva, baseada em listas
+          e estruturas aninhadas delimitadas por parênteses%
+          \footnote
+            { Na notação original de McCarthy, eram utilizadas
+              \textit{M-expressions} entre colchetes para representar
+              expressões. Essas \textit{M-expressions} seriam posteriormente
+              traduzidas em \textit{\gloss[Word]{sexp}s}. Por exemplo, a
+              \textit{M-expression} \usebox{\mexpressionexample} seria
+              equivalente à \textit{S-expression} \usebox{\sexpressionexample}.
+              No entanto, assim que a linguagem LISP foi implementada, os
+              programadores prontamente adotaram o uso das
+              \textit{S-expressions} em vez das \textit{M-expressions},
+              tornando as \textit{S-expressions} a forma predominante de
+              representar a estrutura do código na linguagem.}%
+          , o que tornava o código-fonte praticamente ilegível e
+          incompreensível caso não fosse devidamente organizado. Além disso,
+    \item LISP era \gloss{homoiconic}, ou seja, permitia a manipulação do
+          código via dados da própria linguagem.
+  \end{inparaenum}
+  Essas duas características intrínsecas do LISP fundamentaram o surgimento de
+  \begin{inparaenum}
+    \item \textit{prettyprinters} para a linguagem, visando aperfeiçoar a
+          legibilidade do código-fonte escrito ou emitido; além de
+    \item novas técnicas e abordagens para a formatação de código em geral.
+  \end{inparaenum}
+  Esses avanços contribuíram significativamente para o conhecimento e o
+  aprimoramento de práticas de formatação de código em trabalhos subsequentes.
+
+  Em 1967, Bill Gosper desenvolveu o \textit{GRINDEF} (acrônimo para
+  \textit
+    {%
+      ``\textbf{GRIND}%
+      \footnote
+        { O termo \textit{``grind''} era utilizado em alguns círculos de LISP
+          como sinônimo para \textit{prettyprinters}.}
+      \textbf{F}unction''}%
+  ), considerado o primeiro \textit{prettyprinter} a mensurar o tamanho das
+  linhas e ter ciência de sua localização no arquivo
+  \cites{gosper-2023-twubblesome}{griesemer-2022-cultural}. Essa ferramenta
+  implementava o algoritmo \textit{recursive re-predictor}, que, como descrito
+  por \textcite{goldstein-1973-pretty}, percorria a árvore de nós representando
+  as listas e imprimia os nós considerando seus tamanhos e a quantidade máxima
+  de caracteres que ainda poderiam ser inseridos em uma linha.
+
+  Posteriormente, \textcite{hearn-1979-one} propuseram um algoritmo mais
+  elaborado para \textit{prettyprinting} que utilizava um par de corrotinas%
+  \footnote
+    { Na obra, os autores enfatizam que a implementação com o uso de corrotinas
+      é tão simples que poderia ser simulada -- sem grandes dificuldades -- em
+      linguagens que não possuíam suporte nativo para corrotinas
+      \cite[53]{hearn-1979-one}.}%
+  ,
+  \begin{inparaenum}
+    \item uma responsável por produzir uma sequência de caracteres que
+          representavam o programa sendo impresso; e
+    \item outra responsável por decidir como esses caracteres seriam exibidos.
+  \end{inparaenum}
+  Essas corrotinas se comunicavam por meio de um buffer \gloss{fifo},
+  permitindo que as decisões de formatação fossem adiadas até que houvesse
+  informações suficientes disponíveis para tomá-las com confiabilidade.
+
+  No ano seguinte, \textcite{oppen-1980-prettyprinting} apresentou em sua
+  influente obra, intitulada \textit{``Prettyprinting''}, um algoritmo inovador
+  de formatação de código-fonte. Embora apresentasse semelhanças ao algoritmo
+  proposto por \textcite{hearn-1979-one}, destacava-se por sua capacidade de
+  formatar código derivado de qualquer linguagem de programação. Para realizar
+  essa tarefa, o algoritmo necessitava que o código-fonte fosse anotado com
+  espaços em branco%
+  \footnote
+    { Quebras de linha, avanços de formulário e alimentações de linha também
+      eram tratados como espaços em branco pelo algoritmo.}
+  e delimitadores especiais para marcar o início e fim de blocos logicamente
+  contíguos. Assim, o código a ser fornecido ao algoritmo precisaria ser
+  processado por uma ferramenta intermediária capaz de compreender a sintaxe da
+  linguagem e fornecer um código anotado de forma adequada, permitindo que o
+  algoritmo realizasse a formatação apropriada.
+
+  Recentemente, tem se tornado cada vez mais evidente a crescente relevância
+  dos softwares opinativos \cite{eccles-2015-rise}, também conhecidos em inglês
+  como \textit{\gloss{opinionated} softwares}. Esses softwares preestabelecem
+  práticas estritivas, visando deliberadamente frustrar ou dificultar práticas
+  destoantes \cite{lance-2021-about}. Similarmente, os \textit{prettyprinters}
+  primitivos, tais como o SOAP \cite{scowen-1971-soap}, eram naturalmente
+  restritivos devido à simplicidade e às limitações dos algoritmos de
+  formatação existentes. Conforme mencionado, à medida que os algoritmos de
+  formatação de código-fonte eram aprimorados, tornando-se mais robustos e
+  sofisticados, os \textit{prettyprinters} passaram a proporcionar mais
+  personalizações aos usuários. No entanto, atualmente, a abordagem opinativa
+  também tem sido adotada por softwares modernos de formatação de código-fonte
+  \cites{black-2023-black}[5--6,8]{griesemer-2022-cultural}. Esses softwares
+  geralmente têm como objetivos
+  \begin{inparaenum}
+    \item padronizar e
+    \item garantir a consistência do código; além
+    \item eliminar o tempo e esforços necessários para escolher os estilos
+          ideais de formatação; e, finalmente, consequentemente e
+          principalmente
+    \item aprimorar o ambiente de desenvolvimento colaborativo.
+  \end{inparaenum}
+
+  Um exemplo proeminente de \textit{prettyprinter} opinativo é o
+  \textit{\textbf{Black}} \cite{black-2023-black}, um formatador de código
+  Python, cuja logomarca parodia a da fabricante automobilística Ford, e cujo
+  irônico slogan \textit{\textbf{``any color you like''}} faz alusão à famosa
+  frase
+  \textit
+    {%
+      ``any customer can have a car painted \textbf{any colour that he wants so
+      long as it is black}''}
+  \cite[p. 72, grifo nosso]{ford-1922-my}, dita por Henry Ford, o fundador da
+  fabricante. Assim como Ford adotou uma abordagem de produção em massa na
+  fabricação dos \textit{Model Ts} com uma única opção de cor para aumentar a
+  eficiência \cite{ford-1922-my}, o \textit{Black} segue um princípio análogo.
+  Ao impor um estilo estrito de formatação, minimizando o espaço para
+  personalização ou preferências individuais, o \textit{Black} oferece
+  velocidade, determinismo, além de economia de tempo e esforços para questões
+  mais importantes \cite{black-2023-black}.
+
+  Sumarizando, desenvolver um \textit{prettyprinter} não é uma tarefa simples
+  \cite[55]{hughes-1995-design}. Durante o processo de formatação, é necessário
+  \begin{inparaenum}
+    \item ter conhecimento das estruturas gramaticais da linguagem específica
+          em questão. Além disso, o objetivo do \textit{prettyprinter} é
+    \item \label{item:format} formatar o código de maneira otimizada e
+          agradável para o leitor \cite[55]{hughes-1995-design}, levando em
+          consideração as melhores práticas de formatação. Em alguns casos,
+          também é importante
+    \item permitir que o usuário possa optar por estilos de formatação que
+          atenda às suas preferências individuais. Adicionalmente, as sintaxes
+          das linguagens de programação costumam ser flexíveis em relação à
+          estruturação do código-fonte. Assim, para atender o
+          \cref{item:format}, geralmente é necessário
+    \item utilizar algoritmos que calculem o layout mais adequado de acordo com
+          o contexto
+          \cites
+            [12]{jasper-2023-clang}
+            {goldstein-1973-pretty}
+            {hughes-1995-design}
+            {yelland-2015-new}.
+  \end{inparaenum}
+  Fatalmente, essas características essenciais de um \textit{prettyprinter}
+  normalmente o restringem a uma linguagem específica ou, em alguns casos, a
+  uma família de linguagens que compartilham semelhanças sintáticas ou
+  estruturais.
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %% The Tree-Sitter System %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \chapter{O Sistema \treesitter}
+  \label{chapter:tree-sitter}
+
+  O \treesitter é um sistema multilíngue de análise sintática para ferramentas
+  de programação inicialmente desenvolvido como um projeto secundário por Max
+  Brunsfeld. Como relatado pelo próprio autor \cite{github-2017-tree}, o
+  \treesitter surgiu como uma tentativa de solucionar problemas presentes nas
+  ferramentas de análise sintática da época. Mais especificamente, o sistema
+  tinha como objetivos
+  \begin{inparaenum}
+    \item ser utilizado no ambiente de desenvolvimento para produzir árvores de
+          sintaxe a partir da análise de códigos escritos em várias linguagens;
+    \item implementar a análise incremental, permitindo a atualização da árvore
+          de sintaxe em tempo real;
+    \item expor através da árvore de sintaxe os nós representando suas
+          construções gramaticais no código (e.g., classes, funções,
+          declarações, etc.), diferentemente das ferramentas contemporâneas,
+          que utilizavam uma abordagem simplística baseada em expressões
+          regulares; e, por fim,
+    \item ser livre de dependências, assim beneficiando sua adoção e
+          aplicabilidade.
+  \end{inparaenum}
+
+  Além das funcionalidades previamente mencionadas presentes no \treesitter, o
+  sistema também conta uma ferramenta de linha de comando que pode ser
+  utilizada para gerar \textit{\gloss{parser}s} para uma linguagem a partir de
+  sua gramática. A gramática é definida via a linguagem de programação
+  JavaScript, a qual
+  \begin{inparaenum}
+    \item foi eleita 15 vezes seguidas pela
+          \textit{Stack Overflow Developer Survey}
+          \cite{stack-overflow-2022-stack} como a linguagem de programação mais
+          comumente usada; além de
+    \item ser amplamente considerada pela comunidade de programadores como uma
+          das linguagens mais fáceis de aprender e programar
+          \cites{berkeley-2023-11}{goel-2023-how}{w3schools-2023-javascript}.
+  \end{inparaenum}
+  A ferramenta de geração de \textit{parsers} também disponibiliza funções
+  preestabelecidas para permitir a criação de gramáticas com diferentes níveis
+  de complexidade. Não é surpreendente que, devido a essas características e
+  facilidades presentes na criação de \textit{parsers}, exista uma variedade de
+  linguagens de programação e formatos de arquivos -- variando de linguagens
+  com sintaxes complexas, como C++ e Perl, a formatos de arquivos mais
+  específicos, como \textit{.vhs} e \textit{.rasi} --, os quais têm parsers
+  gerados pelo \treesitter e, consequentemente, são suportados pelo sistema.
+
+  Na análise de código, é comum realizar tarefas que envolvem a busca de
+  padrões na árvore sintática. Para isso, o \treesitter oferece uma pequena
+  linguagem de consulta declarativa que é capaz de expressar esses padrões por
+  meio de \textit{\gloss[Word]{sexp}s} e buscar correspondências. A linguagem
+  de consulta suporta operadores que permitem
+  \begin{inparaenum}
+    \item a captura de nós;
+    \item a quantificação de nós, análoga às expressões regulares;
+    \item o agrupamento de nós;
+    \item as alternâncias de nós;
+    \item o uso de \textit{\gloss{wildcard}s}; e
+    \item a ordenação de nós.
+  \end{inparaenum}
+  Adicionalmente, é permitido o uso de predicados -- funções arbitrárias
+  geralmente utilizadas para filtrar nós ou realizar verificações mais
+  complexas durante a busca de padrões -- sejam eles \textit{\gloss{builtin}s}
+  ou estendidos por meio de uma API.
+
+  Um exemplo da relevância e utilidade da linguagem de consulta é o plugin
+  \textit{nvim-treesitter} \cite{nvim-treesitter-2023-nvim}, que é
+  frequentemente utilizado no editor \textit{Neovim}
+  \cite{neovim-2023-hyperextensible}. Esse plugin utiliza a linguagem de
+  consulta para definir diferentes recursos, tais como
+  \begin{inparaenum}
+    \item \textit{\gloss{code-folding}}, que permite ocultar blocos de código;
+    \item highlights, que realçam a sintaxe do código;
+    \item indentações, que definem a estrutura do código;
+    \item injeções, que permitem adicionar novas sintaxes a arquivos
+          existentes; além de
+    \item captura de nós correspondentes a construções gramaticais (e.g.,
+          funções, classes, métodos, etc.), os quais são frequentemente
+          utilizados em rotinas de programação tais como a remoção e navegação
+          de código.
+  \end{inparaenum}
+
+  Em resumo, o sistema \treesitter se mostra uma solução inovadora e eficiente
+  para a análise sintática de códigos em diversas linguagens de programação,
+  com uma abordagem diferenciada e sofisticada que possibilita a atualização em
+  tempo real da árvore sintática e a identificação precisa das construções
+  gramaticais presentes no código. Além disso, a ferramenta de linha de comando
+  disponível no sistema facilita a geração de parsers a partir de gramáticas
+  definidas em JavaScript, o que torna o processo mais acessível e
+  personalizável para os programadores. Finalmente, a linguagem de consulta
+  declarativa oferecida pelo \treesitter se mostra uma importante
+  \textit{\gloss{feature}}, sendo utilizada em diversos plugins de editores de
+  código para realizar tarefas variadas e sofisticadas, contribuindo
+  significativamente no ambiente de desenvolvimento.
+
+  %%%%%%%%%%%%%%%%%%%%%%
+  %% The Witch Cooking %
+  %%%%%%%%%%%%%%%%%%%%%%
+
+  \chapter{O \witchcooking}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%% Motivations and Purposes %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \section{Motivações e Propósitos}
+
+  As motivações para o desenvolvimento do \witchcooking surgiram das
+  dificuldades enfrentadas pelo autor ao estudar estilos de formatação de
+  código-fonte em diversas linguagens de programação com as quais ele
+  trabalhava. O estudo envolvia a exploração e análise tanto de estilos
+  convencionais%
+  \footnote
+    { Neste trabalho, são considerados convencionais os estilos de formatação
+      abordados nas páginas \textit{Indentation style} e
+      \textit{Programming style} da Wikipédia.
+      \cites{wiki-2023-indentation}{wiki-2023-programming}}%
+  , dos quais muitos eram amplamente adotados, quanto de estilos
+  não-convencionais. Durante a análise dos estilos convencionais de formatação,
+  \begin{inparaenum}
+    \item era imprescindível recorrer a diferentes \textit{prettyprinters},
+    \item cada um com suas próprias configurações e níveis de suporte para
+          esses estilos. Por outro lado, durante a análise dos estilos
+          não-convencionais,
+    \item a aplicação manual era inevitável, consumindo consideravelmente tempo
+          e esforço.
+  \end{inparaenum}
+
+  Tendo em vista
+  \begin{inparaenum}
+    \item as dificuldades mencionadas anteriormente; além da
+    \item complexidade envolvida no \textit{prettyprinting} --
+    \item agravada pela proposta de formatação multilíngue
+  \end{inparaenum}
+  --, o \witchcooking foi concebido como um software de linha de comando --
+  de natureza prototípica -- para a formatação de código-fonte. A ferramenta
+  elaborada tem como objetivos
+  \begin{inparaenum}
+    \item abranger uma gama de linguagens de programação e
+    \item permitir que o usuário defina seus próprios estilos de formatação
+          de código-fonte.
+  \end{inparaenum}
+
+  %%%%%%%%%%%
+  %%% Usage %
+  %%%%%%%%%%%
+
+  \section{Usagem}
+  \label{section:usage}
+
+  O \witchcooking apresenta a seguinte usagem
+  \codesnippetinline{cook [-l LANG] -q QUERY [SRC]}%
+  , onde
+  \begin{inparaenum}
+    \item \codesnippetinline{cook} é o nome do executável,
+    \item \codesnippetinline{[-l LANG]} é uma opção para explicitar a linguagem
+          do código-fonte a ser formatado,
+    \item \codesnippetinline{-q QUERY} é utilizado para definir o caminho para
+          o arquivo -- escrito na linguagem de consulta do \treesitter{} -- no
+          qual as instruções de formatação estão definidas, e
+    \item \codesnippetinline{[SRC]} é um argumento opcional para especificar o
+          caminho para o arquivo a ser formatado.
+  \end{inparaenum}
+  Quando \codesnippetinline{[SRC]} é provido e \codesnippetinline{[-l LANG]} é
+  omitido, o software tentará inferir uma linguagem conforme a extenção do nome
+  do arquivo. Por outro lado, quando \codesnippetinline{[SRC]} é omitido, o
+  código-fonte a ser formatado deve ser provido via \textit{\gloss{pipeline}},
+  e a sua linguagem deve ser explicitada via \codesnippetinline{[-l LANG]}. Em
+  alinhamento com sua natureza experimental, o \witchcooking proporciona o
+  código-fonte formatado resultante como saída, sem modificar o conteúdo
+  original, efetivamente estabelecendo uma formatação segura.
+
+  %%%%%%%%%%%%%%%
+  %%% Materials %
+  %%%%%%%%%%%%%%%
+
+  \section{Materiais}
+
+  O \witchcooking foi programado em Rust \cite{rust-2023-rust}, que é uma
+  linguagem amplamente reconhecida na comunidade de programadores
+  \cite{stack-overflow-2023-stack}. Dentre os motivos que levaram à escolha
+  dessa linguagem para o desenvolvimento, destacam-se
+  \begin{inparaenum}
+    \item seu gerenciamento de memória seguro%
+          \footnote
+            { Embora Rust não apresente \textit{\gloss{garbage-collection}} --
+              o que contribui significativamente para o desempenho --, a
+              linguagem emprega \textit{features} e conceitos como
+              \textit{borrow checker}, \textit{ownership} e \textit{lifetime},
+              garantindo um gerenciamento de memória seguro. Isso é
+              especialmente relevante em linguagens de alto desempenho que não
+              possuem coleta de lixo (e.g., C e C++). Estudos estimam que,
+              nesse contexto, pelo menos 65\% das vulnerabilidades de segurança
+              sejam causadas por falta de segurança no gerenciamento de memória
+              \cite{gaynor-2020-what}.}
+          \cite[3]{nsa-2022-software};
+    \item seu excelente desempenho, a par às linguagens C e C++;
+    \item seus recursos de linguagens modernas, incluindo
+          \begin{inparaenum}
+            \item expressividade,
+            \item \textit{\gloss{zero-cost-abs}},
+            \item correspondência de padrões,
+            \item \textit{closures},
+            \item macros, etc.;
+          \end{inparaenum}
+    \item seu suporte a múltiplas plataformas; além de
+    \item seu ecossistema de desenvolvimento fértil, que oferece
+          \begin{inparaenum}
+            \item uma ampla variedade de bibliotecas,
+            \item \textit{Cargo}, o gerenciador de pacotes, além do
+            \item \textit{rust-analyzer} \cite{rust-analyzer-2023-rust}, uma
+                  implementação do \textit{Language Server Protocol} (LSP) para
+                  a linguagem.
+          \end{inparaenum}
+  \end{inparaenum}
+
+  Para atender a seus objetivos, o \witchcooking foi desenvolvido com base na
+  biblioteca \treesitter \cite{tree-sitter-2018-tree}, a qual
+  \begin{inparaenum}
+    \item suporta uma ampla variedade de linguagens de programação e formatos
+          de arquivos, além de
+    \item possuir uma linguagem de consulta versátil e extensível que, dentre
+          outras características, permite
+          \begin{inparaenum}
+            \item a realização de buscas complexas na árvore de sintaxe
+                  analisada de um código-fonte, bem como
+            \item a adição de predicados personalizados.
+          \end{inparaenum}
+  \end{inparaenum}
+
+  Para escrever o código do \witchcooking, foi utilizado o editor de texto
+  \textit{Neovim} \cite{neovim-2023-hyperextensible}, com configurações
+  personalizadas \cite{silva-2023-uma}. Essas configurações possibilitaram a
+  integração com o \textit{rust-analyzer}, o que resultou em melhorias
+  significativas na experiência de programação. Dentre os plugins utilizados na
+  configuração, destacam-se
+  \begin{inparaenum}
+    \item o \textit{nvim-treesitter} \cite{nvim-treesitter-2023-nvim}, que
+          permitiu a integração com o \treesitter; além do
+    \item \textit{playground} \cite{nvim-treesitter-2023-playground}, que
+          disponibilizou ferramentas para uma melhor compreensão do \treesitter
+          e de sua linguagem de consulta.
+  \end{inparaenum}
+
+  %%%%%%%%%%%%%
+  %%% Methods %
+  %%%%%%%%%%%%%
+
+  \section{Métodos}
+
+  Embora o \treesitter não tenha sido originalmente projetado para formatação
+  de código-fonte, o autor deste trabalho identificou o potencial da
+  biblioteca, particularmente em relação à sua linguagem de consulta, que --
+  como já ressaltado -- é extensível. Assim, para permitir a formatação
+  instruída, o \witchcooking baseou-se na extensão e disponibilização de
+  predicados designados a executar operações específicas de formatação. Em
+  outras palavras, a concepção do autor era que a formatação ocorresse conforme
+  a aplicação dos predicados estendidos em padrões especificados no arquivo de
+  instruções, escrito na linguagem de consulta do \treesitter.
+
+  Consequentemente, no desenvolvimento deste trabalho, foram utilizados
+  diferentes procedimentos, incluindo
+  \begin{inparaenum}
+    \item pesquisa bibliográfica e
+    \item pesquisa documental, com o intuito de aprofundar o conhecimento sobre
+          o funcionamento do \treesitter; além de
+    \item pesquisa experimental, assim como
+    \item estudo de caso, com as respectivas finalidades de
+          \begin{inparaenum}
+            \item explorar a aplicação do \treesitter e sua linguagem de
+                  consulta no processo de formatação de código-fonte, além de
+            \item analisar a eficácia do algoritmo de formatação desenvolvido.
+          \end{inparaenum}
+  \end{inparaenum}
+  Essa abordagem metodológica se caracteriza como predominantemente
+  qualitativa, de natureza básica e orientada por objetivos exploratórios.
+
+  %%%%%%%%%%%%%%%%%%%%
+  %%% Making Queries %
+  %%%%%%%%%%%%%%%%%%%%
+
+  \section{Fazendo Consultas}
+
+  Como mencionado na \cref{section:usage}, o \witchcooking formata o
+  código-fonte conforme as instruções presentes no arquivo submetido via
+  \codesnippetinline{-q QUERY}, o qual é escrito na linguagem de consulta do
+  \treesitter. Devido à importância fundamental desempenhada por essa linguagem
+  na ferramenta, é essencial possuir um conhecimento básico sobre o seu
+  funcionamento. Portanto, nesta seção, será abordado superficialmente o
+  funcionamento da linguagem de consulta do \treesitter, permitindo assim uma
+  melhor compreensão da base em que o \witchcooking foi desenvolvido.
+
+  Como abordado no \cref{chapter:tree-sitter}, a linguagem de consulta do
+  \treesitter foi originalmente concebida para buscar padrões na árvore
+  sintática via
+  \begin{inparaenum}
+    \item definição de padrões de correspondência e
+    \item aplicação de predicados.
+  \end{inparaenum}
+  Os predicados disponibilizados nativamente pelo \treesitter são agnósticos
+  quanto à linguagem de programação utilizada. Por outro lado, os padrões de
+  correspondência variam de acordo com a linguagem devido às suas construções
+  gramaticais específicas, que são posteriormente traduzidas como nós na árvore
+  de sintaxe analisada.
+
+  Por exemplo, considere os \cref{snippet:add-two-c,snippet:add-two-rust},
+  escritos nas linguagens de programação C e Rust, respectivamente. Embora
+  ambos desempenhem papéis idênticos -- i.e., definem uma função que retorna a
+  soma do parâmetro \textit{x} com 2 --, suas árvores de sintaxe analisadas --
+  apresentadas respectivamente nos
+  \cref{snippet:add-two-c-tree,snippet:add-two-rust-tree} -- exibem diferenças
+  significativas. Portanto, para buscar a correspondência do trecho em que o
+  parâmetro \textit{x} é definido em ambos os códigos (i.e.,
+  \codesnippetinline
+    [c]
+    $int add_two(|\colorbox{codehighlight}{int x}|) {$
+    [escapeinside=||]
+  e
+  \codesnippetinline
+    [rust]
+    $fn add_two(|\colorbox{codehighlight}{x: i32}|) -> i32 {$
+    [escapeinside=||]%
+  ), são necessárias consultas distintas, apresentadas pelos
+  \cref{snippet:param-query-c,snippet:param-query-rust}.
+
+  Dado que os padrões correspondem a qualquer uma de suas ocorrências, é
+  importante garantir maior especificidade em sua definição. Isso pode ser
+  obtido por meio de
+  \begin{inparaenum}
+    \item especificação de campos,
+    \item especificação de nós anônimos e
+    \item aplicação de predicados.
+  \end{inparaenum}
+  Para ilustrar, ao aplicar a consulta apresentada no
+  \cref{snippet:param-query-c} ao seguinte código em linha
+  \codesnippetinline[c]{int add(int x, int y);}, obtêm-se duas
+  correspondências, como destacadas no seguinte trecho
+  \codesnippetinline[c]{int add(|\hi{int x}, \hi{int y}|);}[escapeinside=||].
+  Logo, para corresponder somente ao parâmetro \textit{x}, deve-se utilizar uma
+  consulta mais elaborada, conforme exemplificada no
+  \cref{snippet:x-param-query}. Nesse trecho, é possível notar algumas
+  diferenças em relação à sua versão original, que foi apresentada no
+  \cref{snippet:param-query-c}.
+  \begin{inparaenum}
+    \item O nó \textit{identifier} é capturado com o nome \textit{id}, como
+          destacado no seguinte trecho de código
+          \codesnippetinline
+            [scheme]
+            {declarator: |\hi{(identifier) @id}|}
+            [escapeinside=||]%
+          . Além disso,
+    \item o predicado \textit{eq?} é aplicado para garantir que o conteúdo da
+          captura \textit{id} corresponda à string ``x'' o que, por
+          consequência, impede a correspondência do parâmetro \textit{y}.
+  \end{inparaenum}
+
+  Por fim, é importante ressaltar que a linguagem de consulta do \treesitter
+  disponibiliza recursos adicionais \cite{tree-sitter-2023-using} que vão além
+  do escopo desta seção. No entanto, as informações abordadas até então
+  estabelecem uma base fundamental para compreender o funcionamento da
+  linguagem de consulta e sua aplicação em conjunto com o \witchcooking na
+  formatação do código-fonte.
+
+  \clearpage
+
+  \noindent
+  \begin{minipage}[t]{.49\textwidth}
+    \begin
+      {codesnippet}%
+      [c]%
+      {Função \textit{add\_two} em C}%
+      {add-two-c}
+      int add_two(int x) {
+        return x + 2;
+      }
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{.49\textwidth}
+    \begin
+      {codesnippet}%
+      [rust]%
+      {Função \textit{add\_two} em Rust}%
+      {add-two-rust}
+      fn add_two(x: i32) -> i32 {
+        x + 2
+      }
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
+  \end{minipage}
+
+  \noindent
+  \begin{minipage}[t]{.51\textwidth}
+    \begin
+      {codesnippet}*%
+      {Árvore Sintática da Função \textit{add\_two} em C}%
+      {add-two-c-tree}%
+      [fontsize=\ABNTEXfontereduzida]
+      function_definition
+        type: primitive_type
+        declarator: function_declarator
+          declarator: identifier
+          parameters: parameter_list
+            parameter_declaration
+              type: primitive_type
+              declarator: identifier
+        body: compound_statement
+          return_statement
+            binary_expression
+              left: identifier
+              right: number_literal
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*
+      {listing}
+      {\ABNTEXfontereduzida Fonte autoral. Nós anônimos foram omitidos.}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{.47\textwidth}
+    \begin
+      {codesnippet}*%
+      {Árvore Sintática da Função \textit{add\_two} em Rust}%
+      {add-two-rust-tree}%
+      [fontsize=\ABNTEXfontereduzida]
+      function_item
+        name: identifier
+        parameters: parameters
+          parameter
+            pattern: identifier
+            type: primitive_type
+        return_type: primitive_type
+        body: block
+          binary_expression
+            left: identifier
+            right: integer_literal
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*
+      {listing}
+      {\ABNTEXfontereduzida Fonte autoral. Nós anônimos foram omitidos.}
+  \end{minipage}
+
+  \noindent
+  \begin{minipage}[t]{.51\textwidth}
+    \begin
+      {codesnippet}*%
+      [scheme]%
+      {Consulta Correspondendo a um Parâmetro de Função em C}%
+      {param-query-c}
+      (parameter_declaration
+        type: (primitive_type)
+        declarator: (identifier))
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{.47\textwidth}
+    \begin
+      {codesnippet}*%
+      [scheme]%
+      {Consulta Correspondendo a um Parâmetro de Função em Rust}%
+      {param-query-rust}
+      (parameter
+        pattern: (identifier)
+        type: (primitive_type))
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
+  \end{minipage}
+
+  \noindent
+  \begin{minipage}[t]{\textwidth}
+    \begin
+      {codesnippet}*%
+      [scheme]%
+      {Consulta Correspondendo ao Parâmetro \textit{x} de uma Função em C}%
+      {x-param-query}
+      (parameter_declaration
+        type: (primitive_type)
+        declarator: (identifier) @id
+        (#eq? @id "x"))
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
+  \end{minipage}
+
+  \clearpage
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%% The Formatting Algorithm %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \section{O Algoritmo de Formatação}
+
+  O \witchcooking permite a formatação de código-fonte via seu algoritmo
+  fundamentado no \treesitter e sua linguagem de consulta. Esse algoritmo
+  utiliza a biblioteca para gerar uma árvore de sintaxe a partir do
+  código-fonte submetido pelo usuário. Adicionalmente, complementando os
+  predicados \textit{builtins} do \treesitter{} -- os quais foram concebidos
+  para a busca de padrões correspondentes --, o algoritmo inclui predicados
+  desenvolvidos para executar procedimentos variados de formatação.
+  Consequentemente, ao utilizar esses predicados nos padrões da consulta, é
+  possível instruir a formatação de nós específicos da árvore de sintaxe.
+
+  A operação do algoritmo de formatação divide-se nas etapas de
+  \begin{inparaenum}
+    \item inicialização,
+    \item formatação, e
+    \item retorno,
+  \end{inparaenum}
+  como ilustrado na \cref{figure:algorithm-flowchart}.
+  Durante a etapa de inicialização -- onde estruturas são instanciadas --,
+  primeiramente,
+  \begin{inparaenum}
+    \item a árvore de sintaxe -- derivada do código-fonte submetido para
+          formatação -- é analisada. Em seguida,
+    \item um objeto%
+          \footnote
+            { Neste contexto, o termo ``objeto'' é utilizado como uma
+              alternativa para descrever uma estrutura em Rust.}
+          de consulta é gerado a partir do arquivo contendo as
+          instruções de formatação, escrito na linguagem de consulta do
+          \treesitter. Esse objeto
+          \begin{inparaenum}
+            \item contém informações sobre padrões, capturas, propriedades e
+                  predicados; e
+            \item é posteriormente utilizado para obter as correspondências
+                  dos seus padrões.
+          \end{inparaenum}
+
+          Além disso,
+    \item é instanciada uma estrutura editora que contém
+          \begin{inparaenum}
+            \item o texto do código-fonte em edição -- originado do código
+                  submetido pelo usuário --, juntamente com
+            \item um vetor de edições.
+          \end{inparaenum}
+          Essa estrutura é utilizada pelos predicados para realizar edições no
+          código. Na sequência,
+    \item é inicializado um objeto de configurações, que é futuramente
+          empregado pelos predicados para obter e definir configurações em
+          diferentes níveis de escopo, sejam eles globais -- i.e., abrangendo
+          toda a consulta -- ou locais -- i.e., restrito a um padrão.
+          Finalizando a etapa de inicialização,
+    \item a estrutura de correspondências é derivada do
+          \begin{inparaenum}
+            \item objeto de consulta, juntamente com
+            \item a árvore analisada e
+            \item o texto do código-fonte submetido.
+          \end{inparaenum}
+          Simplificadamente, essa estrutura pode ser descrita como um iterador
+          que fornece nós que correspondem a capturas presentes em padrões
+          específicos.
+  \end{inparaenum}
+
+  O processo efetivo de formatação de código-fonte inicia na segunda etapa.
+  Nessa fase, a dinâmica se baseia em
+  \begin{inparaenum}
+    \item \label{item:pattern-loop} um \textit{\gloss{loop}} que itera sobre
+          todos os padrões especificados no arquivo de instruções de
+          formatação. Em cada iteração, inicialmente,
+    \item é checado se o padrão é enraizado%
+          \footnote
+            { Na linguagem de consulta do \treesitter, embora a biblioteca não
+              forneça uma definição exata, um padrão enraizado é geralmente
+              caracterizado por especificar pelo menos um nó inicial para a
+              correspondência, e vice-versa.}
+          ou não, determinando assim se o escopo de atuação do padrão é local
+          ou global, respectivamente. Em seguida,
+    \item \label{item:nodes-loop} um segundo \textit{loop} percorre as coleções
+          de nós capturados para cada correspondência do padrão em questão. No
+          corpo dessa estrutura de repetição,
+    \item são aplicadas as configurações especificadas no padrão via o
+          predicado \textit{builtin} \textit{set!}. Além disso,
+    \item são aplicados os predicados gerais -- i.e., predicados
+          não-\textit{builtins} -- especificados no padrão em iteração.
+          Pressupõe-se que esses predicados estejam dentre os providos pelo
+          \witchcooking para instruir a formatação.
+
+          Encerando o \cref{item:nodes-loop} e, subsequentemente, o
+          \cref{item:pattern-loop}, bem como a etapa de formatação como um
+          todo,
+    \item as configurações locais -- i.e, configurações a nível de
+          correspondência -- são redefinidas para seus valores padrões. Logo em
+          seguida,
+    \item é interrompido o \cref{item:nodes-loop} caso o padrão em iteração não
+          seja enraizado.
+  \end{inparaenum}
+  Por fim, na etapa de retorno, o algoritmo conclui retornando o código-fonte
+  resultante do processo de formatação.
+
+  { \centering
+    \figurewrapper
+      {Fluxograma do Algoritmo de Formatação}
+      {algorithm-flowchart}
+      { \ABNTEXfontereduzida
+        \begin
+          {tikzpicture}
+          [node distance=1em,every node/.style={draw,inner sep=1em}]
+          \node (init) {
+            \begin
+              {tikzpicture}
+              [ every node/.style=
+                  {align=center,draw,inner sep=.5em,text width=16em}]
+              \node [draw=none] (label) {Inicialização};
+              \node (I) [below=of label] {Analisa a árvore de sintaxe};
+              \node (II) [below=of I] {Gera o objeto de consulta};
+              \node (III) [below=of II] {Instancia a estrutura editora};
+              \node (IV) [below=of III] {Inicializa o objeto de configurações};
+              \node (V) [below=of IV] {Deriva a estrutura de correspondências};
+              \draw [->] (I) -- (II);
+              \draw [->] (II) -- (III);
+              \draw [->] (III) -- (IV);
+              \draw [->] (IV) -- (V);
+            \end{tikzpicture}
+          };
+          \node (fmt) [below=of init] {
+            \begin
+              {tikzpicture}
+              [ every node/.style=
+                  {align=center,draw,inner sep=.5em,text width=14em}]
+              \node [draw=none,text width=16em] (label) {Formatação};
+              \path
+                let \p1=(label.south)
+                in coordinate (I-coord) at ($ (\x1-1em,\y1-1em) $);
+              \node (I) at (I-coord) {Itera sobre os padrões};
+              \node (II) [below=of I] {Define o escopo de atuação};
+              \node
+                (III)
+                [below=of II]
+                {Itera sobre as coleções\\de nós capturados};
+              \node (IV) [below=of III] {Aplica as configurações};
+              \node (V) [below=of IV] {Aplica os predicados gerais};
+              \node (VI) [below=of V] {Redefine as\\configurações locais};
+              \node
+                (VII)
+                [below=of VI]
+                {Interrompe o \cref{item:nodes-loop} se o padrão é enraizado};
+              \draw [->] (I) -- (II);
+              \draw [->] (II) -- (III);
+              \draw [->] (III) -- (IV);
+              \draw [->] (IV) -- (V);
+              \draw [->] (V) -- (VI);
+              \draw [->] (VI) -- (VII);
+              \draw [->] (VII.east) -- ++(1em,0) |- (III.east);
+              \draw [->] (VII.east) -- ++(2em,0) |- (I.east);
+            \end{tikzpicture}
+          };
+          \draw [->] (init) -- (fmt);
+          \node (ret) [below=of fmt] {
+            \begin
+              {tikzpicture}
+              [ every node/.style=
+                  {align=center,draw,inner sep=.5em,text width=16em}]
+              \node [draw=none] (label) {Retorno};
+              \node
+                (label)
+                [below=of label]
+                {Retorna o código-fonte formatado};
+            \end{tikzpicture}
+          };
+          \draw [->] (fmt) -- (ret);
+        \end{tikzpicture}}
+    \vspace{-2ex}
+    \captionof*{figure}{\ABNTEXfontereduzida Fonte autoral.}}
+
+  \clearpage
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%% Instructing the Formatting %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \section{Instruindo a Formatação}
+
+  %%%%%%%%%%%%%%%
+  %% Conclusion %
+  %%%%%%%%%%%%%%%
+
+  \chapter{Conclusão}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%
+  % Post Textual Elements %
+  %%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \postextual
+  \printbibliography
+  \printgloss{glossary}
+\end{document}
