@@ -80,7 +80,12 @@ impl<'a> Default for Predicates<'a> {
       }};
     }
 
-    insert!(indent_offset::IndentOffset, space::Space, spacer::Spacer,);
+    insert!(
+      indent::Indent,
+      indent_offset::IndentOffset,
+      space::Space,
+      spacer::Spacer,
+    );
 
     predicates
   }

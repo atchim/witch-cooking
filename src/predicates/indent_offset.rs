@@ -14,7 +14,7 @@ impl Predicate for IndentOffset {
     settings: &mut Settings<'a, 'tree>,
     _editor: &mut Editor,
   ) -> Result<(), Error> {
-    ensure!(args.len() != 2, Error::nargs("2", args.len()));
+    ensure!(args.len() == 2, Error::nargs("2", args.len()));
 
     let offset_node_id = match &args[1] {
       QueryPredicateArg::Capture(cap_ix) => {

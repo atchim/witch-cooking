@@ -27,7 +27,7 @@ fn prev(mut node: Node<'_>) -> Option<Node<'_>> {
 pub struct Indent;
 
 impl Predicate for Indent {
-  fn name(&self) -> &'static str { "indent" }
+  fn name(&self) -> &'static str { "indent!" }
 
   fn parse<'a, 'tree>(
     &self,
