@@ -788,6 +788,10 @@
 
   \chapter{O \witchcooking}
 
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%% Motivations and Purposes %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
   \section{Motivações e Propósitos}
 
   As motivações para o desenvolvimento do \witchcooking surgiram das
@@ -826,6 +830,10 @@
           de código-fonte.
   \end{inparaenum}
 
+  %%%%%%%%%%%
+  %%% Usage %
+  %%%%%%%%%%%
+
   \section{Usagem}
   \label{section:usage}
 
@@ -850,6 +858,10 @@
   alinhamento com sua natureza experimental, o \witchcooking proporciona o
   código-fonte formatado resultante como saída, sem modificar o conteúdo
   original, efetivamente estabelecendo uma formatação segura.
+
+  %%%%%%%%%%%%%%%
+  %%% Materials %
+  %%%%%%%%%%%%%%%
 
   \section{Materiais}
 
@@ -919,6 +931,10 @@
           e de sua linguagem de consulta.
   \end{inparaenum}
 
+  %%%%%%%%%%%%%
+  %%% Methods %
+  %%%%%%%%%%%%%
+
   \section{Métodos}
 
   Embora o \treesitter não tenha sido originalmente projetado para formatação
@@ -948,6 +964,10 @@
   Essa abordagem metodológica se caracteriza como predominantemente
   qualitativa, de natureza básica e orientada por objetivos exploratórios.
 
+  %%%%%%%%%%%%%%%%%%%%
+  %%% Making Queries %
+  %%%%%%%%%%%%%%%%%%%%
+
   \section{Fazendo Consultas}
 
   Como mencionado na \cref{section:usage}, o \witchcooking formata o
@@ -966,8 +986,8 @@
     \item definição de padrões de correspondência e
     \item aplicação de predicados.
   \end{inparaenum}
-  Os predicados disponíveis nativamente pelo \treesitter são agnósticos quanto
-  à linguagem de programação utilizada. Por outro lado, os padrões de
+  Os predicados disponibilizados nativamente pelo \treesitter são agnósticos
+  quanto à linguagem de programação utilizada. Por outro lado, os padrões de
   correspondência variam de acordo com a linguagem devido às suas construções
   gramaticais específicas, que são posteriormente traduzidas como nós na árvore
   de sintaxe analisada.
@@ -1060,7 +1080,7 @@
     \vspace{-3ex}
     \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
   \end{minipage}
-  \vfill
+
   \noindent
   \begin{minipage}[t]{.51\textwidth}
     \begin
@@ -1111,7 +1131,7 @@
       {listing}
       {\ABNTEXfontereduzida Fonte autoral. Nós anônimos foram omitidos.}
   \end{minipage}
-  \vfill
+
   \noindent
   \begin{minipage}[t]{.51\textwidth}
     \begin
@@ -1140,7 +1160,7 @@
     \vspace{-3ex}
     \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
   \end{minipage}
-  \vfill
+
   \noindent
   \begin{minipage}[t]{\textwidth}
     \begin
@@ -1158,6 +1178,10 @@
   \end{minipage}
 
   \clearpage
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%% The Formatting Algorithm %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   \section{O Algoritmo de Formatação}
 
@@ -1258,8 +1282,7 @@
   Por fim, na etapa de retorno, o algoritmo conclui retornando o código-fonte
   resultante do processo de formatação.
 
-  { \hfill
-    \centering
+  { \centering
     \figurewrapper
       {Fluxograma do Algoritmo de Formatação}
       {algorithm-flowchart}
@@ -1333,6 +1356,14 @@
         \end{tikzpicture}}
     \vspace{-2ex}
     \captionof*{figure}{\ABNTEXfontereduzida Fonte autoral.}}
+
+  \clearpage
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%% Instructing the Formatting %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \section{Instruindo a Formatação}
 
   %%%%%%%%%%%%%%%
   %% Conclusion %
