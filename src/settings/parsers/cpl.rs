@@ -139,23 +139,23 @@ mod tests {
   fn cpl_overwrite() {
     let res = cook_debugging_cpl(
       "fn foo() { bar(); }",
-      "
-        (#dbg! empty-cpl)
-        (#set! cpl 79)
-        (#dbg! with-cpl)
-        (function_item
-          (#set! cpl 0) ; It does not take effect.
-          (#dbg! not-intuitive)
-          (#set! cpl 90) ; It overwrites the last CPL setting.
-          (#dbg! as-expected))
-      ",
+      lines!(
+        "(#dbg! empty-cpl)",
+        "(#set! cpl 79)",
+        "(#dbg! with-cpl)",
+        "(function_item",
+        " (#set! cpl 0) ; It does not take effect.",
+        " (#dbg! non-intuitive)",
+        " (#set! cpl 90) ; It overwrites the last CPL setting.",
+        " (#dbg! as-expected))",
+      ),
       |_query, args, scope, _provider, settings, _editor| {
-        let n = match &args[0] {
+        let label = match &args[0] {
           QueryPredicateArg::String(s) => s.as_ref(),
           _ => unreachable!(),
         };
 
-        match n {
+        match label {
           "empty-cpl" => {
             assert_eq!(scope, Scope::Global);
             assert!(matches!(settings.cpl(), None));
@@ -166,7 +166,7 @@ mod tests {
               matches!(settings.cpl(), Some(Cpl::Sane(value)) if value == 79),
             );
           }
-          "not-intuitive" => {
+          "non-intuitive" => {
             assert_eq!(scope, Scope::Local);
             assert!(
               matches!(settings.cpl(), Some(Cpl::Sane(value)) if value == 90),

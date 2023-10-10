@@ -13,6 +13,13 @@ pub(crate) use {
   tree_sitter_rust::language as rs_lang,
 };
 
+macro_rules! lines {
+  () => { "\n" };
+  ($($line:literal),* $(,)?) => { concat!($($line, "\n"),*) };
+}
+
+pub(crate) use lines;
+
 pub fn cook_debugging<D, P, S>(
   src: &str,
   query_src: &str,
