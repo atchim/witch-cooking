@@ -1365,6 +1365,23 @@
 
   \section{Instruindo a Formatação}
 
+  Como já enfatizado em diversas ocasiões, as instruções de formatação do
+  código-fonte são especificadas no arquivo escrito na linguagem de consulta do
+  \treesitter, o qual é submetido ao \witchcooking via
+  \codesnippetinline{-q QUERY}. Para realizar um procedimento de efetivo de
+  formatação, é necessário
+  \begin{inparaenum}
+    \item definir um padrão de correspondência onde o procedimento atuará;
+    \item capturar nós que
+          \begin{inparaenum}
+            \item são alvos do procedimento (i.e., serão formatados) ou que
+            \item auxiliarão nas operações feitas;
+          \end{inparaenum}
+    \item opcionalmente, aplicar configurações via o predicado \textit{set!};
+          e, por fim,
+    \item aplicar os predicados estendidos pelo \witchcooking.
+  \end{inparaenum}
+
   %%%%%%%%%%%%%%%
   %% Conclusion %
   %%%%%%%%%%%%%%%
