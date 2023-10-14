@@ -15,7 +15,7 @@ pub fn is_ascii_whitespace(s: &str) -> bool {
 
 fn should_space(
   sep: &str,
-  thresh: &RangeInclusive<usize>,
+  range: &RangeInclusive<usize>,
   s: RopeSlice<'_>,
 ) -> bool {
   if sep.is_empty() {
@@ -40,7 +40,7 @@ fn should_space(
     }
   }
 
-  !thresh.contains(&count)
+  !range.contains(&count)
 }
 
 pub struct Space;
@@ -69,32 +69,32 @@ impl Predicate for Space {
       _ => " ",
     };
 
-    let thresh = {
-      let one_thresh = match args.peek() {
+    let noop = {
+      let lower = match args.peek() {
         Some(QueryPredicateArg::String(s)) => {
           args.next();
           arg_ix += 1;
           let thresh = s.parse::<usize>().map_err(|_| {
-            Error::arg(arg_ix, "usize threshold", format!("\"{s}\""))
+            Error::arg(arg_ix, "usize boundary", format!("\"{s}\""))
           })?;
           Some(thresh)
         }
         _ => None,
       };
 
-      let upper_thresh = match args.peek() {
+      let upper = match args.peek() {
         Some(QueryPredicateArg::String(s)) => {
           args.next();
           arg_ix += 1;
           let thresh = s.parse::<usize>().map_err(|_| {
-            Error::arg(arg_ix, "usize threshold", format!("\"{s}\""))
+            Error::arg(arg_ix, "usize boundary", format!("\"{s}\""))
           })?;
           Some(thresh)
         }
         _ => None,
       };
 
-      match (one_thresh, upper_thresh) {
+      match (lower, upper) {
         (None, None) => None,
         (None, Some(_)) => unreachable!(),
         (Some(x), None) => Some(1..=x),
@@ -105,14 +105,14 @@ impl Predicate for Space {
     if log::log_enabled!(log::Level::Warn)
       || log::log_enabled!(log::Level::Trace)
     {
-      let thresh: Cow<'_, _> = thresh.as_ref().map_or("".into(), |thresh| {
-        format!(" and threshold {thresh:?}").into()
-      });
+      let noop: Cow<'_, _> = noop
+        .as_ref()
+        .map_or("".into(), |noop| format!(" and no-op range {noop:?}").into());
       match is_ascii_whitespace(sep) {
         false => {
-          log::warn!("spacing with non-ASCII-whitespace \"{sep}\" {thresh}")
+          log::warn!("spacing with non-ASCII-whitespace \"{sep}\" {noop}")
         }
-        true => log::trace!("spacing with \"{sep}\"{thresh}"),
+        true => log::trace!("spacing with \"{sep}\"{noop}"),
       }
     }
 
@@ -168,7 +168,7 @@ impl Predicate for Space {
       };
 
       let s = editor.src().byte_slice(range.start_byte..range.end_byte);
-      if thresh.as_ref().map_or(true, |thresh| should_space(sep, thresh, s)) {
+      if noop.as_ref().map_or(true, |thresh| should_space(sep, thresh, s)) {
         editor.replace(&range, sep);
       }
     }
@@ -184,14 +184,14 @@ mod tests {
   #[test]
   fn should_space_() {
     macro_rules! should_space {
-      ($sep:literal, $thresh:expr, $s:literal $(,)?) => {
-        assert!(should_space($sep, &$thresh, RopeSlice::from($s)))
+      ($sep:literal, $range:expr, $s:literal $(,)?) => {
+        assert!(should_space($sep, &$range, RopeSlice::from($s)))
       };
     }
 
     macro_rules! should_not_space {
-      ($sep:literal, $thresh:expr, $s:literal $(,)?) => {
-        assert!(!should_space($sep, &$thresh, RopeSlice::from($s)))
+      ($sep:literal, $range:expr, $s:literal $(,)?) => {
+        assert!(!should_space($sep, &$range, RopeSlice::from($s)))
       };
     }
 
