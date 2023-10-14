@@ -436,7 +436,7 @@
   \chapter{Introdução}
 
   A flexibilidade presente na sintaxe de linguagens de programação permite que
-  diferentes arranjos dum mesmo código compartilhem um valor sintático
+  diferentes arranjos de um mesmo código compartilhem um valor sintático
   equivalente. Essa característica possibilita a formatação do código de acordo
   com aspectos desejados, como a legibilidade, que é fundamental no ciclo de
   vida do software
@@ -476,8 +476,8 @@
   Visando superar ou reduzir as limitações previamente mencionadas, quais são
   frequentemente presentes nas ferramentas convencionais de formatação, este
   trabalho tem como objetivo geral desenvolver um software prototípico para a
-  formatação de código. Nomeada de \witchcooking \cite{silva-2023-witch}, a
-  ferramenta desenvolvida tem como objetivos
+  formatação de código. A ferramenta desenvolvida, nomeada de \witchcooking
+  \cite{silva-2023-witch}, tem como objetivos
   \begin{inparaenum}
     \item abranger uma gama de linguagens de programação, além de
     \item permitir que o usuário defina seus estilos personalizados de
@@ -731,8 +731,9 @@
   facilidades presentes na criação de \textit{parsers}, exista uma variedade de
   linguagens de programação e formatos de arquivos -- variando de linguagens
   com sintaxes complexas, como C++ e Perl, a formatos de arquivos mais
-  específicos, como \textit{.vhs} e \textit{.rasi} --, os quais têm parsers
-  gerados pelo \treesitter e, consequentemente, são suportados pelo sistema.
+  específicos, como \codesnippetinline{.vhs} e \codesnippetinline{.rasi} --, os
+  quais têm parsers gerados pelo \treesitter e, consequentemente, são
+  suportados pelo sistema.
 
   Na análise de código, é comum realizar tarefas que envolvem a busca de
   padrões na árvore sintática. Para isso, o \treesitter oferece uma pequena
@@ -749,7 +750,7 @@
   \end{inparaenum}
   Adicionalmente, é permitido o uso de predicados -- funções arbitrárias
   geralmente utilizadas para filtrar nós ou realizar verificações mais
-  complexas durante a busca de padrões -- sejam eles \textit{\gloss{builtin}s}
+  complexas durante a busca de padrões --, sejam eles \textit{\gloss{builtin}s}
   ou estendidos por meio de uma API.
 
   Um exemplo da relevância e utilidade da linguagem de consulta é o plugin
@@ -1004,8 +1005,8 @@
   Por exemplo, considere os \cref{snippet:add-two-c,snippet:add-two-rust},
   escritos nas linguagens de programação C e Rust, respectivamente. Embora
   ambos desempenhem papéis idênticos -- i.e., definem uma função que retorna a
-  soma do parâmetro \textit{x} com 2 --, suas árvores de sintaxe analisadas --
-  apresentadas respectivamente nos
+  soma do parâmetro \codesnippetinline{x} com 2 --, suas árvores de sintaxe
+  analisadas -- apresentadas respectivamente nos
   \cref{snippet:add-two-c-tree,snippet:add-two-rust-tree} -- exibem diferenças
   significativas. Portanto, para buscar a correspondência do trecho em que o
   parâmetro \textit{x} é definido em ambos os códigos (i.e.,
@@ -1034,22 +1035,23 @@
   \codesnippetinline[c]{int add(int x, int y);}, obtêm-se duas
   correspondências, como destacadas no seguinte trecho
   \codesnippetinline[c]{int add(|\hi{int x}, \hi{int y}|);}[escapeinside=||].
-  Logo, para corresponder somente ao parâmetro \textit{x}, deve-se utilizar uma
-  consulta mais elaborada, conforme exemplificada no
+  Logo, para corresponder somente ao parâmetro \codesnippetinline{x}, deve-se
+  utilizar uma consulta mais elaborada, conforme exemplificada no
   \cref{snippet:x-param-query}. Nesse trecho, é possível notar algumas
   diferenças em relação à sua versão original, que foi apresentada no
   \cref{snippet:param-query-c}.
   \begin{inparaenum}
-    \item O nó \textit{identifier} é capturado com o nome \textit{id}, como
-          destacado no seguinte trecho de código
+    \item O nó \codesnippetinline{(identifier)} é capturado com o nome
+          \codesnippetinline{id}, como destacado no seguinte trecho de código
           \codesnippetinline
             [scheme]
             {declarator: |\hi{(identifier) @id}|}
             [escapeinside=||]%
           . Além disso,
-    \item o predicado \textit{eq?} é aplicado para garantir que o conteúdo da
-          captura \textit{id} corresponda à string ``x'' o que, por
-          consequência, impede a correspondência do parâmetro \textit{y}.
+    \item o predicado \codesnippetinline{eq?} é aplicado para garantir que o
+          conteúdo da captura \codesnippetinline{id} corresponda à string ``x''
+          o que, por consequência, impede a correspondência do parâmetro
+          \codesnippetinline{y}.
   \end{inparaenum}
 
   Por fim, é importante ressaltar que a linguagem de consulta do \treesitter
@@ -1269,7 +1271,7 @@
           de nós capturados para cada correspondência do padrão em questão. No
           corpo dessa estrutura de repetição,
     \item são aplicadas as configurações especificadas no padrão via o
-          predicado \textit{builtin} \textit{set!}. Além disso,
+          predicado \textit{builtin} \codesnippetinline{set!}. Além disso,
     \item são aplicados os predicados gerais -- i.e., predicados
           não-\textit{builtins} -- especificados no padrão em iteração.
           Pressupõe-se que esses predicados estejam dentre os providos pelo
@@ -1373,19 +1375,64 @@
   Como já enfatizado em diversas ocasiões, as instruções de formatação do
   código-fonte são especificadas no arquivo escrito na linguagem de consulta do
   \treesitter, o qual é submetido ao \witchcooking via
-  \codesnippetinline{-q QUERY}. Para realizar um procedimento de efetivo de
-  formatação, é necessário
+  \codesnippetinline{-q QUERY}. Para realizar um procedimento de formatação, é
+  necessário
   \begin{inparaenum}
-    \item definir um padrão de correspondência onde o procedimento atuará;
+    \item definir um padrão de correspondência que delimita o escopo de
+          operação;
     \item capturar nós que
           \begin{inparaenum}
-            \item são alvos do procedimento (i.e., serão formatados) ou que
-            \item auxiliarão nas operações feitas;
+            \item sejam alvos do procedimento (i.e., serão formatados) ou
+            \item auxiliarão nas operações;
           \end{inparaenum}
-    \item opcionalmente, aplicar configurações via o predicado \textit{set!};
-          e, por fim,
+    \item opcionalmente, aplicar configurações via o predicado
+          \codesnippetinline{set!}; e, por fim,
     \item aplicar os predicados estendidos pelo \witchcooking.
   \end{inparaenum}
+
+  Uma das operações fundamentais da formatação consiste na inserção de
+  espaçamento entre \textit{\gloss{token}s}. Nesse contexto, o \witchcooking
+  disponibiliza o predicado \codesnippetinline{space!}. Esse predicado funciona da
+  seguinte forma \codesnippetinline{(#space! [sep [lower [upper]]] a b)}, onde
+  \begin{inparaenum}
+    \item \codesnippetinline{a} e \codesnippetinline{b} são duas capturas que
+          se deseja separar;
+    \item \codesnippetinline{sep} é uma string opcional que determina a
+          sequência de caracteres utilizada para separar os nós capturados,
+          sendo o caractere de espaço o valor padrão; e
+    \item \codesnippetinline{lower} e \codesnippetinline{upper} são inteiros
+          não negativos que definem o intervalo inclusivo para a não-operação
+          do espaçamento, sendo que
+          \begin{inparaenum}
+            \item se \codesnippetinline{upper} não for especificado, o
+                  intervalo resultante será
+                  $\left[1, \codesnippetinline{lower}\right]$,
+            \item senão, o intervalo será
+                  $ \left
+                      [ \codesnippetinline{lower},
+                        \codesnippetinline{upper}\right]$. Além disso,
+            \item quando o intervalo de não-operação é definido, a separação
+                  dos nós é evitada se a sequência de caracteres atual entre
+                  eles contiver uma quantidade de \codesnippetinline{sep} que
+                  esteja dentro no intervalo.
+          \end{inparaenum}
+  \end{inparaenum}
+
+  \noindent
+  \begin{minipage}[t]{\textwidth}
+    \begin
+      {codesnippet}%
+      [scheme]%
+      {Consulta Para Separar Itens de uma Lista em Rust}%
+      {item-sep}
+      (array_expression
+        "," @comma
+        . (_) @item
+        (#space! @comma @item))
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
+\end{minipage}
 
   %%%%%%%%%%%%%%%
   %% Conclusion %
