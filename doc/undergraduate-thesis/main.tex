@@ -235,7 +235,7 @@
     coltitle=black,
     fonttitle=\ABNTEXfontereduzida,
     frame hidden,
-    label={snippet:#4},
+    label={snippet:#2:#4},
     label type=listing,
     list entry={Trecho de Código \thetcbcounter{} -- #3},
     listing engine=minted,
@@ -1002,14 +1002,14 @@
   gramaticais específicas, que são posteriormente traduzidas como nós na árvore
   de sintaxe analisada.
 
-  Por exemplo, considere os \cref{snippet:add-two-c,snippet:add-two-rust},
+  Por exemplo, considere os \cref{snippet:c:add-two,snippet:rust:add-two},
   escritos nas linguagens de programação C e Rust, respectivamente. Embora
   ambos desempenhem papéis idênticos -- i.e., definem uma função que retorna a
   soma do parâmetro \codesnippetinline{x} com 2 --, suas árvores de sintaxe
   analisadas -- apresentadas respectivamente nos
-  \cref{snippet:add-two-c-tree,snippet:add-two-rust-tree} -- exibem diferenças
-  significativas. Portanto, para buscar a correspondência do trecho em que o
-  parâmetro \textit{x} é definido em ambos os códigos (i.e.,
+  \cref{snippet:text:tree:c:add-two,snippet:text:tree:rust:add-two} -- exibem
+  diferenças significativas. Portanto, para buscar a correspondência do trecho
+  em que o parâmetro \textit{x} é definido em ambos os códigos (i.e.,
   \codesnippetinline
     [c]
     $int add_two(|\colorbox{codehighlight}{int x}|) {$
@@ -1020,7 +1020,7 @@
     $fn add_two(|\colorbox{codehighlight}{x: i32}|) -> i32 {$
     [escapeinside=||]%
   ), são necessárias consultas distintas, apresentadas pelos
-  \cref{snippet:param-query-c,snippet:param-query-rust}.
+  \cref{snippet:scheme:c:param-query,snippet:scheme:rust:param-query}.
 
   Dado que os padrões correspondem a qualquer uma de suas ocorrências, é
   importante garantir maior especificidade em sua definição. Isso pode ser
@@ -1031,15 +1031,15 @@
     \item aplicação de predicados.
   \end{inparaenum}
   Para ilustrar, ao aplicar a consulta apresentada no
-  \cref{snippet:param-query-c} ao seguinte código em linha
+  \cref{snippet:scheme:c:param-query} ao seguinte código em linha
   \codesnippetinline[c]{int add(int x, int y);}, obtêm-se duas
   correspondências, como destacadas no seguinte trecho
   \codesnippetinline[c]{int add(|\hi{int x}, \hi{int y}|);}[escapeinside=||].
   Logo, para corresponder somente ao parâmetro \codesnippetinline{x}, deve-se
   utilizar uma consulta mais elaborada, conforme exemplificada no
-  \cref{snippet:x-param-query}. Nesse trecho, é possível notar algumas
+  \cref{snippet:scheme:c:x-param-query}. Nesse trecho, é possível notar algumas
   diferenças em relação à sua versão original, que foi apresentada no
-  \cref{snippet:param-query-c}.
+  \cref{snippet:scheme:c:param-query}.
   \begin{inparaenum}
     \item O nó \codesnippetinline{(identifier)} é capturado com o nome
           \codesnippetinline{id}, como destacado no seguinte trecho de código
@@ -1067,7 +1067,7 @@
       {codesnippet}%
       [c]%
       {Função \textit{add\_two} em C}%
-      {add-two-c}
+      {add-two}
       int add_two(int x) {
         return x + 2;
       }
@@ -1081,7 +1081,7 @@
       {codesnippet}%
       [rust]%
       {Função \textit{add\_two} em Rust}%
-      {add-two-rust}
+      {add-two}
       fn add_two(x: i32) -> i32 {
         x + 2
       }
@@ -1095,7 +1095,7 @@
     \begin
       {codesnippet}*%
       {Árvore Sintática da Função \textit{add\_two} em C}%
-      {add-two-c-tree}%
+      {tree:c:add-two}%
       [fontsize=\ABNTEXfontereduzida]
       function_definition
         type: primitive_type
@@ -1121,7 +1121,7 @@
     \begin
       {codesnippet}*%
       {Árvore Sintática da Função \textit{add\_two} em Rust}%
-      {add-two-rust-tree}%
+      {tree:rust:add-two}%
       [fontsize=\ABNTEXfontereduzida]
       function_item
         name: identifier
@@ -1147,7 +1147,7 @@
       {codesnippet}*%
       [scheme]%
       {Consulta Correspondendo a um Parâmetro de Função em C}%
-      {param-query-c}
+      {c:param-query}
       (parameter_declaration
         type: (primitive_type)
         declarator: (identifier))
@@ -1161,7 +1161,7 @@
       {codesnippet}*%
       [scheme]%
       {Consulta Correspondendo a um Parâmetro de Função em Rust}%
-      {param-query-rust}
+      {rust:param-query}
       (parameter
         pattern: (identifier)
         type: (primitive_type))
@@ -1176,7 +1176,7 @@
       {codesnippet}*%
       [scheme]%
       {Consulta Correspondendo ao Parâmetro \textit{x} de uma Função em C}%
-      {x-param-query}
+      {c:x-param-query}
       (parameter_declaration
         type: (primitive_type)
         declarator: (identifier) @id
@@ -1390,10 +1390,11 @@
     \item aplicar os predicados estendidos pelo \witchcooking.
   \end{inparaenum}
 
-  Uma das operações fundamentais da formatação consiste na inserção de
+  Uma das operações fundamentais de formatação consiste na inserção de
   espaçamento entre \textit{\gloss{token}s}. Nesse contexto, o \witchcooking
-  disponibiliza o predicado \codesnippetinline{space!}. Esse predicado funciona da
-  seguinte forma \codesnippetinline{(#space! [sep [lower [upper]]] a b)}, onde
+  disponibiliza o predicado \codesnippetinline{space!}. Esse predicado funciona
+  da seguinte forma \codesnippetinline{(#space! [sep [lower [upper]]] a b)},
+  onde
   \begin{inparaenum}
     \item \codesnippetinline{a} e \codesnippetinline{b} são duas capturas que
           se deseja separar;
@@ -1401,8 +1402,8 @@
           sequência de caracteres utilizada para separar os nós capturados,
           sendo o caractere de espaço o valor padrão; e
     \item \codesnippetinline{lower} e \codesnippetinline{upper} são inteiros
-          não negativos que definem o intervalo inclusivo para a não-operação
-          do espaçamento, sendo que
+          não negativos opcionais que definem o intervalo inclusivo para a
+          não-operação do espaçamento, sendo que
           \begin{inparaenum}
             \item se \codesnippetinline{upper} não for especificado, o
                   intervalo resultante será
@@ -1418,13 +1419,25 @@
           \end{inparaenum}
   \end{inparaenum}
 
+  Para ilustrar o funcionamento do predicado \codesnippetinline{space!},
+  considere o seguinte vetor na linguagem de programação Rust, apresentado no
+  seguinte trecho de código em linha \codesnippetinline[rust]{[0,1,   2,  3]}.
+  Para formatar esse vetor, de modo que cada número após uma vírgula seja
+  separado por um espaço, é possível usar a consulta exibida no
+  \cref{snippet:scheme:rust:vec-item-sep}. Ao formatar o vetor com essa consulta, é
+  obtido \codesnippetinline[rust]{[0, 1, 2, 3]}, conforme esperado. No padrão
+  presente na consulta usada para formatar o vetor, o predicado
+  \codesnippetinline{space!} é chamado com a configuração de argumentos mais
+  simples, que consiste em especificar apenas as capturas que devem ser
+  separadas.
+
   \noindent
   \begin{minipage}[t]{\textwidth}
     \begin
       {codesnippet}%
       [scheme]%
-      {Consulta Para Separar Itens de uma Lista em Rust}%
-      {item-sep}
+      {Consulta Para Separar Elementos de um Vetor em Rust}%
+      {rust:vec-item-sep}
       (array_expression
         "," @comma
         . (_) @item
@@ -1432,7 +1445,74 @@
     \end{codesnippet}
     \vspace{-3ex}
     \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
-\end{minipage}
+  \end{minipage}
+
+  Outro exemplo típico de inserção de espaçamento usado na formatação de
+  código-fonte é o espaçamento entre elementos pertencentes ao corpo de uma
+  função. Nesse contexto, é comum seprar esses elementos com uma quebra de
+  linha. Contudo, em certos casos, são utilizadas duas quebras de linha para
+  destacar diferentes blocos de código, a fim de favorecer a compreensão do
+  leitor. Para ilustrar, considere o \cref{snippet:rust:let-decl-cluster}, que
+  contém dois blocos dentro de uma função. No primeiro bloco de código, é
+  possível notar o arranjo da linha 3, que contém duas
+  \textit{let declarations}. Para formatar o corpo da função, desaglomerando as
+  \textit{let declarations} e mantendo o espaçamento que separa os blocos, é
+  possível utilizar a consulta mostrada no
+  \cref{snippet:scheme:rust:fn-body-items-sep}.
+
+  \noindent
+  \begin{minipage}[t]{\textwidth}
+    \begin
+      {codesnippet}%
+      [rust]%
+      {Função Com Bloco Aglomerado em Rust}%
+      {let-decl-cluster}
+      fn x_plus_y() -> u32 {
+        // Initialization Block
+        let x = 5; let y = 11;
+
+        // Return Block
+        x + y
+      }
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
+  \end{minipage}
+
+  \noindent
+  \begin{minipage}[t]{\textwidth}
+    \begin
+      {codesnippet}%
+      [scheme]%
+      {Consulta Para Separar Elementos do Corpo de uma Função em Rust}%
+      {rust:fn-body-items-sep}
+      (function_item
+        body: (block . "{" (_) @item . (_) @next "}" .)
+        (#space! "\n" 2 @item @next))
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
+  \end{minipage}
+
+  \noindent
+  \begin{minipage}[t]{\textwidth}
+    \begin
+      {codesnippet}%
+      [rust]%
+      {Função Com Má Indentação em Rust}%
+      {bad-indent}
+      fn x_plus_y() -> u32 {
+        // Initialization Block
+        let x = 5;
+      let y = 11;
+
+        // Return Block
+        x + y
+      }
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
+  \end{minipage}
 
   %%%%%%%%%%%%%%%
   %% Conclusion %
