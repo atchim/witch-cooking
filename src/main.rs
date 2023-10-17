@@ -233,7 +233,7 @@ fn main() -> ExitCode {
       ExitCode::FAILURE
     }
     Ok(src) => {
-      println!("{src}");
+      print!("{src}");
       ExitCode::SUCCESS
     }
   }
