@@ -1204,6 +1204,7 @@
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   \section{O Algoritmo de Formatação}
+  \label{section:fmt-algorithm}
 
   O \witchcooking permite a formatação de código-fonte via seu algoritmo
   fundamentado no \treesitter e sua linguagem de consulta. Esse algoritmo
@@ -1536,6 +1537,13 @@
   possível combinar os predicados \codesnippetinline{set!} e
   \codesnippetinline{indent!}, como demonstrado no
   \cref{snippet:scheme:rust:fn-body-items-sep-with-indent}.
+
+  Na primeira linha deste trecho, observa-se um padrão composto exclusivamente
+  pelo predicado \codesnippetinline{set!}, no qual a propriedade
+  \codesnippetinline{indent-style} é configurada para dois caracteres de
+  espaço. Conforme discutido na \cref{section:fmt-algorithm}, a ausência de um
+  nó como base para correspondência classifica esse padrão como enraizado,
+  implicando que a propriedade especificada terá um efeito no escopo global.
 
   \noindent
   \begin{minipage}[t]{\textwidth}
