@@ -37,6 +37,7 @@
 
 \usepackage{amsmath}
 \usepackage[backend=biber,indent,style=abnt]{biblatex}
+\usepackage{calc}
 \usepackage{caption}
 \usepackage[brazilian]{cleveref}
 \usepackage{color}
@@ -353,6 +354,18 @@
 \begin{document}
   \selectlanguage{brazil}
   \frenchspacing
+
+  %%%%%%%%%%%
+  % Lengths %
+  %%%%%%%%%%%
+
+  \newlength{\halfpart}
+  \newlength{\biggerpart}
+  \newlength{\smallerpart}
+
+  \setlength{\biggerpart}{.5\textwidth}
+  \setlength{\halfpart}{.5\textwidth - .5em}
+  \setlength{\smallerpart}{.5\textwidth - 1em}
 
   %%%%%%%%%%%%%%
   % Pretextual %
@@ -1062,7 +1075,7 @@
   formatação do código-fonte.
 
   \noindent
-  \begin{minipage}[t]{.49\textwidth}
+  \begin{minipage}[t]{\halfpart}
     \begin
       {codesnippet}%
       [c]%
@@ -1076,7 +1089,7 @@
     \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
   \end{minipage}
   \hfill
-  \begin{minipage}[t]{.49\textwidth}
+  \begin{minipage}[t]{\halfpart}
     \begin
       {codesnippet}%
       [rust]%
@@ -1091,7 +1104,7 @@
   \end{minipage}
 
   \noindent
-  \begin{minipage}[t]{.51\textwidth}
+  \begin{minipage}[t]{\biggerpart}
     \begin
       {codesnippet}*%
       {Árvore Sintática da Função \textit{add\_two} em C}%
@@ -1117,7 +1130,7 @@
       {\ABNTEXfontereduzida Fonte autoral. Nós anônimos foram omitidos.}
   \end{minipage}
   \hfill
-  \begin{minipage}[t]{.47\textwidth}
+  \begin{minipage}[t]{\smallerpart}
     \begin
       {codesnippet}*%
       {Árvore Sintática da Função \textit{add\_two} em Rust}%
@@ -1142,7 +1155,7 @@
   \end{minipage}
 
   \noindent
-  \begin{minipage}[t]{.51\textwidth}
+  \begin{minipage}[t]{\biggerpart}
     \begin
       {codesnippet}*%
       [scheme]%
@@ -1156,7 +1169,7 @@
     \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
   \end{minipage}
   \hfill
-  \begin{minipage}[t]{.47\textwidth}
+  \begin{minipage}[t]{\smallerpart}
     \begin
       {codesnippet}*%
       [scheme]%
@@ -1405,17 +1418,21 @@
           não negativos opcionais que definem o intervalo inclusivo para a
           não-operação do espaçamento, sendo que
           \begin{inparaenum}
-            \item se \codesnippetinline{upper} não for especificado, o
-                  intervalo resultante será
-                  $\left[1, \codesnippetinline{lower}\right]$,
-            \item senão, o intervalo será
+            \item se ambos forem especificados, o intervalo será
                   $ \left
                       [ \codesnippetinline{lower},
-                        \codesnippetinline{upper}\right]$. Além disso,
+                        \codesnippetinline{upper}\right]$%
+                  , caso contrário,
+            \item se somente \codesnippetinline{lower} for especificado, o
+                  intervalo resultante será
+                  $\left[1, \codesnippetinline{lower}\right]$%
+                  , senão,
+            \item caso ambos forem ausentes, o intervalo de não-operação é
+                  nulo. Além disso,
             \item quando o intervalo de não-operação é definido, a separação
                   dos nós é evitada se a sequência de caracteres atual entre
                   eles contiver uma quantidade de \codesnippetinline{sep} que
-                  esteja dentro no intervalo.
+                  esteja dentro do intervalo especificado.
           \end{inparaenum}
   \end{inparaenum}
 
@@ -1424,7 +1441,7 @@
   seguinte trecho de código em linha \codesnippetinline[rust]{[0,1,   2,  3]}.
   Para formatar esse vetor, de modo que cada número após uma vírgula seja
   separado por um espaço, é possível usar a consulta exibida no
-  \cref{snippet:scheme:rust:vec-item-sep}. Ao formatar o vetor com essa consulta, é
+  \cref{snippet:scheme:rust:vec-items-sep}. Ao formatar o vetor com essa consulta, é
   obtido \codesnippetinline[rust]{[0, 1, 2, 3]}, conforme esperado. No padrão
   presente na consulta usada para formatar o vetor, o predicado
   \codesnippetinline{space!} é chamado com a configuração de argumentos mais
@@ -1437,7 +1454,7 @@
       {codesnippet}%
       [scheme]%
       {Consulta Para Separar Elementos de um Vetor em Rust}%
-      {rust:vec-item-sep}
+      {rust:vec-items-sep}
       (array_expression
         "," @comma
         . (_) @item
@@ -1468,7 +1485,7 @@
       {Função Com Bloco Aglomerado em Rust}%
       {let-decl-cluster}
       fn x_plus_y() -> u32 {
-        // Initialization Block
+        // Declaration Block
         let x = 5; let y = 11;
 
         // Return Block
@@ -1487,8 +1504,75 @@
       {Consulta Para Separar Elementos do Corpo de uma Função em Rust}%
       {rust:fn-body-items-sep}
       (function_item
-        body: (block . "{" (_) @item . (_) @next "}" .)
+        body: (block (_) @item . (_) @next)
         (#space! "\n" 2 @item @next))
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
+  \end{minipage}
+
+  Essa consulta apresenta um padrão que aplica o predicado
+  \codesnippetinline{space!} com uma configuração de argumentos mais elaborada.
+  Primeiramente, em adição ao \cref{snippet:scheme:rust:vec-items-sep},
+  \begin{inparaenum}
+    \item é especificada a string \codesnippetinline{sep} com o valor
+          \codesnippetinline{"\n"}, indicando que os itens do corpo da função
+          serão separados por uma quebra de linha. Além disso,
+    \item é especificado o limite inferior \codesnippetinline{lower} como 2,
+          resultando num intervalo de não-aplicação de $\left[1, 2\right]$.
+          Em termos mais simples, isso implica que itens já separados por uma
+          ou duas quebras de linha não sofrerão alterações, o que, por sua vez,
+          mantém a formatação dos blocos intacta.
+  \end{inparaenum}
+
+  Desta forma, ao aplicar a consulta do
+  \cref{snippet:scheme:rust:fn-body-items-sep} ao
+  \cref{snippet:rust:let-decl-cluster}, obtém-se o código-fonte formatado,
+  conforme ilustrado no \cref{snippet:rust:bad-indent}. Embora o uso de quebras
+  de linha para separar elementos do corpo da função esteja correto,
+  observa-se um erro de indentação na linha 4. Isso ocorre porque o predicado
+  \codesnippetinline{space!} lida com a separação dos itens de sintaxe, mas não
+  controla a indentação deles. No entanto, para lidar com a indentação, é
+  possível combinar os predicados \codesnippetinline{set!} e
+  \codesnippetinline{indent!}, como demonstrado no
+  \cref{snippet:scheme:rust:fn-body-items-sep-with-indent}.
+
+  \noindent
+  \begin{minipage}[t]{\textwidth}
+    \begin
+      {codesnippet}%
+      [rust]%
+      {Função Com Má Indentação em Rust}%
+      {bad-indent}
+      fn x_plus_y() -> u32 {
+        // Declaration Block
+        let x = 5;
+      let y = 11;
+
+        // Return Block
+        x + y
+      }
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
+  \end{minipage}
+
+  \noindent
+  \begin{minipage}[t]{\textwidth}
+    \begin
+      {codesnippet}%
+      [scheme]%
+      { Consulta Para Separar Elementos do Corpo de uma Função Com Indentação
+        em Rust}%
+      {rust:fn-body-items-sep-with-indent}
+      (#set! indent-style "  ")
+
+      (function_item
+        body: (block . "{" (_) @item . (_) @next "}" .)
+        (#space! "\n" 2 @item @next)
+        (#set! @item indent-rule "+1")
+        (#set! @next indent-rule "+1")
+        (#indent! @item @next))
     \end{codesnippet}
     \vspace{-3ex}
     \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
@@ -1499,12 +1583,12 @@
     \begin
       {codesnippet}%
       [rust]%
-      {Função Com Má Indentação em Rust}%
-      {bad-indent}
+      {Função Com Indentação Apropriada em Rust}%
+      {proper-indent}
       fn x_plus_y() -> u32 {
-        // Initialization Block
+        // Declaration Block
         let x = 5;
-      let y = 11;
+        let y = 11;
 
         // Return Block
         x + y
