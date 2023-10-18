@@ -1442,9 +1442,9 @@
   seguinte trecho de código em linha \codesnippetinline[rust]{[0,1,   2,  3]}.
   Para formatar esse vetor, de modo que cada número após uma vírgula seja
   separado por um espaço, é possível usar a consulta exibida no
-  \cref{snippet:scheme:rust:vec-items-sep}. Ao formatar o vetor com essa consulta, é
-  obtido \codesnippetinline[rust]{[0, 1, 2, 3]}, conforme esperado. No padrão
-  presente na consulta usada para formatar o vetor, o predicado
+  \cref{snippet:scheme:rust:vec-items-sep}. Ao formatar o vetor com essa
+  consulta, é obtido \codesnippetinline[rust]{[0, 1, 2, 3]}, conforme esperado.
+  No padrão presente na consulta usada para formatar o vetor, o predicado
   \codesnippetinline{space!} é chamado com a configuração de argumentos mais
   simples, que consiste em especificar apenas as capturas que devem ser
   separadas.
@@ -1544,6 +1544,39 @@
   espaço. Conforme discutido na \cref{section:fmt-algorithm}, a ausência de um
   nó como base para correspondência classifica esse padrão como enraizado,
   implicando que a propriedade especificada terá um efeito no escopo global.
+  Simplificadamente, o trecho
+  \codesnippetinline[scheme]{(#set! indent-style "  ")} estabelece que, a menos
+  que a configuração \codesnippetinline{indent-style} seja sobreposta
+  localmente, o estilo de indentação será caracterizado como dois espaços.
+
+  Ainda na consulta ilustrada pelo
+  \cref{snippet:scheme:rust:fn-body-items-sep-with-indent}, no padrão enraizado
+  pelo nó \codesnippetinline{function_item}, começado na linha 3, podem ser
+  observadas duas diferenças em relação à versão anterior, exibida no
+  \cref{snippet:scheme:rust:fn-body-items-sep}. Primeiramente,
+  \begin{inparaenum}
+    \item na linha 6, a propriedade \codesnippetinline{indent-rule} é
+          configurada com o valor \codesnippetinline{"+1"} para a captura
+          \codesnippetinline{@next}. Essa configuração define que, ao indentar
+          os nós capturados, deverá ser utilizado o estilo de indentação
+          vigente em adição ao deslocamento dos nós pais. Além disso,
+    \item na próxima linha, o predicado \codesnippetinline{indent!} é aplicado,
+          tomando como argumento a captura \codesnippetinline{@next}. Esse
+          predicado tem como função aplicar a indentação previamente
+          configurada a cada nó capturado pelo(s) argumento(s) passado(s).
+  \end{inparaenum}
+
+  Finalmente, ao aplicar uma consulta mais sofisticada -- exemplificada no
+  \cref{snippet:scheme:rust:fn-body-items-sep-with-indent} -- ao
+  \cref{snippet:rust:let-decl-cluster}, obtém-se o código-fonte formatado
+  conforme ilustrado no \cref{snippet:rust:proper-indent}. Nesse resultado, é
+  evidente que
+  \begin{inparaenum}
+    \item os blocos de código foram preservados, bem como
+    \item as \textit{let declarations} foram desaglomeradas em suas respectivas
+          linhas -- e com a devida indentação --,
+  \end{inparaenum}
+  atendendo às expectativas de formatação.
 
   \noindent
   \begin{minipage}[t]{\textwidth}
@@ -1576,11 +1609,10 @@
       (#set! indent-style "  ")
 
       (function_item
-        body: (block . "{" (_) @item . (_) @next "}" .)
+        body: (block (_) @item . (_) @next)
         (#space! "\n" 2 @item @next)
-        (#set! @item indent-rule "+1")
         (#set! @next indent-rule "+1")
-        (#indent! @item @next))
+        (#indent! @next))
     \end{codesnippet}
     \vspace{-3ex}
     \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
