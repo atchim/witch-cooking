@@ -359,13 +359,30 @@
   % Lengths %
   %%%%%%%%%%%
 
-  \newlength{\halfpart}
-  \newlength{\biggerpart}
-  \newlength{\smallerpart}
+  %%%%%%%%%%%%%%
+  %% Half Part %
+  %%%%%%%%%%%%%%
 
-  \setlength{\biggerpart}{.5\textwidth}
+  \newlength{\halfpart}
   \setlength{\halfpart}{.5\textwidth - .5em}
-  \setlength{\smallerpart}{.5\textwidth - 1em}
+
+  %%%%%%%%%%%%%%%%%%%%%
+  %% Text Width Parts %
+  %%%%%%%%%%%%%%%%%%%%%
+
+  \newlength{\halftextwidthpart}
+  \setlength{\halftextwidthpart}{.5\textwidth}
+  \newlength{\halftextwidthcounterpart}
+  \setlength{\halftextwidthcounterpart}{.5\textwidth - 1em}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %% Text Width Plus Two em Parts %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \newlength{\halftextwidthplustwoempart}
+  \setlength{\halftextwidthplustwoempart}{.5\textwidth + 2em}
+  \newlength{\halftextwidthplustwoemcounterpart}
+  \setlength{\halftextwidthplustwoemcounterpart}{.5\textwidth - 3em}
 
   %%%%%%%%%%%%%%
   % Pretextual %
@@ -1104,7 +1121,7 @@
   \end{minipage}
 
   \noindent
-  \begin{minipage}[t]{\biggerpart}
+  \begin{minipage}[t]{\halftextwidthpart}
     \begin
       {codesnippet}*%
       {Árvore Sintática da Função \textit{add\_two} em C}%
@@ -1130,7 +1147,7 @@
       {\ABNTEXfontereduzida Fonte autoral. Nós anônimos foram omitidos.}
   \end{minipage}
   \hfill
-  \begin{minipage}[t]{\smallerpart}
+  \begin{minipage}[t]{\halftextwidthcounterpart}
     \begin
       {codesnippet}*%
       {Árvore Sintática da Função \textit{add\_two} em Rust}%
@@ -1155,7 +1172,7 @@
   \end{minipage}
 
   \noindent
-  \begin{minipage}[t]{\biggerpart}
+  \begin{minipage}[t]{\halftextwidthpart}
     \begin
       {codesnippet}*%
       [scheme]%
@@ -1169,7 +1186,7 @@
     \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
   \end{minipage}
   \hfill
-  \begin{minipage}[t]{\smallerpart}
+  \begin{minipage}[t]{\halftextwidthcounterpart}
     \begin
       {codesnippet}*%
       [scheme]%
@@ -1479,12 +1496,13 @@
   \cref{snippet:scheme:rust:fn-body-items-sep}.
 
   \noindent
-  \begin{minipage}[t]{\textwidth}
+  \begin{minipage}[t]{\halftextwidthplustwoemcounterpart}
     \begin
       {codesnippet}%
       [rust]%
       {Função Com Bloco Aglomerado em Rust}%
-      {let-decl-cluster}
+      {let-decl-cluster}%
+      [fontsize=\ABNTEXfontereduzida]
       fn x_plus_y() -> u32 {
         // Declaration Block
         let x = 5; let y = 11;
@@ -1496,14 +1514,15 @@
     \vspace{-3ex}
     \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
   \end{minipage}
-
+  \hfill
   \noindent
-  \begin{minipage}[t]{\textwidth}
+  \begin{minipage}[t]{\halftextwidthplustwoempart}
     \begin
       {codesnippet}%
       [scheme]%
       {Consulta Para Separar Elementos do Corpo de uma Função em Rust}%
-      {rust:fn-body-items-sep}
+      {rust:fn-body-items-sep}%
+      [fontsize=\ABNTEXfontereduzida]
       (function_item
         body: (block (_) @item . (_) @next)
         (#space! "\n" 2 @item @next))
@@ -1537,6 +1556,48 @@
   possível combinar os predicados \codesnippetinline{set!} e
   \codesnippetinline{indent!}, como demonstrado no
   \cref{snippet:scheme:rust:fn-body-items-sep-with-indent}.
+
+  \noindent
+  \begin{minipage}[t]{\halftextwidthplustwoemcounterpart}
+    \begin
+      {codesnippet}%
+      [rust]%
+      {Função Com Má Indentação em Rust}%
+      {bad-indent}%
+      [fontsize=\ABNTEXfontereduzida]
+      fn x_plus_y() -> u32 {
+        // Declaration Block
+        let x = 5;
+      let y = 11;
+
+        // Return Block
+        x + y
+      }
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
+  \end{minipage}
+  \hfill
+  \noindent
+  \begin{minipage}[t]{\halftextwidthplustwoempart}
+    \begin
+      {codesnippet}%
+      [scheme]%
+      { Consulta Para Separar Elementos do Corpo de uma Função Com Indentação
+        em Rust}%
+      {rust:fn-body-items-sep-with-indent}%
+      [fontsize=\ABNTEXfontereduzida]
+      (#set! indent-style "  ")
+
+      (function_item
+        body: (block (_) @item . (_) @next)
+        (#space! "\n" 2 @item @next)
+        (#set! @next indent-rule "+1")
+        (#indent! @next))
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
+  \end{minipage}
 
   Na primeira linha deste trecho, observa-se um padrão composto exclusivamente
   pelo predicado \codesnippetinline{set!}, no qual a propriedade
@@ -1577,46 +1638,6 @@
           linhas -- e com a devida indentação --,
   \end{inparaenum}
   atendendo às expectativas de formatação.
-
-  \noindent
-  \begin{minipage}[t]{\textwidth}
-    \begin
-      {codesnippet}%
-      [rust]%
-      {Função Com Má Indentação em Rust}%
-      {bad-indent}
-      fn x_plus_y() -> u32 {
-        // Declaration Block
-        let x = 5;
-      let y = 11;
-
-        // Return Block
-        x + y
-      }
-    \end{codesnippet}
-    \vspace{-3ex}
-    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
-  \end{minipage}
-
-  \noindent
-  \begin{minipage}[t]{\textwidth}
-    \begin
-      {codesnippet}%
-      [scheme]%
-      { Consulta Para Separar Elementos do Corpo de uma Função Com Indentação
-        em Rust}%
-      {rust:fn-body-items-sep-with-indent}
-      (#set! indent-style "  ")
-
-      (function_item
-        body: (block (_) @item . (_) @next)
-        (#space! "\n" 2 @item @next)
-        (#set! @next indent-rule "+1")
-        (#indent! @next))
-    \end{codesnippet}
-    \vspace{-3ex}
-    \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
-  \end{minipage}
 
   \noindent
   \begin{minipage}[t]{\textwidth}
