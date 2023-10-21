@@ -486,7 +486,7 @@
   código padronizado e consistente. No entanto, é comum que essas ferramentas
   de formatação sejam limitadas a uma linguagem ou a uma família de linguagens
   de programação. Além disso, algumas delas são opinativas, assim restringindo
-  as possiblidades de personalização pelo usuário. Finalmente, é também comum
+  as possibilidades de personalização pelo usuário. Finalmente, é também comum
   que essas ferramentas de formatação não permitam que o usuário defina estilos
   de formatação personalizados.
 
@@ -503,7 +503,7 @@
           complexas na árvore analisada de um código-fonte.
   \end{inparaenum}
 
-  Visando superar ou reduzir as limitações previamente mencionadas, quais são
+  Visando superar ou reduzir as limitações previamente mencionadas, que são
   frequentemente presentes nas ferramentas convencionais de formatação, este
   trabalho tem como objetivo geral desenvolver um software prototípico para a
   formatação de código. A ferramenta desenvolvida, nomeada de \witchcooking
@@ -882,7 +882,7 @@
           caminho para o arquivo a ser formatado.
   \end{inparaenum}
   Quando \codesnippetinline{[SRC]} é provido e \codesnippetinline{[-l LANG]} é
-  omitido, o software tentará inferir uma linguagem conforme a extenção do nome
+  omitido, o software tentará inferir uma linguagem conforme a extensão do nome
   do arquivo. Por outro lado, quando \codesnippetinline{[SRC]} é omitido, o
   código-fonte a ser formatado deve ser provido via \textit{\gloss{pipeline}},
   e a sua linguagem deve ser explicitada via \codesnippetinline{[-l LANG]}. Em
@@ -1308,7 +1308,7 @@
           Pressupõe-se que esses predicados estejam dentre os providos pelo
           \witchcooking para instruir a formatação.
 
-          Encerando o \cref{item:nodes-loop} e, subsequentemente, o
+          Encerrando o \cref{item:nodes-loop} e, subsequentemente, o
           \cref{item:pattern-loop}, bem como a etapa de formatação como um
           todo,
     \item as configurações locais -- i.e, configurações a nível de
@@ -1504,10 +1504,8 @@
       {let-decl-cluster}%
       [fontsize=\ABNTEXfontereduzida]
       fn x_plus_y() -> u32 {
-        // Declaration Block
         let x = 5; let y = 11;
 
-        // Return Block
         x + y
       }
     \end{codesnippet}
@@ -1566,11 +1564,9 @@
       {bad-indent}%
       [fontsize=\ABNTEXfontereduzida]
       fn x_plus_y() -> u32 {
-        // Declaration Block
         let x = 5;
       let y = 11;
 
-        // Return Block
         x + y
       }
     \end{codesnippet}
@@ -1624,7 +1620,7 @@
     \item na próxima linha, o predicado \codesnippetinline{indent!} é aplicado,
           tomando como argumento a captura \codesnippetinline{@next}. Esse
           predicado tem como função aplicar a indentação previamente
-          configurada a cada nó capturado pelo(s) argumento(s) passado(s).
+          configurada a cada nó capturado pelos argumentos passados.
   \end{inparaenum}
 
   Finalmente, ao aplicar uma consulta mais sofisticada -- exemplificada no
@@ -1647,17 +1643,128 @@
       {Função Com Indentação Apropriada em Rust}%
       {proper-indent}
       fn x_plus_y() -> u32 {
-        // Declaration Block
         let x = 5;
         let y = 11;
 
-        // Return Block
         x + y
       }
     \end{codesnippet}
     \vspace{-3ex}
     \captionof*{listing}{\ABNTEXfontereduzida Fonte autoral.}
   \end{minipage}
+
+  No decorrer da exemplificação do uso do predicado \codesnippetinline{space!}
+  com a configuração de argumentos mais avançada, foi introduzida a
+  configuração \codesnippetinline{indent-rule}. Essa configuração determina a
+  regra de indentação para uma captura específica -- i.e., a designação de
+  uma captura é obrigatória para essa configuração. Através do predicado
+  \codesnippetinline{set!}, é possível especificar os seguintes tipos valores
+  para a configuração \codesnippetinline{indent-rule}.
+
+  Primeiramente,
+  \begin{inparaenum}
+    \item pode ser definido um inteiro não-negativo -- sem sinal. Esse valor
+          denota o nível de indentação absoluto para a captura em questão. Em
+          outras palavras,
+          \begin{inparaenum}
+            \item se o valor for 0, os nós capturados terão nenhum deslocamento
+                  em relação ao início da linha, independentemente do estilo de
+                  indentação definido via \codesnippetinline{indent-style};
+            \item se o valor for 1, os nós capturados serão deslocados por uma
+                  string idêntica ao estilo de indentação definido;
+            \item se o valor for 2, os nós capturados serão deslocados por uma
+                  sequência de caracteres equivalente a duas strings
+                  subsequentes do estilo de indentação; e assim por diante.
+          \end{inparaenum}
+
+          \newsavebox\querystringregex
+          \begin{lrbox}{\querystringregex}
+            \codesnippetinline{[-0-9a-zA-Z]}[fontsize=\footnotesize]
+          \end{lrbox}
+
+          \newsavebox\indentruleabs
+          \begin{lrbox}{\indentruleabs}
+            \codesnippetinline
+              [scheme]
+              {(#set! @node indent-rule 0)}
+              [fontsize=\footnotesize]
+          \end{lrbox}
+
+          \newsavebox\indentruleneg
+          \begin{lrbox}{\indentruleneg}
+            \codesnippetinline
+              [scheme]
+              {(#set! @node indent-rule -1)}
+              [fontsize=\footnotesize]
+          \end{lrbox}
+
+          \newsavebox\indentrulepos
+          \begin{lrbox}{\indentrulepos}
+            \codesnippetinline
+              [scheme]
+              {(#set! @node indent-rule "+1")}
+              [fontsize=\footnotesize]
+          \end{lrbox}
+
+          Além disso,
+    \item pode ser especificado um inteiro positivo -- com sinal. Esse número
+          configura o nível de indentação adicional para os nós capturados,
+          relativo ao deslocamento apresentado pelos pais desses nós. Dessa
+          forma,
+          \begin{inparaenum}
+            \item se o valor for \codesnippetinline{"+1"}%
+                  \footnote
+                    { É importante ressaltar que, ao fornecer um argumento para
+                      um predicado na linguagem de consulta do \treesitter,
+                      esse argumento deve ser
+                      \begin{inparaenum}[(I)]
+                        \item ou uma string,
+                        \item ou uma captura.
+                      \end{inparaenum}
+                      Para especificar uma string, é possível seguir a
+                      abordagem tradicional, utilizando as aspas duplas como
+                      delimitadores para a sequência de caracteres. No entanto,
+                      quando cada caractere da string atende à expressão
+                      regular \usebox{\querystringregex}, é possível dispensar
+                      os delimitadores. Consequentemente, é possível
+                      especificar
+                      \begin{inparaenum}[(I)]
+                        \item uma regra de indentação absoluta via
+                              \usebox{\indentruleabs},
+                        \item uma regra de indentação relativa e negativa via
+                              \usebox{\indentruleneg}, e
+                        \item uma regra de indentação relativa e positiva via
+                              \usebox{\indentrulepos}.
+                      \end{inparaenum}}%
+                  , os nós capturados
+                  serão deslocados mais um \codesnippetinline{indent-style}
+                  além do que seus pais apresentam; já
+            \item se o valor for \codesnippetinline{"+2"}, o deslocamento
+                  adicional será de dois \codesnippetinline{indent-style}; e
+                  assim sucessivamente.
+          \end{inparaenum}
+
+          Encerrando, dentre os diferentes tipos de valores aceitos como
+          argumentos pelo predicado \codesnippetinline{indent-rule},
+    \item pode ser passado um inteiro negativo. Atualmente, esse valor é usado
+          para calcular o número de caracteres pelo qual os nós capturados
+          devem recuar em relação ao deslocamento dos seus pais. Esse cálculo
+          é efetuado multiplicando-se o módulo do valor passado pela quantidade
+          de caracteres que o estilo de indentação -- definido via
+          \codesnippetinline{indent-style} -- contém. Por exemplo, considerando
+          que o deslocamento dos nós pais é de 4 caracteres e que o estilo de
+          indentação foi definido como \codesnippetinline{"  "} (dois espaços),
+          \begin{inparaenum}
+            \item se -1 for passado, os nós capturados recuarão 2 caracteres e
+                  seu deslocamento será de 2 caracteres;
+            \item se o valor for -2, o recuo dos nós capturados será de 4
+                  caracteres, e o deslocamento desses nós será de 0 caracteres
+                  -- i.e., início da linha --; por fim,
+            \item se o número especificado for -3, ocorrerá um erro, pois o
+                  recuo calculado de 6 caracteres será maior que o deslocamento
+                  dos nós pais, que é de apenas 4 caracteres.
+          \end{inparaenum}
+  \end{inparaenum}
 
   %%%%%%%%%%%%%%%
   %% Conclusion %
