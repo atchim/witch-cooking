@@ -1487,7 +1487,7 @@
     \begin
       {codesnippet}%
       [scheme]%
-      {Consulta Para Separar Elementos de um Vetor em Rust}%
+      {Consulta para Separar Elementos de um Vetor em Rust}%
       {rust:vec-items-sep}
       (array_expression
         "," @comma
@@ -1534,7 +1534,7 @@
     \begin
       {codesnippet}%
       [scheme]%
-      {Consulta Para Separar Elementos do Corpo de uma Função em Rust}%
+      {Consulta para Separar Elementos do Corpo de uma Função em Rust}%
       {rust:fn-body-items-sep}%
       [fontsize=\ABNTEXfontereduzida]
       (function_item
@@ -1595,7 +1595,7 @@
     \begin
       {codesnippet}%
       [scheme]%
-      { Consulta Para Separar Elementos do Corpo de uma Função Com Indentação
+      { Consulta para Separar Elementos do Corpo de uma Função Com Indentação
         em Rust}%
       {rust:fn-body-items-sep-with-indent}%
       [fontsize=\ABNTEXfontereduzida]
@@ -1810,8 +1810,21 @@
                   corpo da função;
             \item \codesnippetinline{close}, que captura o delimitador final do
                   corpo da função; e
-            \item \codesnippetinline{fn}, que captura toda a função em si.
+            \item \codesnippetinline{fn}, que engloba toda a definição da
+                  função.
           \end{inparaenum}
+          Dentre essas capturas,
+    \item \codesnippetinline{item} tem sua regra de indentação especificada
+          como um nível de indentação além do deslocamento do nó pai -- i.e., a
+          própria função --; e
+    \item \codesnippetinline{close} tem sua regra de indentação definida como o
+          deslocamento de \codesnippetinline{fn} por meio do uso do predicado
+          \codesnippetinline{indent-offset!}. Concluindo, ao final do segundo
+          padrão, é utilizado o predicado \codesnippetinline{indent!}, passando
+          as respectivas capturas \codesnippetinline{item} e
+          \codesnippetinline{close} como argumentos. O resultado da aplicação
+          dessa consulta está disponível para verificação no
+          \cref{snippet:rust:1tbs-foo}.
   \end{inparaenum}
 
   \noindent
@@ -1819,7 +1832,7 @@
     \begin
       {codesnippet}%
       [scheme]%
-      {Consulta Para Formatar uma Função de Acordo Com o Estilo \textit{1TBS}}%
+      {Consulta para Formatar uma Função de Acordo Com o Estilo \textit{1TBS}}%
       {rust:1tbs-fn}%
       [fontsize=\ABNTEXfontereduzida]
       (#set! indent-style "    ")
