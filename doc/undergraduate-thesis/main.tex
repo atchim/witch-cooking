@@ -1289,9 +1289,9 @@
           diferentes níveis de escopo, sejam eles globais -- i.e., abrangendo
           toda a consulta -- ou locais -- i.e., restrito a um padrão.
           Finalizando a etapa de inicialização,
-    \item a estrutura de correspondências é derivada do:
+    \item a estrutura de correspondências é derivada:
           \begin{inparaenum}
-            \item objeto de consulta, juntamente com
+            \item do objeto de consulta, juntamente com
             \item a árvore analisada e
             \item o texto do código-fonte submetido.
           \end{inparaenum}
@@ -1418,6 +1418,7 @@
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   \section{Instruindo a Formatação}
+  \label{section:instructing}
 
   Como já enfatizado em diversas ocasiões, as instruções de formatação do
   código-fonte são especificadas no arquivo escrito na linguagem de consulta do
@@ -1856,10 +1857,36 @@
       fn foo() {
           bar()
       }
-   \end{codesnippet}
+    \end{codesnippet}
     \vspace{-3ex}
     \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
   \end{minipage}
+
+  %%%%%%%%%%%%%
+  %%% Results %
+  %%%%%%%%%%%%%
+
+  \section{Resultados}
+
+  Conforme explicado e demonstrado na \cref{section:instructing}, é possível
+  desempenhar procedimentos básicos de formatação através do \witchcooking.
+  Esse processo, que é fundamentado no \treesitter, é viabilizado pelas
+  implementações que estendem a biblioteca. Mais especificamente, em adição à
+  base fornecida pelo \treesitter, a formatação é proporcionada pelas:
+  \begin{inparaenum}
+    \item configurações, sendo elas
+          \begin{inparaenum}
+            \item \codesnippetinline{indent-rule} e
+            \item \codesnippetinline{indent-style};
+          \end{inparaenum}
+          em conjunto com
+    \item os predicados, sendo eles
+          \begin{inparaenum}
+            \item \codesnippetinline{space!},
+            \item \codesnippetinline{indent!}, e
+            \item \codesnippetinline{indent-offset!}.
+          \end{inparaenum}
+  \end{inparaenum}
 
   %%%%%%%%%%%%%%%
   %% Conclusion %
