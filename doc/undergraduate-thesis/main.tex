@@ -1896,6 +1896,16 @@
   cenários mais realistas, nos quais não é possível presumir algo sobre a
   estruturação inicial do código.
 
+  Além disso, ao final do desenvolvimento do \witchcooking, foi descoberto um
+  problema na formatação que ocorre sob condições específicas. Para compreender
+  a complexidade envolvida nesse problema, é essencial ter uma compreensão do
+  funcionamento do processo de formatação; mais especificamente, como o
+  processo de edição do código em formatação opera. Conforme mencionado na
+  \cref{section:fmt-algorithm}, o algoritmo de formatação é composto, entre
+  outros componentes, por uma estrutura editora. Essa estrutura retém o
+  código-fonte em formatação e registra as edições (ou modificações) realizadas
+  pelos predicados.
+
   Um dos principais elementos no \textit{prettyprinting} é o
   \textit{\gloss[short]{cpl}}, que se refere à quantidade máxima de caracteres
   permitida em uma única linha. No contexto da formatação de código-fonte,
@@ -1915,12 +1925,11 @@
   , muitos guias de estilo para diferentes linguagens de programação ainda
   estipulam um valor para o \textit{CPL} \cite{wiki-2023-characters}.
   Consequentemente, o código formatado por diversos \textit{prettyprinters}
-  continua a ser diretamente influenciado por esse parâmetro.
-
-  Apesar da importância que o \textit{CPL} normalmente desempenha na
-  formatação, o \witchcooking atualmente não fornece algum mecanismo de
-  formatação conforme esse aspecto. Mais precisamente, a ferramenta carece de
-  mecanismos que proporcionem formatação condicionada, em geral.
+  continua a ser diretamente influenciado por esse parâmetro. Apesar da
+  importância que o \textit{CPL} normalmente desempenha na formatação, o
+  \witchcooking atualmente não fornece algum mecanismo de formatação conforme
+  esse aspecto. Mais precisamente, a ferramenta carece de mecanismos que
+  proporcionem formatação condicionada, em geral.
 
   %%%%%%%%%%%%%%%
   %% Conclusion %
