@@ -1862,6 +1862,114 @@
     \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
   \end{minipage}
 
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%% Something Is Missing %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \section{Falta Algo}
+
+  Ao final do desenvolvimento do \witchcooking, foi conduzida uma série de
+  testes para verificar se o código formatado atendia às expectativas, conforme
+  o código e as instruções submetidas. Um desses testes envolvia a formatação
+  de duas funções aninhadas. O propósito desse teste era averiguar o
+  comportamento da formatação em um contexto de aninhamento; ou seja, onde um
+  trecho de código sofre o mesmo procedimento de formatação múltiplas vezes,
+  mas com base em nós distintos.
+
+  Para realizar esse teste, foram submetidos:
+  \begin{inparaenum}
+    \item o código-fonte escrito em Rust, que incluía as funções que
+          configuravam o aninhamento, ilustrado no
+          \cref{snippet:rust:foo-bar-baz}; assim como
+    \item as instruções de formatação, escritas na linguagem de consulta do
+          \treesitter, apresentadas no \cref{snippet:scheme:rust:fn}.
+  \end{inparaenum}
+  A consulta submetida tinha o propósito de instruir a formatação, de modo que
+  o resultado fosse compatível ao estilo de indentação \textit{1TBS}. Assim, o
+  código-fonte formatado deveria apresentar a estruturação apresentada no
+  \cref{snippet:rust:foo-bar-baz-1tbs}.
+
+  \noindent
+  \begin{minipage}[t]{\textwidth}
+    \begin
+      {codesnippet}%
+      [rust]%
+      {Funções Aninhadas em Rust}%
+      {foo-bar-baz}
+      fn foo() {fn bar() {baz()}}
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+  \end{minipage}
+
+  \noindent
+  \begin{minipage}[t]{\halftextwidthplusfiveempart}
+    \begin
+      {codesnippet}%
+      [scheme]%
+      {Consulta para Formatar uma Função em Rust}%
+      {rust:fn}%
+      [fontsize=\ABNTEXfontereduzida]
+      (#set! indent-style "  ")
+
+      ( (function_item
+          body: (block (_) @item "}" @close)) @fn
+        (#set! @item indent-rule "+1")
+        (#indent-offset! @close @fn)
+        (#indent! @item @close))
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{\halftextwidthplusfiveemcounterpart}
+    \begin
+      {codesnippet}%
+      [rust]%
+      {Funções Aninhadas Conforme \textit{1TBS} em Rust}%
+      {foo-bar-baz-1tbs}
+      fn foo() {
+        fn bar() {
+          baz()
+        }
+      }
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+  \end{minipage}
+
+  No entanto, ao analisar o resultado da execução do \witchcooking, notou-se um
+  código que destoa significativamente das expectativas, conforme apresentado
+  no \cref{snippet:rust:foo-bar-baz-bad}. Esse código revela dois problemas
+  relevantes. Primeiramente, é evidente que
+  \begin{inparaenum}
+    \item a indentação não está correta. Isso ocorre devido ao
+          fato de que a expressão de função \codesnippetinline[rust]{baz()}
+          possui o mesmo nível de indentação que a declaração de função
+          \codesnippetinline[rust]$fn bar() {$, a qual engloba a expressão.
+          Além disso, e de maior gravidade, percebe-se
+    \item a ausência de uma chave que caracterize o fechamento do
+          corpo da função \codesnippetinline[rust]$fn foo() {$. Ou seja, a
+          formatação de um código sintaticamente correto ocasionou um erro de
+          sintaxe.
+  \end{inparaenum}
+
+  \noindent
+  \begin{minipage}[t]{\textwidth}
+    \begin
+      {codesnippet}%
+      [rust]%
+      {Funções Aninhadas Mal Formatadas em Rust}%
+      {foo-bar-baz-bad}
+      fn foo() {
+        fn bar() {
+        baz()
+      }
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+  \end{minipage}
+
   %%%%%%%%%%%%%
   %%% Results %
   %%%%%%%%%%%%%
@@ -1895,16 +2003,6 @@
   prudente supor que consultas mais complexas sejam necessárias para abranger
   cenários mais realistas, nos quais não é possível presumir algo sobre a
   estruturação inicial do código.
-
-  Além disso, ao final do desenvolvimento do \witchcooking, foi descoberto um
-  problema na formatação que ocorre sob condições específicas. Para compreender
-  a complexidade envolvida nesse problema, é essencial ter uma compreensão do
-  funcionamento do processo de formatação; mais especificamente, como o
-  processo de edição do código em formatação opera. Conforme mencionado na
-  \cref{section:fmt-algorithm}, o algoritmo de formatação é composto, entre
-  outros componentes, por uma estrutura editora. Essa estrutura retém o
-  código-fonte em formatação e registra as edições (ou modificações) realizadas
-  pelos predicados.
 
   Um dos principais elementos no \textit{prettyprinting} é o
   \textit{\gloss[short]{cpl}}, que se refere à quantidade máxima de caracteres
