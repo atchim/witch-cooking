@@ -1943,9 +1943,9 @@
   no \cref{snippet:rust:foo-bar-baz-bad}. Esse código revela dois problemas
   relevantes. Primeiramente, é evidente que
   \begin{inparaenum}
-    \item a indentação não está correta. Isso ocorre devido ao
-          fato de que a expressão de função \codesnippetinline[rust]{baz()}
-          possui o mesmo nível de indentação que a declaração de função
+    \item a indentação não está correta. Isso ocorre porque a expressão de
+          função \codesnippetinline[rust]{baz()} possui o mesmo nível de
+          indentação que a declaração de função
           \codesnippetinline[rust]$fn bar() {$, a qual engloba a expressão.
           Além disso, e de maior gravidade, percebe-se
     \item a ausência de uma chave que caracterize o fechamento do
@@ -1965,6 +1965,43 @@
         fn bar() {
         baz()
       }
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+  \end{minipage}
+
+  Para entender as causas de ambos os problemas, é necessário seguir uma
+  explicação passo a passo dos procedimentos realizados. Começando pela má
+  indentação presente na linha 3 do \cref{snippet:rust:foo-bar-baz-bad}, é
+  essencial compreender o funcionamento do segundo padrão da consulta
+  submetida, apresentado no \cref{snippet:scheme:rust:fn}. Esse padrão, que
+  lida com declarações de funções em Rust,
+  \begin{inparaenum}
+    \item impõe um nível adicional de indentação em relação à função para os
+          elementos dentro do corpo da própria função. Além disso, ele
+    \item alinha a chave de fechamento do corpo da função com o início da
+          própria função.
+  \end{inparaenum}
+
+  Durante o processo de busca por correspondências do segundo padrão, realizado
+  pelo \treesitter, a primeira função a coincidir com o padrão é função
+  \codesnippetinline[rust]{fn bar() {baz()}}. Como posteriormente, no algoritmo
+  de formatação do \witchcooking, a aplicação dos predicados ocorre
+  sequencialmente conforme a ordem das correspondências, essa função é a
+  primeira a ser formatada. Após a aplicação do primeiro procedimento de
+  formatação, o código em formatação apresenta a organização demonstrada no
+  \cref{snippet:rust:foo-bar-baz-step-1}.
+
+  \noindent
+  \begin{minipage}[t]{\textwidth}
+    \begin
+      {codesnippet}%
+      [rust]%
+      {Primeiro Passo da Formatação das Funções Aninhadas em Rust}%
+      {foo-bar-baz-step-1}
+      fn foo() {fn bar() {
+        baz()
+                }}
     \end{codesnippet}
     \vspace{-3ex}
     \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
