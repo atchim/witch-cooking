@@ -1749,15 +1749,13 @@
                       delimitadores para a sequência de caracteres. No entanto,
                       quando cada caractere da string atende à expressão
                       regular \usebox{\querystringregex}, é possível dispensar
-                      os delimitadores. Consequentemente, é possível
-                      especificar:
+                      os delimitadores. Consequentemente, para configurar uma
+                      regra de indentação, é possível especificar uma regra:
                       \begin{inparaenum}[(I)]
-                        \item uma regra de indentação absoluta via
-                              \usebox{\indentruleabs},
-                        \item uma regra de indentação relativa e negativa via
-                              \usebox{\indentruleneg}, e
-                        \item uma regra de indentação relativa e positiva via
-                              \usebox{\indentrulepos}.
+                        \item absoluta via \usebox{\indentruleabs},
+                        \item relativa negativa usando \usebox{\indentruleneg},
+                              e
+                        \item relativa positiva com \usebox{\indentrulepos}.
                       \end{inparaenum}}%
                   , os nós capturados
                   serão deslocados mais um \codesnippetinline{indent-style}
@@ -2048,6 +2046,46 @@
   No entanto, após a execução do segundo procedimento de formatação, o código
   problemático em estudo, apresentado anteriormente no
   \cref{snippet:rust:foo-bar-baz-bad}, é gerado.
+
+  Ao comparar o código resultante do segundo e último procedimento de
+  formatação com o código esperado, ilustrado no
+  \cref{snippet:rust:foo-bar-baz-1tbs}, observa-se que as duas primeiras linhas
+  são idênticas, ou seja, seguem o estilo \textit{1TBS}. No entanto, na
+  terceira linha do \cref{snippet:rust:foo-bar-baz-bad}, a indentação da
+  expressão da função \codesnippetinline[rust]{baz()} é claramente inadequada,
+  pois coincide com a indentação da declaração da função que a envolve. Esse
+  problema decorre do cálculo de indentação executado pelo predicado
+  \codesnippetinline{indent!}.
+
+  Conforme já explicado, na implementação atual, quando é estabelecida uma
+  regra de indentação relativa positiva para um nó, o cálculo é baseado:
+  \begin{inparaenum}
+    \item no deslocamento do primeiro caractere não espaço encontrado na linha
+          do pai desse nó, e não
+    \item \label{item:parent-offset} no deslocamento do próprio nó pai.
+  \end{inparaenum}
+  No entanto, o cálculo com base no \cref{item:parent-offset} poderia ser mais
+  apropriado, especialmente em circunstâncias de aninhamento. Por exemplo, se
+  a indentação fosse calculada conforme o deslocamento do nó pai, ao realizar
+  o primeiro procedimento de formatação no \cref{snippet:rust:foo-bar-baz-bad},
+  utilizando a mesma consulta do \cref{snippet:scheme:rust:fn} como base, o
+  resultado seria conforme ilustrado no
+  \cref{snippet:rust:foo-bar-baz-step-1-hipo}.
+
+  \noindent
+  \begin{minipage}[t]{\textwidth}
+    \begin
+      {codesnippet}%
+      [rust]%
+      {Primeiro Passo Hipotético da Formatação das Funções Aninhadas em Rust}%
+      {foo-bar-baz-step-1-hipo}
+      fn foo() {fn bar() {
+                  baz()
+                }}
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+  \end{minipage}
 
   %%%%%%%%%%%%%
   %%% Results %
