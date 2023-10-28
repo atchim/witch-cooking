@@ -846,12 +846,12 @@
       \textit{Programming style} da Wikipédia.
       \cites{wiki-2023-indentation}{wiki-2023-programming}}%
   , dos quais muitos eram amplamente adotados, quanto de estilos
-  não-convencionais. Durante a análise dos estilos convencionais de formatação,
+  não convencionais. Durante a análise dos estilos convencionais de formatação,
   \begin{inparaenum}
     \item era imprescindível recorrer a diferentes \textit{prettyprinters},
     \item cada um com suas próprias configurações e níveis de suporte para
           esses estilos. Por outro lado, durante a análise dos estilos
-          não-convencionais,
+          não convencionais,
     \item a aplicação manual era inevitável, consumindo consideravelmente tempo
           e esforço.
   \end{inparaenum}
@@ -1320,7 +1320,7 @@
     \item são aplicadas as configurações especificadas no padrão via o
           predicado \textit{builtin} \codesnippetinline{set!}. Além disso,
     \item são aplicados os predicados gerais -- i.e., predicados
-          não-\textit{builtins} -- especificados no padrão em iteração.
+          não \textit{builtins} -- especificados no padrão em iteração.
           Pressupõe-se que esses predicados estejam dentre os providos pelo
           \witchcooking para instruir a formatação.
 
@@ -1451,7 +1451,7 @@
           sendo o caractere de espaço o valor padrão; e
     \item \codesnippetinline{lower} e \codesnippetinline{upper} são inteiros
           não negativos opcionais que definem o intervalo inclusivo para a
-          não-operação do espaçamento, sendo que
+          não operação do espaçamento, sendo que
           \begin{inparaenum}
             \item se ambos forem especificados, o intervalo será
                   $ \left
@@ -1462,9 +1462,9 @@
                   intervalo resultante será
                   $\left[1, \codesnippetinline{lower}\right]$%
                   , senão,
-            \item caso ambos forem ausentes, o intervalo de não-operação é
+            \item caso ambos forem ausentes, o intervalo de não operação é
                   nulo. Além disso,
-            \item quando o intervalo de não-operação é definido, a separação
+            \item quando o intervalo de não operação é definido, a separação
                   dos nós é evitada se a sequência de caracteres atual entre
                   eles contiver uma quantidade de \codesnippetinline{sep} que
                   esteja dentro do intervalo especificado.
@@ -1554,7 +1554,7 @@
           \codesnippetinline{"\n"}, indicando que os itens do corpo da função
           serão separados por uma quebra de linha. Além disso,
     \item é especificado o limite inferior \codesnippetinline{lower} como 2,
-          resultando num intervalo de não-aplicação de $\left[1, 2\right]$.
+          resultando num intervalo de não aplicação de $\left[1, 2\right]$.
           Em termos mais simples, isso implica que itens já separados por uma
           ou duas quebras de linha não sofrerão alterações, o que, por sua vez,
           mantém a formatação dos blocos intacta.
@@ -1633,7 +1633,13 @@
           configurada com o valor \codesnippetinline{"+1"} para a captura
           \codesnippetinline{@next}. Essa configuração define que, ao indentar
           os nós capturados, deverá ser utilizado o estilo de indentação
-          vigente em adição ao deslocamento dos nós pais. Além disso,
+          vigente em adição ao deslocamento dos nós pais%
+          \footnote
+            { Tecnicamente, o deslocamento é calculado como o índice (em bytes)
+              do primeiro caractere que não seja classificado como um
+              \textit{ASCII whitespace} \cite{infra-2023-ascii} presente na
+              linha que inicia o pai do nó capturado.}%
+          . Além disso,
     \item na próxima linha, o predicado \codesnippetinline{indent!} é aplicado,
           tomando como argumento a captura \codesnippetinline{@next}. Esse
           predicado tem como função aplicar a indentação previamente
@@ -1680,7 +1686,7 @@
 
   Primeiramente,
   \begin{inparaenum}
-    \item pode ser definido um inteiro não-negativo -- sem sinal. Esse valor
+    \item pode ser definido um inteiro não negativo -- sem sinal. Esse valor
           denota o nível de indentação absoluto para a captura em questão. Em
           outras palavras:
           \begin{inparaenum}
@@ -1989,7 +1995,7 @@
   de formatação do \witchcooking, a aplicação dos predicados ocorre
   sequencialmente conforme a ordem das correspondências, essa função é a
   primeira a ser formatada. Após a aplicação do primeiro procedimento de
-  formatação, o código em formatação apresenta a organização demonstrada no
+  formatação, o código em formatação apresenta a configuração demonstrada no
   \cref{snippet:rust:foo-bar-baz-step-1}.
 
   \noindent
@@ -2006,6 +2012,29 @@
     \vspace{-3ex}
     \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
   \end{minipage}
+
+  Nesse código, destaca-se o deslocamento da expressão de função
+  \codesnippetinline[rust]{baz()}, cuja regra de indentação foi especificada
+  via \codesnippetinline[scheme]{(#set! @item indent-rule "+1")}, conforme o
+  \cref{snippet:scheme:rust:fn}. Com base na explicação da
+  \cref{section:instructing}, essa configuração define que o deslocamento da
+  expressão de função, capturada via \codesnippetinline{@item}, será calculado
+  como a combinação:
+  \begin{inparaenum}
+    \item do estilo de indentação vigente com
+    \item o deslocamento do primeiro caractere não espaço encontrado na linha
+          onde começa o nó pai da expressão.
+  \end{inparaenum}
+  Nesse contexto, o nó pai é o corpo da função \codesnippetinline{bar}, que
+  começa na linha 1. Dado que
+  \begin{inparaenum}
+    \item o primeiro caractere não espaço nessa linha está no início da própria
+          linha e
+    \item o estilo de indentação vigente é \codesnippetinline{"  "},
+  \end{inparaenum}
+  a indentação aplicada à expressão de função \codesnippetinline[rust]{baz()}
+  configura uma formatação peculiar, como vista no
+  \cref{snippet:rust:foo-bar-baz-step-1}.
 
   %%%%%%%%%%%%%
   %%% Results %
