@@ -2036,6 +2036,19 @@
   configura uma formatação peculiar, como vista no
   \cref{snippet:rust:foo-bar-baz-step-1}.
 
+  Prosseguindo com a compreensão dos procedimentos sucedidos, a segunda função
+  a corresponder ao segundo padrão da consulta submetida é a função
+  \codesnippetinline{foo}, que engloba todo o código. Similarmente ao ocorrido
+  com a função \codesnippetinline{bar}, a aplicação do padrão nessa função
+  supostamente resultaria na indentação:
+  \begin{inparaenum}
+    \item da função \codesnippetinline{bar} e
+    \item da chave que fecha o corpo da função \codesnippetinline{foo}.
+  \end{inparaenum}
+  No entanto, após a execução do segundo procedimento de formatação, o código
+  problemático em estudo, apresentado anteriormente no
+  \cref{snippet:rust:foo-bar-baz-bad}, é gerado.
+
   %%%%%%%%%%%%%
   %%% Results %
   %%%%%%%%%%%%%
