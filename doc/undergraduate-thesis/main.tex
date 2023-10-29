@@ -2112,8 +2112,8 @@
   função \codesnippetinline{bar} no \cref{snippet:rust:foo-bar-baz-step-1}, o
   conteúdo dessa função -- a expressão de função
   \codesnippetinline[rust]{baz()} -- que está em outra linha, permanece
-  inalterado. Contudo, seria mais útil se a indentação ocorresse em bloco, ou
-  seja, o deslocamento seria aplicado para cada linha abrangida pelo nó em
+  inalterado. Contudo, seria mais coerente se a indentação ocorresse em bloco,
+  ou seja, o deslocamento seria aplicado para cada linha abrangida pelo nó em
   questão. Com essa melhoria, ao aplicar a consulta do
   \cref{snippet:scheme:rust:1tbs-mod} ao
   \cref{snippet:rust:foo-bar-baz-step-1-hipo}, o resultado seria o conteúdo
@@ -2127,7 +2127,10 @@
   apresentou um erro de sintaxe decorrente da falta da chave que fecha o corpo
   da função \codesnippetinline{foo}. Isso ocorreu porque, na exemplificação
   dessas possíveis melhorias, não foi considerado o problema que origina a
-  omissão da chave em questão.
+  omissão da chave em questão. Por sua vez, essa desconsideração ocorreu porque
+  esse problema não deriva diretamente do \witchcooking, mas sim de uma
+  característica da biblioteca \treesitter: ao sincronizar um nó, as edições
+  ocorridas dentro de sua extensão não são contabilizadas.
 
   %%%%%%%%%%%%%
   %%% Results %
