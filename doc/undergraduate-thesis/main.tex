@@ -2073,7 +2073,7 @@
   \cref{snippet:rust:foo-bar-baz-step-1-hipo}.
 
   \noindent
-  \begin{minipage}[t]{\textwidth}
+  \begin{minipage}[t]{\halfpart}
     \begin
       {codesnippet}%
       [rust]%
@@ -2086,6 +2086,34 @@
     \vspace{-3ex}
     \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
   \end{minipage}
+  \hfill
+  \begin{minipage}[t]{\halfpart}
+    \begin
+      {codesnippet}%
+      [rust]%
+      {Segundo Passo Hipotético da Formatação das Funções Aninhadas em Rust}%
+      {foo-bar-baz-step-2-hipo}
+      fn foo() {
+        fn bar() {
+          baz()
+        }} // FIXME
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+  \end{minipage}
+
+  Outro possível aprimoramento é a própria aplicação da indentação, que é
+  também realizada pelo predicado \codesnippetinline{indent!}. Atualmente, esse
+  predicado executa a indentação com base somente na linha inicial do nó em
+  procedimento. Como resultado, ao aplicar a indentação à função
+  \codesnippetinline{bar} no \cref{snippet:rust:foo-bar-baz-step-1}, o conteúdo
+  dessa função -- a expressão de função \codesnippetinline[rust]{baz()} -- que
+  está em outra linha, permanece inalterado. Contudo, seria mais útil se a
+  indentação ocorresse em bloco, ou seja, o deslocamento seria aplicado para
+  cada linha abrangida pelo nó em questão. Considerando essa melhoria, ao
+  aplicar a consulta do \cref{snippet:scheme:rust:fn} ao
+  \cref{snippet:rust:foo-bar-baz-step-1-hipo}, o resultado seria o conteúdo
+  ilustrado no \cref{snippet:rust:foo-bar-baz-step-2-hipo}.
 
   %%%%%%%%%%%%%
   %%% Results %
