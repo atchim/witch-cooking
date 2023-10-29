@@ -1886,11 +1886,12 @@
           configuravam o aninhamento, ilustrado no
           \cref{snippet:rust:foo-bar-baz}; assim como
     \item as instruções de formatação, escritas na linguagem de consulta do
-          \treesitter, apresentadas no \cref{snippet:scheme:rust:fn}.
+          \treesitter, apresentadas no \cref{snippet:scheme:rust:1tbs-mod}.
   \end{inparaenum}
   A consulta submetida tinha o propósito de instruir a formatação, de modo que
-  o resultado fosse compatível ao estilo de indentação \textit{1TBS}. Assim, o
-  código-fonte formatado deveria apresentar a estruturação apresentada no
+  o resultado seguisse uma variante do estilo de indentação \textit{1TBS} que
+  utiliza 2 espaços em vez dos tradicionais 4 espaços. Assim, o código-fonte
+  formatado deveria apresentar a estruturação apresentada no
   \cref{snippet:rust:foo-bar-baz-1tbs}.
 
   \noindent
@@ -1911,8 +1912,9 @@
     \begin
       {codesnippet}%
       [scheme]%
-      {Consulta para Formatar uma Função em Rust}%
-      {rust:fn}%
+      { Consulta para Formatar Funções de Acordo Com uma Variante do Estilo
+        \textit{1TBS}}%
+      {rust:1tbs-mod}%
       [fontsize=\ABNTEXfontereduzida]
       (#set! indent-style "  ")
 
@@ -1930,7 +1932,7 @@
     \begin
       {codesnippet}%
       [rust]%
-      {Funções Aninhadas Conforme \textit{1TBS} em Rust}%
+      {Funções Aninhadas Conforme a Variante do Estilo \textit{1TBS} em Rust}%
       {foo-bar-baz-1tbs}
       fn foo() {
         fn bar() {
@@ -1978,8 +1980,8 @@
   explicação passo a passo dos procedimentos realizados. Começando pela má
   indentação presente na linha 3 do \cref{snippet:rust:foo-bar-baz-bad}, é
   essencial compreender o funcionamento do segundo padrão da consulta
-  submetida, apresentado no \cref{snippet:scheme:rust:fn}. Esse padrão, que
-  lida com declarações de funções em Rust,
+  submetida, apresentado no \cref{snippet:scheme:rust:1tbs-mod}. Esse padrão,
+  que lida com declarações de funções em Rust,
   \begin{inparaenum}
     \item impõe um nível adicional de indentação em relação à função para os
           elementos dentro do corpo da própria função. Além disso, ele
@@ -2014,7 +2016,7 @@
   Nesse código, destaca-se o deslocamento da expressão de função
   \codesnippetinline[rust]{baz()}, cuja regra de indentação foi especificada
   via \codesnippetinline[scheme]{(#set! @item indent-rule "+1")}, conforme o
-  \cref{snippet:scheme:rust:fn}. Com base na explicação da
+  \cref{snippet:scheme:rust:1tbs-mod}. Com base na explicação da
   \cref{section:instructing}, essa configuração define que o deslocamento da
   expressão de função, capturada via \codesnippetinline{@item}, será calculado
   como a combinação:
@@ -2050,12 +2052,12 @@
   Ao comparar o código resultante do segundo e último procedimento de
   formatação com o código esperado, ilustrado no
   \cref{snippet:rust:foo-bar-baz-1tbs}, observa-se que as duas primeiras linhas
-  são idênticas, ou seja, seguem o estilo \textit{1TBS}. No entanto, na
-  terceira linha do \cref{snippet:rust:foo-bar-baz-bad}, a indentação da
-  expressão da função \codesnippetinline[rust]{baz()} é claramente inadequada,
-  pois coincide com a indentação da declaração da função que a envolve. Esse
-  problema decorre do cálculo de indentação executado pelo predicado
-  \codesnippetinline{indent!}.
+  são idênticas, ou seja, seguem a variante do estilo \textit{1TBS}. No
+  entanto, na terceira linha do \cref{snippet:rust:foo-bar-baz-bad}, a
+  indentação da expressão da função \codesnippetinline[rust]{baz()} é
+  claramente inadequada, pois coincide com a indentação da declaração da função
+  que a envolve. Esse problema decorre do cálculo de indentação executado pelo
+  predicado \codesnippetinline{indent!}.
 
   Conforme já explicado, na implementação atual, quando é estabelecida uma
   regra de indentação relativa positiva para um nó, o cálculo é baseado:
@@ -2068,8 +2070,8 @@
   apropriado, especialmente em circunstâncias de aninhamento. Por exemplo, se
   a indentação fosse calculada conforme o deslocamento do nó pai, ao realizar
   o primeiro procedimento de formatação no \cref{snippet:rust:foo-bar-baz-bad},
-  utilizando a mesma consulta do \cref{snippet:scheme:rust:fn} como base, o
-  resultado seria conforme ilustrado no
+  utilizando a mesma consulta do \cref{snippet:scheme:rust:1tbs-mod} como base,
+  o resultado seria conforme ilustrado no
   \cref{snippet:rust:foo-bar-baz-step-1-hipo}.
 
   \noindent
@@ -2096,24 +2098,36 @@
       fn foo() {
         fn bar() {
           baz()
-        }} // FIXME
+        }
+      }
     \end{codesnippet}
     \vspace{-3ex}
     \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
   \end{minipage}
 
-  Outro possível aprimoramento é a própria aplicação da indentação, que é
-  também realizada pelo predicado \codesnippetinline{indent!}. Atualmente, esse
-  predicado executa a indentação com base somente na linha inicial do nó em
-  procedimento. Como resultado, ao aplicar a indentação à função
-  \codesnippetinline{bar} no \cref{snippet:rust:foo-bar-baz-step-1}, o conteúdo
-  dessa função -- a expressão de função \codesnippetinline[rust]{baz()} -- que
-  está em outra linha, permanece inalterado. Contudo, seria mais útil se a
-  indentação ocorresse em bloco, ou seja, o deslocamento seria aplicado para
-  cada linha abrangida pelo nó em questão. Considerando essa melhoria, ao
-  aplicar a consulta do \cref{snippet:scheme:rust:fn} ao
+  Outro ponto passível de aprimoramento é a própria aplicação da indentação,
+  que é também realizada pelo predicado \codesnippetinline{indent!}.
+  Atualmente, esse predicado executa a indentação com base somente na linha
+  inicial do nó em procedimento. Como resultado, ao aplicar a indentação à
+  função \codesnippetinline{bar} no \cref{snippet:rust:foo-bar-baz-step-1}, o
+  conteúdo dessa função -- a expressão de função
+  \codesnippetinline[rust]{baz()} -- que está em outra linha, permanece
+  inalterado. Contudo, seria mais útil se a indentação ocorresse em bloco, ou
+  seja, o deslocamento seria aplicado para cada linha abrangida pelo nó em
+  questão. Com essa melhoria, ao aplicar a consulta do
+  \cref{snippet:scheme:rust:1tbs-mod} ao
   \cref{snippet:rust:foo-bar-baz-step-1-hipo}, o resultado seria o conteúdo
-  ilustrado no \cref{snippet:rust:foo-bar-baz-step-2-hipo}.
+  ilustrado no \cref{snippet:rust:foo-bar-baz-step-2-hipo}. Uma vez que esse
+  código segue a variante do estilo \textit{1TBS}, o teste teria seu objeto
+  cumprido.
+
+  No entanto, ao retomar a análise do código problemático mostrado no
+  \cref{snippet:rust:foo-bar-baz-bad}, o comparando com código hipotético
+  resultante das melhorias discutidas, observa-se que o código hipotético não
+  apresentou um erro de sintaxe decorrente da falta da chave que fecha o corpo
+  da função \codesnippetinline{foo}. Isso ocorreu porque, na exemplificação
+  dessas possíveis melhorias, não foi considerado o problema que origina a
+  omissão da chave em questão.
 
   %%%%%%%%%%%%%
   %%% Results %
