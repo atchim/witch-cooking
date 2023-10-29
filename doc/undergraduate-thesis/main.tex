@@ -2130,7 +2130,49 @@
   omissão da chave em questão. Por sua vez, essa desconsideração ocorreu porque
   esse problema não deriva diretamente do \witchcooking, mas sim de uma
   característica da biblioteca \treesitter: ao sincronizar um nó, as edições
-  ocorridas dentro de sua extensão não são contabilizadas.
+  ocorridas tangentes à sua extensão não são contabilizadas.
+
+  Para compreender a complexidade envolvida nesse problema, é essencial
+  entender minimamente o funcionamento do processo de formatação; mais
+  especificamente, como o processo de edição do código em formatação opera.
+  Conforme mencionado na \cref{section:fmt-algorithm}, o algoritmo de
+  formatação é composto, entre outros componentes, por uma estrutura editora.
+  Essa estrutura retém o código-fonte em formatação e registra as edições (ou
+  modificações) realizadas pelos predicados.
+
+  Para realizar as edições, um predicado sempre se baseia em ao menos um nó.
+  Dentre as informações que um nó possui, está a extensão de caracteres que o
+  configura no código-fonte. Essa extensão compreende um início e um fim
+  representados em ambos os níveis:
+  \begin{inparaenum}
+    \item de bytes, especificando o deslocamento dentre os bytes do
+          código-fonte; bem como
+    \item de pontos, onde cada ponto refere-se a uma linha e uma coluna
+          específica.
+  \end{inparaenum}
+  Originalmente, os nós capturados nos padrões mantém as extensões conforme
+  presentes no código-fonte submetido. Portanto, ao manipulá-los, os
+  predicados devem sincronizar os nós para que suas extensões estejam
+  consoantes ao código vigente em processo de formatação.
+
+  Como afirmado anteriormente, ao sincronizar um nó, o \treesitter não
+  contabiliza edições tangentes à extensão desse nó. Consequentemente,
+  especialmente em cenários que apresentam estruturas aninhadas, durante o
+  processo de formatação, ao sincronizar um nó, há uma probabilidade
+  considerável de que ele apresente uma extensão corrompida. Não
+  surpreendentemente, essa é a razão por trás da omissão da chave, mostrada no
+  \cref{snippet:rust:foo-bar-baz-bad}. Essa chave -- que foi capturada via
+  \codesnippetinline{@close} -- tem sua regra de indentação definida como o
+  deslocamento da função \codesnippetinline{foo}, como mostra o seguinte
+  fragmento em linha do \cref{snippet:scheme:rust:1tbs-mod}:
+  \codesnippetinline[scheme]{(#indent-offset! @close @fn)}. Para indentá-la,
+  mais especificamente, para aplicar os caracteres que configuram sua
+  indentação, o predicado \codesnippetinline{indent!} busca um nó irmão que
+  preceda a chave. Esse nó, por sua vez, é a função \codesnippetinline{bar}, a
+  qual já fora modificada nos procedimentos anteriores. Como resultado, o
+  predicado considera a extensão corrompida dessa função e, consequentemente,
+  aplica a indentação que sobrescreve a chave que fecha o corpo da função
+  \codesnippetinline{bar}.
 
   %%%%%%%%%%%%%
   %%% Results %
