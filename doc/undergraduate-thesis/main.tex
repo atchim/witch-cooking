@@ -73,6 +73,7 @@
 %%%%%%%%%%%%%
 
 \renewcommand{\ABNTEXchapterfont}{\fontseries{b}}
+\renewcommand{\apendicename}{Apêndice}
 \renewcommand{\folhaderostoname}{Folha de Rosto}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -937,7 +938,8 @@
     \item seu ecossistema de desenvolvimento fértil, que oferece
           \begin{inparaenum}
             \item uma ampla variedade de bibliotecas,
-            \item \textit{Cargo}, o gerenciador de pacotes, além do
+            \item \textit{Cargo} \cite{rust-2023-cargo}, o gerenciador de
+                  pacotes, além do
             \item \textit{rust-analyzer} \cite{rust-analyzer-2023-rust}, uma
                   implementação do \textit{Language Server Protocol} (LSP) para
                   a linguagem.
@@ -2156,11 +2158,11 @@
   predicados devem sincronizar os nós para que suas extensões estejam
   consoantes ao código vigente em processo de formatação.
 
-  Como afirmado anteriormente, ao sincronizar um nó, o \treesitter não
-  contabiliza edições tangentes à extensão desse nó. Consequentemente,
-  especialmente em cenários que apresentam estruturas aninhadas, durante o
-  processo de formatação, ao sincronizar um nó, há uma probabilidade
-  considerável de que ele apresente uma extensão corrompida. Não
+  Como demonstrado no \cref{appendice:ts-sync-proof}, ao sincronizar um nó, o
+  \treesitter não contabiliza edições tangentes à extensão desse nó.
+  Consequentemente, especialmente em cenários que apresentam estruturas
+  aninhadas, durante o processo de formatação, ao sincronizar um nó, há uma
+  probabilidade considerável de que ele apresente uma extensão corrompida. Não
   surpreendentemente, essa é a razão por trás da omissão da chave, conforme
   demonstrada no \cref{snippet:rust:foo-bar-baz-bad}. Essa chave -- que foi
   capturada via \codesnippetinline{@close} -- tem sua regra de indentação
@@ -2253,4 +2255,179 @@
   \postextual
   \printbibliography
   \printgloss{glossary}
+
+  %%%%%%%%%%%%%%%
+  %% Appendices %
+  %%%%%%%%%%%%%%%
+
+  \begin{apendicesenv}
+    \partapendices
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Tree-Sitter's Node Syncing %
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \chapter{Sincronizando Nós do \treesitter}
+    \label{appendice:ts-sync-proof}
+
+    Na \cref{section:missing}, foi mencionado que, ao sincronizar um nó, a
+    biblioteca \treesitter não contabiliza as edições ocorridas que tangem a
+    extensão desse nó. Este apêndice tem como objetivo demonstrar esse
+    comportamento de forma didática. Para reproduzí-lo, é necessário:
+    \begin{inparaenum}
+      \item Rust \cite{rust-2023-rust}, a linguagem de programação;
+      \item \textit{Cargo} \cite{rust-2023-cargo}, o gerenciador de pacotes
+            dessa linguagem; além das bibliotecas
+      \item \textit{tree-sitter} e
+      \item \textit{tree-sitter-rust}.
+    \end{inparaenum}
+
+    Primeiramente, o comando \codesnippetinline[sh]{cargo new ts-node-edit}
+    é executado para criar um novo pacote executável \textit{Cargo}, que será
+    utilizado para a demonstração. Em seguida, o comando
+    \codesnippetinline[sh]{cd ts-node-edit} é executado para navegar até o
+    diretório recém-criado. Nesse diretório, para adicionar as dependências --
+    i.e., as bibliotecas -- necessárias, é executado o seguinte comando:
+    \codesnippetinline[sh]{cargo add tree-sitter{,-rust}}. Dessa forma, a
+    configuração inicial é concluída.
+
+    Para escrever o código, é necessário editar o arquivo localizado no
+    seguinte caminho: \codesnippetinline{src/main.rs}. A seguir, serão
+    mostrados e explicados os trechos que compõe o código da demonstração. Essa
+    abordagem fragmentada foi adotada por dois motivos:
+    \begin{inparaenum}
+      \item explicar os procedimentos na ordem de execução, e
+      \item evitar problemas de formatação neste documento.
+    \end{inparaenum}
+
+    Conforme ilustrado no \cref{snippet:rust:ts-node-edit-demo-part-1}, na
+    primeira linha,
+    \begin{inparaenum}
+      \item são importados alguns itens da biblioteca \treesitter que são
+            utilizados nessa demonstração. Já na linha 3,
+      \item inicia-se a função principal, que engloba todos os procedimentos.
+            Em seguida,
+      \item é definido a string do código-fonte usado como referência na
+            demonstração: \codesnippetinline[rust]{fn foo() {}}. Além disso,
+            da linha 5 a 7,
+      \item são realizados procedimentos para gerar a árvore de sintaxe a
+            partir da análise do código-fonte definido anteriormente.
+    \end{inparaenum}
+
+    Continuando, no \cref{snippet:rust:ts-node-edit-demo-part-2}, observa-se
+    que na linha 8,
+    \begin{inparaenum}
+      \item é obtido um nó que supostamente remete à função
+            \codesnippetinline{foo}. Logo na linha seguinte,
+      \item essa suposição é validada por uma asserção. Já nas linhas
+            subsequentes,
+      \item são realizados procedimentos similares, porém buscando o nó que
+            representa o nome da função.
+    \end{inparaenum}
+    Em seguida, nos
+    \cref
+      {%
+        snippet:rust:ts-node-edit-demo-part-3,%
+        snippet:rust:ts-node-edit-demo-part-4}%
+    , são executadas duas asserções semelhantes. Essas asserções verificam os
+    valores originais das extensões --- tanto em bytes quanto em pontos --- dos
+    nós:
+    \begin{inparaenum}
+      \item da função \codesnippetinline{foo} e
+      \item do seu nome.
+    \end{inparaenum}
+
+    \noindent
+    \begin{minipage}[t]{\textwidth}
+      \begin
+        {codesnippet}%
+        [rust]%
+        {Primeiro Trecho da Demonstração da Sincronização de Nós em Rust}%
+        {ts-node-edit-demo-part-1}
+        use tree_sitter::{InputEdit, Parser, Point, Range};
+
+        fn main() {
+          let src = "fn foo() {}";
+          let mut parser = Parser::new();
+          parser.set_language(tree_sitter_rust::language()).unwrap();
+          let tree = parser.parse(src, None).unwrap();
+      \end{codesnippet}
+      \vspace{-3ex}
+      \captionof*
+        {listing}
+        {\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+    \end{minipage}
+
+    \noindent
+    \begin{minipage}[t]{\textwidth}
+      \begin
+        {codesnippet}*%
+        [rust]%
+        {Segundo Trecho da Demonstração da Sincronização de Nós em Rust}%
+        {ts-node-edit-demo-part-2}%
+        [%
+          autogobble=false,
+          firstnumber=last,
+          fontsize=\ABNTEXfontereduzida,
+          gobble=8,
+          lastline=4]
+          let mut fn_item = tree.root_node().child(0).unwrap();
+          assert_eq!("function_item", fn_item.kind());
+          let mut fn_name = fn_item.child_by_field_name("name").unwrap();
+          assert_eq!("identifier", fn_name.kind());
+      \end{codesnippet}
+      \vspace{-3ex}
+      \captionof*
+        {listing}
+        {\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+    \end{minipage}
+
+    \noindent
+    \begin{minipage}[t]{\textwidth}
+      \begin
+        {codesnippet}*%
+        [rust]%
+        {Terceiro Trecho da Demonstração da Sincronização de Nós em Rust}%
+        {ts-node-edit-demo-part-3}%
+        [autogobble=false,firstnumber=last,gobble=8,lastline=9]
+          assert_eq!(
+            Range {
+              start_byte: 0,
+              end_byte: 11,
+              start_point: Point { row: 0, column: 0 },
+              end_point: Point { row: 0, column: 11 },
+            },
+            fn_item.range(),
+          );
+      \end{codesnippet}
+      \vspace{-3ex}
+      \captionof*
+        {listing}
+        {\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+    \end{minipage}
+
+    \noindent
+    \begin{minipage}[t]{\textwidth}
+      \begin
+        {codesnippet}*%
+        [rust]%
+        {Quarto Trecho da Demonstração da Sincronização de Nós em Rust}%
+        {ts-node-edit-demo-part-4}%
+        [autogobble=false,firstnumber=last,gobble=8,lastline=9]
+          assert_eq!(
+            Range {
+              start_byte: 3,
+              end_byte: 6,
+              start_point: Point { row: 0, column: 3 },
+              end_point: Point { row: 0, column: 6 },
+            },
+            fn_name.range(),
+          );
+      \end{codesnippet}
+      \vspace{-3ex}
+      \captionof*
+        {listing}
+        {\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+    \end{minipage}
+  \end{apendicesenv}
 \end{document}
