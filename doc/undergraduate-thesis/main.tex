@@ -1871,6 +1871,7 @@
   %%%%%%%%%%%%%%%%%%%%%%%%%%
 
   \section{Falta Algo}
+  \label{section:missing}
 
   Ao final do desenvolvimento do \witchcooking, foi conduzida uma série de
   testes para verificar se o código formatado atendia às expectativas, conforme
@@ -2160,11 +2161,11 @@
   especialmente em cenários que apresentam estruturas aninhadas, durante o
   processo de formatação, ao sincronizar um nó, há uma probabilidade
   considerável de que ele apresente uma extensão corrompida. Não
-  surpreendentemente, essa é a razão por trás da omissão da chave, mostrada no
-  \cref{snippet:rust:foo-bar-baz-bad}. Essa chave -- que foi capturada via
-  \codesnippetinline{@close} -- tem sua regra de indentação definida como o
-  deslocamento da função \codesnippetinline{foo}, como mostra o seguinte
-  fragmento em linha do \cref{snippet:scheme:rust:1tbs-mod}:
+  surpreendentemente, essa é a razão por trás da omissão da chave, conforme
+  demonstrada no \cref{snippet:rust:foo-bar-baz-bad}. Essa chave -- que foi
+  capturada via \codesnippetinline{@close} -- tem sua regra de indentação
+  definida como o deslocamento da função \codesnippetinline{foo}, como mostra o
+  seguinte fragmento em linha do \cref{snippet:scheme:rust:1tbs-mod}:
   \codesnippetinline[scheme]{(#indent-offset! @close @fn)}. Para indentá-la,
   mais especificamente, para aplicar os caracteres que configuram sua
   indentação, o predicado \codesnippetinline{indent!} busca um nó irmão que
@@ -2180,10 +2181,11 @@
 
   \section{Resultados}
 
-  Conforme as seções anteriores, o algoritmo desenvolvido, que é fundamentado
-  no \treesitter, permite a formatação de código-fonte via as implementações
-  que estendem a biblioteca. Mais especificamente, em adição à base fornecida
-  pelo \treesitter, a formatação é proporcionada pelas:
+  Conforme demonstrado ao longo desse capítulo, o algoritmo desenvolvido, que é
+  fundamentado no \treesitter, permite a formatação -- multilíngue e
+  personalizada -- de código-fonte via as implementações que estendem a
+  biblioteca. Mais especificamente, em adição à base fornecida pelo
+  \treesitter, a formatação é proporcionada pelas:
   \begin{inparaenum}
     \item configurações, sendo elas
           \begin{inparaenum}
@@ -2203,10 +2205,15 @@
   desempenhar procedimentos básicos de formatação através do \witchcooking. Nos
   exemplos utilizados, é perceptível que o código-fonte submetido para
   formatação já possui uma organização razoável. Ou seja, a ferramenta foi
-  utilizada para realizar operações pontuais de formatação. Portanto, é
-  prudente supor que consultas mais complexas sejam necessárias para abranger
-  cenários mais realistas, nos quais não é possível presumir algo sobre a
-  estruturação inicial do código.
+  utilizada para realizar operações pontuais de formatação. Contudo, na
+  \cref{section:missing}, a partir de um cenário mais complexo de formatação,
+  foi apresentado um mau funcionamento na sincronização das extensões dos nós.
+  Conforme reportado, essa falha, que deriva de uma característica peculiar do
+  \treesitter, compromete o uso da ferramenta para efetuar procedimentos de
+  formatação mais robustos. Portanto, ao considerar cenários mais realistas,
+  nos quais não é possível presumir algo sobre a estruturação inicial do
+  código, não é prudente pressupor que consultas mais complexas sejam capazes
+  de abranger esses cenários sem ocasionar erros de sintaxe.
 
   Um dos principais elementos no \textit{prettyprinting} é o
   \textit{\gloss[short]{cpl}}, que se refere à quantidade máxima de caracteres
