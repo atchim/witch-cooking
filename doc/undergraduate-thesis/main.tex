@@ -2352,6 +2352,37 @@
       \item do seu nome.
     \end{inparaenum}
 
+    Uma vez que, antes de qualquer modificação ocorrer, foram avaliadas as
+    extensões de ambos os nós, ou seja,
+    \begin{inparaenum}
+      \item da função \codesnippetinline{foo} e
+      \item do seu nome,
+    \end{inparaenum}
+    é possível mensurar o efeito da sincronização de uma edição para cada um
+    deles. Para isso, é definida a edição ilustrada no
+    \cref{snippet:rust:ts-node-edit-demo-part-5}. Essa edição simula a inserção
+    do caractere de quebra de linha imediatamente após a palavra-chave
+    \codesnippetinline[rust]{fn} em: \codesnippetinline[rust]{fn foo() {}}.
+    É importante ressaltar que essa edição acontece:
+    \begin{inparaenum}
+      \item antes do nome da função \codesnippetinline{foo}, bem como
+      \item dentro dessa função.
+    \end{inparaenum}
+
+    Prosseguindo, conforme o \cref{snippet:rust:ts-node-edit-demo-part-6}, o
+    nó que representa nome da função \codesnippetinline{foo} é sincronizado
+    com a edição que simula a inserção da quebra de linha, mencionada
+    anteriormente. Em seguida, ainda nesse trecho, uma asserção é executada
+    para confirmar que a extensão desse nó refletiu essa edição. Já no
+    \cref{snippet:rust:ts-node-edit-demo-part-7}, os mesmos procedimentos do
+    trecho anterior são repetidos, com exceção de que:
+    \begin{inparaenum}
+      \item o nó sincronizado dessa vez é o nó que representa a própria função
+            e
+      \item a asserção feita verifica que esse nó não sofreu modificação em sua
+            extensão.
+    \end{inparaenum}
+
     \noindent
     \begin{minipage}[t]{\textwidth}
       \begin
@@ -2380,15 +2411,11 @@
         [rust]%
         {Demonstração da Sincronização de Nós do \treesitter em Rust Parte 2}%
         {ts-node-edit-demo-part-2}%
-        [%
-          autogobble=false,
-          firstnumber=last,
-          fontsize=\ABNTEXfontereduzida,
-          gobble=8,
-          lastline=4]
+        [autogobble=false,firstnumber=last,gobble=8,lastline=5]
           let mut fn_item = tree.root_node().child(0).unwrap();
           assert_eq!("function_item", fn_item.kind());
-          let mut fn_name = fn_item.child_by_field_name("name").unwrap();
+          let mut fn_name =
+            fn_item.child_by_field_name("name").unwrap();
           assert_eq!("identifier", fn_name.kind());
       \end{codesnippet}
       \vspace{-3ex}
@@ -2437,6 +2464,79 @@
               end_point: Point { row: 0, column: 6 },
             },
             fn_name.range(),
+          );
+      \end{codesnippet}
+      \vspace{-3ex}
+      \captionof*
+        {listing}
+        {\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+    \end{minipage}
+
+    \noindent
+    \begin{minipage}[t]{\textwidth}
+      \begin
+        {codesnippet}*%
+        [rust]%
+        {Demonstração da Sincronização de Nós do \treesitter em Rust Parte 5}%
+        {ts-node-edit-demo-part-5}%
+        [autogobble=false,firstnumber=last,gobble=8,lastline=8]
+          let nl_edit = InputEdit {
+            start_byte: 2,
+            old_end_byte: 2,
+            new_end_byte: 3,
+            start_position: Point { row: 0, column: 2 },
+            old_end_position: Point { row: 0, column: 2 },
+            new_end_position: Point { row: 1, column: 0 },
+          };
+      \end{codesnippet}
+      \vspace{-3ex}
+      \captionof*
+        {listing}
+        {\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+    \end{minipage}
+
+    \noindent
+    \begin{minipage}[t]{\textwidth}
+      \begin
+        {codesnippet}*%
+        [rust]%
+        {Demonstração da Sincronização de Nós do \treesitter em Rust Parte 6}%
+        {ts-node-edit-demo-part-6}%
+        [autogobble=false,firstnumber=last,gobble=8,lastline=10]
+          fn_name.edit(&nl_edit);
+          assert_eq!(
+            Range {
+              start_byte: 4,
+              end_byte: 7,
+              start_point: Point { row: 1, column: 1 },
+              end_point: Point { row: 1, column: 4 },
+            },
+            fn_name.range(),
+          );
+      \end{codesnippet}
+      \vspace{-3ex}
+      \captionof*
+        {listing}
+        {\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+    \end{minipage}
+
+    \noindent
+    \begin{minipage}[t]{\textwidth}
+      \begin
+        {codesnippet}*%
+        [rust]%
+        {Demonstração da Sincronização de Nós do \treesitter em Rust Parte 7}%
+        {ts-node-edit-demo-part-7}%
+        [autogobble=false,firstnumber=last,gobble=8,lastline=10]
+          fn_item.edit(&nl_edit);
+          assert_eq!(
+            Range {
+              start_byte: 0,
+              end_byte: 11,
+              start_point: Point { row: 0, column: 0 },
+              end_point: Point { row: 0, column: 11 },
+            },
+            fn_item.range(),
           );
       \end{codesnippet}
       \vspace{-3ex}
