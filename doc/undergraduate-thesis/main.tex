@@ -633,8 +633,8 @@
   elaborado para \textit{prettyprinting} que utilizava um par de corrotinas%
   \footnote
     { Na obra, os autores enfatizam que a implementação com o uso de corrotinas
-      é tão simples que poderia ser simulada -- sem grandes dificuldades -- em
-      linguagens que não possuíam suporte nativo para corrotinas
+      é tão simples que poderia ser simulada --- sem grandes dificuldades ---
+      em linguagens que não possuíam suporte nativo para corrotinas
       \cite[53]{hearn-1979-one}.}%
   :
   \begin{inparaenum}
@@ -775,10 +775,10 @@
   preestabelecidas para permitir a criação de gramáticas com diferentes níveis
   de complexidade. Não é surpreendente que, devido a essas características e
   facilidades presentes na criação de \textit{parsers}, exista uma variedade de
-  linguagens de programação e formatos de arquivos -- variando de linguagens
+  linguagens de programação e formatos de arquivos --- variando de linguagens
   com sintaxes complexas, como C++ e Perl, a formatos de arquivos mais
-  específicos, como \codesnippetinline{.vhs} e \codesnippetinline{.rasi} --, os
-  quais têm parsers gerados pelo \treesitter e, consequentemente, são
+  específicos, como \codesnippetinline{.vhs} e \codesnippetinline{.rasi} ---,
+  os quais têm parsers gerados pelo \treesitter e, consequentemente, são
   suportados pelo sistema.
 
   Na análise de código, é comum realizar tarefas que envolvem a busca de
@@ -794,10 +794,10 @@
     \item o uso de \textit{\gloss{wildcard}s}; e
     \item a ordenação de nós.
   \end{inparaenum}
-  Adicionalmente, é permitido o uso de predicados -- funções arbitrárias
+  Adicionalmente, é permitido o uso de predicados --- funções arbitrárias
   geralmente utilizadas para filtrar nós ou realizar verificações mais
-  complexas durante a busca de padrões --, sejam eles \textit{\gloss{builtin}s}
-  ou estendidos por meio de uma API.
+  complexas durante a busca de padrões ---, sejam eles
+  \textit{\gloss{builtin}s} ou estendidos por meio de uma API.
 
   Um exemplo da relevância e utilidade da linguagem de consulta é o plugin
   \textit{nvim-treesitter} \cite{nvim-treesitter-2023-nvim}, que é
@@ -865,11 +865,11 @@
   Tendo em vista
   \begin{inparaenum}
     \item as dificuldades mencionadas anteriormente, além da
-    \item complexidade envolvida no \textit{prettyprinting} --
-    \item agravada pela proposta de formatação multilíngue
+    \item complexidade envolvida no \textit{prettyprinting} ---
+    \item agravada pela proposta de formatação multilíngue ---,
   \end{inparaenum}
-  --, o \witchcooking foi concebido como um software de linha de comando --
-  de natureza prototípica -- para a formatação de código-fonte. A ferramenta
+  o \witchcooking foi concebido como um software de linha de comando --- de
+  natureza prototípica --- para a formatação de código-fonte. A ferramenta
   elaborada tem como objetivos:
   \begin{inparaenum}
     \item abranger uma gama de linguagens de programação e
@@ -892,8 +892,8 @@
     \item \codesnippetinline{[-l LANG]} é uma opção para explicitar a linguagem
           do código-fonte a ser formatado,
     \item \codesnippetinline{-q QUERY} é utilizado para definir o caminho para
-          o arquivo -- escrito na linguagem de consulta do \treesitter{} -- no
-          qual as instruções de formatação estão definidas, e
+          o arquivo --- escrito na linguagem de consulta do \treesitter{} ---
+          no qual as instruções de formatação estão definidas, e
     \item \codesnippetinline{[SRC]} é um argumento opcional para especificar o
           caminho para o arquivo a ser formatado.
   \end{inparaenum}
@@ -919,8 +919,8 @@
   \begin{inparaenum}
     \item seu gerenciamento de memória seguro%
           \footnote
-            { Embora Rust não apresente \textit{\gloss{garbage-collection}} --
-              o que contribui significativamente para o desempenho --, a
+            { Embora Rust não apresente \textit{\gloss{garbage-collection}} ---
+              o que contribui significativamente para o desempenho ---, a
               linguagem emprega \textit{features} e conceitos como
               \textit{borrow checker}, \textit{ownership} e \textit{lifetime},
               garantindo um gerenciamento de memória seguro. Isso é
@@ -987,8 +987,8 @@
 
   Embora o \treesitter não tenha sido originalmente projetado para formatação
   de código-fonte, o autor deste trabalho identificou o potencial da
-  biblioteca, particularmente em relação à sua linguagem de consulta, que --
-  como já ressaltado -- é extensível. Assim, para permitir a formatação
+  biblioteca, particularmente em relação à sua linguagem de consulta, que ---
+  como já ressaltado --- é extensível. Assim, para permitir a formatação
   instruída, o \witchcooking baseou-se na extensão e disponibilização de
   predicados designados a executar operações específicas de formatação. Em
   outras palavras, a concepção do autor era que a formatação ocorresse conforme
@@ -1007,7 +1007,7 @@
           \end{inparaenum}
           Complementarmente, foi feita
     \item uma pesquisa documental, que fundamentou a compreensão das
-          tecnologias e bibliotecas -- em especial, o \treesitter{} --
+          tecnologias e bibliotecas --- em especial, o \treesitter{} ---
           utilizadas no desenvolvimento do \witchcooking.
 
           À medida que se aprofundou o conhecimento sobre o \treesitter, foram
@@ -1051,10 +1051,10 @@
 
   Por exemplo, considere os \cref{snippet:c:add-two,snippet:rust:add-two},
   escritos nas linguagens de programação C e Rust, respectivamente. Embora
-  ambos desempenhem papéis idênticos -- i.e., definem uma função que retorna a
-  soma do parâmetro \codesnippetinline{x} com 2 --, suas árvores de sintaxe
-  analisadas -- apresentadas respectivamente nos
-  \cref{snippet:text:tree:c:add-two,snippet:text:tree:rust:add-two} -- exibem
+  ambos desempenhem papéis idênticos --- i.e., definem uma função que retorna a
+  soma do parâmetro \codesnippetinline{x} com 2 ---, suas árvores de sintaxe
+  analisadas --- apresentadas respectivamente nos
+  \cref{snippet:text:tree:c:add-two,snippet:text:tree:rust:add-two} --- exibem
   diferenças significativas. Portanto, para buscar a correspondência do trecho
   em que o parâmetro \textit{x} é definido em ambos os códigos (i.e.,
   \codesnippetinline
@@ -1250,8 +1250,8 @@
   fundamentado no \treesitter e sua linguagem de consulta. Esse algoritmo
   utiliza a biblioteca para gerar uma árvore de sintaxe a partir do
   código-fonte submetido pelo usuário. Adicionalmente, complementando os
-  predicados \textit{builtins} do \treesitter{} -- os quais foram concebidos
-  para a busca de padrões correspondentes --, o algoritmo inclui predicados
+  predicados \textit{builtins} do \treesitter{} --- os quais foram concebidos
+  para a busca de padrões correspondentes ---, o algoritmo inclui predicados
   desenvolvidos para executar procedimentos variados de formatação.
   Consequentemente, ao utilizar esses predicados nos padrões da consulta, é
   possível instruir a formatação de nós específicos da árvore de sintaxe.
@@ -1263,11 +1263,11 @@
     \item retorno,
   \end{inparaenum}
   como ilustrado na \cref{figure:algorithm-flowchart}.
-  Durante a etapa de inicialização -- onde estruturas são instanciadas --,
+  Durante a etapa de inicialização --- onde estruturas são instanciadas ---,
   primeiramente,
   \begin{inparaenum}
-    \item a árvore de sintaxe -- derivada do código-fonte submetido para
-          formatação -- é analisada. Em seguida,
+    \item a árvore de sintaxe --- derivada do código-fonte submetido para
+          formatação --- é analisada. Em seguida,
     \item um objeto%
           \footnote
             { Neste contexto, o termo ``objeto'' é utilizado como uma
@@ -1285,16 +1285,16 @@
           Além disso,
     \item é instanciada uma estrutura editora que contém:
           \begin{inparaenum}
-            \item o texto do código-fonte em edição -- originado do código
-                  submetido pelo usuário --, juntamente com
+            \item o texto do código-fonte em edição --- originado do código
+                  submetido pelo usuário ---, juntamente com
             \item um vetor de edições.
           \end{inparaenum}
           Essa estrutura é utilizada pelos predicados para realizar edições no
           código. Na sequência,
     \item é inicializado um objeto de configurações, que é futuramente
           empregado pelos predicados para obter e definir configurações em
-          diferentes níveis de escopo, sejam eles globais -- i.e., abrangendo
-          toda a consulta -- ou locais -- i.e., restrito a um padrão.
+          diferentes níveis de escopo, sejam eles globais --- i.e., abrangendo
+          toda a consulta --- ou locais --- i.e., restrito a um padrão.
           Finalizando a etapa de inicialização,
     \item a estrutura de correspondências é derivada:
           \begin{inparaenum}
@@ -1326,17 +1326,17 @@
           corpo dessa estrutura de repetição,
     \item são aplicadas as configurações especificadas no padrão via o
           predicado \textit{builtin} \codesnippetinline{set!}. Além disso,
-    \item são aplicados os predicados gerais -- i.e., predicados
-          não \textit{builtins} -- especificados no padrão em iteração.
+    \item são aplicados os predicados gerais --- i.e., predicados não
+          \textit{builtins} --- especificados no padrão em iteração.
           Pressupõe-se que esses predicados estejam dentre os providos pelo
           \witchcooking para instruir a formatação.
 
           Encerrando o \cref{item:nodes-loop} e, subsequentemente, o
           \cref{item:pattern-loop}, bem como a etapa de formatação como um
           todo,
-    \item as configurações locais -- i.e, configurações a nível de
-          correspondência -- são redefinidas para seus valores padrões. Logo em
-          seguida,
+    \item as configurações locais --- i.e, configurações a nível de
+          correspondência --- são redefinidas para seus valores padrões. Logo
+          em seguida,
     \item é interrompido o \cref{item:nodes-loop} caso o padrão em iteração não
           seja enraizado.
   \end{inparaenum}
@@ -1653,15 +1653,15 @@
           configurada a cada nó capturado pelos argumentos passados.
   \end{inparaenum}
 
-  Finalmente, ao aplicar uma consulta mais sofisticada -- exemplificada no
-  \cref{snippet:scheme:rust:fn-body-items-sep-with-indent} -- ao
+  Finalmente, ao aplicar uma consulta mais sofisticada --- exemplificada no
+  \cref{snippet:scheme:rust:fn-body-items-sep-with-indent} --- ao
   \cref{snippet:rust:let-decl-cluster}, obtém-se o código-fonte formatado
   conforme ilustrado no \cref{snippet:rust:proper-indent}. Nesse código,
   observa-se que:
   \begin{inparaenum}
     \item os blocos de código foram preservados, bem como
     \item as \textit{let declarations} foram desaglomeradas em suas respectivas
-          linhas -- e com a devida indentação --,
+          linhas --- e com a devida indentação ---,
   \end{inparaenum}
   atendendo às expectativas de formatação.
 
@@ -1686,14 +1686,14 @@
   No decorrer da exemplificação do uso do predicado \codesnippetinline{space!}
   com a configuração de argumentos mais avançada, foi introduzida a
   configuração \codesnippetinline{indent-rule}. Essa configuração determina a
-  regra de indentação para uma captura específica -- i.e., a designação de
-  uma captura é obrigatória para essa configuração. Através do predicado
+  regra de indentação para uma captura específica --- i.e., a designação de uma
+  captura é obrigatória para essa configuração. Através do predicado
   \codesnippetinline{set!}, é possível especificar os seguintes tipos valores
   para a configuração \codesnippetinline{indent-rule}.
 
   Primeiramente,
   \begin{inparaenum}
-    \item pode ser definido um inteiro não negativo -- sem sinal. Esse valor
+    \item pode ser definido um inteiro não negativo --- sem sinal. Esse valor
           denota o nível de indentação absoluto para a captura em questão. Em
           outras palavras:
           \begin{inparaenum}
@@ -1737,7 +1737,7 @@
           \end{lrbox}
 
           Além disso,
-    \item pode ser especificado um inteiro positivo -- com sinal. Esse número
+    \item pode ser especificado um inteiro positivo --- com sinal. Esse número
           configura o nível de indentação adicional para os nós capturados,
           relativo ao deslocamento apresentado pelos pais desses nós. Dessa
           forma:
@@ -1779,16 +1779,17 @@
           para calcular o número de caracteres pelo qual os nós capturados
           devem recuar em relação ao deslocamento dos seus pais. Esse cálculo
           é efetuado multiplicando-se o módulo do valor passado pela quantidade
-          de caracteres que o estilo de indentação -- definido via
-          \codesnippetinline{indent-style} -- contém. Por exemplo, considerando
-          que o deslocamento dos nós pais é de 4 caracteres e que o estilo de
-          indentação foi definido como \codesnippetinline{"  "} (dois espaços):
+          de caracteres que o estilo de indentação --- definido via
+          \codesnippetinline{indent-style} --- contém. Por exemplo,
+          considerando que o deslocamento dos nós pais é de 4 caracteres e que
+          o estilo de indentação foi definido como \codesnippetinline{"  "}
+          (dois espaços):
           \begin{inparaenum}
             \item se -1 for passado, os nós capturados recuarão 2 caracteres e
                   seu deslocamento será de 2 caracteres;
             \item se o valor for -2, o recuo dos nós capturados será de 4
                   caracteres, e o deslocamento desses nós será de 0 caracteres
-                  -- i.e., início da linha --; por fim,
+                  --- i.e., início da linha ---; por fim,
             \item se o número especificado for -3, ocorrerá um erro, pois o
                   recuo calculado de 6 caracteres será maior que o deslocamento
                   dos nós pais, que é de apenas 4 caracteres.
@@ -1827,8 +1828,8 @@
           \end{inparaenum}
           Dentre essas capturas,
     \item \codesnippetinline{item} tem sua regra de indentação especificada
-          como um nível de indentação além do deslocamento do nó pai -- i.e., a
-          própria função --; e
+          como um nível de indentação além do deslocamento do nó pai --- i.e.,
+          a própria função ---; e
     \item \codesnippetinline{close} tem sua regra de indentação definida como o
           deslocamento de \codesnippetinline{fn} por meio do uso do predicado
           \codesnippetinline{indent-offset!}. Concluindo, ao final do segundo
@@ -2118,8 +2119,8 @@
   Atualmente, esse predicado executa a indentação com base somente na linha
   inicial do nó em procedimento. Como resultado, ao aplicar a indentação à
   função \codesnippetinline{bar} no \cref{snippet:rust:foo-bar-baz-step-1}, o
-  conteúdo dessa função -- a expressão de função
-  \codesnippetinline[rust]{baz()} -- que está em outra linha, permanece
+  conteúdo dessa função --- a expressão de função
+  \codesnippetinline[rust]{baz()} --- que está em outra linha, permanece
   inalterado. Contudo, seria mais coerente se a indentação ocorresse em bloco,
   ou seja, o deslocamento seria aplicado para cada linha abrangida pelo nó em
   questão. Com essa melhoria, ao aplicar a consulta do
@@ -2169,8 +2170,8 @@
   aninhadas, durante o processo de formatação, ao sincronizar um nó, há uma
   probabilidade considerável de que ele apresente uma extensão corrompida. Não
   surpreendentemente, essa é a razão por trás da omissão da chave, conforme
-  demonstrada no \cref{snippet:rust:foo-bar-baz-bad}. Essa chave -- que foi
-  capturada via \codesnippetinline{@close} -- tem sua regra de indentação
+  demonstrada no \cref{snippet:rust:foo-bar-baz-bad}. Essa chave --- que foi
+  capturada via \codesnippetinline{@close} --- tem sua regra de indentação
   definida como o deslocamento da função \codesnippetinline{foo}, como mostra o
   seguinte fragmento em linha do \cref{snippet:scheme:rust:1tbs-mod}:
   \codesnippetinline[scheme]{(#indent-offset! @close @fn)}. Para indentá-la,
@@ -2189,8 +2190,8 @@
   \section{Resultados}
 
   Conforme demonstrado ao longo desse capítulo, o algoritmo desenvolvido, que é
-  fundamentado no \treesitter, permite a formatação -- multilíngue e
-  personalizada -- de código-fonte via as implementações que estendem a
+  fundamentado no \treesitter, permite a formatação --- multilíngue e
+  personalizada --- de código-fonte via as implementações que estendem a
   biblioteca. Mais especificamente, em adição à base fornecida pelo
   \treesitter, a formatação é proporcionada pelas:
   \begin{inparaenum}
@@ -2291,8 +2292,8 @@
     é executado para criar um novo pacote executável \textit{Cargo}, que será
     utilizado para a demonstração. Em seguida, o comando
     \codesnippetinline[sh]{cd ts-node-edit} é executado para navegar até o
-    diretório recém-criado. Nesse diretório, para adicionar as dependências --
-    i.e., as bibliotecas -- necessárias, é executado o seguinte comando:
+    diretório recém-criado. Nesse diretório, para adicionar as dependências ---
+    i.e., as bibliotecas --- necessárias, é executado o seguinte comando:
     \codesnippetinline[sh]{cargo add tree-sitter{,-rust}}. Dessa forma, a
     configuração inicial é concluída.
 
