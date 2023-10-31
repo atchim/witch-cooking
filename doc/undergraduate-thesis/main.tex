@@ -147,23 +147,23 @@
     \end{center}}
 \makeatother
 
-%%%%%%%%%%
-%%%% TOC %
-%%%%%%%%%%
+%%%%%%%%%
+%%% TOC %
+%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+%%%% Settings %
+%%%%%%%%%%%%%%%
 
 \setlength{\cftlastnumwidth}{\cftsectionnumwidth}
 
-\cftsetindents{part}{0em}{\cftlastnumwidth}
 \cftsetindents{chapter}{0em}{\cftlastnumwidth}
+\cftsetindents{part}{0em}{\cftlastnumwidth}
 \cftsetindents{section}{0em}{\cftlastnumwidth}
-\cftsetindents{subsection}{0em}{\cftlastnumwidth}
-\cftsetindents{subsubsection}{0em}{\cftlastnumwidth}
-\cftsetindents{paragraph}{0em}{\cftlastnumwidth}
-\cftsetindents{subparagraph}{0em}{\cftlastnumwidth}
 
-\renewcommand
-  {\tocprintchapter}
-  {\addtocontents{toc}{\cftsetindents{chapter}{0em}{\cftlastnumwidth}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Command Redefinition %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \renewcommand
   {\tocinnonumchapter}
@@ -172,20 +172,18 @@
     \cftinserthook{toc}{A}}
 
 \renewcommand
-  {\tocprintchapternonum}
-  {\addtocontents{toc}{\cftsetindents{chapter}{\cftlastnumwidth}{2em}}}
-
-\renewcommand
   {\tocpartapendices}
   {%
     \addtocontents{toc}{\cftsetindents{part}{\cftlastnumwidth}{2em}}
     \cftinserthook{toc}{A}}
 
 \renewcommand
-  {\tocpartanexos}
-  {%
-    \addtocontents{toc}{\cftsetindents{part}{\cftlastnumwidth}{2em}}
-    \cftinserthook{toc}{A}}
+  {\tocprintchapter}
+  {\addtocontents{toc}{\cftsetindents{chapter}{0em}{\cftlastnumwidth}}}
+
+\renewcommand
+  {\tocprintchapternonum}
+  {\addtocontents{toc}{\cftsetindents{chapter}{\cftlastnumwidth}{2em}}}
 
 \renewcommand{\cftchapterfont}{\bfseries}
 \renewcommand{\cftchapterpagefont}{\cftchapterfont}
