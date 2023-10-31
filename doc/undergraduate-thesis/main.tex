@@ -2376,14 +2376,34 @@
     nó que representa nome da função \codesnippetinline{foo} é sincronizado
     com a edição que simula a inserção da quebra de linha, mencionada
     anteriormente. Em seguida, ainda nesse trecho, uma asserção é executada
-    para confirmar que a extensão desse nó refletiu essa edição. Já no
-    \cref{snippet:rust:ts-node-edit-demo-part-7}, os mesmos procedimentos do
-    trecho anterior são repetidos, com exceção de que:
+    para confirmar que a extensão desse nó refletiu essa edição. Já no trecho
+    \ref{snippet:rust:ts-node-edit-demo-part-7}, finalizando o código, os
+    mesmos procedimentos do trecho anterior são repetidos, com exceção de que:
     \begin{inparaenum}
       \item o nó sincronizado dessa vez é o nó que representa a própria função
             e
       \item a asserção feita verifica que esse nó não sofreu modificação em sua
             extensão.
+    \end{inparaenum}
+
+    Concluindo, para executar o projeto e constatar os resultados, é possível
+    executar o comando: \codesnippetinline[sh]{cargo run}. Ao fazê-lo,
+    observa-se que o código de execução 0 foi retornado, ou seja, a execução
+    foi um sucesso. Isso implica que todas as asserções feitas no código eram
+    verdadeiras. Por sua vez, as asserções feitas nos
+    \cref
+      {%
+        snippet:rust:ts-node-edit-demo-part-6,%
+        snippet:rust:ts-node-edit-demo-part-7}
+    provaram que, com base na edição do
+    \cref{snippet:rust:ts-node-edit-demo-part-5}:
+    \begin{inparaenum}
+      \item ao sincronizar o nó representando o nome da função, localizado
+            após a extensão da edição feita, o nó apresentou a extensão
+            esperada, assim, refletindo a edição; já
+      \item ao sincronizar o nó remetendo à própria função, cuja extensão
+            englobava a edição feita, esse nó não apresentou alguma modificação
+            em sua extensão, fatalmente, não refletindo a edição feita.
     \end{inparaenum}
 
     \noindent
