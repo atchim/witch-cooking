@@ -168,31 +168,38 @@
 \renewcommand
   {\tocinnonumchapter}
   {%
-    \addtocontents{toc}{\cftsetindents{chapter}{\cftlastnumwidth}{0em}}
+    \addtocontents{toc}{\cftsetindents{chapter}{\cftlastnumwidth}{2em}}
     \cftinserthook{toc}{A}}
 
 \renewcommand
   {\tocprintchapternonum}
-  {\addtocontents{toc}{\cftsetindents{chapter}{\cftlastnumwidth}{0em}}}
+  {\addtocontents{toc}{\cftsetindents{chapter}{\cftlastnumwidth}{2em}}}
 
 \renewcommand
   {\tocpartapendices}
   {%
-    \addtocontents{toc}{\cftsetindents{part}{\cftlastnumwidth}{0em}}
+    \addtocontents{toc}{\cftsetindents{part}{\cftlastnumwidth}{2em}}
     \cftinserthook{toc}{A}}
 
 \renewcommand
   {\tocpartanexos}
   {%
-    \addtocontents{toc}{\cftsetindents{part}{\cftlastnumwidth}{0em}}
+    \addtocontents{toc}{\cftsetindents{part}{\cftlastnumwidth}{2em}}
     \cftinserthook{toc}{A}}
 
 \renewcommand{\cftchapterfont}{\bfseries}
 \renewcommand{\cftchapterpagefont}{\cftchapterfont}
-\renewcommand{\cftsectionfont}{\cftchapterfont\ABNTEXfontereduzida}
+\renewcommand{\cftpartfont}{\bfseries}
+\renewcommand{\cftpartpagefont}{\cftpartfont}
+\renewcommand{\cftsectionfont}{\cftchapterfont}
 \renewcommand{\cftsectionpagefont}{\cftsectionfont}
 
+\renewcommand{\backmatter}{}
 \renewcommand{\postextual}{}
+
+\makeatletter
+\renewcommand{\partapendices}{\tocpartapendices\appendixpage}
+\makeatother
 
 %%%%%%%%%%%%%%%%%%
 %%% Bibliography %
@@ -2158,7 +2165,7 @@
   predicados devem sincronizar os nós para que suas extensões estejam
   consoantes ao código vigente em processo de formatação.
 
-  Como demonstrado no \cref{appendice:ts-sync-proof}, ao sincronizar um nó, o
+  Como demonstrado no \cref{appendix:ts-sync-proof}, ao sincronizar um nó, o
   \treesitter não contabiliza edições tangentes à extensão desse nó.
   Consequentemente, especialmente em cenários que apresentam estruturas
   aninhadas, durante o processo de formatação, ao sincronizar um nó, há uma
@@ -2268,7 +2275,7 @@
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     \chapter{Sincronizando Nós do \treesitter}
-    \label{appendice:ts-sync-proof}
+    \label{appendix:ts-sync-proof}
 
     Na \cref{section:missing}, foi mencionado que, ao sincronizar um nó, a
     biblioteca \treesitter não contabiliza as edições ocorridas que tangem a
