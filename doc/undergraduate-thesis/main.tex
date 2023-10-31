@@ -97,10 +97,18 @@
     \textit
       {%
         Curso Técnico em Análise e Desenvolvimento de Sistemas do Instituto
-        Federal de Educação, Ciência e Tecnologia da Bahia – Campus Irecê}%
+        Federal de Educação, Ciência e Tecnologia da Bahia --- Campus Irecê}%
     , como requisito parcial para obtenção do diploma de
     \textit{Técnico em Análise e Desenvolvimento de Sistemas}, mediante a
     orientação do professor \imprimirorientador.}
+
+%%%%%%%%%%%%%
+%%%% Dashes %
+%%%%%%%%%%%%%
+
+\renewcommand{\ABNTEXcaptiondelim}{~\textemdash~}
+\captiondelim{\ABNTEXcaptiondelim}
+\cftinsertcode{A}{\renewcommand{\cftchapteraftersnum}{\hfill\textemdash\hfill}}
 
 %%%%%%%%%%%%%%%%%%%
 %%%% IFBA's Cover %
@@ -245,7 +253,7 @@
     frame hidden,
     label={snippet:#2:#4},
     label type=listing,
-    list entry={Trecho de Código \thetcbcounter{} -- #3},
+    list entry={Trecho de Código \thetcbcounter{} --- #3},
     listing engine=minted,
     listing only,
     minted language=#2,
@@ -268,7 +276,7 @@
           ([xshift=\IfBooleanTF{#1}{2.5}{2}em]frame.north west);
         \end{tcbclipinterior}},
     sharp corners,
-    title={Trecho de Código \thetcbcounter{} -- #3},
+    title={Trecho de Código \thetcbcounter{} --- #3},
     #6}
 
 %%%%%%%%%%%%%
@@ -286,9 +294,9 @@
     frame hidden,
     label={figure:#2},
     label type=figure,
-    list entry={Figura \thetcbcounter{} -- #1},
+    list entry={Figura \thetcbcounter{} --- #1},
     sharp corners,
-    title={Figura \thetcbcounter{} -- #1},
+    title={Figura \thetcbcounter{} --- #1},
     #3}
   {#4}
 
