@@ -2297,43 +2297,46 @@
       \item \textit{tree-sitter-rust}.
     \end{inparaenum}
 
-    Primeiramente, o comando \codesnippetinline[sh]{cargo new ts-node-edit}
-    é executado para criar um novo pacote executável \textit{Cargo}, que será
-    utilizado para a demonstração. Em seguida, o comando
-    \codesnippetinline[sh]{cd ts-node-edit} é executado para navegar até o
-    diretório recém-criado. Nesse diretório, para adicionar as dependências ---
-    i.e., as bibliotecas --- necessárias, é executado o seguinte comando:
-    \codesnippetinline[sh]{cargo add tree-sitter{,-rust}}. Dessa forma, a
-    configuração inicial é concluída.
+    Primeiramente, para criar um novo projeto, é possível executar o seguinte
+    comando: \codesnippetinline[sh]{cargo new ts-node-edit}. Esse comando cria
+    um novo pacote executável \textit{Cargo}, nomeado de
+    \codesnippetinline{ts-node-edit}, que será usado para realizar os
+    procedimentos dessa demonstração. Em seguida, para navegar ao diretório
+    recém-criado, com o mesmo nome do projeto, pode ser executado o seguinte
+    comando: \codesnippetinline[sh]{cd ts-node-edit}. Dentro desse diretório,
+    para adicionar as dependências --- i.e., as bibliotecas --- necessárias, é
+    possível executar o seguinte comando em linha:
+    \codesnippetinline[sh]{cargo add tree-sitter{,-rust}}. Após a execução
+    desses comandos, a configuração inicial é concluída.
 
     Para escrever o código, é necessário editar o arquivo localizado no
     seguinte caminho: \codesnippetinline{src/main.rs}. A seguir, serão
-    mostrados e explicados os trechos que compõe o código da demonstração. Essa
-    abordagem fragmentada foi adotada por dois motivos:
+    mostrados e explicados os trechos de código que compõe esse arquivo. Essa
+    abordagem fragmentada foi adotada por dois motivos principais:
     \begin{inparaenum}
       \item explicar os procedimentos na ordem de execução, e
       \item evitar problemas de formatação neste documento.
     \end{inparaenum}
 
-    Conforme ilustrado no \cref{snippet:rust:ts-node-edit-demo-part-1}, na
-    primeira linha,
+    Conforme ilustrado no \cref{snippet:rust:ts-node-edit-demo-part-1},
+    primeiramente,
     \begin{inparaenum}
       \item são importados alguns itens da biblioteca \treesitter que são
-            utilizados nessa demonstração. Já na linha 3,
+            utilizados nessa demonstração. Em seguida,
       \item inicia-se a função principal, que engloba todos os procedimentos.
-            Em seguida,
+            Dentro dessa função, inicialmente,
       \item é definido a string do código-fonte usado como referência na
             demonstração: \codesnippetinline[rust]{fn foo() {}}. Além disso,
-            da linha 5 a 7,
+            nas próximas linhas,
       \item são realizados procedimentos para gerar a árvore de sintaxe a
             partir da análise do código-fonte definido anteriormente.
     \end{inparaenum}
 
     Continuando, no \cref{snippet:rust:ts-node-edit-demo-part-2}, observa-se
-    que na linha 8,
+    que: primeiramente,
     \begin{inparaenum}
       \item é obtido um nó que supostamente remete à função
-            \codesnippetinline{foo}. Logo na linha seguinte,
+            \codesnippetinline{foo}. Logo na sequência,
       \item essa suposição é validada por uma asserção. Já nas linhas
             subsequentes,
       \item são realizados procedimentos similares, porém buscando o nó que
