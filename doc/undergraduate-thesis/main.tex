@@ -82,8 +82,8 @@
 
 \titulo
   {%
-    \witchcooking: Formatação de Código via Linguagem de Consulta do
-    \treesitter}
+    \witchcooking: Formatação Personalizada de Código-Fonte via Linguagem de
+    Consulta do \treesitter}
 \autor{Átila Gama Silva}
 \local{Irecê}
 \data{\the\year}
@@ -498,55 +498,37 @@
   Consequentemente, a formatação é frequentemente utilizada para estabelecer um
   nível satisfatório de legibilidade em bases de código.
 
-  A formatação de código pode ser realizada manualmente pelo programador,
-  embora esse processo possa ser demorado, especialmente em grandes bases de
-  código, exigindo do programador um tempo que poderia ser empregado em outra
-  tarefa. Além disso, a formatação manual também pode ser falha e inconsistente
-  devido à suscetibilidade humana ao erro, podendo ser agravada quando há
-  múltiplos programadores em uma base de código.
+  Para evitar os problemas inerentes à formatação manual, é comum recorrer a
+  softwares que automatizam deterministicamente esse processo, garantindo que o
+  código seja padronizado e consistente. No entanto, essas ferramentas são
+  normalmente restritas a uma linguagem específica ou a uma família de
+  linguagens de programação. Além disso, essas ferramentas costumam oferecer
+  uma quantidade limitada de configurações de estilização, dificultando a
+  personalização pelo usuário. Isso é especialmente agravado em formatadores
+  opinativos, onde um estilo é rigorosamente imposto.
 
-  Para evitar os problemas inerentes da formatação manual, é comum a utilização
-  de softwares que automatizam a formatação de forma determinística, tornando o
-  código padronizado e consistente. No entanto, é comum que essas ferramentas
-  de formatação sejam limitadas a uma linguagem ou a uma família de linguagens
-  de programação. Além disso, algumas delas são opinativas, assim restringindo
-  as possibilidades de personalização pelo usuário. Finalmente, é também comum
-  que essas ferramentas de formatação não permitam que o usuário defina estilos
-  de formatação personalizados.
-
-  Em ambientes de desenvolvimento modernos, além da utilização de ferramentas
-  que automatizam a formatação de código, é também comum a utilização do
-  \treesitter \cite{tree-sitter-2018-tree}: um sistema de análise sintática de
-  código aberto que foi disponibilizado ao público geral no GitHub
-  primeiramente em 2019, tendo sido inicialmente desenvolvido por Max
-  Brunsfeld. Desde seu lançamento, o \treesitter tem ganhado popularidade na
-  comunidade de desenvolvedores devido dentre outros motivos à:
+  Com o intuito de superar ou reduzir as limitações previamente mencionadas,
+  frequentemente presentes nas ferramentas convencionais de formatação, o
+  objetivo geral deste trabalho é desenvolver um software prototípico para a
+  formatação de código-fonte. Nomeado de \witchcooking \cite{silva-2023-witch},
+  o software foi concebido com base no \treesitter
+  \cite{tree-sitter-2023-tree}: um sistema de análise sintática de código
+  aberto. Mediante esse sistema, o \witchcooking tem como objetivos:
   \begin{inparaenum}
-    \item sua capacidade de suportar várias linguagens de programação; além de
-    \item sua linguagem de consulta, a qual permite a realização de buscas
-          complexas na árvore analisada de um código-fonte.
-  \end{inparaenum}
-
-  Visando superar ou reduzir as limitações previamente mencionadas, que são
-  frequentemente presentes nas ferramentas convencionais de formatação, este
-  trabalho tem como objetivo geral desenvolver um software prototípico para a
-  formatação de código. A ferramenta desenvolvida, nomeada de \witchcooking
-  \cite{silva-2023-witch}, tem como objetivos:
-  \begin{inparaenum}
-    \item abranger uma gama de linguagens de programação, além de
-    \item permitir que o usuário defina seus estilos personalizados de
-          formatação.
+    \item abranger uma gama de linguagens de programação, e
+    \item proporcionar a formatação personalizada via a linguagem de consulta
+          do \treesitter.
   \end{inparaenum}
 
   Para alcançar o objetivo geral proposto, este trabalho tem como objetivos
   específicos:
   \begin{inparaenum}
-    \item apresentar e contextualizar ferramentas de formatação de código
-          conceituadas, além de abordar seus métodos de formatação;
-    \item conceituar, contextualizar e abordar as tecnologias do sistema
-          \treesitter; e, por fim,
-    \item utilizar o \treesitter para desenvolver e atender às aspirações do
-          \witchcooking.
+    \item desenvolver um algoritmo de formatação fundamentado no \treesitter;
+    \item definir configurações de estilização para o predicado
+          \codesnippetinline{set!}, nativo da linguagem de consulta do
+          \treesitter; e
+    \item estender os predicados embutidos da linguagem de consulta,
+          proporcionando predicados basais para a formatação.
   \end{inparaenum}
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -960,7 +942,7 @@
   \end{inparaenum}
 
   Para atender a seus objetivos, o \witchcooking foi desenvolvido com base na
-  biblioteca \treesitter \cite{tree-sitter-2018-tree}, a qual:
+  biblioteca \treesitter \cite{tree-sitter-2023-tree}, a qual:
   \begin{inparaenum}
     \item suporta uma ampla variedade de linguagens de programação e formatos
           de arquivos, além de
