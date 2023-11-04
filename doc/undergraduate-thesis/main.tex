@@ -1063,7 +1063,7 @@
   analisadas --- apresentadas respectivamente nos
   \cref{snippet:text:tree:c:add-two,snippet:text:tree:rust:add-two} --- exibem
   diferenças significativas. Portanto, para buscar a correspondência do trecho
-  em que o parâmetro \textit{x} é definido em ambos os códigos (i.e.,
+  em que o parâmetro \textit{x} é definido em ambos os códigos --- i.e.,
   \codesnippetinline
     [c]
     $int add_two(|\colorbox{codehighlight}{int x}|) {$
@@ -1072,8 +1072,8 @@
   \codesnippetinline
     [rust]
     $fn add_two(|\colorbox{codehighlight}{x: i32}|) -> i32 {$
-    [escapeinside=||]%
-  ), são necessárias consultas distintas, apresentadas pelos
+    [escapeinside=||]
+  ---, são necessárias consultas distintas, apresentadas pelos
   \cref{snippet:scheme:c:param-query,snippet:scheme:rust:param-query}.
 
   Dado que os padrões correspondem a qualquer uma de suas ocorrências, é
@@ -1444,7 +1444,7 @@
           operação;
     \item capturar nós que
           \begin{inparaenum}
-            \item sejam alvos do procedimento (i.e., serão formatados) ou
+            \item sejam alvos do procedimento --- i.e., serão formatados --- ou
             \item auxiliarão nas operações;
           \end{inparaenum}
     \item opcionalmente, aplicar configurações via o predicado
