@@ -6,7 +6,21 @@
 #![allow(dead_code)]
 #![deny(elided_lifetimes_in_paths, missing_docs)]
 
-#[cfg(not(any(feature = "rust")))]
+#[cfg(not(any(
+  feature = "bash",
+  feature = "c",
+  feature = "cpp",
+  feature = "go",
+  feature = "html",
+  feature = "java",
+  feature = "javascript",
+  feature = "markdown",
+  feature = "ocaml",
+  feature = "python",
+  feature = "rust",
+  feature = "svelte",
+  feature = "toml",
+)))]
 compile_error!("no language to support");
 
 mod cli;
