@@ -1479,9 +1479,9 @@
             \item caso ambos forem ausentes, o intervalo de não operação é
                   nulo. Além disso,
             \item quando o intervalo de não operação é definido, a separação
-                  dos nós é evitada se a sequência de caracteres atual entre
-                  eles contiver uma quantidade de \codesnippetinline{sep} que
-                  esteja dentro do intervalo especificado.
+                  dos nós é evitada se a sequência de caracteres entre eles
+                  contiver uma quantidade de \codesnippetinline{sep} que esteja
+                  dentro do intervalo especificado.
           \end{inparaenum}
   \end{inparaenum}
 
@@ -1782,10 +1782,10 @@
           Encerrando, dentre os diferentes tipos de valores aceitos pela
           configuração de regra de indentação (\codesnippetinline{indent-rule})
           via o predicado \codesnippetinline{set!},
-    \item pode ser passado um inteiro negativo. Atualmente, esse valor é usado
-          para calcular o número de caracteres pelo qual os nós capturados
-          devem recuar em relação ao deslocamento dos seus pais. Esse cálculo
-          é efetuado multiplicando-se o módulo do valor passado pela quantidade
+    \item pode ser passado um inteiro negativo. Esse valor é usado para
+          calcular o número de caracteres pelo qual os nós capturados devem
+          recuar em relação ao deslocamento dos seus pais. Esse cálculo é
+          efetuado multiplicando-se o módulo do valor passado pela quantidade
           de caracteres que o estilo de indentação --- definido via
           \codesnippetinline{indent-style} --- contém. Por exemplo,
           considerando que o deslocamento dos nós pais é de 4 caracteres e que
@@ -2076,8 +2076,8 @@
   que a envolve. Esse problema decorre do cálculo de indentação executado pelo
   predicado \codesnippetinline{indent!}.
 
-  Conforme já explicado, na implementação atual, quando é estabelecida uma
-  regra de indentação relativa positiva para um nó, o cálculo é baseado:
+  Conforme já explicado, quando é estabelecida uma regra de indentação relativa
+  positiva para um nó, o cálculo é baseado:
   \begin{inparaenum}
     \item no deslocamento do primeiro caractere não espaço encontrado na linha
           do pai desse nó, e não
@@ -2123,16 +2123,15 @@
   \end{minipage}
 
   Outro ponto passível de aprimoramento é a própria aplicação da indentação,
-  que é também realizada pelo predicado \codesnippetinline{indent!}.
-  Atualmente, esse predicado executa a indentação com base somente na linha
-  inicial do nó em procedimento. Como resultado, ao aplicar a indentação à
-  função \codesnippetinline{bar} no \cref{snippet:rust:foo-bar-baz-step-1}, o
-  conteúdo dessa função --- a expressão de função
-  \codesnippetinline[rust]{baz()} --- que está em outra linha, permanece
-  inalterado. Contudo, seria mais coerente se a indentação ocorresse em bloco,
-  ou seja, o deslocamento seria aplicado para cada linha abrangida pelo nó em
-  questão. Com essa melhoria, ao aplicar a consulta do
-  \cref{snippet:scheme:rust:1tbs-mod} ao
+  que é também realizada pelo predicado \codesnippetinline{indent!}. Esse
+  predicado executa a indentação com base somente na linha inicial do nó em
+  procedimento. Como resultado, ao aplicar a indentação à função
+  \codesnippetinline{bar} no \cref{snippet:rust:foo-bar-baz-step-1}, o conteúdo
+  dessa função --- a expressão de função \codesnippetinline[rust]{baz()} ---
+  que está em outra linha, permanece inalterado. Contudo, seria mais coerente
+  se a indentação ocorresse em bloco, ou seja, o deslocamento seria aplicado
+  para cada linha abrangida pelo nó em questão. Com essa melhoria, ao aplicar a
+  consulta do \cref{snippet:scheme:rust:1tbs-mod} ao
   \cref{snippet:rust:foo-bar-baz-step-1-hipo}, o resultado seria o conteúdo
   ilustrado no \cref{snippet:rust:foo-bar-baz-step-2-hipo}. Uma vez que esse
   código segue a variante do estilo \textit{1TBS}, o teste teria seu objeto
@@ -2236,8 +2235,8 @@
   Concluindo, ainda na \cref{section:limitations}, a partir da exemplificação
   do predicado \codesnippetinline{indent!}, foram discutidos:
   \begin{inparaenum}
-    \item as limitações da implementação atual desse predicado ao aplicar
-          diferentes regras de indentação, além de
+    \item as limitações desse predicado ao aplicar diferentes regras de
+          indentação, além de
     \item possíveis melhorias para tornar essas aplicações mais coerentes,
           sobretudo ao indentar nós que abrangem múltiplas linhas.
   \end{inparaenum}
