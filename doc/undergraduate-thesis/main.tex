@@ -631,7 +631,10 @@
   implementava o algoritmo \textit{recursive re-predictor}, que, como descrito
   por \textcite{goldstein-1973-pretty}, percorria a árvore de nós representando
   as listas e imprimia os nós considerando seus tamanhos e a quantidade máxima
-  de caracteres que ainda poderiam ser inseridos em uma linha.
+  de caracteres que ainda poderiam ser inseridos em uma linha. Isso era
+  especialmente relevante, uma vez que os sistemas de computação daquela época
+  apresentavam restrições técnicas quanto à quantidade máxima de caracteres em
+  uma linha (\textit{\gloss[short]{cpl}}) \cite{wiki-2023-characters}.
 
   Posteriormente, \textcite{hearn-1979-one} propuseram um algoritmo mais
   elaborado para \textit{prettyprinting} que utilizava um par de corrotinas%
@@ -2230,8 +2233,8 @@
   complexas sejam capazes de abranger esses cenários sem ocasionar erros de
   sintaxe.
 
-  Concluindo, ainda na \cref{section:missing}, a partir da exemplificação
-  do predicado \codesnippetinline{indent!}, foram discutidos:
+  Concluindo, ainda na \cref{section:missing}, a partir da exemplificação do
+  predicado \codesnippetinline{indent!}, foram discutidos:
   \begin{inparaenum}
     \item as limitações da implementação atual desse predicado ao aplicar
           diferentes regras de indentação, além de
