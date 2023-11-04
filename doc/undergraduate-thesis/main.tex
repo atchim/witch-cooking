@@ -2197,8 +2197,8 @@
   Conforme demonstrado ao longo desse capítulo, o algoritmo desenvolvido,
   fundamentado no \treesitter, permite a formatação --- multilíngue e
   personalizada --- de código-fonte via as implementações que estendem a
-  biblioteca. Mais especificamente, em adição à base fornecida pelo
-  \treesitter, a formatação é proporcionada pelas:
+  linguagem de consulta biblioteca. Mais especificamente, em adição à base
+  fornecida pelo \treesitter, a formatação é proporcionada pelas:
   \begin{inparaenum}
     \item configurações, sendo elas
           \begin{inparaenum}
@@ -2230,7 +2230,7 @@
   complexas sejam capazes de abranger esses cenários sem ocasionar erros de
   sintaxe.
 
-  Adicionalmente, ainda na \cref{section:missing}, a partir da exemplificação
+  Concluindo, ainda na \cref{section:missing}, a partir da exemplificação
   do predicado \codesnippetinline{indent!}, foram discutidos:
   \begin{inparaenum}
     \item as limitações da implementação atual desse predicado ao aplicar
@@ -2238,32 +2238,6 @@
     \item possíveis melhorias para tornar essas aplicações mais coerentes,
           sobretudo ao indentar nós que abrangem múltiplas linhas.
   \end{inparaenum}
-
-  Um dos principais elementos no \textit{prettyprinting} é o
-  \textit{\gloss[short]{cpl}}, que se refere à quantidade máxima de caracteres
-  permitida em uma única linha. No contexto da formatação de código-fonte,
-  embora esse elemento tenha perdido parte de sua relevância atualmente%
-  \footnote
-    { Embora o \textit{CPL} tenha tido origem nas limitações técnicas dos
-      equipamentos, as várias mudanças, incluindo melhorias significativas, no
-      ambiente de desenvolvimento e nas tecnologias utilizadas transformaram o
-      conceito de \textit{CPL} em algo de menor relevância. Dentre os fatores
-      que corroboraram para isso, destacam-se:
-      \begin{inparaenum}
-        \item a disponibilidade de monitores de alta resolução,
-        \item editores de texto avançados,
-        \item recursos de formatação automática, e
-        \item práticas de codificação modular.
-      \end{inparaenum}}%
-  , muitos guias de estilo para diferentes linguagens de programação ainda
-  estipulam um valor para o \textit{CPL} \cite{wiki-2023-characters}.
-  Consequentemente, o código formatado por diversos \textit{prettyprinters}
-  continua a ser diretamente influenciado por esse parâmetro. No entanto,
-  apesar dessa importância que o \textit{CPL} normalmente desempenha na
-  formatação, vale ressaltar que o \witchcooking atualmente não fornece algum
-  mecanismo de formatação conforme esse aspecto. Mais precisamente, a
-  ferramenta carece de mecanismos que proporcionem formatação condicionada, em
-  geral.
 
   %%%%%%%%%%%%%%%
   %% Conclusion %
