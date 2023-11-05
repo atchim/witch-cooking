@@ -1028,224 +1028,6 @@
   Essa abordagem metodológica se caracteriza como predominantemente
   qualitativa, de natureza básica e orientada por objetivos exploratórios.
 
-  %%%%%%%%%%%%%%%%%%%%
-  %%% Making Queries %
-  %%%%%%%%%%%%%%%%%%%%
-
-  \section{Fazendo Consultas}
-
-  Como mencionado na \cref{section:usage}, o \witchcooking formata o
-  código-fonte conforme as diretrizes presentes no arquivo submetido via
-  \codesnippetinline{-q QUERY}, o qual é escrito na linguagem de consulta do
-  \treesitter. Devido à importância fundamental desempenhada por essa linguagem
-  na ferramenta, é essencial possuir um conhecimento básico sobre o seu
-  funcionamento. Portanto, nesta seção, será abordado superficialmente o
-  funcionamento da linguagem de consulta do \treesitter, permitindo assim uma
-  melhor compreensão da base em que o \witchcooking foi desenvolvido.
-
-  Como abordado no \cref{chapter:tree-sitter}, a linguagem de consulta do
-  \treesitter foi originalmente concebida para buscar padrões na árvore
-  sintática via:
-  \begin{inparaenum}
-    \item definição de padrões de correspondência e
-    \item aplicação de predicados.
-  \end{inparaenum}
-  Os predicados disponibilizados nativamente pelo \treesitter são agnósticos
-  quanto à linguagem de programação utilizada. Por outro lado, os padrões de
-  correspondência variam de acordo com a linguagem devido às suas construções
-  gramaticais específicas, que são posteriormente traduzidas como nós na árvore
-  de sintaxe analisada.
-
-  Por exemplo, considere os \cref{snippet:c:add-two,snippet:rust:add-two},
-  escritos nas linguagens de programação C e Rust, respectivamente. Embora
-  ambos desempenhem papéis idênticos --- i.e., definem uma função que retorna a
-  soma do parâmetro \codesnippetinline{x} com 2 ---, suas árvores de sintaxe
-  analisadas --- apresentadas respectivamente nos
-  \cref{snippet:text:tree:c:add-two,snippet:text:tree:rust:add-two} --- exibem
-  diferenças significativas. Portanto, para buscar a correspondência do trecho
-  em que o parâmetro \textit{x} é definido em ambos os códigos --- i.e.,
-  \codesnippetinline
-    [c]
-    $int add_two(|\colorbox{codehighlight}{int x}|) {$
-    [escapeinside=||]
-  e
-  \codesnippetinline
-    [rust]
-    $fn add_two(|\colorbox{codehighlight}{x: i32}|) -> i32 {$
-    [escapeinside=||]
-  ---, são necessárias consultas distintas, apresentadas pelos
-  \cref{snippet:scheme:c:param-query,snippet:scheme:rust:param-query}.
-
-  Dado que os padrões correspondem a qualquer uma de suas ocorrências, é
-  importante garantir maior especificidade em sua definição. Isso pode ser
-  obtido por meio de:
-  \begin{inparaenum}
-    \item especificação de campos,
-    \item especificação de nós anônimos e
-    \item aplicação de predicados.
-  \end{inparaenum}
-  Para ilustrar, ao aplicar a consulta apresentada no
-  \cref{snippet:scheme:c:param-query} ao seguinte código em linha
-  \codesnippetinline[c]{int add(int x, int y);}, obtêm-se duas
-  correspondências, como destacadas no seguinte trecho:
-  \codesnippetinline[c]{int add(|\hi{int x}, \hi{int y}|);}[escapeinside=||].
-  Logo, para corresponder somente ao parâmetro \codesnippetinline{x}, deve-se
-  utilizar uma consulta mais elaborada, conforme exemplificada no
-  \cref{snippet:scheme:c:x-param-query}. Nesse trecho, é possível notar algumas
-  diferenças em relação à sua versão original, que foi apresentada no
-  \cref{snippet:scheme:c:param-query}.
-  \begin{inparaenum}
-    \item O nó \codesnippetinline{(identifier)} é capturado com o nome
-          \codesnippetinline{id}, como destacado no seguinte trecho de código:
-          \codesnippetinline
-            [scheme]
-            {declarator: |\hi{(identifier) @id}|}
-            [escapeinside=||]%
-          . Além disso,
-    \item o predicado \codesnippetinline{eq?} é aplicado para garantir que o
-          conteúdo da captura \codesnippetinline{id} corresponda à string ``x''
-          o que, por consequência, impede a correspondência do parâmetro
-          \codesnippetinline{y}.
-  \end{inparaenum}
-
-  Por fim, é importante ressaltar que a linguagem de consulta do \treesitter
-  disponibiliza recursos adicionais \cite{tree-sitter-2023-using} que vão além
-  do escopo desta seção. No entanto, as informações abordadas até então
-  estabelecem uma base fundamental para compreender o funcionamento da
-  linguagem de consulta e sua aplicação em conjunto com o \witchcooking na
-  formatação do código-fonte.
-
-  \noindent
-  \begin{minipage}[t]{\halfpart}
-    \begin
-      {codesnippet}%
-      [c]%
-      {Função \textit{add\_two} em C}%
-      {add-two}
-      int add_two(int x) {
-        return x + 2;
-      }
-    \end{codesnippet}
-    \vspace{-3ex}
-    \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[t]{\halfpart}
-    \begin
-      {codesnippet}%
-      [rust]%
-      {Função \textit{add\_two} em Rust}%
-      {add-two}
-      fn add_two(x: i32) -> i32 {
-        x + 2
-      }
-    \end{codesnippet}
-    \vspace{-3ex}
-    \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
-  \end{minipage}
-
-  \noindent
-  \begin{minipage}[t]{\halftextwidthpart}
-    \begin
-      {codesnippet}*%
-      {Árvore Sintática da Função \textit{add\_two} em C}%
-      {tree:c:add-two}%
-      [fontsize=\ABNTEXfontereduzida]
-      function_definition
-        type: primitive_type
-        declarator: function_declarator
-          declarator: identifier
-          parameters: parameter_list
-            parameter_declaration
-              type: primitive_type
-              declarator: identifier
-        body: compound_statement
-          return_statement
-            binary_expression
-              left: identifier
-              right: number_literal
-    \end{codesnippet}
-    \vspace{-3ex}
-    \captionof*
-      {listing}
-      { \ABNTEXfontereduzida
-        \textbf{Fonte:} o próprio autor.
-        \\
-        \textbf{Nota:} Nós anônimos foram omitidos.}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[t]{\halftextwidthcounterpart}
-    \begin
-      {codesnippet}*%
-      {Árvore Sintática da Função \textit{add\_two} em Rust}%
-      {tree:rust:add-two}%
-      [fontsize=\ABNTEXfontereduzida]
-      function_item
-        name: identifier
-        parameters: parameters
-          parameter
-            pattern: identifier
-            type: primitive_type
-        return_type: primitive_type
-        body: block
-          binary_expression
-            left: identifier
-            right: integer_literal
-    \end{codesnippet}
-    \vspace{-3ex}
-    \captionof*
-      {listing}
-      { \ABNTEXfontereduzida
-        \textbf{Fonte:} o próprio autor.
-        \\
-        \textbf{Nota:} Nós anônimos foram omitidos.}
-  \end{minipage}
-
-  \noindent
-  \begin{minipage}[t]{\halftextwidthpart}
-    \begin
-      {codesnippet}*%
-      [scheme]%
-      {Consulta Correspondendo a um Parâmetro de Função em C}%
-      {c:param-query}
-      (parameter_declaration
-        type: (primitive_type)
-        declarator: (identifier))
-    \end{codesnippet}
-    \vspace{-3ex}
-    \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[t]{\halftextwidthcounterpart}
-    \begin
-      {codesnippet}*%
-      [scheme]%
-      {Consulta Correspondendo a um Parâmetro de Função em Rust}%
-      {rust:param-query}
-      (parameter
-        pattern: (identifier)
-        type: (primitive_type))
-    \end{codesnippet}
-    \vspace{-3ex}
-    \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
-  \end{minipage}
-
-  \noindent
-  \begin{minipage}[t]{\textwidth}
-    \begin
-      {codesnippet}*%
-      [scheme]%
-      {Consulta Correspondendo a um Parâmetro \textit{x} de uma Função em C}%
-      {c:x-param-query}
-      (parameter_declaration
-        type: (primitive_type)
-        declarator: (identifier) @id
-        (#eq? @id "x"))
-    \end{codesnippet}
-    \vspace{-3ex}
-    \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
-  \end{minipage}
-
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%% The Formatting Algorithm %
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1262,6 +1044,12 @@
   desenvolvidos para executar procedimentos variados de formatação.
   Consequentemente, ao utilizar esses predicados nos padrões da consulta, é
   possível dirigir a formatação de nós específicos da árvore de sintaxe.
+
+  Para compreender as \cref{section:fmt-algorithm,section:driving}, é essencial
+  um ter um conhecimento básico sobre o funcionamento da linguagem de consulta
+  do \treesitter, que é cerne do algoritmo desenvolvido. Portanto, é
+  recomendado a leitura do \cref{appendix:queries}, onde são abordados os
+  principais conceitos e características dessa linguagem.
 
   A operação do algoritmo de formatação divide-se nas etapas de:
   \begin{inparaenum}
@@ -1424,8 +1212,6 @@
         \end{tikzpicture}}
     \vspace{-2ex}
     \captionof*{figure}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}}
-
-  \clearpage
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%% Driving the Formatting %
@@ -2261,6 +2047,225 @@
 
   \begin{apendicesenv}
     \partapendices
+
+    %%%%%%%%%%%%%%%%%%
+    % Making Queries %
+    %%%%%%%%%%%%%%%%%%
+
+    \chapter{Fazendo Consultas}
+    \label{appendix:queries}
+
+    Como mencionado na \cref{section:usage}, o \witchcooking formata o
+    código-fonte conforme as diretrizes presentes no arquivo submetido via
+    \codesnippetinline{-q QUERY}, o qual é escrito na linguagem de consulta do
+    \treesitter. Devido à importância fundamental desempenhada por essa linguagem
+    na ferramenta, é essencial possuir um conhecimento básico sobre o seu
+    funcionamento. Portanto, nesta seção, será abordado superficialmente o
+    funcionamento da linguagem de consulta do \treesitter, permitindo assim uma
+    melhor compreensão da base em que o \witchcooking foi desenvolvido.
+
+    Como abordado no \cref{chapter:tree-sitter}, a linguagem de consulta do
+    \treesitter foi originalmente concebida para buscar padrões na árvore
+    sintática via:
+    \begin{inparaenum}
+      \item definição de padrões de correspondência e
+      \item aplicação de predicados.
+    \end{inparaenum}
+    Os predicados disponibilizados nativamente pelo \treesitter são agnósticos
+    quanto à linguagem de programação utilizada. Por outro lado, os padrões de
+    correspondência variam de acordo com a linguagem devido às suas construções
+    gramaticais específicas, que são posteriormente traduzidas como nós na árvore
+    de sintaxe analisada.
+
+    Por exemplo, considere os \cref{snippet:c:add-two,snippet:rust:add-two},
+    escritos nas linguagens de programação C e Rust, respectivamente. Embora
+    ambos desempenhem papéis idênticos --- i.e., definem uma função que retorna a
+    soma do parâmetro \codesnippetinline{x} com 2 ---, suas árvores de sintaxe
+    analisadas --- apresentadas respectivamente nos
+    \cref{snippet:text:tree:c:add-two,snippet:text:tree:rust:add-two} --- exibem
+    diferenças significativas. Portanto, para buscar a correspondência do trecho
+    em que o parâmetro \textit{x} é definido em ambos os códigos --- i.e.,
+    \codesnippetinline
+      [c]
+      $int add_two(|\colorbox{codehighlight}{int x}|) {$
+      [escapeinside=||]
+    e
+    \codesnippetinline
+      [rust]
+      $fn add_two(|\colorbox{codehighlight}{x: i32}|) -> i32 {$
+      [escapeinside=||]
+    ---, são necessárias consultas distintas, apresentadas pelos
+    \cref{snippet:scheme:c:param-query,snippet:scheme:rust:param-query}.
+
+    Dado que os padrões correspondem a qualquer uma de suas ocorrências, é
+    importante garantir maior especificidade em sua definição. Isso pode ser
+    obtido por meio de:
+    \begin{inparaenum}
+      \item especificação de campos,
+      \item especificação de nós anônimos e
+      \item aplicação de predicados.
+    \end{inparaenum}
+    Para ilustrar, ao aplicar a consulta apresentada no
+    \cref{snippet:scheme:c:param-query} ao seguinte código em linha
+    \codesnippetinline[c]{int add(int x, int y);}, obtêm-se duas
+    correspondências, como destacadas no seguinte trecho:
+    \codesnippetinline[c]{int add(|\hi{int x}, \hi{int y}|);}[escapeinside=||].
+    Logo, para corresponder somente ao parâmetro \codesnippetinline{x}, deve-se
+    utilizar uma consulta mais elaborada, conforme exemplificada no
+    \cref{snippet:scheme:c:x-param-query}. Nesse trecho, é possível notar algumas
+    diferenças em relação à sua versão original, que foi apresentada no
+    \cref{snippet:scheme:c:param-query}.
+    \begin{inparaenum}
+      \item O nó \codesnippetinline{(identifier)} é capturado com o nome
+            \codesnippetinline{id}, como destacado no seguinte trecho de código:
+            \codesnippetinline
+              [scheme]
+              {declarator: |\hi{(identifier) @id}|}
+              [escapeinside=||]%
+            . Além disso,
+      \item o predicado \codesnippetinline{eq?} é aplicado para garantir que o
+            conteúdo da captura \codesnippetinline{id} corresponda à string ``x''
+            o que, por consequência, impede a correspondência do parâmetro
+            \codesnippetinline{y}.
+    \end{inparaenum}
+
+    Por fim, é importante ressaltar que a linguagem de consulta do \treesitter
+    disponibiliza recursos adicionais \cite{tree-sitter-2023-using} que vão além
+    do escopo desta seção. No entanto, as informações abordadas até então
+    estabelecem uma base fundamental para compreender o funcionamento da
+    linguagem de consulta e sua aplicação em conjunto com o \witchcooking na
+    formatação do código-fonte.
+
+    \noindent
+    \begin{minipage}[t]{\halfpart}
+      \begin
+        {codesnippet}%
+        [c]%
+        {Função \textit{add\_two} em C}%
+        {add-two}
+        int add_two(int x) {
+          return x + 2;
+        }
+      \end{codesnippet}
+      \vspace{-3ex}
+      \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{\halfpart}
+      \begin
+        {codesnippet}%
+        [rust]%
+        {Função \textit{add\_two} em Rust}%
+        {add-two}
+        fn add_two(x: i32) -> i32 {
+          x + 2
+        }
+      \end{codesnippet}
+      \vspace{-3ex}
+      \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+    \end{minipage}
+
+    \noindent
+    \begin{minipage}[t]{\halftextwidthpart}
+      \begin
+        {codesnippet}*%
+        {Árvore Sintática da Função \textit{add\_two} em C}%
+        {tree:c:add-two}%
+        [fontsize=\ABNTEXfontereduzida]
+        function_definition
+          type: primitive_type
+          declarator: function_declarator
+            declarator: identifier
+            parameters: parameter_list
+              parameter_declaration
+                type: primitive_type
+                declarator: identifier
+          body: compound_statement
+            return_statement
+              binary_expression
+                left: identifier
+                right: number_literal
+      \end{codesnippet}
+      \vspace{-3ex}
+      \captionof*
+        {listing}
+        { \ABNTEXfontereduzida
+          \textbf{Fonte:} o próprio autor.
+          \\
+          \textbf{Nota:} Nós anônimos foram omitidos.}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{\halftextwidthcounterpart}
+      \begin
+        {codesnippet}*%
+        {Árvore Sintática da Função \textit{add\_two} em Rust}%
+        {tree:rust:add-two}%
+        [fontsize=\ABNTEXfontereduzida]
+        function_item
+          name: identifier
+          parameters: parameters
+            parameter
+              pattern: identifier
+              type: primitive_type
+          return_type: primitive_type
+          body: block
+            binary_expression
+              left: identifier
+              right: integer_literal
+      \end{codesnippet}
+      \vspace{-3ex}
+      \captionof*
+        {listing}
+        { \ABNTEXfontereduzida
+          \textbf{Fonte:} o próprio autor.
+          \\
+          \textbf{Nota:} Nós anônimos foram omitidos.}
+    \end{minipage}
+
+    \noindent
+    \begin{minipage}[t]{\halftextwidthpart}
+      \begin
+        {codesnippet}*%
+        [scheme]%
+        {Consulta Correspondendo a um Parâmetro de Função em C}%
+        {c:param-query}
+        (parameter_declaration
+          type: (primitive_type)
+          declarator: (identifier))
+      \end{codesnippet}
+      \vspace{-3ex}
+      \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{\halftextwidthcounterpart}
+      \begin
+        {codesnippet}*%
+        [scheme]%
+        {Consulta Correspondendo a um Parâmetro de Função em Rust}%
+        {rust:param-query}
+        (parameter
+          pattern: (identifier)
+          type: (primitive_type))
+      \end{codesnippet}
+      \vspace{-3ex}
+      \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+    \end{minipage}
+
+    \noindent
+    \begin{minipage}[t]{\textwidth}
+      \begin
+        {codesnippet}*%
+        [scheme]%
+        {Consulta Correspondendo a um Parâmetro \textit{x} de uma Função em C}%
+        {c:x-param-query}
+        (parameter_declaration
+          type: (primitive_type)
+          declarator: (identifier) @id
+          (#eq? @id "x"))
+      \end{codesnippet}
+      \vspace{-3ex}
+      \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+    \end{minipage}
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Tree-Sitter's Node Syncing %
