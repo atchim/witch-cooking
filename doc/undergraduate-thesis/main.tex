@@ -1057,9 +1057,8 @@
     \item formatação, e
     \item retorno,
   \end{inparaenum}
-  como ilustrado na \cref{figure:algorithm-flowchart}.
-  Durante a etapa de inicialização --- onde estruturas são instanciadas ---,
-  primeiramente,
+  como ilustrado na \cref{figure:algorithm-flowchart}. Durante a etapa de
+  inicialização --- onde estruturas são instanciadas ---, primeiramente,
   \begin{inparaenum}
     \item a árvore de sintaxe --- derivada do código-fonte submetido para
           formatação --- é analisada. Em seguida,
@@ -2058,9 +2057,9 @@
     Como mencionado na \cref{section:usage}, o \witchcooking formata o
     código-fonte conforme as diretrizes presentes no arquivo submetido via
     \codesnippetinline{-q QUERY}, o qual é escrito na linguagem de consulta do
-    \treesitter. Devido à importância fundamental desempenhada por essa linguagem
-    na ferramenta, é essencial possuir um conhecimento básico sobre o seu
-    funcionamento. Portanto, nesta seção, será abordado superficialmente o
+    \treesitter. Devido à importância fundamental desempenhada por essa
+    linguagem na ferramenta, é essencial possuir um conhecimento básico sobre o
+    seu funcionamento. Portanto, nesta seção, será abordado superficialmente o
     funcionamento da linguagem de consulta do \treesitter, permitindo assim uma
     melhor compreensão da base em que o \witchcooking foi desenvolvido.
 
@@ -2074,17 +2073,18 @@
     Os predicados disponibilizados nativamente pelo \treesitter são agnósticos
     quanto à linguagem de programação utilizada. Por outro lado, os padrões de
     correspondência variam de acordo com a linguagem devido às suas construções
-    gramaticais específicas, que são posteriormente traduzidas como nós na árvore
-    de sintaxe analisada.
+    gramaticais específicas, que são posteriormente traduzidas como nós na
+    árvore de sintaxe analisada.
 
     Por exemplo, considere os \cref{snippet:c:add-two,snippet:rust:add-two},
     escritos nas linguagens de programação C e Rust, respectivamente. Embora
-    ambos desempenhem papéis idênticos --- i.e., definem uma função que retorna a
-    soma do parâmetro \codesnippetinline{x} com 2 ---, suas árvores de sintaxe
-    analisadas --- apresentadas respectivamente nos
-    \cref{snippet:text:tree:c:add-two,snippet:text:tree:rust:add-two} --- exibem
-    diferenças significativas. Portanto, para buscar a correspondência do trecho
-    em que o parâmetro \textit{x} é definido em ambos os códigos --- i.e.,
+    ambos desempenhem papéis idênticos --- i.e., definem uma função que retorna
+    a soma do parâmetro \codesnippetinline{x} com 2 ---, suas árvores de
+    sintaxe analisadas --- apresentadas respectivamente nos
+    \cref{snippet:text:tree:c:add-two,snippet:text:tree:rust:add-two} ---
+    exibem diferenças significativas. Portanto, para buscar a correspondência
+    do trecho em que o parâmetro \textit{x} é definido em ambos os códigos ---
+    i.e.,
     \codesnippetinline
       [c]
       $int add_two(|\colorbox{codehighlight}{int x}|) {$
@@ -2112,26 +2112,27 @@
     \codesnippetinline[c]{int add(|\hi{int x}, \hi{int y}|);}[escapeinside=||].
     Logo, para corresponder somente ao parâmetro \codesnippetinline{x}, deve-se
     utilizar uma consulta mais elaborada, conforme exemplificada no
-    \cref{snippet:scheme:c:x-param-query}. Nesse trecho, é possível notar algumas
-    diferenças em relação à sua versão original, que foi apresentada no
+    \cref{snippet:scheme:c:x-param-query}. Nesse trecho, é possível notar
+    algumas diferenças em relação à sua versão original, que foi apresentada no
     \cref{snippet:scheme:c:param-query}.
     \begin{inparaenum}
       \item O nó \codesnippetinline{(identifier)} é capturado com o nome
-            \codesnippetinline{id}, como destacado no seguinte trecho de código:
+            \codesnippetinline{id}, como destacado no seguinte trecho de
+            código:
             \codesnippetinline
               [scheme]
               {declarator: |\hi{(identifier) @id}|}
               [escapeinside=||]%
             . Além disso,
       \item o predicado \codesnippetinline{eq?} é aplicado para garantir que o
-            conteúdo da captura \codesnippetinline{id} corresponda à string ``x''
-            o que, por consequência, impede a correspondência do parâmetro
-            \codesnippetinline{y}.
+            conteúdo da captura \codesnippetinline{id} corresponda à string
+            ``x'' o que, por consequência, impede a correspondência do
+            parâmetro \codesnippetinline{y}.
     \end{inparaenum}
 
     Por fim, é importante ressaltar que a linguagem de consulta do \treesitter
-    disponibiliza recursos adicionais \cite{tree-sitter-2023-using} que vão além
-    do escopo desta seção. No entanto, as informações abordadas até então
+    disponibiliza recursos adicionais \cite{tree-sitter-2023-using} que vão
+    além do escopo desta seção. No entanto, as informações abordadas até então
     estabelecem uma base fundamental para compreender o funcionamento da
     linguagem de consulta e sua aplicação em conjunto com o \witchcooking na
     formatação do código-fonte.
@@ -2148,7 +2149,9 @@
         }
       \end{codesnippet}
       \vspace{-3ex}
-      \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+      \captionof*
+        {listing}
+        {\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
     \end{minipage}
     \hfill
     \begin{minipage}[t]{\halfpart}
@@ -2162,7 +2165,9 @@
         }
       \end{codesnippet}
       \vspace{-3ex}
-      \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+      \captionof*
+        {listing}
+        {\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
     \end{minipage}
 
     \noindent
@@ -2234,7 +2239,9 @@
           declarator: (identifier))
       \end{codesnippet}
       \vspace{-3ex}
-      \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+      \captionof*
+        {listing}
+        {\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
     \end{minipage}
     \hfill
     \begin{minipage}[t]{\halftextwidthcounterpart}
@@ -2248,7 +2255,9 @@
           type: (primitive_type))
       \end{codesnippet}
       \vspace{-3ex}
-      \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+      \captionof*
+        {listing}
+        {\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
     \end{minipage}
 
     \noindent
@@ -2264,7 +2273,9 @@
           (#eq? @id "x"))
       \end{codesnippet}
       \vspace{-3ex}
-      \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+      \captionof*
+        {listing}
+        {\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
     \end{minipage}
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
