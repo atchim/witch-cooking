@@ -840,6 +840,7 @@
   %%%%%%%%%%%%%%%%%%%%%%
 
   \chapter{O \witchcooking}
+  \label{chapter:witch}
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%% Motivations and Purposes %
@@ -2031,6 +2032,46 @@
   %%%%%%%%%%%%%%%
 
   \chapter{Conclusão}
+
+  Conforme demonstrado ao longo do \cref{chapter:witch}, com base no sistema
+  \treesitter, o software desenvolvido \cite{silva-2023-witch}:
+  \begin{inparaenum}
+    \item \label{item:embrace} abrange uma gama de linguagens de programação%
+          \footnote
+            { Mais especificamente, o \witchcooking suporta as seguintes
+              linguagens:
+              \begin{inparaenum}[(I)]
+                \item Bash,
+                \item C,
+                \item C++,
+                \item Go,
+                \item HTML,
+                \item Java,
+                \item JavaScript,
+                \item Python,
+                \item Rust e
+                \item TOML.
+              \end{inparaenum}}
+          e
+    \item \label{item:custom} proporciona a formatação personalizada via a
+          linguagem de consulta do \treesitter.
+  \end{inparaenum}
+  A respeito do \cref{item:embrace}, a ferramenta tem potencial de suportar
+  qualquer linguagem que tenha uma gramática compatível com a versão do
+  \treesitter utilizada no \witchcooking. No entanto, quanto ao
+  \cref{item:custom}, é importante ressaltar que a ferramenta desenvolvida não
+  é funcional para cenários realistas, uma vez que muito provavelmente
+  ocasionará erros de sintaxe.
+
+  Esses erros de sintaxe que podem ocorrer --- principalmente em cenários mais
+  complexos de formatação --- derivam de uma característica da edição (ou
+  sincronização) de nós feita pelo \treesitter: ao sincronizar um nó, as
+  edições ocorridas tangentes à sua extensão não são contabilizadas. Essa
+  peculiaridade só foi identificada durante os testes realizados para validar o
+  funcionamentos das configurações e dos predicados desenvolvidos. Essa
+  descoberta tardia dificilmente poderia ser antecipada, uma vez que o
+  comportamento da sincronização não é mencionado na documentação do método
+  \codesnippetinline{edit} \cite{tree-sitter-2023-node}.
 
   %%%%%%%%%%%%%%%%%%%%%%%%%
   % Post Textual Elements %
