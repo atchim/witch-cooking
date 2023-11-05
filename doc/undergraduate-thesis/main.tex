@@ -883,35 +883,6 @@
           de código-fonte.
   \end{inparaenum}
 
-  %%%%%%%%%%%
-  %%% Usage %
-  %%%%%%%%%%%
-
-  \section{Usagem}
-  \label{section:usage}
-
-  O \witchcooking apresenta a seguinte usagem
-  \codesnippetinline{cook [-l LANG] -q QUERY [SRC]}%
-  , onde:
-  \begin{inparaenum}
-    \item \codesnippetinline{cook} é o nome do executável,
-    \item \codesnippetinline{[-l LANG]} é uma opção para explicitar a linguagem
-          do código-fonte a ser formatado,
-    \item \codesnippetinline{-q QUERY} é utilizado para definir o caminho para
-          o arquivo --- escrito na linguagem de consulta do \treesitter{} ---
-          no qual as diretrizes de formatação estão definidas, e
-    \item \codesnippetinline{[SRC]} é um argumento opcional para especificar o
-          caminho para o arquivo a ser formatado.
-  \end{inparaenum}
-  Quando \codesnippetinline{[SRC]} é provido e \codesnippetinline{[-l LANG]} é
-  omitido, o software tentará inferir uma linguagem conforme a extensão do nome
-  do arquivo. Por outro lado, quando \codesnippetinline{[SRC]} é omitido, o
-  código-fonte a ser formatado deve ser provido via \textit{\gloss{pipeline}},
-  e a sua linguagem deve ser explicitada via \codesnippetinline{[-l LANG]}. Em
-  alinhamento com sua natureza experimental, o \witchcooking proporciona o
-  código-fonte formatado resultante como saída, sem modificar o conteúdo
-  original, efetivamente estabelecendo uma formatação segura.
-
   %%%%%%%%%%%%%%%
   %%% Materials %
   %%%%%%%%%%%%%%%
@@ -1027,6 +998,35 @@
   \end{inparaenum}
   Essa abordagem metodológica se caracteriza como predominantemente
   qualitativa, de natureza básica e orientada por objetivos exploratórios.
+
+  %%%%%%%%%%%
+  %%% Usage %
+  %%%%%%%%%%%
+
+  \section{Usagem}
+  \label{section:usage}
+
+  O \witchcooking apresenta a seguinte usagem
+  \codesnippetinline{cook [-l LANG] -q QUERY [SRC]}%
+  , onde:
+  \begin{inparaenum}
+    \item \codesnippetinline{cook} é o nome do executável,
+    \item \codesnippetinline{[-l LANG]} é uma opção para explicitar a linguagem
+          do código-fonte a ser formatado,
+    \item \codesnippetinline{-q QUERY} é utilizado para definir o caminho para
+          o arquivo --- escrito na linguagem de consulta do \treesitter{} ---
+          no qual as diretrizes de formatação estão definidas, e
+    \item \codesnippetinline{[SRC]} é um argumento opcional para especificar o
+          caminho para o arquivo a ser formatado.
+  \end{inparaenum}
+  Quando \codesnippetinline{[SRC]} é provido e \codesnippetinline{[-l LANG]} é
+  omitido, o software tentará inferir uma linguagem conforme a extensão do nome
+  do arquivo. Por outro lado, quando \codesnippetinline{[SRC]} é omitido, o
+  código-fonte a ser formatado deve ser provido via \textit{\gloss{pipeline}},
+  e a sua linguagem deve ser explicitada via \codesnippetinline{[-l LANG]}. Em
+  alinhamento com sua natureza experimental, o \witchcooking proporciona o
+  código-fonte formatado resultante como saída, sem modificar o conteúdo
+  original, efetivamente estabelecendo uma formatação segura.
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%% The Formatting Algorithm %
