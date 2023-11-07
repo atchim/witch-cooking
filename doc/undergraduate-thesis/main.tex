@@ -550,6 +550,7 @@
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   \chapter{A Formatação de Código-Fonte}
+  \label{chapter:src-fmt}
 
   Desde os primórdios da computação, métodos foram desenvolvidos para garantir
   que a saída impressa fosse formatada de maneira esteticamente agradável
@@ -1957,7 +1958,7 @@
   predicados devem sincronizar os nós para que suas extensões estejam
   consoantes ao código vigente em processo de formatação.
 
-  Como demonstrado no \cref{appendix:ts-sync-proof}, ao sincronizar um nó, o
+  Como demonstrado no \cref{appendix:node-edit-demo}, ao sincronizar um nó, o
   \treesitter não contabiliza edições tangentes à extensão desse nó.
   Consequentemente, especialmente em cenários que apresentam estruturas
   aninhadas, durante o processo de formatação, ao sincronizar um nó, há uma
@@ -2033,10 +2034,34 @@
 
   \chapter{Conclusão}
 
-  Conforme demonstrado ao longo do \cref{chapter:witch}, com base no sistema
-  \treesitter, o software desenvolvido \cite{silva-2023-witch}:
+  A partir da implementação
   \begin{inparaenum}
-    \item \label{item:embrace} abrange uma gama de linguagens de programação%
+    \item do algoritmo de formatação fundamentado no \treesitter, descrito na
+          \cref{section:fmt-algorithm};
+    \item das configurações de estilização para o predicado
+          \codesnippetinline{set!}, descritas na \cref{section:driving}, sendo
+          elas
+          \begin{inparaenum}
+            \item \codesnippetinline{indent-rule} e
+            \item \codesnippetinline{indent-style};
+          \end{inparaenum}
+          e
+    \item dos predicados basais para a formatação, estendendo a linguagem de
+          consulta, demonstrados também na \cref{section:driving}, sendo eles
+          \begin{inparaenum}
+            \item \codesnippetinline{space!},
+            \item \codesnippetinline{indent!}, e
+            \item \codesnippetinline{indent-offset!};
+          \end{inparaenum}
+  \end{inparaenum}
+  foi possível atender ao objetivo geral deste trabalho: desenvolver o
+  \witchcooking \cite{silva-2023-witch}.
+
+  Assim, conforme demonstrado ao longo do \cref{chapter:witch}, o software
+  desenvolvido com base no sistema \treesitter atendeu
+  aos objetivos de:
+  \begin{inparaenum}
+    \item \label{item:embrace} abranger uma gama de linguagens de programação%
           \footnote
             { Mais especificamente, o \witchcooking suporta as seguintes
               linguagens:
@@ -2053,8 +2078,8 @@
                 \item TOML.
               \end{inparaenum}}
           e
-    \item \label{item:custom} proporciona a formatação personalizada via a
-          linguagem de consulta do \treesitter.
+    \item \label{item:custom} proporcionar a formatação personalizada via a
+          linguagem de consulta do sistema.
   \end{inparaenum}
   A respeito do \cref{item:embrace}, a ferramenta tem potencial de suportar
   qualquer linguagem que tenha uma gramática compatível com a versão do
@@ -2067,11 +2092,43 @@
   complexos de formatação --- derivam de uma característica da edição (ou
   sincronização) de nós feita pelo \treesitter: ao sincronizar um nó, as
   edições ocorridas tangentes à sua extensão não são contabilizadas. Essa
-  peculiaridade só foi identificada durante os testes realizados para validar o
-  funcionamentos das configurações e dos predicados desenvolvidos. Essa
-  descoberta tardia dificilmente poderia ser antecipada, uma vez que o
-  comportamento da sincronização não é mencionado na documentação do método
+  peculiaridade --- demonstrada no \cref{appendix:node-edit-demo} --- só foi
+  identificada durante os testes realizados para validar o funcionamentos das
+  configurações e dos predicados desenvolvidos. Essa descoberta tardia
+  dificilmente poderia ser antecipada, uma vez que esse comportamento da
+  sincronização não é mencionado na documentação do método
   \codesnippetinline{edit} \cite{tree-sitter-2023-node}.
+
+  %%%%%%%%%%%%%%%%%%%
+  %%% Contributions %
+  %%%%%%%%%%%%%%%%%%%
+
+  \section{Contribuições}
+
+  A proposta de desenvolver um algoritmo multilíngue para a formatação de
+  código-fonte não é inédita nem recente. Por exemplo, como mencionado no
+  \cref{chapter:src-fmt}, já na década de 80,
+  \textcite{oppen-1980-prettyprinting} descreveu seu algoritmo de formatação
+  baseado em anotações. Contudo, o \witchcooking apresenta uma nova abordagem
+  de formatação multilíngue: via o \treesitter e sua linguagem de consulta.
+
+  Diferentemente do algoritmo de Oppen que
+  \begin{inparaenum}
+    \item depende de um terceiro para fornecer o código com as anotações
+          necessárias, e
+    \item formata conforme o \textit{CPL} em adição às anotações fornecidas;
+  \end{inparaenum}
+  o \witchcooking
+  \begin{inparaenum}
+    \item alcança a formatação multilíngue através do \treesitter, e
+    \item proporciona predicados para dirigir a formatação.
+  \end{inparaenum}
+  Ao comparar essas duas abordagens, observa-se que o \witchcooking oferece
+  maior controle ao usuário, embora exija dele um conhecimento considerável:
+  \begin{inparaenum}
+    \item da sintaxe em questão e
+    \item da linguagem de consulta.
+  \end{inparaenum}
 
   %%%%%%%%%%%%%%%%%%%%%%%%%
   % Post Textual Elements %
@@ -2324,7 +2381,7 @@
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     \chapter{Sincronizando Nós do \treesitter}
-    \label{appendix:ts-sync-proof}
+    \label{appendix:node-edit-demo}
 
     Na \cref{section:limitations}, foi mencionado que, ao sincronizar um nó, a
     biblioteca \treesitter não contabiliza as edições ocorridas que tangem a
