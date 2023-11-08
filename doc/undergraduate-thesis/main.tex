@@ -2130,6 +2130,32 @@
     \item da linguagem de consulta.
   \end{inparaenum}
 
+  Quanto às diretrizes de formatação, especificamente no que se refere à
+  utilização das configurações em conjunto com os predicados, assemelha-se
+  bastante ao que \textcite{yelland-2015-new} denomina de \textit{combinators}
+  --- funções geradoras para descrever \textit{layouts} alternativos de
+  código-fonte --- presentes em seu formatador de código-fonte para a
+  linguagem R. Mais precisamente:
+  \begin{inparaenum}
+    \item o predicado \codesnippetinline{space!} opera similarmente ao
+          \textit{combinator}
+          \codesnippetinline{|$\leftrightarrow$|}[escapeinside=||] --- que lida
+          com a colocação horizontal ---, enquanto
+    \item o predicado \codesnippetinline{indent!} funciona análogo ao uso de
+          \codesnippetinline{|$\leftrightarrow$|}[escapeinside=||] em conjunto
+          com o \textit{combinator}
+          \codesnippetinline{|$\updownarrow$|}[escapeinside=||] --- que
+          controla a colocação vertical.
+  \end{inparaenum}
+  Uma diferença significativa entre essas duas abordagens reside no fato de
+  que: enquanto
+  \begin{inparaenum}
+    \item os \textit{combinators} se limitam ao algoritmo de formatação,
+    \item os predicados são disponibilizados ao usuário --- por meio da
+          linguagem de consulta do \treesitter{} ---, permitindo que ele
+          componha suas próprias diretrizes de formatação.
+  \end{inparaenum}
+
   %%%%%%%%%%%%%%%%%%%%%%%%%
   % Post Textual Elements %
   %%%%%%%%%%%%%%%%%%%%%%%%%
