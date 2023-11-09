@@ -2133,9 +2133,9 @@
   Quanto às diretrizes de formatação, especificamente no que se refere à
   utilização das configurações em conjunto com os predicados, assemelha-se
   bastante ao que \textcite{yelland-2015-new} denomina de \textit{combinators}
-  --- funções geradoras para descrever \textit{layouts} alternativos de
-  código-fonte --- presentes em seu formatador de código-fonte para a
-  linguagem R. Mais precisamente:
+  --- funções geradoras para descrever layouts alternativos de código-fonte ---
+  presentes em seu formatador de código-fonte para a linguagem R. Mais
+  precisamente:
   \begin{inparaenum}
     \item o predicado \codesnippetinline{space!} opera similarmente ao
           \textit{combinator}
@@ -2154,6 +2154,46 @@
     \item os predicados são disponibilizados ao usuário --- por meio da
           linguagem de consulta do \treesitter{} ---, permitindo que ele
           componha suas próprias diretrizes de formatação.
+  \end{inparaenum}
+
+  %%%%%%%%%%%%%%%%%%
+  %%% Future Works %
+  %%%%%%%%%%%%%%%%%%
+
+  \section{Trabalhos Futuros}
+
+  Como enfatizado diversas vezes durante este trabalho, o \witchcooking é uma
+  ferramenta prototípica para formatação de código-fonte. Consequentemente, há
+  vários aspectos com potencial de aprimoramento.
+  \begin{inparaenum}
+    \item O problema mais premente é a sincronização de nós --- abordado na
+          \cref{section:limitations} ---, para o qual seria possível
+          desenvolver um algoritmo dedicado capaz de sincronizar corretamente
+          qualquer nó mesmo após ele ter sofrido edições tangentes à sua
+          extensão.
+
+          Outras melhorias potenciais, também discutidas na
+          \cref{section:limitations}, estão relacionadas ao funcionamento do
+          predicado \codesnippetinline{indent!}. Nesse contexto, é possível
+          aprimorar
+    \item a formatação de nós com regras de indentação relativa positiva, de
+          modo que a indentação siga o deslocamento do nó pai, em vez de se
+          basear no primeiro caractere não espaço encontrado na linha do pai.
+          Além disso,
+    \item seria mais coerente que esse predicado indentasse o bloco inteiro ao
+          qual o nó se estende, em vez de se limitar à linha inicial do nó em
+          questão.
+
+    \item Aprimoramentos relacionados ao dinamismo da formatação, como
+          \begin{inparaenum}
+            \item a formatação com base no \textit{CPL} e
+            \item a otimização para determinar o melhor layout,
+          \end{inparaenum}
+          também seriam extremamente benéficas. Esse grau de sofisticação é
+          comum em formatadores modernos de código-fonte. No entanto, uma
+          análise mais aprofundada seria necessária para determinar a
+          viabilidade dessas implementações sofisticadas, considerando a
+          natureza do \witchcooking.
   \end{inparaenum}
 
   %%%%%%%%%%%%%%%%%%%%%%%%%
