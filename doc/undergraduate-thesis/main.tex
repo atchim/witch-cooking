@@ -415,11 +415,15 @@
   \imprimircapa
   \imprimirfolhaderosto
 
-  %%%%%%%%%%%%
-  % Abstract %
-  %%%%%%%%%%%%
+  %%%%%%%%%%%%%
+  % Abstracts %
+  %%%%%%%%%%%%%
 
   \setlength{\absparsep}{18pt}
+
+  %%%%%%%%%%%%%%%
+  %% Portuguese %
+  %%%%%%%%%%%%%%%
 
   \begin{resumo}
     A formatação de código é fundamental no desenvolvimento de software,
@@ -445,8 +449,7 @@
     personalizada por meio de diretrizes especificadas no arquivo submetido,
     escrito na linguagem de consulta do \treesitter. No entanto, um erro na
     sincronização de nós da sintaxe --- derivado do desconhecimento de uma
-    peculiaridade do sistema \treesitter{} --- inviabiliza o uso do
-    \witchcooking:
+    peculiaridade do sistema \treesitter{} --- limita o uso do \witchcooking:
     \begin{inparaenum}
       \item para formatar códigos mais robustos ou
       \item para aplicar diretrizes mais complexas,
@@ -460,6 +463,50 @@
     formatação personalizada;
     \treesitter;
     linguagem de consulta.
+  \end{resumo}
+
+  %%%%%%%%%%%%
+  %% English %
+  %%%%%%%%%%%%
+
+  \begin{resumo}[Abstract]
+    \begin{otherlanguage*}{english}
+      Code formatting is crucial in software development, allowing for the
+      establishment of desired aspects such as code standardization and
+      readability, which have a positive impact on the software's life cycle.
+      In modern development environments, it's common to use tools to automate
+      code formatting. However, these tools often come with limitations in
+      terms of supported languages, configuration options, and the ability to
+      define custom formatting styles. To overcome or reduce the limitations
+      frequently encountered in conventional formatting tools, this work
+      introduces \witchcooking, a command-line prototypical software built on
+      the \treesitter system. It aims to:
+      \begin{inparaenum}
+        \item encompass a range of programming languages and
+        \item provide custom formatting through the \treesitter's query
+              language.
+      \end{inparaenum}
+      The software developed has the potential to support any language with a
+      grammar compatible with the version of \treesitter used by \witchcooking.
+      Additionally, it offers customized formatting based on guidelines
+      specified in the submitted file, written in the \treesitter's query
+      language. However, an error in synchronizing syntax nodes --- resulting
+      from an unawareness of a \treesitter system peculiarity --- limits the
+      use of \witchcooking:
+      \begin{inparaenum}
+        \item for formatting more intricate codes or
+        \item for applying more complex guidelines,
+      \end{inparaenum}
+      as it may likely lead to syntax errors.
+
+      \noindent
+      \textbf{Keywords}:
+      code formatting;
+      \textit{prettyprint};
+      custom formatting;
+      \treesitter;
+      query language.
+    \end{otherlanguage*}
   \end{resumo}
 
   %%%%%%%%%%%%%%%%%%%
