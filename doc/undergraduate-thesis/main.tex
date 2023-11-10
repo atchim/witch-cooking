@@ -432,11 +432,26 @@
     estilos de formatação personalizados. Visando superar ou reduzir as
     limitações frequentemente encontradas nas ferramentas convencionais de
     formatação, neste trabalho é apresentado o \witchcooking, um software
-    prototípico que tem como objetivos:
+    prototípico de linha de comando, fundamentado no sistema \treesitter, que
+    tem como objetivos:
     \begin{inparaenum}
       \item abranger uma gama de linguagens de programação, além de
-      \item permitir que o usuário defina seus próprios estilos de formatação.
+      \item proporcionar a formatação personalizada via a linguagem de consulta
+            do \treesitter.
     \end{inparaenum}
+    O software desenvolvido tem potencial para suportar qualquer linguagem que
+    tenha uma gramática compatível com a versão do \treesitter utilizada pelo
+    \witchcooking. Além disso, o software proporciona a formatação
+    personalizada por meio de diretrizes especificadas no arquivo submetido,
+    escrito na linguagem de consulta do \treesitter. No entanto, um erro na
+    sincronização de nós da sintaxe --- derivado do desconhecimento de uma
+    peculiaridade do sistema \treesitter{} --- inviabiliza o uso do
+    \witchcooking:
+    \begin{inparaenum}
+      \item para formatar códigos mais robustos ou
+      \item para aplicar diretrizes mais complexas,
+    \end{inparaenum}
+    uma vez que provavelmente ocasionará erros de sintaxe.
 
     \noindent
     \textbf{Palavras-chave}:
