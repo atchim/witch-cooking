@@ -48,18 +48,12 @@
 \usepackage{palatino}
 \usepackage{paralist}
 \usepackage{tikz}
-\usepackage{xspace}
-
-%%%%%%%%%%%%%%%%%%
-%% Handy Aliases %
-%%%%%%%%%%%%%%%%%%
-
-\newcommand{\treesitter}{\textit{Tree-Sitter}\xspace}
-\newcommand{\witchcooking}{\textit{Witch Cooking}\xspace}
 
 %%%%%%%%%%%%%%%%%%
 %% Configuration %
 %%%%%%%%%%%%%%%%%%
+
+\input{aliases.tex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% ABNT's NBR 14724 Metrics Compliance %
@@ -80,26 +74,18 @@
 %%%% Cover & Title Page Info %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\titulo
-  {%
-    \witchcooking: Formatação Personalizada de Código-Fonte via a Linguagem de
-    Consulta do \treesitter}
+\titulo{\witchcooking: \witchcookingsubtitle}
 \autor{Átila Gama Silva}
 \local{Irecê}
 \data{\the\year}
 \orientador{Rafael Xavier}
-\instituicao
-  {Instituto Federal de Educação, Ciência e Tecnologia da Bahia – Campus Irecê}
+\instituicao{\ifba}
 \tipotrabalho{Trabalho de Conclusão de Curso}
 \preambulo
   {%
-    \textit{Trabalho de Conclusão de Curso} apresentado ao
-    \textit
-      {%
-        Curso Técnico em Análise e Desenvolvimento de Sistemas do Instituto
-        Federal de Educação, Ciência e Tecnologia da Bahia --- Campus Irecê}%
-    , como requisito parcial para obtenção do diploma de
-    \textit{Técnico em Análise e Desenvolvimento de Sistemas}, mediante a
+    Trabalho de Conclusão de Curso apresentado ao Curso Técnico em Análise e
+    Desenvolvimento de Sistemas do \ifba, como requisito parcial para obtenção
+    do diploma de Técnico em Análise e Desenvolvimento de Sistemas, mediante a
     orientação do professor \imprimirorientador.}
 
 %%%%%%%%%%%%%

@@ -1,0 +1,63 @@
+%%%%%%%%%%%%
+% Preamble %
+%%%%%%%%%%%%
+
+\documentclass[aspectratio=169,english,brazil]{beamer}
+
+%%%%%%%%%%%%%
+%% Packages %
+%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%
+%%% Encoding %
+%%%%%%%%%%%%%%
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%%%%%%%%%%%%%%%%%%%
+%%% Miscellaneous %
+%%%%%%%%%%%%%%%%%%%
+
+\usepackage[portuguese]{babel}
+\usepackage{csquotes}
+\usepackage{palatino}
+
+%%%%%%%%%%%%%%%%%%
+%% Configuration %
+%%%%%%%%%%%%%%%%%%
+
+\input{../aliases.tex}
+
+%%%%%%%%%%%%
+%%% Beamer %
+%%%%%%%%%%%%
+
+\setbeamertemplate{headline}{}
+\setbeamertemplate{navigation symbols}{}
+
+%%%%%%%%%%%%%%%%
+%%% Title Page %
+%%%%%%%%%%%%%%%%
+
+\title{\witchcooking}
+\subtitle{\witchcookingsubtitle}
+\author{Átila Gama Silva}
+\institute{\ifba}
+\date{\today}
+\logo{\includegraphics[height=1cm]{../ifba-irece-logo.png}}
+
+%%%%%%%%%%
+%%% Font %
+%%%%%%%%%%
+
+\usefonttheme{professionalfonts}
+\renewcommand\familydefault{\rmdefault}
+
+%%%%%%%%%%%%
+% Document %
+%%%%%%%%%%%%
+
+\begin{document}
+  \begin{frame}\titlepage\end{frame}
+\end{document}
