@@ -1725,12 +1725,12 @@
     \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
   \end{minipage}
 
-  %%%%%%%%%%%%%%%%%
-  %%% Limitations %
-  %%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%
+  %%% Tests %
+  %%%%%%%%%%%
 
-  \section{Limitações}
-  \label{section:limitations}
+  \section{Testes}
+  \label{section:tests}
 
   Ao final do desenvolvimento do \witchcooking, foi conduzida uma série de
   testes para verificar se o código formatado atendia às expectativas, conforme
@@ -2065,8 +2065,8 @@
   formatação já possui uma organização razoável. Ou seja, a ferramenta foi
   utilizada para realizar operações pontuais de formatação.
 
-  Contudo, na \cref{section:limitations}, a partir de um cenário mais complexo
-  de formatação, foi apresentado um mau funcionamento na sincronização das
+  Contudo, na \cref{section:tests}, a partir de um cenário mais complexo de
+  formatação, foi apresentado um mau funcionamento na sincronização das
   extensões dos nós. Conforme reportado, essa falha, que deriva de uma
   característica peculiar do \treesitter, compromete o uso da ferramenta para
   efetuar procedimentos de formatação mais robustos. Portanto, ao considerar
@@ -2075,8 +2075,8 @@
   complexas sejam capazes de abranger esses cenários sem ocasionar erros de
   sintaxe.
 
-  Concluindo, ainda na \cref{section:limitations}, a partir da exemplificação
-  do predicado \codesnippetinline{indent!}, foram discutidos:
+  Concluindo, ainda na \cref{section:tests}, a partir da exemplificação do
+  predicado \codesnippetinline{indent!}, foram discutidos:
   \begin{inparaenum}
     \item as limitações desse predicado ao aplicar diferentes regras de
           indentação, além de
@@ -2224,13 +2224,12 @@
   vários aspectos com potencial de aprimoramento.
   \begin{inparaenum}
     \item O problema mais premente é a sincronização de nós --- abordado na
-          \cref{section:limitations} ---, para o qual seria possível
-          desenvolver um algoritmo dedicado capaz de sincronizar corretamente
-          qualquer nó mesmo após ele ter sofrido edições tangentes à sua
-          extensão.
+          \cref{section:tests} ---, para o qual seria possível desenvolver um
+          algoritmo dedicado capaz de sincronizar corretamente qualquer nó
+          mesmo após ele ter sofrido edições tangentes à sua extensão.
 
           Outras melhorias potenciais, também discutidas na
-          \cref{section:limitations}, estão relacionadas ao funcionamento do
+          \cref{section:tests}, estão relacionadas ao funcionamento do
           predicado \codesnippetinline{indent!}. Nesse contexto, é possível
           aprimorar
     \item a formatação de nós com regras de indentação relativa positiva, de
@@ -2513,7 +2512,7 @@
     \chapter{Sincronizando Nós do \treesitter}
     \label{appendix:node-edit-demo}
 
-    Na \cref{section:limitations}, foi mencionado que, ao sincronizar um nó, a
+    Na \cref{section:tests}, foi mencionado que, ao sincronizar um nó, a
     biblioteca \treesitter não contabiliza as edições ocorridas que tangem a
     extensão desse nó. Este apêndice tem como objetivo demonstrar esse
     comportamento de forma didática. Para reproduzí-lo, é necessário:
