@@ -1103,11 +1103,11 @@
   Consequentemente, ao utilizar esses predicados nos padrões da consulta, é
   possível dirigir a formatação de nós específicos da árvore de sintaxe.
 
-  Para compreender as \cref{section:fmt-algorithm,section:driving}, é essencial
-  um ter um conhecimento básico sobre o funcionamento da linguagem de consulta
-  do \treesitter, que é cerne do algoritmo desenvolvido. Portanto, é
-  recomendado a leitura do \cref{appendix:queries}, onde são abordados os
-  principais conceitos e características dessa linguagem.
+  Para compreender esta seção e as subsequentes, é essencial ter um
+  conhecimento básico sobre o funcionamento da linguagem de consulta do
+  \treesitter, que é cerne do algoritmo desenvolvido. Portanto, é recomendado a
+  leitura do \cref{appendix:queries}, onde são abordados os principais
+  conceitos e características dessa linguagem.
 
   A operação do algoritmo de formatação divide-se nas etapas de:
   \begin{inparaenum}
@@ -1270,12 +1270,12 @@
     \vspace{-2ex}
     \captionof*{figure}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}}
 
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %%% Driving the Formatting %
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%% The Formatting Guidelines %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-  \section{Dirigindo a Formatação}
-  \label{section:driving}
+  \section{As Diretrizes de Formatação}
+  \label{section:guidelines}
 
   Como já enfatizado em diversas ocasiões, as diretrizes de formatação do
   código-fonte são especificadas no arquivo escrito na linguagem de consulta do
@@ -1877,7 +1877,7 @@
   \codesnippetinline[rust]{baz()}, cuja regra de indentação foi especificada
   via \codesnippetinline[scheme]{(#set! @item indent-rule "+1")}, conforme o
   \cref{snippet:scheme:rust:1tbs-mod}. Com base na explicação da
-  \cref{section:driving}, essa configuração define que o deslocamento da
+  \cref{section:guidelines}, essa configuração define que o deslocamento da
   expressão de função, capturada via \codesnippetinline{@item}, será calculado
   como a combinação:
   \begin{inparaenum}
@@ -2059,7 +2059,7 @@
           \end{inparaenum}
   \end{inparaenum}
 
-  Como explicado e demonstrado na \cref{section:driving}, é possível
+  Como explicado e demonstrado na \cref{section:guidelines}, é possível
   desempenhar procedimentos básicos de formatação através do \witchcooking. Nos
   exemplos utilizados, é perceptível que o código-fonte submetido para
   formatação já possui uma organização razoável. Ou seja, a ferramenta foi
@@ -2095,15 +2095,16 @@
     \item do algoritmo de formatação fundamentado no \treesitter, descrito na
           \cref{section:fmt-algorithm};
     \item das configurações de estilização para o predicado
-          \codesnippetinline{set!}, descritas na \cref{section:driving}, sendo
-          elas
+          \codesnippetinline{set!}, descritas na \cref{section:guidelines},
+          sendo elas
           \begin{inparaenum}
             \item \codesnippetinline{indent-rule} e
             \item \codesnippetinline{indent-style};
           \end{inparaenum}
           e
     \item dos predicados basais para a formatação, estendendo a linguagem de
-          consulta, demonstrados também na \cref{section:driving}, sendo eles
+          consulta, demonstrados também na \cref{section:guidelines}, sendo
+          eles
           \begin{inparaenum}
             \item \codesnippetinline{space!},
             \item \codesnippetinline{indent!}, e
