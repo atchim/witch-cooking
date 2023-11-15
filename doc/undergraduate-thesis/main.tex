@@ -988,8 +988,8 @@
           \end{inparaenum}
   \end{inparaenum}
 
-  Para atender a seus objetivos, o \witchcooking foi desenvolvido com base na
-  biblioteca \treesitter \cite{tree-sitter-2023-tree}, a qual:
+  Para atender a seus objetivos, o \witchcooking foi desenvolvido com base no
+  sistema \treesitter \cite{tree-sitter-2023-tree}, o qual:
   \begin{inparaenum}
     \item suporta uma ampla variedade de linguagens de programação e formatos
           de arquivos, além de
@@ -1023,8 +1023,8 @@
   \section{Métodos}
 
   Embora o \treesitter não tenha sido originalmente projetado para formatação
-  de código-fonte, o autor deste trabalho identificou o potencial da
-  biblioteca, particularmente em relação à sua linguagem de consulta, que ---
+  de código-fonte, o autor deste trabalho identificou o potencial do sistema,
+  particularmente em relação à sua linguagem de consulta, que ---
   como já ressaltado --- é extensível. Assim, para permitir a formatação
   dirigida, o \witchcooking baseou-se na extensão e disponibilização de
   predicados designados a executar operações específicas de formatação. Em
@@ -1050,8 +1050,8 @@
 
           À medida que se aprofundou o conhecimento sobre o \treesitter, foram
           incorporados elementos de
-    \item uma pesquisa experimental com o objetivo de explorar a aplicação da
-          biblioteca como base para o algoritmo de formatação de código-fonte.
+    \item uma pesquisa experimental com o objetivo de explorar a aplicação do
+          sistema como base para o algoritmo de formatação de código-fonte.
           Similarmente, foram integrados elementos de
     \item um estudo de caso com o propósito de analisar a eficácia do software
           desenvolvido.
@@ -1095,13 +1095,13 @@
 
   O \witchcooking permite a formatação de código-fonte via seu algoritmo
   fundamentado no \treesitter e sua linguagem de consulta. Esse algoritmo
-  utiliza a biblioteca para gerar uma árvore de sintaxe a partir do
-  código-fonte submetido pelo usuário. Adicionalmente, complementando os
-  predicados \textit{builtins} do \treesitter{} --- os quais foram concebidos
-  para a busca de padrões correspondentes ---, o algoritmo inclui predicados
-  desenvolvidos para executar procedimentos variados de formatação.
-  Consequentemente, ao utilizar esses predicados nos padrões da consulta, é
-  possível dirigir a formatação de nós específicos da árvore de sintaxe.
+  utiliza o sistema para gerar uma árvore de sintaxe a partir do código-fonte
+  submetido pelo usuário. Adicionalmente, complementando os predicados
+  \textit{builtins} do \treesitter{} --- os quais foram concebidos para a busca
+  de padrões correspondentes ---, o algoritmo inclui predicados desenvolvidos
+  para executar procedimentos variados de formatação. Consequentemente, ao
+  utilizar esses predicados nos padrões da consulta, é possível dirigir a
+  formatação de nós específicos da árvore de sintaxe.
 
   Para compreender esta seção e as subsequentes, é essencial ter um
   conhecimento básico sobre o funcionamento da linguagem de consulta do
@@ -1167,7 +1167,7 @@
           formatação. Em cada iteração, inicialmente,
     \item é checado se o padrão é enraizado%
           \footnote
-            { Na linguagem de consulta do \treesitter, embora a biblioteca não
+            { Na linguagem de consulta do \treesitter, embora o sistema não
               forneça uma definição exata, um padrão enraizado é geralmente
               caracterizado por especificar pelo menos um nó inicial para a
               correspondência, e vice-versa.}
@@ -1988,7 +1988,7 @@
   dessas possíveis melhorias, não foi considerado o problema que origina a
   omissão da chave em questão. Por sua vez, essa desconsideração ocorreu porque
   esse problema não deriva diretamente do \witchcooking, mas sim de uma
-  característica da biblioteca \treesitter: ao sincronizar um nó, as edições
+  característica do sistema \treesitter: ao sincronizar um nó, as edições
   ocorridas tangentes à sua extensão não são contabilizadas.
 
   Para compreender a complexidade envolvida nesse problema, é essencial
@@ -2042,7 +2042,7 @@
   Conforme demonstrado ao longo deste capítulo, o algoritmo desenvolvido,
   fundamentado no \treesitter, permite a formatação --- multilíngue e
   personalizada --- de código-fonte via as implementações que estendem a
-  linguagem de consulta da biblioteca. Mais especificamente, em adição à base
+  linguagem de consulta do sistema. Mais especificamente, em adição à base
   fornecida pelo \treesitter, a formatação é proporcionada pelas:
   \begin{inparaenum}
     \item configurações, sendo elas
@@ -2512,8 +2512,8 @@
     \chapter{Sincronizando Nós do \treesitter}
     \label{appendix:node-edit-demo}
 
-    Na \cref{section:tests}, foi mencionado que, ao sincronizar um nó, a
-    biblioteca \treesitter não contabiliza as edições ocorridas que tangem a
+    Na \cref{section:tests}, foi mencionado que, ao sincronizar um nó, o
+    sistema \treesitter não contabiliza as edições ocorridas que tangem a
     extensão desse nó. Este apêndice tem como objetivo demonstrar esse
     comportamento de forma didática. Para reproduzí-lo, é necessário:
     \begin{inparaenum}
