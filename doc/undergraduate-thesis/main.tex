@@ -2009,7 +2009,7 @@
     \item de pontos, onde cada ponto refere-se a uma linha e uma coluna
           específica.
   \end{inparaenum}
-  Originalmente, os nós capturados nos padrões mantém as extensões conforme
+  Originalmente, os nós capturados nos padrões mantêm as extensões conforme
   presentes no código-fonte submetido. Portanto, ao manipulá-los, os
   predicados devem sincronizar os nós para que suas extensões estejam
   consoantes ao código vigente em processo de formatação.
@@ -2039,10 +2039,10 @@
 
   \section{Discussão dos Resultados}
 
-  Conforme demonstrado ao longo desse capítulo, o algoritmo desenvolvido,
+  Conforme demonstrado ao longo deste capítulo, o algoritmo desenvolvido,
   fundamentado no \treesitter, permite a formatação --- multilíngue e
   personalizada --- de código-fonte via as implementações que estendem a
-  linguagem de consulta biblioteca. Mais especificamente, em adição à base
+  linguagem de consulta da biblioteca. Mais especificamente, em adição à base
   fornecida pelo \treesitter, a formatação é proporcionada pelas:
   \begin{inparaenum}
     \item configurações, sendo elas
@@ -2150,7 +2150,7 @@
   sincronização) de nós feita pelo \treesitter: ao sincronizar um nó, as
   edições ocorridas tangentes à sua extensão não são contabilizadas. Essa
   peculiaridade --- demonstrada no \cref{appendix:node-edit-demo} --- só foi
-  identificada durante os testes realizados para validar o funcionamentos das
+  identificada durante os testes realizados para validar o funcionamento das
   configurações e dos predicados desenvolvidos. Essa descoberta tardia
   dificilmente poderia ser antecipada, uma vez que esse comportamento da
   sincronização não é mencionado na documentação do método
@@ -2538,7 +2538,7 @@
 
     Para escrever o código, é necessário editar o arquivo localizado no
     seguinte caminho: \codesnippetinline{src/main.rs}. A seguir, serão
-    mostrados e explicados os trechos de código que compõe esse arquivo. Essa
+    mostrados e explicados os trechos de código que compõem esse arquivo. Essa
     abordagem fragmentada foi adotada por dois motivos principais:
     \begin{inparaenum}
       \item explicar os procedimentos na ordem de execução, e
