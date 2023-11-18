@@ -10,7 +10,8 @@ clean:
 	latexmk -CA
 	rm -fr $(disposable-main-files)
 
-main.pdf: main.tex ; latexmk -pdf -pdflatex=$(pdflatex-args) -use-make $<
+main.pdf: main.tex ../aliases.tex
+	latexmk -pdf -pdflatex=$(pdflatex-args) -use-make $<
 
 .PHONY: present
 present: main.pdf ; nohup zathura --mode presentation $< >/dev/null 2>&1 &

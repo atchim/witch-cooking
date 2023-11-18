@@ -14,7 +14,7 @@ clean:
 .PHONY: defense-seminar
 defense-seminar: ; $(MAKE) -C defense-seminar
 
-main.pdf: main.tex glossary.bib references.bib
+main.pdf: main.tex aliases.tex glossary.bib references.bib
 	latexmk -pdf -pdflatex=$(pdflatex-args) -use-make $<
 
 .PHONY: open
