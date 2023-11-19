@@ -2,7 +2,12 @@
 % Preamble %
 %%%%%%%%%%%%
 
-\documentclass[aspectratio=169,english,brazil]{beamer}
+\documentclass
+  [ aspectratio=169,
+    english,
+    hyperref={citecolor=blue,colorlinks=true,linkcolor=blue,urlcolor=blue},
+    brazil]
+  {beamer}
 
 %%%%%%%%%%%%%
 %% Packages %
@@ -20,6 +25,7 @@
 %%%%%%%%%%%%%%%%%%%
 
 \usepackage[portuguese]{babel}
+\usepackage[backend=biber,indent,style=abnt]{biblatex}
 \usepackage{csquotes}
 \usepackage{palatino}
 
@@ -36,16 +42,17 @@
 \setbeamertemplate{headline}{}
 \setbeamertemplate{navigation symbols}{}
 
-%%%%%%%%%%%%%%%%
-%%% Title Page %
-%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%
+%%% Bibliography %
+%%%%%%%%%%%%%%%%%%
 
-\title{\witchcooking}
-\subtitle{\witchcookingsubtitle}
-\author{Átila Gama Silva}
-\institute{\ifba}
-\date{\today}
-\logo{\includegraphics[height=1cm]{../ifba-irece-logo.png}}
+\addbibresource{../references.bib}
+
+%%%%%%%%%%%%
+%%% Colors %
+%%%%%%%%%%%%
+
+\definecolor{blue}{RGB}{41,5,195}
 
 %%%%%%%%%%
 %%% Font %
@@ -54,10 +61,134 @@
 \usefonttheme{professionalfonts}
 \renewcommand\familydefault{\rmdefault}
 
+%%%%%%%%%%%%%%%%
+%%% Title Page %
+%%%%%%%%%%%%%%%%
+
+\title{\witchcooking}
+\subtitle{\witchcookingsubtitle}
+\author{Átila Gama Silva}
+\date{\today}
+\titlegraphic{\includegraphics[height=1cm]{../ifba-irece-logo.png}}
+
 %%%%%%%%%%%%
 % Document %
 %%%%%%%%%%%%
 
 \begin{document}
   \begin{frame}\titlepage\end{frame}
+
+  \begin{frame}{Motivações}
+    \begin{itemize}
+      \item<2-> Surgiram das dificuldades ao estudar estilos de formatação de
+                código-fonte em diversas linguagens de programação
+                \begin{itemize}
+                  \item<3-> Durante a análise dos estilos convencionais de
+                            formatação
+                            \begin{itemize}
+                              \item<4-> Era imprescindível recorrer a
+                                        diferentes \textit{prettyprinters}
+                              \item<5-> Cada um com suas próprias configurações
+                                        e níveis de suporte para esses estilos
+                            \end{itemize}
+                  \item<6-> Durante a análise dos estilos não convencionais
+                            \begin{itemize}
+                              \item<7-> A aplicação manual era inevitável%
+                                        \onslide
+                                          <8->
+                                          {%
+                                            , consumindo consideravelmente tempo
+                                            e esforço}
+                            \end{itemize}
+                \end{itemize}
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}{Propósitos}
+    \begin{itemize}
+      \item<2-> Desenvolver um software de linha de comando%
+                \onslide<3->{ — de natureza prototípica —}%
+                \onslide<4->{ para a formatação de código-fonte}%
+                \onslide<5->{, tendo como objetivos}
+                \begin{itemize}
+                  \item<6-> Abranger uma gama de linguagens de programação
+                  \item<7-> proporcionar a formatação personalizada via a
+                            linguagem de consulta do \treesitter
+                \end{itemize}
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}{A Formatação de Código-Fonte}
+    \only
+      <2-4>
+      { \begin{itemize}
+          \item<2-> Desde os primórdios da computação, métodos foram
+                    desenvolvidos para garantir que a saída impressa fosse
+                    formatada de maneira esteticamente agradável
+                    \apud{harris-1956-keyboard}[1]{yelland-2015-new}
+          \item<3-> Esses métodos ganharam popularidade sob o termo
+                    \textit{``prettyprinting''}
+          \item<4-> No desenvolvimento de software, o \textit{prettyprinting} é
+                    conhecido como formatação de código-fonte
+        \end{itemize}}%
+    \only
+      <5-11>
+      { \begin{itemize}
+          \item<5-> Durante as décadas de 60 e 70, a linguagem de programação
+                    LISP proporcionou condições favoráveis para o avanço da
+                    formatação de código \cite[2]{yelland-2015-new}
+          \item<6-> Em 1967, Bill Gosper desenvolveu o \textit{GRINDEF}%
+                    \onslide
+                      <7->
+                      {%
+                        : considerado o primeiro \textit{prettyprinter} a
+                        mensurar o tamanho das linhas e ter ciência de sua
+                        localização no arquivo
+                        \cites
+                          {gosper-2023-twubblesome}
+                          {griesemer-2022-cultural}}
+          \item<8-> Posteriormente, \textcite{oppen-1980-prettyprinting}
+                    apresentou algoritmo inovador de formatação de
+                    código-fonte%
+                    \onslide
+                      <9->
+                      {%
+                        : destacava-se por sua capacidade de formatar código
+                        derivado de qualquer linguagem de programação}
+                    \begin{itemize}
+                      \item<10->  O algoritmo necessitava que o código fosse
+                                  anotado com espaços em branco e delimitadores
+                                  especiais para marcar o início e fim de
+                                  blocos
+                      \item<11->  Assim, o código a ser fornecido ao algoritmo
+                                  precisaria ser processado por uma ferramenta
+                                  intermediária capaz de compreender a sintaxe
+                                  da linguagem e fornecer um código anotado de
+                                  forma adequada, permitindo que o algoritmo
+                                  realizasse a formatação apropriada
+                    \end{itemize}
+        \end{itemize}}%
+    \only
+      <12->
+      { \begin{itemize}
+          \item<12->  Recentemente, \textcite{yelland-2015-new} descreveu um
+                      algoritmo que visa otimizar o layout do código em relação
+                      a uma noção intuitiva de custo de layout
+                      \begin{itemize}
+                        \item<13->  Notavelmente, entre as abstrações de
+                                    programação empregadas para facilitar sua
+                                    aplicação em diversas linguagens e
+                                    políticas de layout de código, destacam-se
+                                    os \textit{combinators}%
+                                    \onslide
+                                      <14->
+                                      {%
+                                        : funções geradoras que descrevem
+                                        layouts alternativos para o
+                                        código-fonte}
+                      \end{itemize}
+        \end{itemize}}
+  \end{frame}
+
+  \begin{frame}{Referências}\printbibliography\end{frame}
 \end{document}
