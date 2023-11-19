@@ -89,27 +89,22 @@
 
   \begin{frame}{Motivações}
     \begin{itemize}
-      \item<2-> Surgiram das dificuldades ao estudar estilos de formatação de
-                código-fonte em diversas linguagens de programação
-                \begin{itemize}
-                  \item<3-> Durante a análise dos estilos convencionais de
-                            formatação
-                            \begin{itemize}
-                              \item<4-> Era imprescindível recorrer a
-                                        diferentes \textit{prettyprinters}
-                              \item<5-> Cada um com suas próprias configurações
-                                        e níveis de suporte para esses estilos
-                            \end{itemize}
-                  \item<6-> Durante a análise dos estilos não convencionais
-                            \begin{itemize}
-                              \item<7-> A aplicação manual era inevitável%
-                                        \onslide
-                                          <8->
-                                          {%
-                                            , consumindo consideravelmente tempo
-                                            e esforço}
-                            \end{itemize}
-                \end{itemize}
+      \item As motivações surgiram das dificuldades ao estudar estilos de
+            formatação de código-fonte em diversas linguagens de programação
+            \begin{itemize}
+              \item Durante a análise dos estilos convencionais de formatação
+                    \begin{itemize}
+                      \item Era imprescindível recorrer a diferentes
+                            \textit{prettyprinters}
+                      \item Cada um com suas próprias configurações e níveis de
+                            suporte para esses estilos
+                    \end{itemize}
+              \item Durante a análise dos estilos não convencionais
+                    \begin{itemize}
+                      \item A aplicação manual era inevitável, consumindo
+                            consideravelmente tempo e esforço
+                    \end{itemize}
+            \end{itemize}
     \end{itemize}
   \end{frame}
 
@@ -119,15 +114,14 @@
 
   \begin{frame}{Propósitos}
     \begin{itemize}
-      \item<2-> Desenvolver um software de linha de comando%
-                \onslide<3->{ — de natureza prototípica —}%
-                \onslide<4->{ para a formatação de código-fonte}%
-                \onslide<5->{, tendo como objetivos}
-                \begin{itemize}
-                  \item<6-> Abranger uma gama de linguagens de programação
-                  \item<7-> proporcionar a formatação personalizada via a
-                            linguagem de consulta do \treesitter
-                \end{itemize}
+      \item Desenvolver um software de linha de comando --- de natureza
+            prototípica --- para a formatação de código-fonte, tendo como
+            objetivos
+            \begin{itemize}
+              \item Abranger uma gama de linguagens de programação
+              \item Proporcionar a formatação personalizada via a linguagem de
+                    consulta do \treesitter
+            \end{itemize}
     \end{itemize}
   \end{frame}
 
@@ -137,69 +131,50 @@
 
   \begin{frame}{A Formatação de Código-Fonte}
     \begin{itemize}
-      \item<2-> Desde os primórdios da computação, métodos foram
-                desenvolvidos para garantir que a saída impressa fosse
-                formatada de maneira esteticamente agradável
-                \apud{harris-1956-keyboard}[1]{yelland-2015-new}
-      \item<3-> Esses métodos ganharam popularidade sob o termo
-                \textit{``prettyprinting''}
-      \item<4-> No desenvolvimento de software, o \textit{prettyprinting} é
-                conhecido como formatação de código-fonte
+      \item Desde os primórdios da computação, métodos foram desenvolvidos para
+            garantir que a saída impressa fosse formatada de maneira
+            esteticamente agradável
+            \apud{harris-1956-keyboard}[1]{yelland-2015-new}
+      \item Esses métodos ganharam popularidade sob o termo
+            \textit{``prettyprinting''}
+      \item No desenvolvimento de software, o \textit{prettyprinting} é
+            conhecido como formatação de código-fonte
     \end{itemize}
   \end{frame}
 
   \begin{frame}{A Formatação de Código-Fonte}
     \begin{itemize}
-      \item<1-> Durante as décadas de 60 e 70, a linguagem de programação LISP
-                proporcionou condições favoráveis para o avanço da formatação
-                de código \cite[2]{yelland-2015-new}
-      \item<2-> Em 1967, Bill Gosper desenvolveu o \textit{GRINDEF}%
-                \onslide
-                  <3->
-                  {%
-                    : considerado o primeiro \textit{prettyprinter} a mensurar
-                    o tamanho das linhas e ter ciência de sua localização no
-                    arquivo
-                    \cites
-                      {gosper-2023-twubblesome}
-                      {griesemer-2022-cultural}}
-      \item<4-> Posteriormente, \textcite{oppen-1980-prettyprinting} apresentou
-                algoritmo inovador de formatação de código-fonte%
-                \onslide
-                  <5->
-                  {%
-                    : destacava-se por sua capacidade de formatar código
-                    derivado de qualquer linguagem de programação}
-                \begin{itemize}
-                  \item<6-> O algoritmo necessitava que o código fosse anotado
-                            com espaços em branco e delimitadores especiais
-                            para marcar o início e fim de blocos
-                  \item<7-> Assim, o código a ser fornecido ao algoritmo
-                            precisaria ser processado por uma ferramenta
-                            intermediária capaz de compreender a sintaxe da
-                            linguagem e fornecer um código anotado de forma
-                            adequada, permitindo que o algoritmo realizasse a
-                            formatação apropriada
-                \end{itemize}
+      \item Durante as décadas de 60 e 70, a linguagem de programação LISP
+            proporcionou condições favoráveis para o avanço da formatação de
+            código \cite[2]{yelland-2015-new}
+      \item Em 1967, Bill Gosper desenvolveu o \textit{GRINDEF}: considerado o
+            primeiro \textit{prettyprinter} a mensurar o tamanho das linhas e
+            ter ciência de sua localização no arquivo
+            \cites{gosper-2023-twubblesome}{griesemer-2022-cultural}
+      \item Posteriormente, \textcite{oppen-1980-prettyprinting} apresentou um
+            algoritmo inovador capaz de formatar código-fonte derivado de
+            qualquer linguagem de programação
+            \begin{itemize}
+              \item O algoritmo necessitava que o código fosse anotado --- por
+                    uma ferramenta intermediária --- com espaços em branco e
+                    delimitadores especiais para marcar o início e fim de
+                    blocos
+            \end{itemize}
     \end{itemize}
   \end{frame}
 
   \begin{frame}{A Formatação de Código-Fonte}
     \begin{itemize}
-      \item<1-> Recentemente, \textcite{yelland-2015-new} descreveu um
-                algoritmo que visa otimizar o layout do código em relação a uma
-                noção intuitiva de custo de layout
-                \begin{itemize}
-                  \item<2-> Notavelmente, entre as abstrações de programação
-                            empregadas para facilitar sua aplicação em diversas
-                            linguagens e políticas de layout de código,
-                            destacam-se os \textit{combinators}%
-                            \onslide
-                              <3->
-                              {%
-                                : funções geradoras que descrevem layouts
-                                alternativos para o código-fonte}
-                \end{itemize}
+      \item Recentemente, \textcite{yelland-2015-new} descreveu um algoritmo
+            que visa otimizar o layout do código em relação a uma noção
+            intuitiva de custo de layout
+            \begin{itemize}
+              \item Notavelmente, entre as abstrações de programação
+                    empregadas para facilitar sua aplicação em diversas
+                    linguagens e políticas de layout de código,
+                    destacam-se os \textit{combinators}: funções geradoras que
+                    descrevem layouts alternativos para o código-fonte
+            \end{itemize}
     \end{itemize}
   \end{frame}
 
@@ -209,50 +184,48 @@
 
   \begin{frame}{O Sitema \treesitter}
     \begin{itemize}
-      \item<2-> O \treesitter \cite{tree-sitter-2023-tree} é um sistema
-                multilíngue de análise sintática para ferramentas de
-                programação%
-                \onslide
-                  <3->
-                  {%
-                    , desenvolvido como uma tentativa de solucionar problemas
-                    presentes nas ferramentas de análise sintática da época}
-                \onslide<4->{, tendo como objetivos}
-                \begin{itemize}
-                  \item<5-> Ser utilizado no ambiente de desenvolvimento para
-                            produzir árvores de sintaxe a partir da análise de
-                            códigos escritos em várias linguagens
-                  \item<6-> Implementar a análise incremental, permitindo a
-                            atualização da árvore de sintaxe em tempo real
-                  \item<7-> Expor através da árvore de sintaxe os nós
-                            representando suas construções gramaticais no
-                            código (e.g., classes, funções, declarações, etc.)
-                  \item<8-> Ser livre de dependências, assim beneficiando sua
-                            adoção e aplicabilidade
-                \end{itemize}
+      \item O \treesitter \cite{tree-sitter-2023-tree} é um sistema multilíngue
+            de análise sintática para ferramentas de programação, desenvolvido
+            como uma tentativa de solucionar problemas presentes nas
+            ferramentas de análise sintática da época, tendo como objetivos
+            \begin{itemize}
+              \item Produzir árvores de sintaxe a partir da análise de códigos
+                    escritos em várias linguagens
+              \item Implementar a análise incremental, permitindo a atualização
+                    da árvore de sintaxe em tempo real
+              \item Expor através da árvore de sintaxe os nós representando
+                    suas construções gramaticais no código (e.g., classes,
+                    funções, declarações, etc.)
+              \item Ser livre de dependências, assim beneficiando sua adoção e
+                    aplicabilidade
+            \end{itemize}
     \end{itemize}
   \end{frame}
 
   \begin{frame}{O Sitema \treesitter}
     \begin{itemize}
-      \item<1-> Adicionalmente%
-                \onslide
-                  <2->
-                  {%
-                    , o \treesitter oferece uma pequena linguagem de consulta
-                    declarativa que é capaz de expressar padrões da árvore
-                    sintática por meio de \textit{S-expressions} e buscar
-                    correspondências}
-      \item<3-> Essa linguagem suporta operadores que permitem
-                \begin{itemize}
-                  \item<4-> A captura de nós
-                  \item<5-> A quantificação de nós, análoga às expressões
-                            regulares
-                  \item<6-> O agrupamento de nós
-                  \item<7-> As alternâncias de nós
-                  \item<8-> O uso de \textit{wildcards}
-                  \item<9-> A ordenação de nós
-                \end{itemize}
+      \item Além disso, o \treesitter oferece uma pequena linguagem de
+            consulta declarativa que é capaz de expressar padrões da árvore
+            sintática por meio de \textit{S-expressions} e buscar
+            correspondências
+      \item Essa linguagem suporta operadores que permitem
+            \begin{itemize}
+              \item A captura de nós
+              \item A quantificação de nós, análoga às expressões regulares
+              \item O agrupamento de nós
+              \item As alternâncias de nós
+              \item O uso de \textit{wildcards}
+              \item A ordenação de nós
+            \end{itemize}
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}{O Sitema \treesitter}
+    \begin{itemize}
+      \item Adicionalmente, a linguagem de consulta permite o uso de predicados
+            --- funções arbitrárias geralmente utilizadas para filtrar nós ou
+            realizar verificações mais complexas durante a busca de padrões
+            ---, sejam eles \textit{builtins} ou estendidos por meio de uma API
     \end{itemize}
   \end{frame}
 
