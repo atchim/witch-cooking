@@ -26,14 +26,26 @@
 
 \usepackage[portuguese]{babel}
 \usepackage[backend=biber,indent,style=abnt]{biblatex}
+\usepackage[listings,minted,skins,xparse]{tcolorbox}
 \usepackage{csquotes}
 \usepackage{palatino}
+\usepackage{xspace}
+
+%%%%%%%%%%%%
+%% Aliases %
+%%%%%%%%%%%%
+
+\newcommand{\treesitter}{\textit{Tree-Sitter}\xspace}
+\newcommand{\worktitle}{\textit{Witch Cooking}\xspace}
+\newcommand
+  {\worksubtitle}
+  {%
+    Formatação Multilíngue e Personalizada de Código-Fonte via o Sistema
+    \treesitter}
 
 %%%%%%%%%%%%%%%%%%
 %% Configuration %
 %%%%%%%%%%%%%%%%%%
-
-\input{../aliases.tex}
 
 %%%%%%%%%%%%
 %%% Beamer %
@@ -48,6 +60,29 @@
 %%%%%%%%%%%%%%%%%%
 
 \addbibresource{../references.bib}
+
+%%%%%%%%%%%%%%%%%%%
+%%% Code Snippets %
+%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\theFancyVerbLine}{\ttfamily\arabic{FancyVerbLine}}
+
+\definecolor{codehighlight}{RGB}{240,240,170}
+\newcommand{\hi}[1]{\colorbox{codehighlight}{#1}}
+\setminted{highlightcolor={codehighlight},spacecolor=gray!50}
+
+\NewTotalTCBox
+  {\codesnippetinline}
+  {O{text}vO{}}
+  { bottom=0pt,
+    enhanced,
+    frame hidden,
+    left=0pt,
+    on line,
+    right=0pt,
+    sharp corners,
+    top=0pt}
+  {\mintinline[#3]{#1}{#2}}%
 
 %%%%%%%%%%%%
 %%% Colors %
@@ -66,8 +101,8 @@
 %%% Title Page %
 %%%%%%%%%%%%%%%%
 
-\title{\witchcooking}
-\subtitle{\witchcookingsubtitle}
+\title{\worktitle}
+\subtitle{\worksubtitle}
 \author{Átila Gama Silva}
 \date{\today}
 \titlegraphic{\includegraphics[height=1cm]{../ifba-irece-logo.png}}
@@ -108,11 +143,11 @@
     \end{itemize}
   \end{frame}
 
-  %%%%%%%%%%%%
-  % Purposes %
-  %%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%
+  % General Objectives %
+  %%%%%%%%%%%%%%%%%%%%%%
 
-  \begin{frame}{Propósitos}
+  \begin{frame}{Objetivos Gerais}
     \begin{itemize}
       \item Desenvolver um software de linha de comando --- de natureza
             prototípica --- para a formatação de código-fonte, tendo como
@@ -122,6 +157,21 @@
               \item Proporcionar a formatação personalizada via a linguagem de
                     consulta do \treesitter
             \end{itemize}
+    \end{itemize}
+  \end{frame}
+
+  %%%%%%%%%%%%%%%%%%%%%%%
+  % Specific Objectives %
+  %%%%%%%%%%%%%%%%%%%%%%%
+
+  \begin{frame}[containsverbatim]{Objetivos Específicos}
+    \begin{itemize}
+      \item Desenvolver um algoritmo de formatação fundamentado no \treesitter
+      \item Definir configurações de estilização para o predicado
+            \codesnippetinline{set!}, nativo da linguagem de consulta do
+            \treesitter
+      \item Estender os predicados embutidos da linguagem de consulta,
+            proporcionando predicados basais para a formatação.
     \end{itemize}
   \end{frame}
 

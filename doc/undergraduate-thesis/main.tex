@@ -44,16 +44,32 @@
 \usepackage[listings,minted,skins,xparse]{tcolorbox}
 \usepackage{csquotes}
 \usepackage{graphicx}
-\usepackage{minted}
 \usepackage{palatino}
 \usepackage{paralist}
 \usepackage{tikz}
+\usepackage{xspace}
+
+%%%%%%%%%%%%
+%% Aliases %
+%%%%%%%%%%%%
+
+\newcommand
+  {\ifba}
+  {%
+    Instituto Federal de Educação, Ciência e Tecnologia da Bahia --- Campus
+    Irecê\xspace}
+\newcommand{\treesitter}{\textit{Tree-Sitter}\xspace}
+\newcommand{\witchcooking}{\textit{Witch Cooking}\xspace}
+\newcommand{\worktitle}{\witchcooking}
+\newcommand
+  {\worksubtitle}
+  {%
+    Formatação Multilíngue e Personalizada de Código-Fonte via o Sistema
+    \treesitter}
 
 %%%%%%%%%%%%%%%%%%
 %% Configuration %
 %%%%%%%%%%%%%%%%%%
-
-\input{aliases.tex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% ABNT's NBR 14724 Metrics Compliance %
@@ -74,7 +90,7 @@
 %%%% Cover & Title Page Info %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\titulo{\witchcooking: \witchcookingsubtitle}
+\titulo{\worktitle: \worksubtitle}
 \autor{Átila Gama Silva}
 \local{Irecê}
 \data{\the\year}
@@ -323,7 +339,7 @@
 \hypersetup
   { pdftitle={\@title},
     pdfauthor={\@author},
-    pdfsubject={\witchcooking: \witchcookingsubtitle},
+    pdfsubject={\worktitle: \worksubtitle},
     pdfcreator={\LaTeX with \abnTeX},
     pdfkeywords=
       {formatação de código}
