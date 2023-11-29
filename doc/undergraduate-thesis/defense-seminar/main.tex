@@ -439,9 +439,9 @@
     \end{center}
   \end{frame}
 
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %%% The Formatting Guidelines %
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % The Formatting Guidelines %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   \begin{frame}[fragile]{As Diretrizes de Formatação}
     \begin{itemize}
@@ -460,6 +460,31 @@
               \item Opcionalmente, aplicar configurações via o predicado
                     \codesnippetinline{set!}
               \item Aplicar os predicados estendidos pelo \witchcooking
+            \end{itemize}
+    \end{itemize}
+  \end{frame}
+
+  %%%%%%%%%%%%%%%%%%%%%%
+  % The Configurations %
+  %%%%%%%%%%%%%%%%%%%%%%
+
+  \begin{frame}[fragile]{As Configurações}
+    \begin{itemize}
+      \item \codesnippetinline{indent-rule}
+            \begin{itemize}
+              \item Define a regra de indentação para um nó
+              \item Seu valor pode ser
+                    \begin{itemize}
+                      \item Um inteiro não negativo --- sem sinal
+                      \item Um inteiro positivo --- com sinal
+                      \item Um inteiro negativo
+                    \end{itemize}
+            \end{itemize}
+      \item \codesnippetinline{indent-style}
+            \begin{itemize}
+              \item Define a string usada para indentar
+              \item Pode ser de escopo local ou global
+              \item Não aplicável a nós
             \end{itemize}
     \end{itemize}
   \end{frame}
