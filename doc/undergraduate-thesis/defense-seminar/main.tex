@@ -29,6 +29,7 @@
 \usepackage[listings,minted,skins,xparse]{tcolorbox}
 \usepackage{csquotes}
 \usepackage{palatino}
+\usepackage{tikz}
 \usepackage{xspace}
 
 %%%%%%%%%%%%
@@ -97,6 +98,12 @@
 
 \usefonttheme{professionalfonts}
 \renewcommand\familydefault{\rmdefault}
+
+%%%%%%%%%%
+%%% TikZ %
+%%%%%%%%%%
+
+\usetikzlibrary{calc,decorations.pathmorphing,positioning}
 
 %%%%%%%%%%%%%%%%
 %%% Title Page %
@@ -343,6 +350,93 @@
       \item Similarmente, foram integrados elementos de um estudo de caso com o
             propósito de analisar a eficácia do software desenvolvido
     \end{itemize}
+  \end{frame}
+
+  %%%%%%%%%
+  % Usage %
+  %%%%%%%%%
+
+  \begin{frame}[fragile]{Usagem}
+    \begin{itemize}
+      \item \codesnippetinline{cook [-l LANG] -q QUERY [SRC]}
+    \end{itemize}
+  \end{frame}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % The Formatting Algorithm %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \begin{frame}{O Algoritmo de Formatação}
+    \begin{center}
+      \begin
+        {tikzpicture}
+        [node distance=1em,every node/.style={draw,inner sep=1em}]
+        \tiny
+        \node (init) {
+          \begin
+            {tikzpicture}
+            [ every node/.style=
+                {align=center,draw,inner sep=.5em,text width=14em}]
+            \node [draw=none] (label) {Inicialização};
+            \node (I) [below=of label] {Analisa a árvore de sintaxe};
+            \node (II) [below=of I] {Gera o objeto de consulta};
+            \node (III) [below=of II] {Instancia a estrutura editora};
+            \node (IV) [below=of III] {Inicializa o objeto de configurações};
+            \node (V) [below=of IV] {Deriva a estrutura de correspondências};
+            \draw [->] (I) -- (II);
+            \draw [->] (II) -- (III);
+            \draw [->] (III) -- (IV);
+            \draw [->] (IV) -- (V);
+          \end{tikzpicture}
+        };
+        \node (fmt) [right=of init] {
+          \begin
+            {tikzpicture}
+            [ every node/.style=
+                {align=center,draw,inner sep=.5em,text width=14em}]
+            \node [draw=none,text width=16em] (label) {Formatação};
+            \path
+              let \p1=(label.south west)
+              in coordinate (I-coord) at ($ (\x1,\y1-2em) $);
+            \node (I) at (I-coord) {Itera sobre os padrões};
+            \node (II) [below=of I] {Define o escopo de atuação};
+            \node
+              (III)
+              [below=of II]
+              {Itera sobre as coleções\\de nós capturados};
+            \node (IV) [below=of III] {Aplica as configurações};
+            \node (V) [below=of IV] {Aplica os predicados gerais};
+            \node (VI) [below=of V] {Redefine as\\configurações locais};
+            \node
+              (VII)
+              [below=of VI]
+              {Interrompe a iteração de\\coleções se o padrão\\é enraizado};
+            \draw [->] (I) -- (II);
+            \draw [->] (II) -- (III);
+            \draw [->] (III) -- (IV);
+            \draw [->] (IV) -- (V);
+            \draw [->] (V) -- (VI);
+            \draw [->] (VI) -- (VII);
+            \draw [->] (VII.east) -- ++(1em,0) |- (III.east);
+            \draw [->] (VII.east) -- ++(2em,0) |- (I.east);
+          \end{tikzpicture}
+        };
+        \draw [->] (init) -- (fmt);
+        \node (ret) [right=of fmt] {
+          \begin
+            {tikzpicture}
+            [ every node/.style=
+                {align=center,draw,inner sep=.5em,text width=16em}]
+            \node [draw=none] (label) {Retorno};
+            \node
+              (label)
+              [below=of label]
+              {Retorna o código-fonte formatado};
+          \end{tikzpicture}
+        };
+        \draw [->] (fmt) -- (ret);
+      \end{tikzpicture}
+    \end{center}
   \end{frame}
 
   %%%%%%%%%%%%%%%%
