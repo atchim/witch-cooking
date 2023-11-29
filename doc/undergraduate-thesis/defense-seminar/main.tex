@@ -86,6 +86,41 @@
     top=0pt}
   {\mintinline[#3]{#1}{#2}}%
 
+\NewTCBListing
+  {codesnippet}
+  {sO{text}m!O{}!O{}}
+  { enhanced,
+    center title,
+    coltitle=black,
+    fonttitle=\scriptsize,
+    frame hidden,
+    listing engine=minted,
+    listing only,
+    minted language=#2,
+    minted options=
+      { autogobble,
+        breakanywhere,
+        breakanywheresymbolpre={},
+        breakautoindent=false,
+        breaklines,
+        breaksymbol={},
+        fontsize=\scriptsize,
+        linenos,
+        xleftmargin=\IfBooleanTF{#1}{1.5}{1}em,
+        #4},
+    nobeforeafter,
+    overlay=
+      {%
+        \begin{tcbclipinterior}
+          \fill[gray!25]
+          (frame.south west)
+          rectangle
+          ([xshift=\IfBooleanTF{#1}{2.5}{2}em]frame.north west);
+        \end{tcbclipinterior}},
+    sharp corners,
+    title={#3},
+    #5}
+
 %%%%%%%%%%%%
 %%% Colors %
 %%%%%%%%%%%%
@@ -120,6 +155,19 @@
 %%%%%%%%%%%%
 
 \begin{document}
+  %%%%%%%%%%%
+  % Lengths %
+  %%%%%%%%%%%
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %% Text Width Plus Two em Parts %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \newlength{\halftextwidthplustwoempart}
+  \setlength{\halftextwidthplustwoempart}{.5\textwidth + 2em}
+  \newlength{\halftextwidthplustwoemcounterpart}
+  \setlength{\halftextwidthplustwoemcounterpart}{.5\textwidth - 3em}
+
   %%%%%%%%%%%%%%
   % Title Page %
   %%%%%%%%%%%%%%
@@ -487,6 +535,63 @@
               \item Não aplicável a nós
             \end{itemize}
     \end{itemize}
+  \end{frame}
+
+  %%%%%%%%%%%%%%%%%%
+  % The Predicates %
+  %%%%%%%%%%%%%%%%%%
+
+  %%%%%%%%%%%
+  %% space! %
+  %%%%%%%%%%%
+
+  \begin{frame}[fragile]{Os Predicados}{\textit{space!}}
+    \begin{itemize}
+      \item \codesnippetinline{(#space! [sep [lower [upper]]] a b)}
+            \begin{itemize}
+              \item Separa os nós \codesnippetinline{a} e \codesnippetinline{b}
+                    com a string \codesnippetinline{sep}
+              \item Por padrão, \codesnippetinline{sep} é um caractere de
+                    espaço
+              \item \codesnippetinline{lower} e \codesnippetinline{upper} podem
+                    ser utilizados para definir um intervalo inclusivo para não
+                    atuação
+            \end{itemize} \end{itemize}
+  \end{frame}
+
+  \begin{frame}[fragile]{Os Predicados}{\textit{space!}}
+    \begin{minipage}[t]{\halftextwidthplustwoemcounterpart}
+      \begin{codesnippet}[rust]{Função Com Bloco Aglomerado em Rust}
+        fn x_plus_y() -> u32 {
+          let x = 5; let y = 11;
+
+          x + y
+        }
+      \end{codesnippet}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{\halftextwidthplustwoempart}
+      \begin
+        {codesnippet}%
+        [scheme]%
+        {Consulta para Separar Elementos do Corpo de uma Função em Rust}
+        (function_item
+          body: (block (_) @item . (_) @next)
+          (#space! "\n" 2 @item @next))
+      \end{codesnippet}
+    \end{minipage}
+
+    \begin
+      {codesnippet}%
+      [rust]%
+      {Função Com Elementos do Corpo Separados em Rust}
+      fn x_plus_y() -> u32 {
+        let x = 5;
+      let y = 11;
+
+        x + y
+      }
+    \end{codesnippet}
   \end{frame}
 
   %%%%%%%%%%%%%%%%
