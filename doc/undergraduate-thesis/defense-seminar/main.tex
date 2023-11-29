@@ -439,6 +439,31 @@
     \end{center}
   \end{frame}
 
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%% The Formatting Guidelines %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \begin{frame}[fragile]{As Diretrizes de Formatação}
+    \begin{itemize}
+      \item As diretrizes de formatação do código-fonte são especificadas no
+            arquivo escrito na linguagem de consulta do \treesitter, o qual é
+            submetido ao \witchcooking via \codesnippetinline{-q QUERY}
+      \item Para realizar um procedimento de formatação, é necessário
+            \begin{itemize}
+              \item Definir um padrão de correspondência que delimita o escopo
+                    de operação
+              \item Capturar nós que
+                    \begin{itemize}
+                      \item Sejam alvos do procedimento
+                      \item Auxiliarão nas operações
+                    \end{itemize}
+              \item Opcionalmente, aplicar configurações via o predicado
+                    \codesnippetinline{set!}
+              \item Aplicar os predicados estendidos pelo \witchcooking
+            \end{itemize}
+    \end{itemize}
+  \end{frame}
+
   %%%%%%%%%%%%%%%%
   % Bibliography %
   %%%%%%%%%%%%%%%%
