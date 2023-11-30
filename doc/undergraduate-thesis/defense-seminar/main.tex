@@ -594,6 +594,64 @@
     \end{codesnippet}
   \end{frame}
 
+  %%%%%%%%%%%%
+  %% indent! %
+  %%%%%%%%%%%%
+
+  \begin{frame}[fragile]{Os Predicados}{\textit{indent!}}
+    \begin{itemize}
+      \item \codesnippetinline{(#indent! node...)}
+            \begin{itemize}
+              \item Aplica a indentação previamente configurada para cada
+                    \codesnippetinline{node}
+              \item Cada nó deve ter sua regra de indentação especificada ---
+                    via \codesnippetinline{indent-rule} ou
+                    \codesnippetinline{indent-offset!}
+              \item Um estilo de indentação deve ser configurado --- via
+                    \codesnippetinline{indent-style}
+            \end{itemize} \end{itemize}
+  \end{frame}
+
+  \begin{frame}[fragile]{Os Predicados}{\textit{indent!}}
+    \begin{minipage}[t]{\halftextwidthplustwoemcounterpart}
+      \begin{codesnippet}[rust]{Função Com Bloco Aglomerado em Rust}
+        fn x_plus_y() -> u32 {
+          let x = 5; let y = 11;
+
+          x + y
+        }
+      \end{codesnippet}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{\halftextwidthplustwoempart}
+      \begin
+        {codesnippet}%
+        [scheme]%
+        { Consulta para Separar Elementos do Corpo de uma Função Com Indentação
+          em Rust}
+        (#set! indent-style "  ")
+
+        (function_item
+          body: (block (_) @item . (_) @next)
+          (#space! "\n" 2 @item @next)
+          (#set! @next indent-rule "+1")
+          (#indent! @next))
+      \end{codesnippet}
+    \end{minipage}
+
+    \begin
+      {codesnippet}%
+      [rust]%
+      {Função Com Indentação Apropriada em Rust}
+      fn x_plus_y() -> u32 {
+        let x = 5;
+        let y = 11;
+
+        x + y
+      }
+    \end{codesnippet}
+  \end{frame}
+
   %%%%%%%%%%%%%%%%
   % Bibliography %
   %%%%%%%%%%%%%%%%
