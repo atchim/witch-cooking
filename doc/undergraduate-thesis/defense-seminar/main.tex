@@ -168,6 +168,15 @@
   \newlength{\halftextwidthplustwoemcounterpart}
   \setlength{\halftextwidthplustwoemcounterpart}{.5\textwidth - 3em}
 
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %% Text Width Plus Five em Parts %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \newlength{\halftextwidthplusfiveempart}
+  \setlength{\halftextwidthplusfiveempart}{.5\textwidth + 5em}
+  \newlength{\halftextwidthplusfiveemcounterpart}
+  \setlength{\halftextwidthplusfiveemcounterpart}{.5\textwidth - 6em}
+
   %%%%%%%%%%%%%%
   % Title Page %
   %%%%%%%%%%%%%%
@@ -648,6 +657,54 @@
         let y = 11;
 
         x + y
+      }
+    \end{codesnippet}
+  \end{frame}
+
+  %%%%%%%%%%%%%%%%%%%
+  %% indent-offset! %
+  %%%%%%%%%%%%%%%%%%%
+
+  \begin{frame}[fragile]{Os Predicados}{\textit{indent-offset!}}
+    \begin{itemize}
+      \item \codesnippetinline{(#indent-offset! target ref)}
+            \begin{itemize}
+              \item Configura a regra de indentação --- i.e.,
+                    \codesnippetinline{indent-rule} --- de
+                    \codesnippetinline{target} como o deslocamento de
+                    \codesnippetinline{ref}
+            \end{itemize} \end{itemize}
+  \end{frame}
+
+  \begin{frame}[fragile]{Os Predicados}{\textit{indent-offset!}}
+    \begin{minipage}[t]{\halftextwidthplusfiveemcounterpart}
+      \begin{codesnippet}[rust]{Função Compactada}
+        fn foo() {bar()}
+      \end{codesnippet}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{\halftextwidthplusfiveempart}
+      \begin
+        {codesnippet}%
+        [scheme]%
+        { Consulta para Formatar uma Função em Rust de Acordo Com o Estilo
+          \textit{1TBS}}
+        (#set! indent-style "    ")
+
+        ( (function_item
+            body: (block (_) @item "}" @close)) @fn
+          (#set! @item indent-rule "+1")
+          (#indent-offset! @close @fn)
+          (#indent! @item @close))
+      \end{codesnippet}
+    \end{minipage}
+
+    \begin
+      {codesnippet}%
+      [rust]%
+      {Função em Rust Indentada de Acordo Com o Estilo \textit{1TBS}}
+      fn foo() {
+          bar()
       }
     \end{codesnippet}
   \end{frame}
