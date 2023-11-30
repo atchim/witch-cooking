@@ -159,6 +159,13 @@
   % Lengths %
   %%%%%%%%%%%
 
+  %%%%%%%%%%%%%%
+  %% Half Part %
+  %%%%%%%%%%%%%%
+
+  \newlength{\halfpart}
+  \setlength{\halfpart}{.5\textwidth - .5em}
+
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %% Text Width Plus Two em Parts %
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -593,7 +600,8 @@
               \item \codesnippetinline{lower} e \codesnippetinline{upper} podem
                     ser utilizados para definir um intervalo inclusivo para não
                     atuação
-            \end{itemize} \end{itemize}
+            \end{itemize}
+    \end{itemize}
   \end{frame}
 
   \begin{frame}[fragile]{Os Predicados}{\textit{space!}}
@@ -646,7 +654,8 @@
                     \codesnippetinline{indent-offset!}
               \item Um estilo de indentação deve ser configurado --- via
                     \codesnippetinline{indent-style}
-            \end{itemize} \end{itemize}
+            \end{itemize}
+    \end{itemize}
   \end{frame}
 
   \begin{frame}[fragile]{Os Predicados}{\textit{indent!}}
@@ -701,7 +710,8 @@
                     \codesnippetinline{indent-rule} --- de
                     \codesnippetinline{target} como o deslocamento de
                     \codesnippetinline{ref}
-            \end{itemize} \end{itemize}
+            \end{itemize}
+    \end{itemize}
   \end{frame}
 
   \begin{frame}[fragile]{Os Predicados}{\textit{indent-offset!}}
@@ -734,6 +744,59 @@
       fn foo() {
           bar()
       }
+    \end{codesnippet}
+  \end{frame}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%
+  % Node Synchronization %
+  %%%%%%%%%%%%%%%%%%%%%%%%
+
+  \begin{frame}{A Sincronização de Nós}
+    \begin{itemize}
+      \item Durante a etapa de teste do funcionamento do \witchcooking,
+            notou-se uma peculiaridade --- não documentada
+            \cite{tree-sitter-2023-node} --- do \treesitter
+            \begin{itemize}
+              \item Ao sincronizar um nó, as edições ocorridas tangentes à sua
+                    extensão não são contabilizadas
+                    \begin{itemize}
+                      \item Resultando em um potencial para erros de formatação
+                    \end{itemize}
+            \end{itemize}
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}[fragile]{A Sincronização de Nós}
+    \begin{minipage}[t]{\halfpart}
+      \begin{codesnippet}[rust]{Funções Aninhadas em Rust}
+        fn foo() {fn bar() {baz()}}
+      \end{codesnippet}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{\halfpart}
+      \begin
+        {codesnippet}%
+        [rust]%
+        {Funções Aninhadas Mal Formatadas em Rust}
+        fn foo() {
+          fn bar() {
+          baz()
+        }
+      \end{codesnippet}
+    \end{minipage}
+
+    \begin
+      {codesnippet}%
+      [scheme]%
+      { Consulta para Formatar Funções em Rust de Acordo Com uma Variante do
+        Estilo \textit{1TBS}}
+      (#set! indent-style "  ")
+
+      ( (function_item
+          body: (block (_) @item "}" @close)) @fn
+        (#set! @item indent-rule "+1")
+        (#indent-offset! @close @fn)
+        (#indent! @item @close))
     \end{codesnippet}
   \end{frame}
 
