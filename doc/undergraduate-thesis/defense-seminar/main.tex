@@ -807,7 +807,7 @@
   \begin{frame}[fragile]{Conclusão}
     \begin{itemize}
       \item Foi possível atender ao objetivo geral deste trabalho ---
-            desenvolver o \witchcooking --- a partir da implementação
+            desenvolver o \witchcooking{} --- a partir da implementação
             \begin{itemize}
               \item Do algoritmo de formatação fundamentado no \treesitter
               \item Das configurações de estilização para o predicado
@@ -848,6 +848,68 @@
                             realistas, uma vez que muito provavelmente
                             ocasionará erros de sintaxe
                     \end{itemize}
+            \end{itemize}
+    \end{itemize}
+  \end{frame}
+
+  %%%%%%%%%%%%%%%%%
+  % Contributions %
+  %%%%%%%%%%%%%%%%%
+
+  \begin{frame}{Contribuições}
+    \begin{itemize}
+      \item Diferentemente do algoritmo de \textcite{oppen-1980-prettyprinting}
+            que
+            \begin{itemize}
+              \item Depende de um terceiro para fornecer o código com as
+                    anotações necessárias
+              \item Formata conforme o \textit{CPL} em adição às anotações
+                    fornecidas
+            \end{itemize}
+      \item O \witchcooking
+            \begin{itemize}
+              \item Alcança a formatação multilíngue através do \treesitter
+              \item Proporciona predicados para dirigir a formatação
+            \end{itemize}
+      \item Ao comparar essas duas abordagens, observa-se que
+            \begin{itemize}
+              \item O \witchcooking oferece maior controle ao usuário
+              \item Embora exija dele um conhecimento considerável
+                    \begin{itemize}
+                      \item Da sintaxe em questão
+                      \item Da linguagem de consulta
+                    \end{itemize}
+            \end{itemize}
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}[fragile]{Contribuições}
+    \begin{itemize}
+      \item Quanto às diretrizes de formatação, assemelham-se bastante ao que
+            \textcite{yelland-2015-new} denomina de \textit{combinators}
+            \begin{itemize}
+              \item Funções geradoras para descrever layouts alternativos de
+                    código-fonte
+            \end{itemize}
+      \item Mais precisamente
+            \begin{itemize}
+              \item O predicado \codesnippetinline{space!} opera similarmente
+                    ao \textit{combinator}
+                    \codesnippetinline{|$\leftrightarrow$|}[escapeinside=||]
+              \item O predicado \codesnippetinline{indent!} funciona análogo ao
+                    uso de
+                    \codesnippetinline{|$\leftrightarrow$|}[escapeinside=||] em
+                    conjunto com o \textit{combinator}
+                    \codesnippetinline{|$\updownarrow$|}[escapeinside=||]
+            \end{itemize}
+      \item Uma diferença significativa entre essas duas abordagens reside no
+            fato de que
+            \begin{itemize}
+              \item Os \textit{combinators} se limitam ao algoritmo de
+                    formatação
+              \item Os predicados são disponibilizados ao usuário --- por meio
+                    da linguagem de consulta do \treesitter{} ---, permitindo
+                    que ele componha suas próprias diretrizes de formatação
             \end{itemize}
     \end{itemize}
   \end{frame}
