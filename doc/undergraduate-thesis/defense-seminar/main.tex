@@ -800,6 +800,58 @@
     \end{codesnippet}
   \end{frame}
 
+  %%%%%%%%%%%%%%
+  % Conclusion %
+  %%%%%%%%%%%%%%
+
+  \begin{frame}[fragile]{Conclusão}
+    \begin{itemize}
+      \item Foi possível atender ao objetivo geral deste trabalho ---
+            desenvolver o \witchcooking --- a partir da implementação
+            \begin{itemize}
+              \item Do algoritmo de formatação fundamentado no \treesitter
+              \item Das configurações de estilização para o predicado
+                    \codesnippetinline{set!}
+                    \begin{itemize}
+                      \item \codesnippetinline{indent-rule}
+                      \item \codesnippetinline{indent-style}
+                    \end{itemize}
+              \item Dos predicados basais para a formatação --- estendendo a
+                    linguagem de consulta
+                    \begin{itemize}
+                      \item \codesnippetinline{space!}
+                      \item \codesnippetinline{indent!}
+                      \item \codesnippetinline{indent-offset!}
+                    \end{itemize}
+            \end{itemize}
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}[fragile]{Conclusão}
+    \begin{itemize}
+      \item O software desenvolvido com base no sistema \treesitter atendeu aos
+            objetivos de
+            \begin{itemize}
+              \item Abranger uma gama de linguagens de programação
+                    \begin{itemize}
+                      \item Bash, C, C++, Go, HTML, Java, JavaScript, Python,
+                            Rust e TOML
+                      \item A ferramenta tem potencial de suportar qualquer
+                            linguagem que tenha uma gramática compatível com a
+                            versão do \treesitter utilizada no \witchcooking
+                    \end{itemize}
+              \item Proporcionar a formatação personalizada via a linguagem de
+                    consulta do sistema
+                    \begin{itemize}
+                      \item É importante ressaltar que a ferramenta
+                            desenvolvida não é funcional para cenários
+                            realistas, uma vez que muito provavelmente
+                            ocasionará erros de sintaxe
+                    \end{itemize}
+            \end{itemize}
+    \end{itemize}
+  \end{frame}
+
   %%%%%%%%%%%%%%%%
   % Bibliography %
   %%%%%%%%%%%%%%%%
