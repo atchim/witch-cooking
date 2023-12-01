@@ -915,6 +915,41 @@
   \end{frame}
 
   %%%%%%%%%%%%%%%%
+  % Future Works %
+  %%%%%%%%%%%%%%%%
+
+  \begin{frame}[fragile]{Trabalhos Futuros}
+    \begin{itemize}
+      \item Desenvolver um algoritmo dedicado à sincronização de nós, capaz de
+            sincronizar corretamente qualquer nó, mesmo após ele ter sofrido
+            edições tangentes à sua extensão
+      \item Aprimorar o predicado \codesnippetinline{indent!}
+            \begin{itemize}
+              \item Melhorar a formatação de nós com regras de indentação
+                    relativa positiva, de modo que a indentação siga o
+                    deslocamento do nó pai, em vez de se basear no primeiro
+                    caractere não espaço encontrado na linha do pai
+              \item Seria mais coerente que esse predicado indentasse o bloco
+                    inteiro ao qual o nó se estende, em vez de se limitar à
+                    linha inicial do nó em questão
+            \end{itemize}
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}[fragile]{Trabalhos Futuros}
+    \begin{itemize}
+      \item Aprimoramentos relacionados ao dinamismo da formatação
+            \begin{itemize}
+              \item A formatação com base no \textit{CPL}
+              \item A otimização para determinar o melhor layout
+            \end{itemize}
+      \item Disponibilizar diretrizes de formatação que sigam os estilos de
+            formatação convencionais para as linguagens de programação mais
+            populares (a princípio)
+    \end{itemize}
+  \end{frame}
+
+  %%%%%%%%%%%%%%%%
   % Bibliography %
   %%%%%%%%%%%%%%%%
 
