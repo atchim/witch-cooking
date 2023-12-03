@@ -127,6 +127,23 @@
 
 \definecolor{blue}{RGB}{41,5,195}
 
+%%%%%%%%%%%%%
+%%% Figures %
+%%%%%%%%%%%%%
+
+\NewTotalTCBox
+  {\figurewrapper}
+  {mO{}m}
+  { enhanced,
+    center title,
+    coltitle=black,
+    fonttitle=\scriptsize,
+    frame hidden,
+    sharp corners,
+    title={#1},
+    #2}
+  {#3}
+
 %%%%%%%%%%
 %%% Font %
 %%%%%%%%%%
@@ -196,20 +213,17 @@
 
   \begin{frame}{Motivações}
     \begin{itemize}
-      \item As motivações surgiram das dificuldades ao estudar estilos de
-            formatação de código-fonte em diversas linguagens de programação
+      \item Dificuldades ao estudar estilos de formatação em diversas linguagens
             \begin{itemize}
-              \item Durante a análise dos estilos convencionais de formatação
+              \item Estilos convencionais
                     \begin{itemize}
-                      \item Era imprescindível recorrer a diferentes
-                            \textit{prettyprinters}
-                      \item Cada um com suas próprias configurações e níveis de
-                            suporte para esses estilos
+                      \item Recorrência a diferentes \textit{prettyprinters}
+                      \item Diferentes configurações e níveis de suporte
                     \end{itemize}
-              \item Durante a análise dos estilos não convencionais
+              \item Estilos não convencionais
                     \begin{itemize}
-                      \item A aplicação manual era inevitável, consumindo
-                            consideravelmente tempo e esforço
+                      \item Aplicação manual inevitável
+                      \item Consumo de tempo e esforço
                     \end{itemize}
             \end{itemize}
     \end{itemize}
@@ -221,12 +235,14 @@
 
   \begin{frame}{Problemática}
     \begin{itemize}
-      \item De modo geral, os formatadores de código-fonte
+      \item Em geral, os formatadores de código
             \begin{itemize}
-              \item São restritos a uma linguagem específica ou a uma família
-                    de linguagens de programação
-              \item Oferecem uma quantidade limitada de configurações de
-                    estilização
+              \item São restritos a
+                    \begin{itemize}
+                      \item Uma linguagem específica
+                      \item Uma família de linguagens de programação
+                    \end{itemize}
+              \item São limitados nas configurações de estilização
               \item Proporcionam pouca personalização
             \end{itemize}
     \end{itemize}
@@ -238,13 +254,16 @@
 
   \begin{frame}{Objetivos Gerais}
     \begin{itemize}
-      \item Desenvolver um software de linha de comando --- de natureza
-            prototípica --- para a formatação de código-fonte, tendo como
-            objetivos
+      \item Desenvolver um software de linha de comando
+      \item De natureza prototípica
+      \item Para a formatação de código-fonte
+      \item Tendo como objetivos
             \begin{itemize}
-              \item Abranger uma gama de linguagens de programação
-              \item Proporcionar a formatação personalizada via a linguagem de
-                    consulta do \treesitter
+              \item Ser multilíngue
+              \item Proporcionar a formatação personalizada
+                    \begin{itemize}
+                      \item Via a linguagem de consulta do \treesitter
+                    \end{itemize}
             \end{itemize}
     \end{itemize}
   \end{frame}
@@ -255,12 +274,16 @@
 
   \begin{frame}[fragile]{Objetivos Específicos}
     \begin{itemize}
-      \item Desenvolver um algoritmo de formatação fundamentado no \treesitter
+      \item Desenvolver um algoritmo de formatação
+            \begin{itemize}
+              \item Fundamentado no \treesitter
+            \end{itemize}
       \item Definir configurações de estilização para o predicado
-            \codesnippetinline{set!}, nativo da linguagem de consulta do
-            \treesitter
-      \item Estender os predicados embutidos da linguagem de consulta,
-            proporcionando predicados basais para a formatação
+            \codesnippetinline{set!}
+      \item Estender os predicados da linguagem de consulta
+            \begin{itemize}
+              \item Proporcionando predicados basais para a formatação
+            \end{itemize}
     \end{itemize}
   \end{frame}
 
@@ -270,10 +293,11 @@
 
   \begin{frame}{Resultados Esperados}
     \begin{itemize}
-      \item Que o \witchcooking tenha potencial para abranger qualquer
-            linguagem que tenha uma gramática gerada pelo \treesitter
-      \item Que os predicados desenvolvidos possibilitem a realização de
-            procedimentos básicos de formatação
+      \item Abranger qualquer linguagem suportada pelo \treesitter
+      \item Possibilitar procedimentos básicos de formatação
+            \begin{itemize}
+              \item Através dos predicados desenvolvidos
+            \end{itemize}
     \end{itemize}
   \end{frame}
 
@@ -283,12 +307,12 @@
 
   \begin{frame}{Limitações}
     \begin{itemize}
-      \item O desenvolvimento dos predicados foi limitado para fornecer o
-            mínimo necessário para proporcionar procedimentos básicos de
+      \item Desenvolvimento de predicados limitado a procedimentos básicos de
             formatação
-      \item Como resultado, não foram considerados mecanismos de formatação
-            mais sofisticados, como a formatação condicional, no escopo deste
-            projeto
+      \item Ausência de mecanismos sofisticados de formatação
+            \begin{itemize}
+              \item E.g., formatação condicional
+            \end{itemize}
     \end{itemize}
   \end{frame}
 
@@ -298,49 +322,23 @@
 
   \begin{frame}{A Formatação de Código-Fonte}
     \begin{itemize}
-      \item Desde os primórdios da computação, métodos foram desenvolvidos para
-            garantir que a saída impressa fosse formatada de maneira
-            esteticamente agradável
-            \apud{harris-1956-keyboard}[1]{yelland-2015-new}
-      \item Esses métodos ganharam popularidade sob o termo
-            \textit{``prettyprinting''}
-      \item No desenvolvimento de software, o \textit{prettyprinting} é
-            conhecido como formatação de código-fonte
-    \end{itemize}
-  \end{frame}
-
-  \begin{frame}{A Formatação de Código-Fonte}
-    \begin{itemize}
-      \item Durante as décadas de 60 e 70, a linguagem de programação LISP
-            proporcionou condições favoráveis para o avanço da formatação de
-            código \cite[2]{yelland-2015-new}
-      \item Em 1967, Bill Gosper desenvolveu o \textit{GRINDEF}: considerado o
-            primeiro \textit{prettyprinter} a mensurar o tamanho das linhas e
-            ter ciência de sua localização no arquivo
-            \cites{gosper-2023-twubblesome}{griesemer-2022-cultural}
-      \item Posteriormente, \textcite{oppen-1980-prettyprinting} apresentou um
-            algoritmo inovador capaz de formatar código-fonte derivado de
-            qualquer linguagem de programação
+      \item \textcite{oppen-1980-prettyprinting} apresentou um algoritmo
+            de formatação multilíngue
             \begin{itemize}
-              \item O algoritmo necessitava que o código fosse anotado --- por
-                    uma ferramenta intermediária --- com espaços em branco e
-                    delimitadores especiais para marcar o início e fim de
-                    blocos
+              \item Baseado em anotações delimitando blocos
+                    \begin{itemize}
+                      \item Feitas por uma ferramenta intermediária
+                    \end{itemize}
             \end{itemize}
-    \end{itemize}
-  \end{frame}
-
-  \begin{frame}{A Formatação de Código-Fonte}
-    \begin{itemize}
-      \item Recentemente, \textcite{yelland-2015-new} descreveu um algoritmo
-            que visa otimizar o layout do código em relação a uma noção
-            intuitiva de custo de layout
+      \item \textcite{yelland-2015-new} descreveu um algoritmo de otimização de
+            layout do código
             \begin{itemize}
-              \item Notavelmente, entre as abstrações de programação
-                    empregadas para facilitar sua aplicação em diversas
-                    linguagens e políticas de layout de código,
-                    destacam-se os \textit{combinators}: funções geradoras que
-                    descrevem layouts alternativos para o código-fonte
+              \item Relativo a uma noção intuitiva de custo de layout
+              \item Onde empregou-se os \textit{combinators}
+                    \begin{itemize}
+                      \item Funções geradoras descrevendo layouts alternativos
+                            para o código
+                    \end{itemize}
             \end{itemize}
     \end{itemize}
   \end{frame}
@@ -351,48 +349,18 @@
 
   \begin{frame}{O Sitema \treesitter}
     \begin{itemize}
-      \item O \treesitter \cite{tree-sitter-2023-tree} é um sistema multilíngue
-            de análise sintática para ferramentas de programação, desenvolvido
-            como uma tentativa de solucionar problemas presentes nas
-            ferramentas de análise sintática da época, tendo como objetivos
+      \item Sistema multilíngue de análise sintática
+      \item Oferece uma linguagem de consulta declarativa
             \begin{itemize}
-              \item Produzir árvores de sintaxe a partir da análise de códigos
-                    escritos em várias linguagens
-              \item Implementar a análise incremental, permitindo a atualização
-                    da árvore de sintaxe em tempo real
-              \item Expor através da árvore de sintaxe os nós representando
-                    suas construções gramaticais no código (e.g., classes,
-                    funções, declarações, etc.)
-              \item Ser livre de dependências, assim beneficiando sua adoção e
-                    aplicabilidade
+              \item Expressa padrões da árvore sintática
+              \item Por meio de \textit{S-expressions}
+              \item Busca correspondências
+              \item Proporciona o uso --- e extensão --- de predicados
+                    \begin{itemize}
+                      \item Funções arbitrárias que filtram nós e realizam
+                            verificações complexas
+                    \end{itemize}
             \end{itemize}
-    \end{itemize}
-  \end{frame}
-
-  \begin{frame}{O Sitema \treesitter}
-    \begin{itemize}
-      \item Além disso, o \treesitter oferece uma pequena linguagem de
-            consulta declarativa que é capaz de expressar padrões da árvore
-            sintática por meio de \textit{S-expressions} e buscar
-            correspondências
-      \item Essa linguagem suporta operadores que permitem
-            \begin{itemize}
-              \item A captura de nós
-              \item A quantificação de nós, análoga às expressões regulares
-              \item O agrupamento de nós
-              \item As alternâncias de nós
-              \item O uso de \textit{wildcards}
-              \item A ordenação de nós
-            \end{itemize}
-    \end{itemize}
-  \end{frame}
-
-  \begin{frame}{O Sitema \treesitter}
-    \begin{itemize}
-      \item Adicionalmente, a linguagem de consulta permite o uso de predicados
-            --- funções arbitrárias geralmente utilizadas para filtrar nós ou
-            realizar verificações mais complexas durante a busca de padrões
-            ---, sejam eles \textit{builtins} ou estendidos por meio de uma API
     \end{itemize}
   \end{frame}
 
@@ -402,31 +370,9 @@
 
   \begin{frame}{Materiais}
     \begin{itemize}
-      \item O \witchcooking foi desenvolvido com base
-            \begin{itemize}
-              \item No ecossistema Rust, composto
-                    \begin{itemize}
-                      \item Pela linguagem de programação Rust
-                            \cite{rust-2023-rust}
-                      \item Pelo gerenciador de pacotes \textit{Cargo}
-                            \cite{rust-2023-cargo}
-                      \item Pelo servidor de linguagem \textit{rust-analyzer}
-                            \cite{rust-analyzer-2023-rust}
-                    \end{itemize}
-              \item No sistema/biblioteca \treesitter
-                    \cite{tree-sitter-2023-tree}
-              \item No ecossistema Neovim, composto
-                    \begin{itemize}
-                      \item Pelo editor de texto \textit{Neovim}
-                            \cite{neovim-2023-hyperextensible}
-                      \item Pelas configurações personalizadas
-                            \cite{silva-2023-uma}
-                      \item Pelo plugin \textit{nvim-treesitter}
-                            \cite{nvim-treesitter-2023-nvim}
-                      \item Pelo plugin \textit{playground}
-                            \cite{nvim-treesitter-2023-playground}
-                    \end{itemize}
-            \end{itemize}
+      \item Ecossistema Rust
+      \item Sistema/biblioteca \treesitter \cite{tree-sitter-2023-tree}
+      \item Ecossistema Neovim
     \end{itemize}
   \end{frame}
 
@@ -436,11 +382,17 @@
 
   \begin{frame}{Métodos}
     \begin{itemize}
-      \item Foi realizado uma pesquisa experimental com o objetivo de explorar
-            a aplicação do \treesitter como base para o algoritmo de formatação
-            de código-fonte
-      \item Similarmente, foram integrados elementos de um estudo de caso com o
-            propósito de analisar a eficácia do software desenvolvido
+      \item Pesquisa experimental
+            \begin{itemize}
+              \item Explorando a aplicação do \treesitter
+                    \begin{itemize}
+                      \item Como base para o algoritmo de formatação
+                    \end{itemize}
+            \end{itemize}
+      \item Estudo de caso
+            \begin{itemize}
+              \item Analisando a eficácia do software desenvolvido
+            \end{itemize}
     \end{itemize}
   \end{frame}
 
@@ -460,74 +412,76 @@
 
   \begin{frame}{O Algoritmo de Formatação}
     \begin{center}
-      \begin
-        {tikzpicture}
-        [node distance=1em,every node/.style={draw,inner sep=1em}]
-        \tiny
-        \node (init) {
-          \begin
+      \figurewrapper
+        {Fluxograma do Algoritmo de Formatação}
+        { \begin
             {tikzpicture}
-            [ every node/.style=
-                {align=center,draw,inner sep=.5em,text width=14em}]
-            \node [draw=none] (label) {Inicialização};
-            \node (I) [below=of label] {Analisa a árvore de sintaxe};
-            \node (II) [below=of I] {Gera o objeto de consulta};
-            \node (III) [below=of II] {Instancia a estrutura editora};
-            \node (IV) [below=of III] {Inicializa o objeto de configurações};
-            \node (V) [below=of IV] {Deriva a estrutura de correspondências};
-            \draw [->] (I) -- (II);
-            \draw [->] (II) -- (III);
-            \draw [->] (III) -- (IV);
-            \draw [->] (IV) -- (V);
-          \end{tikzpicture}
-        };
-        \node (fmt) [right=of init] {
-          \begin
-            {tikzpicture}
-            [ every node/.style=
-                {align=center,draw,inner sep=.5em,text width=14em}]
-            \node [draw=none,text width=16em] (label) {Formatação};
-            \path
-              let \p1=(label.south west)
-              in coordinate (I-coord) at ($ (\x1,\y1-2em) $);
-            \node (I) at (I-coord) {Itera sobre os padrões};
-            \node (II) [below=of I] {Define o escopo de atuação};
-            \node
-              (III)
-              [below=of II]
-              {Itera sobre as coleções\\de nós capturados};
-            \node (IV) [below=of III] {Aplica as configurações};
-            \node (V) [below=of IV] {Aplica os predicados gerais};
-            \node (VI) [below=of V] {Redefine as\\configurações locais};
-            \node
-              (VII)
-              [below=of VI]
-              {Interrompe a iteração de\\coleções se o padrão\\é enraizado};
-            \draw [->] (I) -- (II);
-            \draw [->] (II) -- (III);
-            \draw [->] (III) -- (IV);
-            \draw [->] (IV) -- (V);
-            \draw [->] (V) -- (VI);
-            \draw [->] (VI) -- (VII);
-            \draw [->] (VII.east) -- ++(1em,0) |- (III.east);
-            \draw [->] (VII.east) -- ++(2em,0) |- (I.east);
-          \end{tikzpicture}
-        };
-        \draw [->] (init) -- (fmt);
-        \node (ret) [right=of fmt] {
-          \begin
-            {tikzpicture}
-            [ every node/.style=
-                {align=center,draw,inner sep=.5em,text width=16em}]
-            \node [draw=none] (label) {Retorno};
-            \node
-              (label)
-              [below=of label]
-              {Retorna o código-fonte formatado};
-          \end{tikzpicture}
-        };
-        \draw [->] (fmt) -- (ret);
-      \end{tikzpicture}
+            [node distance=1em,every node/.style={draw,inner sep=1em}]
+            \tiny
+            \node (init) {
+              \begin
+                {tikzpicture}
+                [ every node/.style=
+                    {align=center,draw,inner sep=.5em,text width=14em}]
+                \node [draw=none] (label) {Inicialização};
+                \node (I) [below=of label] {Analisa a árvore de sintaxe};
+                \node (II) [below=of I] {Gera o objeto de consulta};
+                \node (III) [below=of II] {Instancia a estrutura editora};
+                \node (IV) [below=of III] {Inicializa o objeto de configurações};
+                \node (V) [below=of IV] {Deriva a estrutura de correspondências};
+                \draw [->] (I) -- (II);
+                \draw [->] (II) -- (III);
+                \draw [->] (III) -- (IV);
+                \draw [->] (IV) -- (V);
+              \end{tikzpicture}
+            };
+            \node (fmt) [right=of init] {
+              \begin
+                {tikzpicture}
+                [ every node/.style=
+                    {align=center,draw,inner sep=.5em,text width=14em}]
+                \node [draw=none,text width=16em] (label) {Formatação};
+                \path
+                  let \p1=(label.south west)
+                  in coordinate (I-coord) at ($ (\x1,\y1-2em) $);
+                \node (I) at (I-coord) {Itera sobre os padrões};
+                \node (II) [below=of I] {Define o escopo de atuação};
+                \node
+                  (III)
+                  [below=of II]
+                  {Itera sobre as coleções\\de nós capturados};
+                \node (IV) [below=of III] {Aplica as configurações};
+                \node (V) [below=of IV] {Aplica os predicados gerais};
+                \node (VI) [below=of V] {Redefine as\\configurações locais};
+                \node
+                  (VII)
+                  [below=of VI]
+                  {Interrompe a iteração de\\coleções se o padrão\\é enraizado};
+                \draw [->] (I) -- (II);
+                \draw [->] (II) -- (III);
+                \draw [->] (III) -- (IV);
+                \draw [->] (IV) -- (V);
+                \draw [->] (V) -- (VI);
+                \draw [->] (VI) -- (VII);
+                \draw [->] (VII.east) -- ++(1em,0) |- (III.east);
+                \draw [->] (VII.east) -- ++(2em,0) |- (I.east);
+              \end{tikzpicture}
+            };
+            \draw [->] (init) -- (fmt);
+            \node (ret) [right=of fmt] {
+              \begin
+                {tikzpicture}
+                [ every node/.style=
+                    {align=center,draw,inner sep=.5em,text width=16em}]
+                \node [draw=none] (label) {Retorno};
+                \node
+                  (label)
+                  [below=of label]
+                  {Retorna o código-fonte formatado};
+              \end{tikzpicture}
+            };
+            \draw [->] (fmt) -- (ret);
+          \end{tikzpicture}}
     \end{center}
   \end{frame}
 
@@ -537,19 +491,19 @@
 
   \begin{frame}[fragile]{As Diretrizes de Formatação}
     \begin{itemize}
-      \item As diretrizes de formatação do código-fonte são especificadas no
-            arquivo escrito na linguagem de consulta do \treesitter, o qual é
-            submetido ao \witchcooking via \codesnippetinline{-q QUERY}
+      \item Especificadas no arquivo submetido via \codesnippetinline{-q QUERY}
       \item Para realizar um procedimento de formatação, é necessário
             \begin{itemize}
-              \item Definir um padrão de correspondência que delimita o escopo
-                    de operação
+              \item Definir um padrão de correspondência
+                    \begin{itemize}
+                      \item Delimitando o escopo de operação
+                    \end{itemize}
               \item Capturar nós que
                     \begin{itemize}
                       \item Sejam alvos do procedimento
                       \item Auxiliarão nas operações
                     \end{itemize}
-              \item Opcionalmente, aplicar configurações via o predicado
+              \item Opcionalmente, aplicar configurações --- via o predicado
                     \codesnippetinline{set!}
               \item Aplicar os predicados estendidos pelo \witchcooking
             \end{itemize}
@@ -590,23 +544,8 @@
   %%%%%%%%%%%
 
   \begin{frame}[fragile]{Os Predicados}{\textit{space!}}
-    \begin{itemize}
-      \item \codesnippetinline{(#space! [sep [lower [upper]]] a b)}
-            \begin{itemize}
-              \item Separa os nós \codesnippetinline{a} e \codesnippetinline{b}
-                    com a string \codesnippetinline{sep}
-              \item Por padrão, \codesnippetinline{sep} é um caractere de
-                    espaço
-              \item \codesnippetinline{lower} e \codesnippetinline{upper} podem
-                    ser utilizados para definir um intervalo inclusivo para não
-                    atuação
-            \end{itemize}
-    \end{itemize}
-  \end{frame}
-
-  \begin{frame}[fragile]{Os Predicados}{\textit{space!}}
     \begin{minipage}[t]{\halftextwidthplustwoemcounterpart}
-      \begin{codesnippet}[rust]{Função Com Bloco Aglomerado em Rust}
+      \begin{codesnippet}[rust]{Função Com Bloco Aglomerado}
         fn x_plus_y() -> u32 {
           let x = 5; let y = 11;
 
@@ -619,7 +558,7 @@
       \begin
         {codesnippet}%
         [scheme]%
-        {Consulta para Separar Elementos do Corpo de uma Função em Rust}
+        {Consulta para Desaglomerar Bloco}
         (function_item
           body: (block (_) @item . (_) @next)
           (#space! "\n" 2 @item @next))
@@ -629,7 +568,7 @@
     \begin
       {codesnippet}%
       [rust]%
-      {Função Com Elementos do Corpo Separados em Rust}
+      {Função Com Bloco Desaglomerado}
       fn x_plus_y() -> u32 {
         let x = 5;
       let y = 11;
@@ -644,23 +583,8 @@
   %%%%%%%%%%%%
 
   \begin{frame}[fragile]{Os Predicados}{\textit{indent!}}
-    \begin{itemize}
-      \item \codesnippetinline{(#indent! node...)}
-            \begin{itemize}
-              \item Aplica a indentação previamente configurada para cada
-                    \codesnippetinline{node}
-              \item Cada nó deve ter sua regra de indentação especificada ---
-                    via \codesnippetinline{indent-rule} ou
-                    \codesnippetinline{indent-offset!}
-              \item Um estilo de indentação deve ser configurado --- via
-                    \codesnippetinline{indent-style}
-            \end{itemize}
-    \end{itemize}
-  \end{frame}
-
-  \begin{frame}[fragile]{Os Predicados}{\textit{indent!}}
     \begin{minipage}[t]{\halftextwidthplustwoemcounterpart}
-      \begin{codesnippet}[rust]{Função Com Bloco Aglomerado em Rust}
+      \begin{codesnippet}[rust]{Função Com Bloco Aglomerado}
         fn x_plus_y() -> u32 {
           let x = 5; let y = 11;
 
@@ -673,8 +597,7 @@
       \begin
         {codesnippet}%
         [scheme]%
-        { Consulta para Separar Elementos do Corpo de uma Função Com Indentação
-          em Rust}
+        {Consulta para Desaglomerar Bloco Com Indentação}
         (#set! indent-style "  ")
 
         (function_item
@@ -688,7 +611,7 @@
     \begin
       {codesnippet}%
       [rust]%
-      {Função Com Indentação Apropriada em Rust}
+      {Função Com Bloco Desaglomerado e Indentação Apropriada}
       fn x_plus_y() -> u32 {
         let x = 5;
         let y = 11;
@@ -703,18 +626,6 @@
   %%%%%%%%%%%%%%%%%%%
 
   \begin{frame}[fragile]{Os Predicados}{\textit{indent-offset!}}
-    \begin{itemize}
-      \item \codesnippetinline{(#indent-offset! target ref)}
-            \begin{itemize}
-              \item Configura a regra de indentação --- i.e.,
-                    \codesnippetinline{indent-rule} --- de
-                    \codesnippetinline{target} como o deslocamento de
-                    \codesnippetinline{ref}
-            \end{itemize}
-    \end{itemize}
-  \end{frame}
-
-  \begin{frame}[fragile]{Os Predicados}{\textit{indent-offset!}}
     \begin{minipage}[t]{\halftextwidthplusfiveemcounterpart}
       \begin{codesnippet}[rust]{Função Compactada}
         fn foo() {bar()}
@@ -725,8 +636,7 @@
       \begin
         {codesnippet}%
         [scheme]%
-        { Consulta para Formatar uma Função em Rust de Acordo Com o Estilo
-          \textit{1TBS}}
+        {Consulta para Formatar uma Função Conforme o Estilo \textit{1TBS}}
         (#set! indent-style "    ")
 
         ( (function_item
@@ -740,7 +650,7 @@
     \begin
       {codesnippet}%
       [rust]%
-      {Função em Rust Indentada de Acordo Com o Estilo \textit{1TBS}}
+      {Função Formatada Conforme o Estilo \textit{1TBS}}
       fn foo() {
           bar()
       }
@@ -751,53 +661,48 @@
   % Node Synchronization %
   %%%%%%%%%%%%%%%%%%%%%%%%
 
-  \begin{frame}{A Sincronização de Nós}
-    \begin{itemize}
-      \item Durante a etapa de teste do funcionamento do \witchcooking,
-            notou-se uma peculiaridade --- não documentada
-            \cite{tree-sitter-2023-node} --- do \treesitter
-            \begin{itemize}
-              \item Ao sincronizar um nó, as edições ocorridas tangentes à sua
-                    extensão não são contabilizadas
-                    \begin{itemize}
-                      \item Resultando em um potencial para erros de formatação
-                    \end{itemize}
-            \end{itemize}
-    \end{itemize}
-  \end{frame}
-
   \begin{frame}[fragile]{A Sincronização de Nós}
-    \begin{minipage}[t]{\halfpart}
-      \begin{codesnippet}[rust]{Funções Aninhadas em Rust}
+    \begin{minipage}[t]{\halftextwidthplusfiveempart}
+      \begin{codesnippet}[rust]{Funções Aninhadas}
         fn foo() {fn bar() {baz()}}
+      \end{codesnippet}
+
+      \begin
+        {codesnippet}%
+        [scheme]%
+        {Consulta para Formatar Funções Conforme uma Variante do \textit{1TBS}}
+        (#set! indent-style "  ")
+
+        ( (function_item
+            body: (block (_) @item "}" @close)) @fn
+          (#set! @item indent-rule "+1")
+          (#indent-offset! @close @fn)
+          (#indent! @item @close))
       \end{codesnippet}
     \end{minipage}
     \hfill
-    \begin{minipage}[t]{\halfpart}
+    \begin{minipage}[t]{\halftextwidthplusfiveemcounterpart}
       \begin
         {codesnippet}%
         [rust]%
-        {Funções Aninhadas Mal Formatadas em Rust}
+        {Funções Aninhadas Conforme uma Variante do \textit{1TBS}}
+        fn foo() {
+          fn bar() {
+            baz()
+          }
+        }
+      \end{codesnippet}
+      \hfil
+      \begin
+        {codesnippet}%
+        [rust]%
+        {Funções Aninhadas Mal Formatadas}
         fn foo() {
           fn bar() {
           baz()
         }
       \end{codesnippet}
     \end{minipage}
-
-    \begin
-      {codesnippet}%
-      [scheme]%
-      { Consulta para Formatar Funções em Rust de Acordo Com uma Variante do
-        Estilo \textit{1TBS}}
-      (#set! indent-style "  ")
-
-      ( (function_item
-          body: (block (_) @item "}" @close)) @fn
-        (#set! @item indent-rule "+1")
-        (#indent-offset! @close @fn)
-        (#indent! @item @close))
-    \end{codesnippet}
   \end{frame}
 
   %%%%%%%%%%%%%%
@@ -806,47 +711,15 @@
 
   \begin{frame}[fragile]{Conclusão}
     \begin{itemize}
-      \item Foi possível atender ao objetivo geral deste trabalho ---
-            desenvolver o \witchcooking{} --- a partir da implementação
-            \begin{itemize}
-              \item Do algoritmo de formatação fundamentado no \treesitter
-              \item Das configurações de estilização para o predicado
-                    \codesnippetinline{set!}
-                    \begin{itemize}
-                      \item \codesnippetinline{indent-rule}
-                      \item \codesnippetinline{indent-style}
-                    \end{itemize}
-              \item Dos predicados basais para a formatação --- estendendo a
-                    linguagem de consulta
-                    \begin{itemize}
-                      \item \codesnippetinline{space!}
-                      \item \codesnippetinline{indent!}
-                      \item \codesnippetinline{indent-offset!}
-                    \end{itemize}
-            \end{itemize}
-    \end{itemize}
-  \end{frame}
-
-  \begin{frame}[fragile]{Conclusão}
-    \begin{itemize}
-      \item O software desenvolvido com base no sistema \treesitter atendeu aos
-            objetivos de
+      \item O objetivo geral deste trabalho foi atentido --- desenvolver o
+            \witchcooking{}
+      \item O software desenvolvido atendeu aos objetivos de
             \begin{itemize}
               \item Abranger uma gama de linguagens de programação
-                    \begin{itemize}
-                      \item Bash, C, C++, Go, HTML, Java, JavaScript, Python,
-                            Rust e TOML
-                      \item A ferramenta tem potencial de suportar qualquer
-                            linguagem que tenha uma gramática compatível com a
-                            versão do \treesitter utilizada no \witchcooking
-                    \end{itemize}
               \item Proporcionar a formatação personalizada via a linguagem de
-                    consulta do sistema
+                    consulta do \treesitter
                     \begin{itemize}
-                      \item É importante ressaltar que a ferramenta
-                            desenvolvida não é funcional para cenários
-                            realistas, uma vez que muito provavelmente
-                            ocasionará erros de sintaxe
+                      \alert{\item Não funcional para cenários realistas}
                     \end{itemize}
             \end{itemize}
     \end{itemize}
@@ -858,58 +731,17 @@
 
   \begin{frame}{Contribuições}
     \begin{itemize}
-      \item Diferentemente do algoritmo de \textcite{oppen-1980-prettyprinting}
-            que
-            \begin{itemize}
-              \item Depende de um terceiro para fornecer o código com as
-                    anotações necessárias
-              \item Formata conforme o \textit{CPL} em adição às anotações
-                    fornecidas
-            \end{itemize}
       \item O \witchcooking
             \begin{itemize}
-              \item Alcança a formatação multilíngue através do \treesitter
+              \item Formata diversas linguagens através do \treesitter
               \item Proporciona predicados para dirigir a formatação
-            \end{itemize}
-      \item Ao comparar essas duas abordagens, observa-se que
-            \begin{itemize}
-              \item O \witchcooking oferece maior controle ao usuário
-              \item Embora exija dele um conhecimento considerável
+              \item Oferece maior controle ao usuário
+              \alert
+                { \item Exige conhecimento
                     \begin{itemize}
                       \item Da sintaxe em questão
                       \item Da linguagem de consulta
-                    \end{itemize}
-            \end{itemize}
-    \end{itemize}
-  \end{frame}
-
-  \begin{frame}[fragile]{Contribuições}
-    \begin{itemize}
-      \item Quanto às diretrizes de formatação, assemelham-se bastante ao que
-            \textcite{yelland-2015-new} denomina de \textit{combinators}
-            \begin{itemize}
-              \item Funções geradoras para descrever layouts alternativos de
-                    código-fonte
-            \end{itemize}
-      \item Mais precisamente
-            \begin{itemize}
-              \item O predicado \codesnippetinline{space!} opera similarmente
-                    ao \textit{combinator}
-                    \codesnippetinline{|$\leftrightarrow$|}[escapeinside=||]
-              \item O predicado \codesnippetinline{indent!} funciona análogo ao
-                    uso de
-                    \codesnippetinline{|$\leftrightarrow$|}[escapeinside=||] em
-                    conjunto com o \textit{combinator}
-                    \codesnippetinline{|$\updownarrow$|}[escapeinside=||]
-            \end{itemize}
-      \item Uma diferença significativa entre essas duas abordagens reside no
-            fato de que
-            \begin{itemize}
-              \item Os \textit{combinators} se limitam ao algoritmo de
-                    formatação
-              \item Os predicados são disponibilizados ao usuário --- por meio
-                    da linguagem de consulta do \treesitter{} ---, permitindo
-                    que ele componha suas próprias diretrizes de formatação
+                    \end{itemize}}
             \end{itemize}
     \end{itemize}
   \end{frame}
@@ -920,32 +752,14 @@
 
   \begin{frame}[fragile]{Trabalhos Futuros}
     \begin{itemize}
-      \item Desenvolver um algoritmo dedicado à sincronização de nós, capaz de
-            sincronizar corretamente qualquer nó, mesmo após ele ter sofrido
-            edições tangentes à sua extensão
+      \item Desenvolver um algoritmo dedicado à sincronização de nós
       \item Aprimorar o predicado \codesnippetinline{indent!}
+      \item Dinamizar a formatação
             \begin{itemize}
-              \item Melhorar a formatação de nós com regras de indentação
-                    relativa positiva, de modo que a indentação siga o
-                    deslocamento do nó pai, em vez de se basear no primeiro
-                    caractere não espaço encontrado na linha do pai
-              \item Seria mais coerente que esse predicado indentasse o bloco
-                    inteiro ao qual o nó se estende, em vez de se limitar à
-                    linha inicial do nó em questão
+              \item Formatar conforme \textit{CPL}
+              \item Cálculo layout otimizado
             \end{itemize}
-    \end{itemize}
-  \end{frame}
-
-  \begin{frame}[fragile]{Trabalhos Futuros}
-    \begin{itemize}
-      \item Aprimoramentos relacionados ao dinamismo da formatação
-            \begin{itemize}
-              \item A formatação com base no \textit{CPL}
-              \item A otimização para determinar o melhor layout
-            \end{itemize}
-      \item Disponibilizar diretrizes de formatação que sigam os estilos de
-            formatação convencionais para as linguagens de programação mais
-            populares (a princípio)
+      \item Disponibilizar diretrizes de formatação
     \end{itemize}
   \end{frame}
 
