@@ -213,7 +213,8 @@
 
   \begin{frame}{Motivações}
     \begin{itemize}
-      \item Dificuldades ao estudar estilos de formatação em diversas linguagens
+      \item Dificuldades ao estudar estilos de formatação em diversas
+            linguagens
             \begin{itemize}
               \item Estilos convencionais
                     \begin{itemize}
@@ -311,7 +312,7 @@
             formatação
       \item Ausência de mecanismos sofisticados de formatação
             \begin{itemize}
-              \item E.g., formatação condicional
+              \item E.g., a formatação condicional
             \end{itemize}
     \end{itemize}
   \end{frame}
@@ -326,19 +327,12 @@
             de formatação multilíngue
             \begin{itemize}
               \item Baseado em anotações delimitando blocos
-                    \begin{itemize}
-                      \item Feitas por uma ferramenta intermediária
-                    \end{itemize}
             \end{itemize}
       \item \textcite{yelland-2015-new} descreveu um algoritmo de otimização de
             layout do código
             \begin{itemize}
               \item Relativo a uma noção intuitiva de custo de layout
               \item Onde empregou-se os \textit{combinators}
-                    \begin{itemize}
-                      \item Funções geradoras descrevendo layouts alternativos
-                            para o código
-                    \end{itemize}
             \end{itemize}
     \end{itemize}
   \end{frame}
@@ -356,10 +350,6 @@
               \item Por meio de \textit{S-expressions}
               \item Busca correspondências
               \item Proporciona o uso --- e extensão --- de predicados
-                    \begin{itemize}
-                      \item Funções arbitrárias que filtram nós e realizam
-                            verificações complexas
-                    \end{itemize}
             \end{itemize}
     \end{itemize}
   \end{frame}
@@ -427,8 +417,14 @@
                 \node (I) [below=of label] {Analisa a árvore de sintaxe};
                 \node (II) [below=of I] {Gera o objeto de consulta};
                 \node (III) [below=of II] {Instancia a estrutura editora};
-                \node (IV) [below=of III] {Inicializa o objeto de configurações};
-                \node (V) [below=of IV] {Deriva a estrutura de correspondências};
+                \node
+                  (IV)
+                  [below=of III]
+                  {Inicializa o objeto de configurações};
+                \node
+                  (V)
+                  [below=of IV]
+                  {Deriva a estrutura de correspondências};
                 \draw [->] (I) -- (II);
                 \draw [->] (II) -- (III);
                 \draw [->] (III) -- (IV);
@@ -456,7 +452,8 @@
                 \node
                   (VII)
                   [below=of VI]
-                  {Interrompe a iteração de\\coleções se o padrão\\é enraizado};
+                  { Interrompe a iteração de\\coleções se o padrão\\é
+                    enraizado};
                 \draw [->] (I) -- (II);
                 \draw [->] (II) -- (III);
                 \draw [->] (III) -- (IV);
@@ -495,16 +492,8 @@
       \item Para realizar um procedimento de formatação, é necessário
             \begin{itemize}
               \item Definir um padrão de correspondência
-                    \begin{itemize}
-                      \item Delimitando o escopo de operação
-                    \end{itemize}
-              \item Capturar nós que
-                    \begin{itemize}
-                      \item Sejam alvos do procedimento
-                      \item Auxiliarão nas operações
-                    \end{itemize}
-              \item Opcionalmente, aplicar configurações --- via o predicado
-                    \codesnippetinline{set!}
+              \item Capturar nós
+              \item Opcionalmente, aplicar configurações
               \item Aplicar os predicados estendidos pelo \witchcooking
             \end{itemize}
     \end{itemize}
@@ -519,12 +508,10 @@
       \item \codesnippetinline{indent-rule}
             \begin{itemize}
               \item Define a regra de indentação para um nó
-              \item Seu valor pode ser
-                    \begin{itemize}
-                      \item Um inteiro não negativo --- sem sinal
-                      \item Um inteiro positivo --- com sinal
-                      \item Um inteiro negativo
-                    \end{itemize}
+              \item Seu valor pode ser:
+                    \codesnippetinline{x},
+                    \codesnippetinline{"+x"},
+                    \codesnippetinline{-x}
             \end{itemize}
       \item \codesnippetinline{indent-style}
             \begin{itemize}
@@ -767,5 +754,5 @@
   % Bibliography %
   %%%%%%%%%%%%%%%%
 
-  \begin{frame}[allowframebreaks]{Referências}\printbibliography\end{frame}
+  \begin{frame}{Referências}\printbibliography\end{frame}
 \end{document}
