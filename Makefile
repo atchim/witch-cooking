@@ -1,4 +1,5 @@
 debug ?=
+demo-name ?=
 release = $(if $(debug),,--release)
 
 .PHONY: all
@@ -11,6 +12,9 @@ clean-undergraduate-thesis: ; $(MAKE) -C doc/undergraduate-thesis clean
 
 .PHONY: build
 build: ; cargo build $(release)
+
+.PHONY: demo
+demo: ; $(MAKE) -C doc/undergraduate-thesis demo demo-name=$(demo-name)
 
 .PHONY: doc doc-cargo doc-defense-seminar doc-undergraduate-thesis
 doc: doc-cargo doc-defense-seminar doc-undergraduate-thesis

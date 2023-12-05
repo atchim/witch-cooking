@@ -1,0 +1,48 @@
+#!/bin/sh -e
+
+err() { echo "demo: ERROR: $*" >&2; }
+die() { [ "$#" -gt 0 ] && err "$@"; exit 1; }
+
+help() {
+  cat - <<EOF
+run cook demos
+
+USAGE
+  demo -h|<src>
+
+FLAGS
+  -h  --help  print this help message and exit
+
+POSITIONAL ARGUMENTS
+  <src>  demo source path
+EOF
+}
+
+parse() {
+  case "$1" in
+    '') die '<src> not given';;
+    -h|--help) help; exit;;
+    -*) die "invalid option: $1";;
+    *) . "$1";;
+  esac
+}
+
+main() {
+  parse "$@"
+  demo_name="$(basename -s .sh "$1")"
+  export TMPDIR=/dev/shm/
+  demo_dir="$(mktemp -d --tmpdir "demo-$demo_name-XXX")"
+  src_file="$demo_dir/src.$EXT"
+  echo "$SRC" >"$src_file"
+  modeline='
+
+; vim: ft=query'
+  query_file="$demo_dir/query.scm"
+  echo "$QUERY$modeline" >"$query_file"
+	${EDITOR:-vi} -O "$src_file" "$query_file"
+  cooked_file="$demo_dir/cooked.$EXT"
+  cargo run -- -q "$query_file" "$src_file" >"$cooked_file"
+	${EDITOR:-vi} -O2 "$src_file" "$query_file" "$cooked_file"
+}
+
+main "$@"

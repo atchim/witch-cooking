@@ -1,3 +1,4 @@
+demo-name ?=
 main-files = $(wildcard main.*)
 disposable-main-files = $(filter-out main.pdf main.tex,$(main-files))
 pdflatex-args = 'pdflatex -interaction=nonstopmode -shell-escape'
@@ -13,6 +14,9 @@ clean:
 
 .PHONY: defense-seminar
 defense-seminar: ; $(MAKE) -C defense-seminar
+
+.PHONY: demo
+demo: ; $(MAKE) -C defense-seminar demo demo-name=$(demo-name)
 
 main.pdf: main.tex glossary.bib references.bib
 	latexmk -pdf -pdflatex=$(pdflatex-args) -use-make $<
