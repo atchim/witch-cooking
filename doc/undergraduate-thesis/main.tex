@@ -562,10 +562,11 @@
   softwares que automatizam deterministicamente esse processo, garantindo que o
   código seja padronizado e consistente. No entanto, essas ferramentas são
   normalmente restritas a uma linguagem específica ou a uma família de
-  linguagens de programação. Além disso, essas ferramentas costumam oferecer
-  uma quantidade limitada de configurações de estilização, dificultando a
-  personalização pelo usuário. Isso é especialmente agravado em formatadores
-  opinativos, onde um estilo é rigorosamente imposto.
+  linguagens de programação --- e.g., \textit{Black} \cite{black-2023-black} e
+  \textit{rfmt} \cite{yelland-2015-rfmt}. Além disso, essas ferramentas
+  costumam oferecer uma quantidade limitada de configurações de estilização,
+  dificultando a personalização pelo usuário. Isso é especialmente agravado em
+  formatadores opinativos, onde um estilo é rigorosamente imposto.
 
   Com o intuito de superar ou reduzir as limitações previamente mencionadas,
   frequentemente presentes nas ferramentas convencionais de formatação, o
@@ -580,13 +581,24 @@
           do \treesitter.
   \end{inparaenum}
 
+  Mais especificamente, a concepção do software visa explorar:
+  \begin{inparaenum}
+    \item o suporte multilíngue do sistema \treesitter em conjunto com
+    \item sua linguagem de consulta, que possibilita o uso e a extensão de
+    \item predicados (funções arbitrárias).
+  \end{inparaenum}
+  Enquanto o sistema oferece a capacidade de lidar com diversas linguagens,
+  o \witchcooking visa alavancar o uso da linguagem de consulta através da
+  extensão dos predicados, fornecendo um conjunto de predicados para
+  proporcionar procedimentos basais de formatação de código-fonte.
+
   Para alcançar o objetivo geral proposto, este trabalho tem como objetivos
   específicos:
   \begin{inparaenum}
     \item desenvolver um algoritmo de formatação fundamentado no \treesitter;
     \item definir configurações de estilização para o predicado
-          \codesnippetinline{set!}, nativo da linguagem de consulta do
-          \treesitter; e
+          \codesnippetinline{set!}, nativo da linguagem de consulta do sistema;
+          e
     \item estender os predicados embutidos da linguagem de consulta,
           proporcionando predicados basais para a formatação.
   \end{inparaenum}
