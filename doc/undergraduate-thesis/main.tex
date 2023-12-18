@@ -445,14 +445,18 @@
     tenha uma gramática compatível com a versão do \treesitter utilizada pelo
     \witchcooking. Além disso, o software proporciona a formatação
     personalizada por meio de diretrizes especificadas no arquivo submetido,
-    escrito na linguagem de consulta do \treesitter. No entanto, um erro na
+    escrito na linguagem de consulta do \treesitter. Essas características
+    conferem à ferramenta um potencial de utilidade na exploração, estudo e
+    aplicação de novos estilos de formatação/indentação. Contudo, um erro na
     sincronização de nós da sintaxe --- derivado do desconhecimento de uma
     peculiaridade do sistema \treesitter{} --- limita o uso do \witchcooking:
     \begin{inparaenum}
       \item para formatar códigos mais robustos ou
       \item para aplicar diretrizes mais complexas,
     \end{inparaenum}
-    uma vez que provavelmente ocasionará erros de sintaxe.
+    uma vez que provavelmente ocasionará erros de sintaxe. Entretanto, em um
+    trabalho futuro, é possível superar esse problema por meio da implementação
+    de um algoritmo dedicado à sincronização/edição de nós.
 
     \noindent
     \textbf{Palavras-chave}:
@@ -488,14 +492,18 @@
       grammar compatible with the version of \treesitter used by \witchcooking.
       Additionally, it offers customized formatting based on guidelines
       specified in the submitted file, written in the \treesitter's query
-      language. However, an error in synchronizing syntax nodes --- resulting
-      from an unawareness of a peculiarity of the \treesitter system --- limits
-      the use of \witchcooking:
+      language. These features give the tool a potential utility in the
+      exploration, study, and application of new formatting/indentation styles.
+      However, an error in synchronizing syntax nodes --- resulting from an
+      unawareness of a peculiarity of the \treesitter system --- limits the use
+      of \witchcooking:
       \begin{inparaenum}
         \item for formatting more intricate codes or
         \item for applying more complex guidelines,
       \end{inparaenum}
-      as it may likely lead to syntax errors.
+      as it may likely lead to syntax errors. Nevertheless, in future work, it
+      is possible to overcome this issue through the implementation of an
+      algorithm dedicated to synchronization/editing of nodes.
 
       \noindent
       \textbf{Keywords}:
