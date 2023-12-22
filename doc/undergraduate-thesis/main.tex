@@ -281,27 +281,6 @@
     title={Trecho de Código \thetcbcounter{} --- #3},
     #6}
 
-%%%%%%%%%%%%%
-%%% Figures %
-%%%%%%%%%%%%%
-
-\NewTotalTCBox
-  [auto counter,list inside=figureswrapper]
-  {\figurewrapper}
-  {mmO{}m}
-  { enhanced,
-    center title,
-    coltitle=black,
-    fonttitle=\ABNTEXfontereduzida,
-    frame hidden,
-    label={figure:#2},
-    label type=figure,
-    list entry={Figura \thetcbcounter{} --- #1},
-    sharp corners,
-    title={Figura \thetcbcounter{} --- #1},
-    #3}
-  {#4}
-
 %%%%%%%%%%%
 %%% Float %
 %%%%%%%%%%%
@@ -514,17 +493,6 @@
       \treesitter.
     \end{otherlanguage*}
   \end{resumo}
-
-  %%%%%%%%%%%%%%%%%%%
-  % List of Figures %
-  %%%%%%%%%%%%%%%%%%%
-
-  \newcommand{\figureswrappername}{Lista de Ilustrações}
-  \begin{KeepFromToc}
-    \pdfbookmark[0]{\figureswrappername}{figureswrapper}
-    \tcblistof[\chapter*]{figureswrapper}{\figureswrappername}
-  \end{KeepFromToc}
-  \cleardoublepage
 
   %%%%%%%%%%%%%%%%%%%%%%%%%
   % List of Code Snippets %
@@ -1157,10 +1125,10 @@
   \begin{inparaenum}
     \item inicialização,
     \item formatação, e
-    \item retorno,
+    \item retorno%
   \end{inparaenum}
-  como ilustrado na \cref{figure:algorithm-flowchart}. Durante a etapa de
-  inicialização --- onde estruturas são instanciadas ---, primeiramente,
+  . Durante a etapa de inicialização --- onde estruturas são instanciadas ---,
+  primeiramente,
   \begin{inparaenum}
     \item a árvore de sintaxe --- derivada do código-fonte submetido para
           formatação --- é analisada. Em seguida,
@@ -1239,80 +1207,56 @@
   Por fim, na etapa de retorno, o algoritmo conclui retornando o código-fonte
   resultante do processo de formatação.
 
-  { \centering
-    \figurewrapper
-      {Fluxograma do Algoritmo de Formatação}
-      {algorithm-flowchart}
-      { \tiny
-        \begin
-          {tikzpicture}
-          [node distance=1em,every node/.style={draw,inner sep=1em}]
-          \node (init) {
-            \begin
-              {tikzpicture}
-              [ every node/.style=
-                  {align=center,draw,inner sep=.5em,text width=16em}]
-              \node [draw=none] (label) {Inicialização};
-              \node (I) [below=of label] {Analisa a árvore de sintaxe};
-              \node (II) [below=of I] {Gera o objeto de consulta};
-              \node (III) [below=of II] {Instancia a estrutura editora};
-              \node (IV) [below=of III] {Inicializa o objeto de configurações};
-              \node (V) [below=of IV] {Deriva a estrutura de correspondências};
-              \draw [->] (I) -- (II);
-              \draw [->] (II) -- (III);
-              \draw [->] (III) -- (IV);
-              \draw [->] (IV) -- (V);
-            \end{tikzpicture}
-          };
-          \node (fmt) [below=of init] {
-            \begin
-              {tikzpicture}
-              [ every node/.style=
-                  {align=center,draw,inner sep=.5em,text width=14em}]
-              \node [draw=none,text width=16em] (label) {Formatação};
-              \path
-                let \p1=(label.south)
-                in coordinate (I-coord) at ($ (\x1-1em,\y1-1em) $);
-              \node (I) at (I-coord) {Itera sobre os padrões};
-              \node (II) [below=of I] {Define o escopo de atuação};
-              \node
-                (III)
-                [below=of II]
-                {Itera sobre as coleções\\de nós capturados};
-              \node (IV) [below=of III] {Aplica as configurações};
-              \node (V) [below=of IV] {Aplica os predicados gerais};
-              \node (VI) [below=of V] {Redefine as\\configurações locais};
-              \node
-                (VII)
-                [below=of VI]
-                {Interrompe o \cref{item:nodes-loop} se o padrão é enraizado};
-              \draw [->] (I) -- (II);
-              \draw [->] (II) -- (III);
-              \draw [->] (III) -- (IV);
-              \draw [->] (IV) -- (V);
-              \draw [->] (V) -- (VI);
-              \draw [->] (VI) -- (VII);
-              \draw [->] (VII.east) -- ++(1em,0) |- (III.east);
-              \draw [->] (VII.east) -- ++(2em,0) |- (I.east);
-            \end{tikzpicture}
-          };
-          \draw [->] (init) -- (fmt);
-          \node (ret) [below=of fmt] {
-            \begin
-              {tikzpicture}
-              [ every node/.style=
-                  {align=center,draw,inner sep=.5em,text width=16em}]
-              \node [draw=none] (label) {Retorno};
-              \node
-                (label)
-                [below=of label]
-                {Retorna o código-fonte formatado};
-            \end{tikzpicture}
-          };
-          \draw [->] (fmt) -- (ret);
-        \end{tikzpicture}}
-    \vspace{-2ex}
-    \captionof*{figure}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}}
+  A compreensão sobre o algoritmo de formatação pode ser aprimorada através da
+  análise do pseudocódigo --- estruturado analogamente à linguagem de
+  programação Python ---, conforme demonstrado no \cref{snippet:python:pseudo}.
+
+  \noindent
+  \begin{minipage}[t]{\textwidth}
+    \begin
+      {codesnippet}%
+      [python]%
+      {Pseudocódigo do Algortimo de Formatação}%
+      {pseudo}%
+      [fontsize=\scriptsize]
+      def cook(
+        parser: Parser,
+        src_code: str,
+        language: Language,
+        query_src: str,
+        query_cursor: QueryCursor,
+        setting_parsers: SettingParsers,
+        predicates: Predicates,
+      ) -> str:
+        parser.set_language(language)
+        tree = parser.parse(src_code)
+        query = Query.new(language, query_src)
+        editor = Editor.new(src_code)
+        settings = Settings.default()
+        matches = Matches.new(query_cursor.matches(query, tree.root_node(), src_code))
+        for pattern_index, array_of_capture_index_to_nodes in matches:
+          is_pattern_rooted = query.is_pattern_rooted(pattern_index)
+          scope = Scope.LOCAL if is_pattern_rooted else Scope.GLOBAL
+          nodes_providers = map(
+            lambda capture_index_to_nodes: NodesProvider.new(
+              capture_index_to_nodes, matches.id_to_node()
+            ),
+            array_of_capture_index_to_nodes,
+          )
+          for nodes_provider in nodes_providers:
+            for query_property in query.property_settings(pattern_index):
+              setting_parsers.parse(query_property, scope, nodes_provider, settings)
+            for query_predicate in query.general_predicates(pattern_index):
+              predicates.parse(
+                query, query_predicate, scope, nodes_provider, settings, editor,
+              )
+            settings.reset()
+            if not is_pattern_rooted: break
+        return str(editor)
+    \end{codesnippet}
+    \vspace{-3ex}
+    \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
+  \end{minipage}
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%% The Formatting Guidelines %
