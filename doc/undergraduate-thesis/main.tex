@@ -921,10 +921,9 @@
   \section{Motivações e Propósitos}
 
   As motivações para o desenvolvimento do \witchcooking surgiram das
-  dificuldades enfrentadas pelo autor ao estudar estilos de formatação de
-  código-fonte em diversas linguagens de programação com as quais ele
-  trabalhava. O estudo envolvia a exploração e análise tanto de estilos
-  convencionais%
+  dificuldades enfrentadas em um contexto onde buscou-se estudar/explorar
+  estilos de formatação de código-fonte em diversas linguagens de programação.
+  O estudo envolvia a exploração e análise tanto de estilos convencionais%
   \footnote
     { Neste trabalho, são considerados convencionais os estilos de formatação
       abordados nas páginas \textit{Indentation style} e
@@ -941,6 +940,17 @@
           e esforço.
   \end{inparaenum}
 
+  Esse cenário evidencia uma lacuna na formatação de código-fonte que envolve
+  os seguintes aspectos: devido à complexidade inerente ao desenvolvimento de
+  \textit{prettyprinters},
+  \begin{inparaenum}
+    \item é comum que essas ferramentas se restrinjam a uma linguagem ou
+          família de linguagens de programação; além disso,
+    \item os formatadores de código frequentemente oferecerem uma quantidade
+          limitada de configurações de estilização; consequentemente
+    \item dificultando a personalização da formatação pelo usuário.
+  \end{inparaenum}
+
   Tendo em vista
   \begin{inparaenum}
     \item as dificuldades mencionadas anteriormente, além da
@@ -955,6 +965,16 @@
     \item proporcionar a formatação personalizada via a linguagem de consulta
           do \treesitter.
   \end{inparaenum}
+
+  Embora o \treesitter não tenha sido originalmente projetado para formatação
+  de código-fonte, foi identificado o potencial do sistema, particularmente em
+  relação à sua linguagem de consulta, que --- como já ressaltado --- é
+  extensível. Assim, para permitir a formatação dirigida, o \witchcooking
+  baseou-se na extensão e disponibilização de predicados designados a executar
+  operações específicas de formatação. Em outras palavras, a concepção era que
+  a formatação ocorresse conforme a aplicação dos predicados estendidos em
+  padrões especificados no arquivo contendo as diretrizes de formatação,
+  escrito na linguagem de consulta do \treesitter.
 
   %%%%%%%%%%%%%%%
   %%% Materials %
@@ -1034,16 +1054,6 @@
   %%%%%%%%%%%%%
 
   \section{Métodos}
-
-  Embora o \treesitter não tenha sido originalmente projetado para formatação
-  de código-fonte, foi identificado o potencial do sistema, particularmente em
-  relação à sua linguagem de consulta, que --- como já ressaltado --- é
-  extensível. Assim, para permitir a formatação dirigida, o \witchcooking
-  baseou-se na extensão e disponibilização de predicados designados a executar
-  operações específicas de formatação. Em outras palavras, a concepção era que
-  a formatação ocorresse conforme a aplicação dos predicados estendidos em
-  padrões especificados no arquivo contendo as diretrizes de formatação,
-  escrito na linguagem de consulta do \treesitter.
 
   Devido à natureza prototípica do software desenvolvido, foi adotada uma
   abordagem multifacetada neste trabalho. Inicialmente, foi conduzida
