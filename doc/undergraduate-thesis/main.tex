@@ -1181,46 +1181,6 @@
           específicos.
   \end{inparaenum}
 
-  O processo efetivo de formatação de código-fonte inicia na segunda etapa.
-  Nessa fase, a dinâmica se baseia em
-  \begin{inparaenum}
-    \item \label{item:pattern-loop} um \textit{\gloss{loop}} que itera sobre
-          todos os padrões especificados no arquivo contendo as diretrizes de
-          formatação. Em cada iteração, inicialmente,
-    \item é checado se o padrão é enraizado%
-          \footnote
-            { Na linguagem de consulta do \treesitter, embora o sistema não
-              forneça uma definição exata, um padrão enraizado é geralmente
-              caracterizado por especificar pelo menos um nó inicial para a
-              correspondência, e vice-versa.}
-          ou não, determinando assim se o escopo de atuação do padrão é local
-          ou global, respectivamente. Em seguida,
-    \item \label{item:nodes-loop} um segundo \textit{loop} percorre as coleções
-          de nós capturados para cada correspondência do padrão em questão. No
-          corpo dessa estrutura de repetição,
-    \item são aplicadas as configurações especificadas no padrão via o
-          predicado \textit{builtin} \codesnippetinline{set!}. Além disso,
-    \item são aplicados os predicados gerais --- i.e., predicados não
-          \textit{builtins} --- especificados no padrão em iteração.
-          Pressupõe-se que esses predicados estejam dentre os providos pelo
-          \witchcooking para dirigir a formatação.
-
-          Encerrando o \cref{item:nodes-loop} e, subsequentemente, o
-          \cref{item:pattern-loop}, bem como a etapa de formatação como um
-          todo,
-    \item as configurações locais --- i.e, configurações a nível de
-          correspondência --- são redefinidas para seus valores padrões. Logo
-          em seguida,
-    \item é interrompido o \cref{item:nodes-loop} caso o padrão em iteração não
-          seja enraizado.
-  \end{inparaenum}
-  Por fim, na etapa de retorno, o algoritmo conclui retornando o código-fonte
-  resultante do processo de formatação.
-
-  A compreensão sobre o algoritmo de formatação pode ser aprimorada através da
-  análise do pseudocódigo --- estruturado analogamente à linguagem de
-  programação Python ---, conforme demonstrado no \cref{snippet:python:pseudo}.
-
   \noindent
   \begin{minipage}[t]{\textwidth}
     \begin
@@ -1267,6 +1227,46 @@
     \vspace{-3ex}
     \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
   \end{minipage}
+
+  O processo efetivo de formatação de código-fonte inicia na segunda etapa.
+  Nessa fase, a dinâmica se baseia em
+  \begin{inparaenum}
+    \item \label{item:pattern-loop} um \textit{\gloss{loop}} que itera sobre
+          todos os padrões especificados no arquivo contendo as diretrizes de
+          formatação. Em cada iteração, inicialmente,
+    \item é checado se o padrão é enraizado%
+          \footnote
+            { Na linguagem de consulta do \treesitter, embora o sistema não
+              forneça uma definição exata, um padrão enraizado é geralmente
+              caracterizado por especificar pelo menos um nó inicial para a
+              correspondência, e vice-versa.}
+          ou não, determinando assim se o escopo de atuação do padrão é local
+          ou global, respectivamente. Em seguida,
+    \item \label{item:nodes-loop} um segundo \textit{loop} percorre as coleções
+          de nós capturados para cada correspondência do padrão em questão. No
+          corpo dessa estrutura de repetição,
+    \item são aplicadas as configurações especificadas no padrão via o
+          predicado \textit{builtin} \codesnippetinline{set!}. Além disso,
+    \item são aplicados os predicados gerais --- i.e., predicados não
+          \textit{builtins} --- especificados no padrão em iteração.
+          Pressupõe-se que esses predicados estejam dentre os providos pelo
+          \witchcooking para dirigir a formatação.
+
+          Encerrando o \cref{item:nodes-loop} e, subsequentemente, o
+          \cref{item:pattern-loop}, bem como a etapa de formatação como um
+          todo,
+    \item as configurações locais --- i.e, configurações a nível de
+          correspondência --- são redefinidas para seus valores padrões. Logo
+          em seguida,
+    \item é interrompido o \cref{item:nodes-loop} caso o padrão em iteração não
+          seja enraizado.
+  \end{inparaenum}
+  Por fim, na etapa de retorno, o algoritmo conclui retornando o código-fonte
+  resultante do processo de formatação.
+
+  A compreensão sobre o algoritmo de formatação pode ser aprimorada através da
+  análise do pseudocódigo --- estruturado analogamente à linguagem de
+  programação Python ---, conforme demonstrado no \cref{snippet:python:pseudo}.
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%% The Formatting Guidelines %
