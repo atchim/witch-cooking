@@ -1677,12 +1677,12 @@
           a própria função ---; e
     \item \codesnippetinline{close} tem sua regra de indentação definida como o
           deslocamento de \codesnippetinline{fn} por meio do uso do predicado
-          \codesnippetinline{indent-offset!}. Concluindo, ao final do segundo
-          padrão, é utilizado o predicado \codesnippetinline{indent!}, passando
-          as respectivas capturas \codesnippetinline{item} e
-          \codesnippetinline{close} como argumentos. O resultado da aplicação
-          dessa consulta está disponível para verificação no
-          \cref{snippet:rust:1tbs-foo}.
+          \codesnippetinline{indent-offset!}. Concluindo a explicação da
+          consulta, ao final do segundo padrão, é utilizado o predicado
+          \codesnippetinline{indent!}, passando as respectivas capturas
+          \codesnippetinline{item} e \codesnippetinline{close} como argumentos.
+          O resultado da aplicação dessa consulta está disponível para
+          verificação no \cref{snippet:rust:1tbs-foo}.
   \end{inparaenum}
 
   \noindent
@@ -1719,6 +1719,28 @@
     \vspace{-3ex}
     \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
   \end{minipage}
+
+  Contudo, é importante ressaltar que o uso dos predicados é de total
+  responsabilidade do usuário. Por exemplo, considere a lista presente no
+  seguinte trecho de código em linha, escrito em Python:
+  \codesnippetinline[python]{[False, 0, 'a']}. Nesse cenário, é possível
+  utilizar o predicado \codesnippetinline{space!} para erroneamente espaçar os
+  itens dessa lista com um separador caracterizado pelo caractere `x', como
+  ilustrado a seguir:
+  \codesnippetinline
+    [scheme]
+    {(list (_) @item . (_) @next (#space! x @item @next))}%
+  . Ao aplicar a consulta, o código-fonte resultante da formatação apresenta o
+  seguinte conteúdo: \codesnippetinline[python]{[Falsex0x'a']}. Esse código
+  formatado não é apenas desfigurado, mas também sintaticamente inválido.
+
+  Outro aspecto relevante a ser notado é que diferentes linguagens de
+  programação exigem desafios distintos na formatação de código-fonte. Por
+  exemplo, enquanto há linguagens que proporcionam uma estruturação de código
+  bastante flexível --- e.g., Rust, LISP, etc. ---, outras impõem restrições
+  mais severas quanto à organização do código. Consequentemente, a complexidade
+  na elaboração das consultas está atrelada ao intrincamento da sintaxe da
+  linguagem em questão.
 
   %%%%%%%%%%%
   %%% Tests %
