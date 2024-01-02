@@ -1323,18 +1323,6 @@
           \end{inparaenum}
   \end{inparaenum}
 
-  Para ilustrar o funcionamento do predicado \codesnippetinline{space!},
-  considere o seguinte vetor na linguagem de programação Rust, apresentado no
-  seguinte trecho de código em linha: \codesnippetinline[rust]{[0,1,   2,  3]}.
-  Para formatar esse vetor, de modo que cada número após uma vírgula seja
-  separado por um espaço, é possível usar a consulta exibida no
-  \cref{snippet:scheme:rust:vec-items-sep}. Ao formatar o vetor com essa
-  consulta, é obtido \codesnippetinline[rust]{[0, 1, 2, 3]}, conforme esperado.
-  No padrão presente na consulta usada para formatar o vetor, o predicado
-  \codesnippetinline{space!} é chamado com a configuração de argumentos mais
-  simples, que consiste em especificar apenas as capturas que devem ser
-  separadas.
-
   \noindent
   \begin{minipage}[t]{\textwidth}
     \begin
@@ -1350,6 +1338,18 @@
     \vspace{-3ex}
     \captionof*{listing}{\ABNTEXfontereduzida \textbf{Fonte:} o próprio autor.}
   \end{minipage}
+
+  Para ilustrar o funcionamento do predicado \codesnippetinline{space!},
+  considere o seguinte vetor na linguagem de programação Rust, apresentado no
+  seguinte trecho de código em linha: \codesnippetinline[rust]{[0,1,   2,  3]}.
+  Para formatar esse vetor, de modo que cada número após uma vírgula seja
+  separado por um espaço, é possível usar a consulta exibida no
+  \cref{snippet:scheme:rust:vec-items-sep}. Ao formatar o vetor com essa
+  consulta, é obtido \codesnippetinline[rust]{[0, 1, 2, 3]}, conforme esperado.
+  No padrão presente na consulta usada para formatar o vetor, o predicado
+  \codesnippetinline{space!} é chamado com a configuração de argumentos mais
+  simples, que consiste em especificar apenas as capturas que devem ser
+  separadas.
 
   Outro exemplo típico de inserção de espaçamento usado na formatação de
   código-fonte é o espaçamento entre elementos pertencentes ao corpo de uma
